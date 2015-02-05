@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>PajamaPenguins_Mac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>PajamaPenguins_iOS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>41E4308918B09E5200E1427D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>41E430B418B09E5200E1427D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>41E430CF18B09E8600E1427D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>41E430F318B09E8600E1427D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>89685D78-6F7A-4B2B-BA75-7B8A23BFA95A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>UniversalSKTemplate</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7F076F8C262D23718988BE5FCB70F50F586C9B85</key>
+		<string>https://github.com/skyefreeman/Universal-Spritekit-Template</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SSKLibraryTemplate/UniversalSKTemplate.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7F076F8C262D23718988BE5FCB70F50F586C9B85</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/skyefreeman/Universal-Spritekit-Template</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7F076F8C262D23718988BE5FCB70F50F586C9B85</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7F076F8C262D23718988BE5FCB70F50F586C9B85</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Universal_Spritekit_Template</string>
+		</dict>
+	</array>
+</dict>
+</plist>
