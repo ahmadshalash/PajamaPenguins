@@ -10,6 +10,7 @@
 #import "SSKGraphicsUtils.h"
 
 typedef enum {
+    backgroundLayer,
     playerLayer,
     menuLayer,
 }Layers;
@@ -27,8 +28,10 @@ typedef enum {
 
 - (void)didMoveToView:(SKView *)view {
     [self createScene];
+    [self startSceneAnimations];
 }
 
+#pragma mark - Creating scene layers
 - (void)createScene {
     self.backgroundColor = SKColorWithRGB(6, 220, 220);
 
@@ -55,7 +58,7 @@ typedef enum {
     [startButton setYScale:6];
     [startButtonNode addChild:startButton];
     
-    SKLabelNode *startButtonLabel = [self createNewLabelWithText:@"Dive !"];
+    SKLabelNode *startButtonLabel = [self createNewLabelWithText:@"Start"];
     [startButtonLabel setPosition:startButton.position];
     [startButtonNode addChild:startButtonLabel];
 }
@@ -81,7 +84,14 @@ typedef enum {
     [player setName:@"player"];
     [player setZPosition:playerLayer];
     [self.playerLayerNode addChild:player];
-    
+}
+
+#pragma mark - Initial scene animations
+- (void)startSceneAnimations {
+    //Slight Wait to prevent initial animation glitchyness
+    [self runAction:[SKAction waitForDuration:.5] completion:^{
+        [self.playerLayerNode runAction:[SKAction repeatActionForever:[self floatAction]] withKey:@"float"];
+    }];
 }
 
 #pragma mark - Button Methods
@@ -96,6 +106,14 @@ typedef enum {
             [menu removeFromParent];
         }];
     }
+}
+
+#pragma mark - Actions
+- (SKAction*)floatAction {
+    SKAction *down = [SKAction moveByX:0 y:-35 duration:2];
+    [down setTimingMode:SKActionTimingEaseInEaseOut];
+    SKAction *up = [down reversedAction];
+    return [SKAction sequence:@[down,up]];
 }
 
 #pragma mark - Convenience
