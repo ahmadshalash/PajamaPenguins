@@ -55,10 +55,15 @@ typedef enum {
     [self.menuLayerNode setName:@"menu"];
     [self addChild:self.menuLayerNode];
     
-    SKLabelNode *startLabel = [self createNewLabelWithText:@"Tap to start!"];
+    SKLabelNode *titleLabel = [self createNewLabelWithText:@"Pajama Penguins" withFontSize:50];
+    [titleLabel setPosition:CGPointMake(self.size.width/2, self.size.height/6 * 5)];
+    [self.menuLayerNode addChild:titleLabel];
+    
+    SKLabelNode *startLabel = [self createNewLabelWithText:@"Tap to start!" withFontSize:30];
     [startLabel setPosition:CGPointMake(self.size.width/2, self.size.height/6)];
     [self.menuLayerNode addChild:startLabel];
     
+
     SKSpriteNode *startIcon = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:17]];
     [startIcon setScale:5];
     [startIcon setPosition:CGPointMake(startLabel.position.x, startLabel.position.y + startIcon.size.height)];
@@ -98,14 +103,23 @@ typedef enum {
 
 #pragma mark - Game Start
 - (void)prepareGameStart {
+    CGFloat moveTime = 1;
+    
+    SKNode *playerLayerNode = [self childNodeWithName:@"playerLayer"];
+    [playerLayerNode removeAllActions];
+    
     SKNode *player = [self.playerLayerNode childNodeWithName:@"player"];
-    [player runAction:[self moveToStartPositionWithNode:player]];
+    [player runAction:[SKAction moveTo:CGPointMake(self.size.width/4, player.position.y) duration:moveTime]];
     
     SKNode *platform = [self.playerLayerNode childNodeWithName:@"platform"];
-    [platform runAction:[self moveToStartPositionWithNode:platform]];
+    [platform runAction:[SKAction moveTo:CGPointMake(-self.size.width/4, platform.position.y) duration:moveTime*3] completion:^{
+        [platform removeFromParent];
+    }];
     
     SKNode *menu = [self childNodeWithName:@"menu"];
     [menu runAction:[SKAction fadeOutWithDuration:.5]];
+    
+    self.gameState = Playing;
 }
 
 #pragma mark - Button Methods
@@ -118,29 +132,25 @@ typedef enum {
     return [SKAction sequence:@[down,up]];
 }
 
-- (SKAction*)moveToStartPositionWithNode:(SKNode*)node {
-    CGPoint destination = CGPointMake(self.size.width/4, node.position.y);
-    CGPoint newDestination = [self convertPoint:destination toNode:node.parent];
-    SKAction *move = [SKAction moveTo:newDestination duration:1];
-    [move setTimingMode:SKActionTimingEaseInEaseOut];
-    return move;
-}
-
 #pragma mark - Convenience
-- (SKLabelNode *)createNewLabelWithText:(NSString*)text {
+- (SKLabelNode *)createNewLabelWithText:(NSString*)text withFontSize:(CGFloat)fontSize {
     SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"Verdana"];
     [label setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
     [label setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
     [label setFontColor:[SKColor blackColor]];
     [label setText:text];
-    [label setFontSize:35];
+    [label setFontSize:fontSize];
     return label;
 }
 
+- (SKAction*)moveTo:(CGPoint)point duration:(NSTimeInterval)duration {
+    SKAction *move = [SKAction moveTo:point duration:duration];
+    [move setTimingMode:SKActionTimingEaseInEaseOut];
+    return move;
+}
 #pragma mark - Screen input interactions
 - (void)interactionBeganAtPosition:(CGPoint)position {
     if (self.gameState == MainMenu) {
-        self.gameState = Playing;
         [self prepareGameStart];
     }
 }
