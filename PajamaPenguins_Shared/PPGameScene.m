@@ -10,12 +10,19 @@
 #import "SSKGraphicsUtils.h"
 
 typedef enum {
-    backgroundLayer,
+    MainMenu,
+    Playing,
+}GameState;
+
+typedef enum {
+    backgroundLayer = 0,
     playerLayer,
     menuLayer,
 }Layers;
 
 @interface PPGameScene()
+@property (nonatomic) GameState gameState;
+
 @property (nonatomic) SKNode *playerLayerNode;
 @property (nonatomic) SKNode *menuLayerNode;
 @end
@@ -27,6 +34,8 @@ typedef enum {
 }
 
 - (void)didMoveToView:(SKView *)view {
+    self.gameState = MainMenu;
+    
     [self createScene];
     [self startSceneAnimations];
 }
@@ -46,21 +55,14 @@ typedef enum {
     [self.menuLayerNode setName:@"menu"];
     [self addChild:self.menuLayerNode];
     
-    SKNode *startButtonNode = [SKNode node];
-    [startButtonNode setName:@"startButtonNode"];
-    [self.menuLayerNode addChild:startButtonNode];
+    SKLabelNode *startLabel = [self createNewLabelWithText:@"Tap to start!"];
+    [startLabel setPosition:CGPointMake(self.size.width/2, self.size.height/6)];
+    [self.menuLayerNode addChild:startLabel];
     
-    SSKButton *startButton = [[SSKButton alloc] initWithIdleTexture:[sTextures objectAtIndex:15] selectedTexture:[sTextures objectAtIndex:16]];
-    [startButton setTouchUpInsideTarget:self selector:@selector(startButtonTouchUpInside)];
-    [startButton setName:@"startButton"];
-    [startButton setPosition:CGPointMake(self.size.width/2, self.size.height/4)];
-    [startButton setXScale:10];
-    [startButton setYScale:6];
-    [startButtonNode addChild:startButton];
-    
-    SKLabelNode *startButtonLabel = [self createNewLabelWithText:@"Start"];
-    [startButtonLabel setPosition:startButton.position];
-    [startButtonNode addChild:startButtonLabel];
+    SKSpriteNode *startIcon = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:17]];
+    [startIcon setScale:5];
+    [startIcon setPosition:CGPointMake(startLabel.position.x, startLabel.position.y + startIcon.size.height)];
+    [self.menuLayerNode addChild:startIcon];
 }
 
 - (void)createBackgroundLayer {
@@ -94,26 +96,34 @@ typedef enum {
     }];
 }
 
-#pragma mark - Button Methods
-- (void)startButtonTouchUpInside {
-    SKNode *menu = [self childNodeWithName:@"menu"];
-    SKNode *buttonNode = [menu childNodeWithName:@"startButtonNode"];
-    SKNode *button = [buttonNode childNodeWithName:@"startButton"];
+#pragma mark - Game Start
+- (void)prepareGameStart {
+    SKNode *player = [self.playerLayerNode childNodeWithName:@"player"];
+    [player runAction:[self moveToStartPositionWithNode:player]];
     
-    if (!menu.hasActions) {
-        [button setUserInteractionEnabled:NO];
-        [menu runAction:[SKAction fadeOutWithDuration:.5] completion:^{
-            [menu removeFromParent];
-        }];
-    }
+    SKNode *platform = [self.playerLayerNode childNodeWithName:@"platform"];
+    [platform runAction:[self moveToStartPositionWithNode:platform]];
+    
+    SKNode *menu = [self childNodeWithName:@"menu"];
+    [menu runAction:[SKAction fadeOutWithDuration:.5]];
 }
+
+#pragma mark - Button Methods
 
 #pragma mark - Actions
 - (SKAction*)floatAction {
-    SKAction *down = [SKAction moveByX:0 y:-35 duration:2];
+    SKAction *down = [SKAction moveByX:0 y:-25 duration:2];
     [down setTimingMode:SKActionTimingEaseInEaseOut];
     SKAction *up = [down reversedAction];
     return [SKAction sequence:@[down,up]];
+}
+
+- (SKAction*)moveToStartPositionWithNode:(SKNode*)node {
+    CGPoint destination = CGPointMake(self.size.width/4, node.position.y);
+    CGPoint newDestination = [self convertPoint:destination toNode:node.parent];
+    SKAction *move = [SKAction moveTo:newDestination duration:1];
+    [move setTimingMode:SKActionTimingEaseInEaseOut];
+    return move;
 }
 
 #pragma mark - Convenience
@@ -121,6 +131,7 @@ typedef enum {
     SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"Verdana"];
     [label setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
     [label setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
+    [label setFontColor:[SKColor blackColor]];
     [label setText:text];
     [label setFontSize:35];
     return label;
@@ -128,6 +139,10 @@ typedef enum {
 
 #pragma mark - Screen input interactions
 - (void)interactionBeganAtPosition:(CGPoint)position {
+    if (self.gameState == MainMenu) {
+        self.gameState = Playing;
+        [self prepareGameStart];
+    }
 }
 
 - (void)interactionMovedAtPosition:(CGPoint)position {
