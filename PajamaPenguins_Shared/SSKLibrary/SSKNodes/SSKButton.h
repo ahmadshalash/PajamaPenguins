@@ -8,6 +8,12 @@
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
 
+/*
+ 
+ NOTE: Button streching only works via setting xScale and yScale as of iOS 8.
+ 
+ */
+
 @interface SSKButton : SKSpriteNode
 
 @property (nonatomic, readonly) SEL SELTouchUpInside;
@@ -23,6 +29,10 @@
 @property (nonatomic, readwrite, strong) SKTexture *idleTexture;
 @property (nonatomic, readwrite, strong) SKTexture *selectedTexture;
 
+@property (nonatomic) SKLabelNode *labelNode;
+- (void)addLabelWithString:(NSString*)string;
+
+//Designated initializer
 - (id)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture;
 - (id)initWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName;
 

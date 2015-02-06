@@ -8,28 +8,43 @@
 #import "SSKButton.h"
 
 @interface SSKButton()
+
 @end
 
 @implementation SSKButton
 
-#pragma mark - Texture initializer
 - (id)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture {
     self = [super initWithTexture:idleTexture color:[SKColor clearColor] size:idleTexture.size];
     if (self) {
-        [self setIdleTexture:idleTexture];
-        [self setSelectedTexture:selectedTexture];
+        //Instance Textures
+        if (idleTexture) {
+            [self setIdleTexture:idleTexture];
+        }
+        
+        if (selectedTexture) {
+            [self setSelectedTexture:selectedTexture];
+        }
+        
+        //For button scaling
+        self.centerRect = CGRectMake((self.size.width/2 - 1)/self.size.width,
+                                     (self.size.height/2 - 1)/self.size.height,
+                                     2/self.size.width,
+                                     2/self.size.height);
         
         [self setIsSelected:NO];
-
-        //TODO : For Button Resizing, make a subclass?
-//        self.centerRect = CGRectMake(12.0/34.0, 12/34.0, 5.0/34.0, 5.0/34.0);
-        
         [self setUserInteractionEnabled:YES];
     }
     return self;
 }
 
-#pragma mark - Image name initializer
+- (id)initWithTexture:(SKTexture *)texture {
+    return [self initWithIdleTexture:texture selectedTexture:nil];
+}
+
+- (id)initWithTexture:(SKTexture *)texture color:(SKColor*)color size:(CGSize)size {
+    return [self initWithIdleTexture:texture selectedTexture:nil];
+}
+
 - (id)initWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName {
     SKTexture *idleTexture = nil;
     if (idleImageName) {
@@ -44,17 +59,8 @@
     return [self initWithIdleTexture:idleTexture selectedTexture:selectedTexture];
 }
 
-#pragma mark - Super class initialization override
 - (id)initWithImageNamed:(NSString *)name {
     return [self initWithIdleImageName:name selectedImageName:nil];
-}
-
-- (id)initWithTexture:(SKTexture *)texture {
-    return [self initWithIdleTexture:texture selectedTexture:nil];
-}
-
-- (id)initWithTexture:(SKTexture *)texture color:(SKColor*)color size:(CGSize)size {
-    return [self initWithIdleTexture:texture selectedTexture:nil];
 }
 
 #pragma mark - Setter Overrides
@@ -83,6 +89,15 @@
 - (void)setTouchDownInsideTarget:(id)theTarget selector:(SEL)theSelector {
     _targetTouchDownInside = theTarget;
     _SELTouchDownInside = theSelector;
+}
+
+#pragma mark - Adding a LabelNode
+- (void)addLabelWithString:(NSString*)string {
+    SKNode *node = [SKNode new];
+    [self addChild:node];
+    
+    self.labelNode = [SKLabelNode labelNodeWithText:string];
+    [node addChild:self.labelNode];
 }
 
 #pragma mark - Handling user node input

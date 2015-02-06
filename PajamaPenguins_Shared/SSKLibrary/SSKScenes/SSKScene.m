@@ -9,10 +9,27 @@
 @implementation SSKScene
 
 -(id)initWithSize:(CGSize)size {
-    if (self = [super initWithSize:size]) {
-        /* Overridden by subclasses */
-    }
-    return self;
+    return [super initWithSize:size];
+}
+
+#pragma mark - Scene Asset Preloading
++ (void)loadSceneAssetsWithCompletionHandler:(AssetCompletionHandler)handler {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        
+        [self loadSceneAssets]; //Loads subclasses assets on a background thread
+        
+        if (!handler) {
+            return;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            handler();  //Calls the handler on the main thread once assets are ready.
+        });
+    });
+}
+
++ (void)loadSceneAssets {
+    //Overridden by subclasses
 }
 
 #pragma mark - iOS touch interaction

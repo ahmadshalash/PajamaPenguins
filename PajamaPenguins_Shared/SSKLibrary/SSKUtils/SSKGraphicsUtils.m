@@ -10,14 +10,17 @@
 @implementation SSKGraphicsUtils
 
 //Designated
-+ (SKTexture*)createPixelTexture:(SKTexture*)texture {
++ (SKTexture*)loadPixelTexture:(SKTexture*)texture {
     texture.filteringMode = SKTextureFilteringNearest;
     return texture;
 }
 
-// Redirected class methods
-+ (SKTexture*)createPixelTextureWithName:(NSString*)name inAtlas:(SKTextureAtlas*)atlas {
-    return [SSKGraphicsUtils createPixelTexture:[atlas textureNamed:name]];
++ (SKTexture*)loadPixelTextureWithName:(NSString*)name {
+    return [SSKGraphicsUtils loadPixelTexture:[SKTexture textureWithImageNamed:name]];
+}
+
++ (SKTexture*)loadPixelTextureWithName:(NSString*)name inAtlas:(SKTextureAtlas*)atlas {
+    return [SSKGraphicsUtils loadPixelTexture:[atlas textureNamed:name]];
 }
 
 + (NSArray*)loadPixelAnimationFromAtlas:(SKTextureAtlas*)atlas
@@ -28,7 +31,7 @@
     for (int i = 1; i <= count; i++) {
         NSString *fileName = [NSString stringWithFormat:@"%@%d.png", baseFileName, i];
         SKTexture *texture = [atlas textureNamed:fileName];
-        [SSKGraphicsUtils createPixelTexture:texture];
+        [SSKGraphicsUtils loadPixelTexture:texture];
         if (texture) {
             [frames addObject:texture];
         } else {
@@ -37,6 +40,34 @@
     }
     
     return frames;
+}
+
++ (NSArray*)loadFramesFromSpriteSheetNamed:(NSString*)name
+                                 frameSize:(CGSize)frameSize
+                                    origin:(CGPoint)origin
+                                 gridWidth:(NSUInteger)gridWidth
+                                gridHeight:(NSUInteger)gridHeight
+{
+    NSMutableArray *images = [NSMutableArray array];
+    SKTexture *spriteSheet = [SSKGraphicsUtils loadPixelTextureWithName:name];
+    
+    for (int y = 0; y < gridHeight; y++) {
+        for (int x = 0; x < gridWidth; x++) {
+            SKTexture *tile = [SKTexture textureWithRect:CGRectMake(origin.x/spriteSheet.size.width,
+                                                                    origin.y/spriteSheet.size.height,
+                                                                    frameSize.width/spriteSheet.size.width,
+                                                                    frameSize.height/spriteSheet.size.height)
+                                               inTexture:spriteSheet];
+            tile.filteringMode = SKTextureFilteringNearest;
+            [images addObject:tile];
+            
+            origin.x += frameSize.width + 1;
+        }
+        origin.x = 0;
+        origin.y -= frameSize.height + 1;
+    }
+
+    return [NSArray arrayWithArray:images];
 }
 
 @end

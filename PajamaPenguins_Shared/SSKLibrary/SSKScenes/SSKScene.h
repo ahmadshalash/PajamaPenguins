@@ -7,13 +7,19 @@
 /*
  
  This is a barebones subclass of SKScene that provides a cross-device (iOS and OS X)
- interface for screen input (touch and mouse clicks).
+ interface for screen input (touch and mouse clicks). Also provides methods for preloading 
+ scene assets.
  
  */
 
 #import <SpriteKit/SpriteKit.h>
 
 @interface SSKScene : SKScene
+
+//Loading Scene Assets
+typedef void (^AssetCompletionHandler)(void);
++ (void)loadSceneAssetsWithCompletionHandler:(AssetCompletionHandler)handler; //Not to be overriden
++ (void)loadSceneAssets;
 
 // Mouse and touch input
 - (void)interactionBeganAtPosition:(CGPoint)position;

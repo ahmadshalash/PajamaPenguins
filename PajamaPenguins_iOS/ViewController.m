@@ -5,7 +5,7 @@
 //  Copyright (c) 2015 Skye Freeman. All rights reserved.
 
 #import "ViewController.h"
-#import "SSKGameScene.h"
+#import "PPGameScene.h"
 
 #define DEBUG_MODE 1 // Comment/uncomment to toggle debug information.
 
@@ -16,14 +16,15 @@
     [super viewWillLayoutSubviews];
     
     SKView * skView = (SKView *)self.view;
+    skView.ignoresSiblingOrder = YES; //Provides extra rendering optimizations. (However, zPositions need to be explicitly set)
+
     if (!skView.scene) {
-        
-        //Provides extra rendering optimizations. (However, zPositions need to be explicitly set)
-        skView.ignoresSiblingOrder = YES;
-        
-        SKScene * scene = [SSKGameScene sceneWithSize:skView.bounds.size];
-        scene.scaleMode = SKSceneScaleModeAspectFill;
-        [skView presentScene:scene];
+        [PPGameScene loadSceneAssetsWithCompletionHandler:^{
+            NSLog(@"Loading Complete.");
+            SKScene * scene = [PPGameScene sceneWithSize:skView.bounds.size];
+            scene.scaleMode = SKSceneScaleModeAspectFill;
+            [skView presentScene:scene];
+        }];
     }
     
 #ifdef DEBUG_MODE
@@ -34,10 +35,6 @@
 
 - (BOOL)shouldAutorotate {
     return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskLandscape;
 }
 
 - (void)didReceiveMemoryWarning {

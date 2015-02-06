@@ -10,12 +10,20 @@
 
 @interface SSKGraphicsUtils : NSObject
 
-+ (SKTexture*)createPixelTexture:(SKTexture*)texture;
-+ (SKTexture*)createPixelTextureWithName:(NSString*)name inAtlas:(SKTextureAtlas*)atlas;
++ (SKTexture*)loadPixelTexture:(SKTexture*)texture;
++ (SKTexture*)loadPixelTextureWithName:(NSString*)name;
++ (SKTexture*)loadPixelTextureWithName:(NSString*)name inAtlas:(SKTextureAtlas*)atlas;
 
-//Load Pixel
+//Load a Pixel Animation
 + (NSArray*)loadPixelAnimationFromAtlas:(SKTextureAtlas*)atlas
                            fromBaseFile:(NSString*)baseFileName
                          withFrameCount:(NSUInteger)count;
+
+//Load tiles from a sprite sheet
++ (NSArray*)loadFramesFromSpriteSheetNamed:(NSString*)name
+                                 frameSize:(CGSize)frameSize
+                                    origin:(CGPoint)origin
+                                 gridWidth:(NSUInteger)width
+                                gridHeight:(NSUInteger)height;
 
 @end
