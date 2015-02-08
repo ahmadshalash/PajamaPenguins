@@ -41,6 +41,8 @@
 		EED8E59E1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */; };
 		EED8E59F1A840B23001C8F59 /* PajamaPenguinsSpriteSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */; };
 		EED8E5A11A84127D001C8F59 /* test_stretchable_button.png in Resources */ = {isa = PBXBuildFile; fileRef = EED8E5A01A84127D001C8F59 /* test_stretchable_button.png */; };
+		EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EED8E5A31A881D79001C8F59 /* PPPlayer.m */; };
+		EED8E5A51A881D79001C8F59 /* PPPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EED8E5A31A881D79001C8F59 /* PPPlayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +90,8 @@
 		EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKPhysicsUtils.m; sourceTree = "<group>"; };
 		EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsSpriteSheet.png; sourceTree = "<group>"; };
 		EED8E5A01A84127D001C8F59 /* test_stretchable_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_stretchable_button.png; sourceTree = "<group>"; };
+		EED8E5A21A881D79001C8F59 /* PPPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlayer.h; sourceTree = "<group>"; };
+		EED8E5A31A881D79001C8F59 /* PPPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +233,8 @@
 		EE5575EE1A5A10CD00B87145 /* Sprites */ = {
 			isa = PBXGroup;
 			children = (
+				EED8E5A21A881D79001C8F59 /* PPPlayer.h */,
+				EED8E5A31A881D79001C8F59 /* PPPlayer.m */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -395,6 +401,7 @@
 			files = (
 				EE6F93001A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */,
 				EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */,
+				EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */,
 				EE5575EB1A5A108100B87145 /* PPGameScene.m in Sources */,
 				EE6F92FC1A82F39400286DC7 /* SSKButton.m in Sources */,
 				EE6F93021A82F39400286DC7 /* SSKMathUtils.mm in Sources */,
@@ -413,6 +420,7 @@
 			files = (
 				EE6F93011A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */,
 				EE6F93031A82F39400286DC7 /* SSKMathUtils.mm in Sources */,
+				EED8E5A51A881D79001C8F59 /* PPPlayer.m in Sources */,
 				EE6F92FF1A82F39400286DC7 /* SSKScene.m in Sources */,
 				EE5575F01A5A16A700B87145 /* PPGameScene.m in Sources */,
 				41E430DF18B09E8600E1427D /* main.m in Sources */,

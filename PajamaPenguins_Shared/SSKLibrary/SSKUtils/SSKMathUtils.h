@@ -13,3 +13,7 @@
 SSK_INLINE CGFloat SKRandomFloatInRange(CGFloat min, CGFloat max) {
     return floorf(((double)arc4random() / ARC4RANDOM_MAX) * (max - min) + min);
 }
+
+SSK_INLINE CGFloat SKDegreesToRadians(CGFloat degrees) {
+    return M_PI/(180/-degrees);
+}

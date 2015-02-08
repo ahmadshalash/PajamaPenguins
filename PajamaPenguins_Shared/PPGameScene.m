@@ -5,8 +5,10 @@
 //  Copyright (c) 2015 Skye Freeman. All rights reserved.
 
 #import "PPGameScene.h"
+#import "PPPlayer.h"
 #import "SSKColor+Additions.h"
 #import "SSKButton.h"
+#import "SSKMathUtils.h"
 #import "SSKGraphicsUtils.h"
 
 typedef enum {
@@ -16,14 +18,15 @@ typedef enum {
 
 typedef enum {
     backgroundLayer = 0,
-    playerLayer,
+    gameLayer,
     menuLayer,
 }Layers;
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
+@property (nonatomic) PPPlayer *player;
 
-@property (nonatomic) SKNode *playerLayerNode;
+@property (nonatomic) SKNode *gameLayerNode;
 @property (nonatomic) SKNode *menuLayerNode;
 @end
 
@@ -45,7 +48,7 @@ typedef enum {
     self.backgroundColor = SKColorWithRGB(6, 220, 220);
 
     [self createBackgroundLayer];
-    [self createPlayerLayer];
+    [self createGameLayer];
     [self createMenuLayer];
 }
 
@@ -62,7 +65,6 @@ typedef enum {
     SKLabelNode *startLabel = [self createNewLabelWithText:@"Tap to start!" withFontSize:30];
     [startLabel setPosition:CGPointMake(self.size.width/2, self.size.height/6)];
     [self.menuLayerNode addChild:startLabel];
-    
 
     SKSpriteNode *startIcon = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:17]];
     [startIcon setScale:5];
@@ -73,48 +75,32 @@ typedef enum {
 - (void)createBackgroundLayer {
 }
 
-- (void)createPlayerLayer {
-    self.playerLayerNode = [SKNode node];
-    [self.playerLayerNode setZPosition:playerLayer];
-    [self.playerLayerNode setName:@"playerLayer"];
-    [self addChild:self.playerLayerNode];
+- (void)createGameLayer {
+    self.gameLayerNode = [SKNode node];
+    [self.gameLayerNode setName:@"gameLayer"];
+    [self.gameLayerNode setZPosition:gameLayer];
+    [self addChild:self.gameLayerNode];
     
-    SKSpriteNode *platform = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:1]];
-    [platform setScale:10];
-    [platform setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
-    [platform setName:@"platform"];
-    [self.playerLayerNode addChild:platform];
-    
-    SKSpriteNode *player = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:0]];
-    [player setScale:5];
-    [player setPosition:CGPointMake(platform.position.x, platform.position.y + player.size.height)];
-    [player setName:@"player"];
-    [player setZPosition:playerLayer];
-    [self.playerLayerNode addChild:player];
+    self.player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
+                                         atPosition:CGPointMake(self.size.width/4, self.size.height/2)];
+    [self.player setScale:4];
+    [self.player setName:@"player"];
+    [self.player setZRotation:SKDegreesToRadians(90)];
+    [self.gameLayerNode addChild:self.player];
 }
 
 #pragma mark - Initial scene animations
 - (void)startSceneAnimations {
     //Slight Wait to prevent initial animation glitchyness
     [self runAction:[SKAction waitForDuration:.5] completion:^{
-        [self.playerLayerNode runAction:[SKAction repeatActionForever:[self floatAction]] withKey:@"float"];
+        [self.gameLayerNode runAction:[SKAction repeatActionForever:[self floatAction]] withKey:@"float"];
     }];
 }
 
 #pragma mark - Game Start
 - (void)prepareGameStart {
-    CGFloat moveTime = 1;
-    
-    SKNode *playerLayerNode = [self childNodeWithName:@"playerLayer"];
-    [playerLayerNode removeAllActions];
-    
-    SKNode *player = [self.playerLayerNode childNodeWithName:@"player"];
-    [player runAction:[SKAction moveTo:CGPointMake(self.size.width/4, player.position.y) duration:moveTime]];
-    
-    SKNode *platform = [self.playerLayerNode childNodeWithName:@"platform"];
-    [platform runAction:[SKAction moveTo:CGPointMake(-self.size.width/4, platform.position.y) duration:moveTime*3] completion:^{
-        [platform removeFromParent];
-    }];
+    SKNode *gameLayer = [self childNodeWithName:@"gameLayer"];
+    [gameLayer removeAllActions];
     
     SKNode *menu = [self childNodeWithName:@"menu"];
     [menu runAction:[SKAction fadeOutWithDuration:.5]];
