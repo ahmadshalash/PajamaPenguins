@@ -8,7 +8,6 @@
 #import "PPPlayer.h"
 #import "SSKColor+Additions.h"
 #import "SSKButton.h"
-#import "SSKMathUtils.h"
 #import "SSKGraphicsUtils.h"
 
 typedef enum {
@@ -28,6 +27,8 @@ typedef enum {
 
 @property (nonatomic) SKNode *gameLayerNode;
 @property (nonatomic) SKNode *menuLayerNode;
+
+@property (nonatomic) NSTimeInterval lastUpdateTime;
 @end
 
 @implementation PPGameScene
@@ -38,6 +39,8 @@ typedef enum {
 
 - (void)didMoveToView:(SKView *)view {
     self.gameState = MainMenu;
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.scene.frame];
+    [self.physicsWorld setGravity:CGVectorMake(0, 9.8)];
     
     [self createScene];
     [self startSceneAnimations];
@@ -85,16 +88,12 @@ typedef enum {
                                          atPosition:CGPointMake(self.size.width/4, self.size.height/2)];
     [self.player setScale:4];
     [self.player setName:@"player"];
-    [self.player setZRotation:SKDegreesToRadians(90)];
+    [self.player setZRotation:90];
     [self.gameLayerNode addChild:self.player];
 }
 
 #pragma mark - Initial scene animations
 - (void)startSceneAnimations {
-    //Slight Wait to prevent initial animation glitchyness
-    [self runAction:[SKAction waitForDuration:.5] completion:^{
-        [self.gameLayerNode runAction:[SKAction repeatActionForever:[self floatAction]] withKey:@"float"];
-    }];
 }
 
 #pragma mark - Game Start
@@ -139,16 +138,22 @@ typedef enum {
     if (self.gameState == MainMenu) {
         [self prepareGameStart];
     }
+    
+    if (self.gameState == Playing) {
+        [self.player setPlayerShouldDive:YES];
+    }
 }
 
 - (void)interactionMovedAtPosition:(CGPoint)position {
 }
 
 - (void)interactionEndedAtPosition:(CGPoint)position {
+    [self.player setPlayerShouldDive:NO];
 }
 
 #pragma mark - Update
-- (void)update:(CFTimeInterval)currentTime {
+- (void)update:(NSTimeInterval)currentTime {
+    [self.player update:currentTime];
 }
 
 #pragma mark - Loading Assets

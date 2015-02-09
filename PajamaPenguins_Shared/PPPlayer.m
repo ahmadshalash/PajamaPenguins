@@ -15,13 +15,26 @@
     if (self) {
         self.position = position;
         self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:texture.size.width/2];
-        [self.physicsBody setAffectedByGravity:NO];
+        [self.physicsBody setAffectedByGravity:YES];
     }
     return self;
 }
 
 - (void)update:(NSTimeInterval)dt {
+    [self setZRotation:(M_PI * self.physicsBody.velocity.dy * .0003) + SSKDegreesToRadians(90)];
     
+    if (_playerShouldDive) {
+        [self.physicsBody applyImpulse:CGVectorMake(0, _yVelocity)];
+        
+        _yVelocity -= .05;
+        if (_yVelocity <= -.7) {
+            _yVelocity = -.7;
+        }
+    }
+
+    if (!_playerShouldDive) {
+        _yVelocity = 0;
+    }
 }
 
 @end

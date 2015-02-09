@@ -10,8 +10,12 @@
 
 @interface PPPlayer : SKSpriteNode
 
+@property (nonatomic) BOOL playerShouldDive;
+@property (nonatomic) CGFloat yVelocity;
+
 - (instancetype)initWithTexture:(SKTexture *)texture atPosition:(CGPoint)position;
 
 - (void)update:(NSTimeInterval)dt;
+
 
 @end
