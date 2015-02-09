@@ -21,7 +21,7 @@
 
 - (void)update:(NSTimeInterval)dt {
     [self setZRotation:(M_PI * self.physicsBody.velocity.dy * .00025) + SSKDegreesToRadians(90)];
-
+ 
     //Clamp rotation between 45 and 135 degrees
     if (self.zRotation >= SSKDegreesToRadians(45)) {
         [self setZRotation:SSKDegreesToRadians(45)];
@@ -34,13 +34,14 @@
     if (_playerShouldDive) {
         [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy + _yVelocity)];
         
-        _yVelocity -= 2;
-        if (_yVelocity <= -40) {
-            _yVelocity = -40;
+        _yVelocity -= .5;
+        if (_yVelocity <= -10) {
+            _yVelocity = -10;
         }
     } else {
         _yVelocity = 0;
     }
+    NSLog(@"%fl",_yVelocity);
 }
 
 @end

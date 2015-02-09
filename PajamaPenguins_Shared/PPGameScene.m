@@ -21,8 +21,8 @@ typedef enum {
     menuLayer,
 }Layers;
 
-CGFloat const kAirGravityStrength = -7;
-CGFloat const kWaterGravityStrength = 12;
+CGFloat const kAirGravityStrength = -3;
+CGFloat const kWaterGravityStrength = 6;
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
@@ -86,7 +86,7 @@ CGFloat const kWaterGravityStrength = 12;
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
                                          atPosition:CGPointMake(self.size.width/4, self.size.height/2)];
-    [player setScale:4];
+    [player setScale:2];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [self.gameLayerNode addChild:player];
