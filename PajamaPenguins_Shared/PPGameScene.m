@@ -51,6 +51,7 @@ CGFloat const kEdgePadding = 50;
 #pragma mark - Creating scene layers
 - (void)createScene {
     self.backgroundColor = SSKColorWithRGB(6, 220, 220);
+    self.anchorPoint = CGPointMake(0.5, 0.5);
 
     [self createWorld];
     [self createMenu];
@@ -62,24 +63,30 @@ CGFloat const kEdgePadding = 50;
     [self addChild:self.worldNode];
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
-                                              atPosition:CGPointMake(self.size.width/4, self.size.height/2)];
+                                              atPosition:CGPointMake(-self.size.width/4, 0)];
     [player setScale:2];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
     [self.worldNode addChild:player];
     
-    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 1.5, self.size.height/2 * 1.5)];
-    [water setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
+    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 2, self.size.height)];
     [water setAnchorPoint:CGPointMake(0.5, 1)];
     [water setAlpha:0.5];
     [water setName:@"water"];
     [water setZPosition:foregroundLayer];
     [self.worldNode addChild:water];
     
-    //World boundaries
-    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:
-                        CGRectMake(-self.size.width/2, -self.size.height/2, self.size.width*2, self.size.height*2)];
+    //Camera
+    SKNode *camera = [SKNode node];
+    [camera setName:@"camera"];
+    [self.worldNode addChild:camera];
+    
+    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width*2, self.size.height*2)];
+    boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
+    [boundary.physicsBody setFriction:0];
+    [boundary.physicsBody setRestitution:0];
+    [self.worldNode addChild:boundary];
 }
 
 - (void)createMenu {
@@ -89,11 +96,11 @@ CGFloat const kEdgePadding = 50;
     [self addChild:self.menuNode];
     
     SKLabelNode *titleLabel = [self createNewLabelWithText:@"Pajama Penguins" withFontSize:50];
-    [titleLabel setPosition:CGPointMake(self.size.width/2, self.size.height/6 * 5)];
+    [titleLabel setPosition:CGPointMake(0, self.size.height/6 * 2)];
     [self.menuNode addChild:titleLabel];
     
     SKLabelNode *startLabel = [self createNewLabelWithText:@"Tap to start!" withFontSize:30];
-    [startLabel setPosition:CGPointMake(self.size.width/2, self.size.height/6)];
+    [startLabel setPosition:CGPointMake(0, -self.size.height/6 * 2)];
     [self.menuNode addChild:startLabel];
 
     SKSpriteNode *startIcon = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:17]];
@@ -108,26 +115,14 @@ CGFloat const kEdgePadding = 50;
 
 #pragma mark - Game Start
 - (void)prepareGameStart {
-    SKNode *menu = [self childNodeWithName:@"menu"];
-    [menu runAction:[SKAction fadeOutWithDuration:.5]];
-    
+    [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
+
     self.gameState = Playing;
 }
 
 #pragma mark - Player
 - (void)updatePlayer:(NSTimeInterval)dt {
-    SKNode *player = (PPPlayer*)[self.worldNode childNodeWithName:@"player"];
-    [(PPPlayer*)player update:dt];
-}
-
-- (void)checkPlayerBoundaries {
-    SKNode *player = (PPPlayer*)[self.worldNode childNodeWithName:@"player"];
-    
-    if ((player.position.y > self.size.height/8 * 7) ||
-        (player.position.y < self.size.height/8))
-    {
-        [player.physicsBody setVelocity:CGVectorMake(0, 0)];
-    }
+    [(PPPlayer*)[self.worldNode childNodeWithName:@"player"] update:dt];
 }
 
 #pragma mark - Actions
@@ -149,10 +144,8 @@ CGFloat const kEdgePadding = 50;
     return label;
 }
 
-- (SKAction*)moveTo:(CGPoint)point duration:(NSTimeInterval)duration {
-    SKAction *move = [SKAction moveTo:point duration:duration];
-    [move setTimingMode:SKActionTimingEaseInEaseOut];
-    return move;
+- (void)runAction:(SKAction*)action onNode:(SKNode*)node {
+    [node runAction:action];
 }
 
 #pragma mark - Input
@@ -188,13 +181,10 @@ CGFloat const kEdgePadding = 50;
 }
 
 - (void)didFinishUpdate {
-//    SKNode *player = [self.worldNode childNodeWithName:@"player"];
-//    if ((player.position.y >= self.size.height - kEdgePadding) || player.position.y <= kEdgePadding) {
-//        [self.worldNode setPosition:CGPointMake(self.worldNode.position.x, self.worldNode.position.y + (self.size.height/2 - player.position.y))];
-//    }
+    [self followNode:[self.worldNode childNodeWithName:@"player"]];
 }
 
-#pragma mark - Updates
+#pragma mark - Updated Per Frame
 - (void)updateGravity {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
     SKNode *water = [self.worldNode childNodeWithName:@"water"];
@@ -204,6 +194,12 @@ CGFloat const kEdgePadding = 50;
     } else {
         [self.physicsWorld setGravity:CGVectorMake(0, kWaterGravityStrength)];
     }
+}
+
+- (void)followNode:(SKNode*)node {
+    CGPoint nodePositionInScene = [node.scene convertPoint:node.position fromNode:node.parent];
+    NSLog(@"(%fl,%fl)",nodePositionInScene.x,nodePositionInScene.y);
+    node.parent.position = CGPointMake(0, node.parent.position.y - nodePositionInScene.y);
 }
 
 #pragma mark - Loading Assets
