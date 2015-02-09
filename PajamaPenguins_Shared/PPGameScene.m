@@ -86,7 +86,7 @@ CGFloat const kWaterGravityStrength = 6;
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
                                          atPosition:CGPointMake(self.size.width/4, self.size.height/2)];
-    [player setScale:2];
+    [player setScale:4];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [self.gameLayerNode addChild:player];
@@ -160,7 +160,6 @@ CGFloat const kWaterGravityStrength = 6;
 - (void)interactionBeganAtPosition:(CGPoint)position {
     if (self.gameState == MainMenu) {
         [self prepareGameStart];
-
     }
     
     if (self.gameState == Playing) {

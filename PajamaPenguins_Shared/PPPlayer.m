@@ -8,6 +8,8 @@
 
 #import "PPPlayer.h"
 
+#define veloCap -30.0
+
 @implementation PPPlayer
 
 - (instancetype)initWithTexture:(SKTexture *)texture atPosition:(CGPoint)position {
@@ -34,9 +36,9 @@
     if (_playerShouldDive) {
         [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy + _yVelocity)];
         
-        _yVelocity -= .5;
-        if (_yVelocity <= -10) {
-            _yVelocity = -10;
+        _yVelocity -= 1;
+        if (_yVelocity <= veloCap) {
+            _yVelocity = veloCap;
         }
     } else {
         _yVelocity = 0;
