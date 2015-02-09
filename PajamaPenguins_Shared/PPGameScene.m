@@ -21,9 +21,11 @@ typedef enum {
     menuLayer,
 }Layers;
 
+CGFloat const kAirGravityStrength = -7;
+CGFloat const kWaterGravityStrength = 12;
+
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
-@property (nonatomic) PPPlayer *player;
 
 @property (nonatomic) SKNode *gameLayerNode;
 @property (nonatomic) SKNode *menuLayerNode;
@@ -39,8 +41,6 @@ typedef enum {
 
 - (void)didMoveToView:(SKView *)view {
     self.gameState = MainMenu;
-    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.scene.frame];
-    [self.physicsWorld setGravity:CGVectorMake(0, 9.8)];
     
     [self createScene];
     [self startSceneAnimations];
@@ -48,7 +48,7 @@ typedef enum {
 
 #pragma mark - Creating scene layers
 - (void)createScene {
-    self.backgroundColor = SKColorWithRGB(6, 220, 220);
+    self.backgroundColor = SSKColorWithRGB(6, 220, 220);
 
     [self createBackgroundLayer];
     [self createGameLayer];
@@ -84,12 +84,18 @@ typedef enum {
     [self.gameLayerNode setZPosition:gameLayer];
     [self addChild:self.gameLayerNode];
     
-    self.player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
+    PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
                                          atPosition:CGPointMake(self.size.width/4, self.size.height/2)];
-    [self.player setScale:4];
-    [self.player setName:@"player"];
-    [self.player setZRotation:90];
-    [self.gameLayerNode addChild:self.player];
+    [player setScale:4];
+    [player setName:@"player"];
+    [player setZRotation:SSKDegreesToRadians(90)];
+    [self.gameLayerNode addChild:player];
+    
+    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width, self.size.height/2)];
+    [water setPosition:CGPointMake(self.size.width/2, self.size.height/4)];
+    [water setAlpha:0.5];
+    [water setZPosition:1];
+    [self.gameLayerNode addChild:water];
 }
 
 #pragma mark - Initial scene animations
@@ -105,6 +111,22 @@ typedef enum {
     [menu runAction:[SKAction fadeOutWithDuration:.5]];
     
     self.gameState = Playing;
+}
+
+#pragma mark - Player
+- (void)updatePlayer:(NSTimeInterval)dt {
+    SKNode *player = (PPPlayer*)[self.gameLayerNode childNodeWithName:@"player"];
+    [(PPPlayer*)player update:dt];
+}
+
+- (void)checkPlayerBoundaries {
+    SKNode *player = (PPPlayer*)[self.gameLayerNode childNodeWithName:@"player"];
+    
+    if ((player.position.y > self.size.height/8 * 7) ||
+        (player.position.y < self.size.height/8))
+    {
+        [player.physicsBody setVelocity:CGVectorMake(0, 0)];
+    }
 }
 
 #pragma mark - Button Methods
@@ -133,27 +155,42 @@ typedef enum {
     [move setTimingMode:SKActionTimingEaseInEaseOut];
     return move;
 }
-#pragma mark - Screen input interactions
+
+#pragma mark - Input
 - (void)interactionBeganAtPosition:(CGPoint)position {
     if (self.gameState == MainMenu) {
         [self prepareGameStart];
+
     }
     
     if (self.gameState == Playing) {
-        [self.player setPlayerShouldDive:YES];
+        SKNode *player = [self.gameLayerNode childNodeWithName:@"player"];
+        [(PPPlayer*)player setPlayerShouldDive:YES];
     }
+}
+
+- (void)interactionEndedAtPosition:(CGPoint)position {
+    SKNode *player = [self.gameLayerNode childNodeWithName:@"player"];
+    [(PPPlayer*)player setPlayerShouldDive:NO];
 }
 
 - (void)interactionMovedAtPosition:(CGPoint)position {
 }
 
-- (void)interactionEndedAtPosition:(CGPoint)position {
-    [self.player setPlayerShouldDive:NO];
-}
-
 #pragma mark - Update
 - (void)update:(NSTimeInterval)currentTime {
-    [self.player update:currentTime];
+    [self updateGravity];
+    [self updatePlayer:currentTime];
+}
+
+- (void)updateGravity {
+    SKNode *player = [self.gameLayerNode childNodeWithName:@"player"];
+
+    if (player.position.y > self.size.height/2) {
+        [self.physicsWorld setGravity:CGVectorMake(0, kAirGravityStrength)];
+    } else {
+        [self.physicsWorld setGravity:CGVectorMake(0, kWaterGravityStrength)];
+    }
 }
 
 #pragma mark - Loading Assets
