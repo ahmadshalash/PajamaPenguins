@@ -43,7 +43,6 @@
     } else {
         _yVelocity = 0;
     }
-    NSLog(@"%fl",_yVelocity);
 }
 
 @end
