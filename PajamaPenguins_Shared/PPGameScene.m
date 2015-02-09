@@ -8,7 +8,6 @@
 #import "PPPlayer.h"
 #import "SSKColor+Additions.h"
 #import "SSKButton.h"
-#import "SSKCamera.h"
 #import "SSKGraphicsUtils.h"
 
 typedef enum {
@@ -54,7 +53,6 @@ CGFloat const kEdgePadding = 50;
     self.backgroundColor = SSKColorWithRGB(6, 220, 220);
 
     [self createWorld];
-    [self createPlayer];
     [self createMenu];
 }
 
@@ -63,6 +61,14 @@ CGFloat const kEdgePadding = 50;
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
     
+    PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
+                                              atPosition:CGPointMake(self.size.width/4, self.size.height/2)];
+    [player setScale:2];
+    [player setName:@"player"];
+    [player setZRotation:SSKDegreesToRadians(90)];
+    [player setZPosition:playerLayer];
+    [self.worldNode addChild:player];
+    
     SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 1.5, self.size.height/2 * 1.5)];
     [water setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
     [water setAnchorPoint:CGPointMake(0.5, 1)];
@@ -70,6 +76,10 @@ CGFloat const kEdgePadding = 50;
     [water setName:@"water"];
     [water setZPosition:foregroundLayer];
     [self.worldNode addChild:water];
+    
+    //World boundaries
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:
+                        CGRectMake(-self.size.width/2, -self.size.height/2, self.size.width*2, self.size.height*2)];
 }
 
 - (void)createMenu {
@@ -92,15 +102,6 @@ CGFloat const kEdgePadding = 50;
     [self.menuNode addChild:startIcon];
 }
 
-- (void)createPlayer {
-    PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
-                                              atPosition:CGPointMake(self.size.width/4, self.size.height/2)];
-    [player setScale:4];
-    [player setName:@"player"];
-    [player setZRotation:SSKDegreesToRadians(90)];
-    [player setZPosition:playerLayer];
-    [self addChild:player];
-}
 #pragma mark - Initial scene animations
 - (void)startSceneAnimations {
 }
@@ -115,12 +116,12 @@ CGFloat const kEdgePadding = 50;
 
 #pragma mark - Player
 - (void)updatePlayer:(NSTimeInterval)dt {
-    SKNode *player = (PPPlayer*)[self childNodeWithName:@"player"];
+    SKNode *player = (PPPlayer*)[self.worldNode childNodeWithName:@"player"];
     [(PPPlayer*)player update:dt];
 }
 
 - (void)checkPlayerBoundaries {
-    SKNode *player = (PPPlayer*)[self childNodeWithName:@"player"];
+    SKNode *player = (PPPlayer*)[self.worldNode childNodeWithName:@"player"];
     
     if ((player.position.y > self.size.height/8 * 7) ||
         (player.position.y < self.size.height/8))
@@ -161,13 +162,13 @@ CGFloat const kEdgePadding = 50;
     }
     
     if (self.gameState == Playing) {
-        SKNode *player = [self childNodeWithName:@"player"];
+        SKNode *player = [self.worldNode childNodeWithName:@"player"];
         [(PPPlayer*)player setPlayerShouldDive:YES];
     }
 }
 
 - (void)interactionEndedAtPosition:(CGPoint)position {
-    SKNode *player = [self childNodeWithName:@"player"];
+    SKNode *player = [self.worldNode childNodeWithName:@"player"];
     [(PPPlayer*)player setPlayerShouldDive:NO];
 }
 
@@ -187,17 +188,18 @@ CGFloat const kEdgePadding = 50;
 }
 
 - (void)didFinishUpdate {
-    SKNode *player = [self childNodeWithName:@"player"];
-    if (player.position.y >= self.size.height - 50) {
-        
-    }
+//    SKNode *player = [self.worldNode childNodeWithName:@"player"];
+//    if ((player.position.y >= self.size.height - kEdgePadding) || player.position.y <= kEdgePadding) {
+//        [self.worldNode setPosition:CGPointMake(self.worldNode.position.x, self.worldNode.position.y + (self.size.height/2 - player.position.y))];
+//    }
 }
 
 #pragma mark - Updates
 - (void)updateGravity {
-    SKNode *player = [self childNodeWithName:@"player"];
+    SKNode *player = [self.worldNode childNodeWithName:@"player"];
+    SKNode *water = [self.worldNode childNodeWithName:@"water"];
     
-    if (player.position.y > self.size.height/2) {
+    if (player.position.y > water.position.y) {
         [self.physicsWorld setGravity:CGVectorMake(0, kAirGravityStrength)];
     } else {
         [self.physicsWorld setGravity:CGVectorMake(0, kWaterGravityStrength)];
