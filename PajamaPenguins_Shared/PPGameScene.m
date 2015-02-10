@@ -25,6 +25,7 @@ typedef enum {
 CGFloat const kAirGravityStrength = -3;
 CGFloat const kWaterGravityStrength = 6;
 CGFloat const kEdgePadding = 50;
+CGFloat const kWorldScaleCap = 0.5;
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
@@ -51,7 +52,7 @@ CGFloat const kEdgePadding = 50;
 #pragma mark - Creating scene layers
 - (void)createScene {
     self.backgroundColor = SSKColorWithRGB(6, 220, 220);
-//    self.anchorPoint = CGPointMake(0.5, 0.5);
+    self.anchorPoint = CGPointMake(0.0, 0.0);
 
     [self createWorld];
     [self createMenu];
@@ -70,7 +71,7 @@ CGFloat const kEdgePadding = 50;
     [player setZPosition:playerLayer];
     [self.worldNode addChild:player];
     
-    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 2, self.size.height/2)];
+    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 2, self.size.height)];
     [water setAnchorPoint:CGPointMake(.5, 1)];
     [water setPosition:CGPointMake(self.size.width, self.size.height/2)];
     [water setAlpha:0.5];
@@ -78,10 +79,11 @@ CGFloat const kEdgePadding = 50;
     [water setZPosition:foregroundLayer];
     [self.worldNode addChild:water];
     
-//    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width*2, self.size.height*2)];
+//    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(water.size.width, self.size.height * 3)];
 //    boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
 //    [boundary.physicsBody setFriction:0];
 //    [boundary.physicsBody setRestitution:0];
+//    [boundary setPosition:CGPointMake(self.size.width/2, boundary.size.height)];
 //    [self.worldNode addChild:boundary];
 }
 
@@ -193,17 +195,18 @@ CGFloat const kEdgePadding = 50;
 
 - (void)updateWorldNodeZoom {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
-    CGFloat boundary = self.size.height/5 * 3;
-    CGFloat maxDistance = self.size.height - boundary;
-    CGFloat currentDistance = fabsf(player.position.y - boundary);
-    CGFloat ratio = (currentDistance/maxDistance) * 0.15;
-    CGFloat scaleCap = 0.5;
+    CGFloat topBoundary = self.size.height/5 * 3;
+//    CGFloat bottomBoundary = self.size.height - topBoundary;
+    CGFloat maxDistance = self.size.height - topBoundary;
+    CGFloat currentDistance = fabsf(player.position.y - topBoundary);
+    CGFloat ratio = fabsf((currentDistance/maxDistance) * 0.15);
     
-    if (player.position.y > boundary) {
+
+    if (player.position.y > topBoundary)
+    {
         [self.worldNode setScale:1 - ratio];
-        NSLog(@"Current Scale:%fl ",1-ratio);
-        if (self.worldNode.xScale <= scaleCap) {
-            [self.worldNode setScale:scaleCap];
+        if (self.worldNode.xScale <= kWorldScaleCap) {
+            [self.worldNode setScale:kWorldScaleCap];
         }
     } else {
         [self.worldNode setScale:1];
