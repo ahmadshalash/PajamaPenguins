@@ -193,14 +193,15 @@ CGFloat const kEdgePadding = 50;
 
 - (void)updateWorldNodeZoom {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
-    CGFloat boundary = self.size.height/4;
+    CGFloat boundary = self.size.height/5 * 3;
     CGFloat maxDistance = self.size.height - boundary;
     CGFloat currentDistance = fabsf(player.position.y - boundary);
-    CGFloat ratio = (currentDistance/maxDistance)/2;
-    CGFloat scaleCap = 0.50;
+    CGFloat ratio = (currentDistance/maxDistance) * 0.15;
+    CGFloat scaleCap = 0.5;
     
     if (player.position.y > boundary) {
         [self.worldNode setScale:1 - ratio];
+        NSLog(@"Current Scale:%fl ",1-ratio);
         if (self.worldNode.xScale <= scaleCap) {
             [self.worldNode setScale:scaleCap];
         }
