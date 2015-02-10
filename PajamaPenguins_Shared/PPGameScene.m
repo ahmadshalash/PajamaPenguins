@@ -51,7 +51,7 @@ CGFloat const kEdgePadding = 50;
 #pragma mark - Creating scene layers
 - (void)createScene {
     self.backgroundColor = SSKColorWithRGB(6, 220, 220);
-    self.anchorPoint = CGPointMake(0.5, 0.5);
+//    self.anchorPoint = CGPointMake(0.5, 0.5);
 
     [self createWorld];
     [self createMenu];
@@ -63,24 +63,20 @@ CGFloat const kEdgePadding = 50;
     [self addChild:self.worldNode];
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
-                                              atPosition:CGPointMake(-self.size.width/4, 0)];
+                                              atPosition:CGPointMake(self.size.width/4, self.size.height/2)];
     [player setScale:3];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
     [self.worldNode addChild:player];
     
-    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 2, self.size.height)];
-    [water setAnchorPoint:CGPointMake(0.5, 1)];
+    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 2, self.size.height/2)];
+    [water setAnchorPoint:CGPointMake(.5, 1)];
+    [water setPosition:CGPointMake(self.size.width, self.size.height/2)];
     [water setAlpha:0.5];
     [water setName:@"water"];
     [water setZPosition:foregroundLayer];
     [self.worldNode addChild:water];
-    
-    //Camera
-    SKNode *camera = [SKNode node];
-    [camera setName:@"camera"];
-    [self.worldNode addChild:camera];
     
 //    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width*2, self.size.height*2)];
 //    boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
@@ -179,11 +175,8 @@ CGFloat const kEdgePadding = 50;
 
 - (void)didSimulatePhysics {
     [self updateWorldNodeZoom];
-    [self updateWorldNodeZoomOffset];
 }
-
 - (void)didFinishUpdate {
-    [self followNode:[self.worldNode childNodeWithName:@"player"]];
 }
 
 #pragma mark - Updated Per Frame
@@ -215,30 +208,6 @@ CGFloat const kEdgePadding = 50;
         [self.worldNode setScale:1];
     }
 }
-
-- (void)updateWorldNodeZoomOffset {
-    SKNode *world = [self childNodeWithName:@"world"];
-    [world setPosition:CGPointMake(0, world.position.y)];
-}
-
-- (void)followNode:(SKNode*)node {
-    CGPoint nodePositionInScene = [node.scene convertPoint:node.position fromNode:node.parent];
-    CGFloat offset = node.parent.position.y - nodePositionInScene.y;
-    
-    //Move camera if node is at upper bounds
-    if (nodePositionInScene.y >= self.size.height/4) {
-        node.parent.position = CGPointMake(0, offset + self.size.height/4);
-    }
-    //Move camera if node is at lower bounds (ONLY if node is above water)
-    else if (nodePositionInScene.y <= -self.size.height/4 && node.position.y > -self.size.height/4) {
-        node.parent.position = CGPointMake(0, offset - self.size.height/4);
-    }
-    //Clamp camera at bottom
-    else if (nodePositionInScene.y <= -self.size.height/4 && node.position.y < -self.size.height/4) {
-        node.parent.position = CGPointMake(0, 0);
-    }
-}
-
 
 #pragma mark - Loading Assets
 + (void)loadSceneAssets {
