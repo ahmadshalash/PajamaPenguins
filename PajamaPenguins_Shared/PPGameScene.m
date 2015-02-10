@@ -82,11 +82,11 @@ CGFloat const kEdgePadding = 50;
     [camera setName:@"camera"];
     [self.worldNode addChild:camera];
     
-    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width*2, self.size.height*2)];
-    boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
-    [boundary.physicsBody setFriction:0];
-    [boundary.physicsBody setRestitution:0];
-    [self.worldNode addChild:boundary];
+//    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width*2, self.size.height*2)];
+//    boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
+//    [boundary.physicsBody setFriction:0];
+//    [boundary.physicsBody setRestitution:0];
+//    [self.worldNode addChild:boundary];
 }
 
 - (void)createMenu {
@@ -178,6 +178,7 @@ CGFloat const kEdgePadding = 50;
 }
 
 - (void)didSimulatePhysics {
+    [self resizeWorldNode];
 }
 
 - (void)didFinishUpdate {
@@ -198,20 +199,27 @@ CGFloat const kEdgePadding = 50;
 
 - (void)resizeWorldNode {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
+    NSLog(@"height in node: %fl",player.position.y);
+    if (player.position.y > self.size.height/3) {
+    }
 }
 
 - (void)followNode:(SKNode*)node {
     CGPoint nodePositionInScene = [node.scene convertPoint:node.position fromNode:node.parent];
     CGFloat offset = node.parent.position.y - nodePositionInScene.y;
     
-    if (nodePositionInScene.y >= self.size.height/3) {
-        node.parent.position = CGPointMake(0, offset + self.size.height/3);
+    //Move camera if node is at upper bounds
+    if (nodePositionInScene.y >= self.size.height/4) {
+        node.parent.position = CGPointMake(0, offset + self.size.height/4);
     }
-    if (nodePositionInScene.y <= -self.size.height/3) {
-        node.parent.position = CGPointMake(0, offset - self.size.height/3);
+    //Move camera if node is at lower bounds (ONLY if node is above water)
+    else if (nodePositionInScene.y <= -self.size.height/4 && node.position.y > -self.size.height/4) {
+        node.parent.position = CGPointMake(0, offset - self.size.height/4);
     }
-    
-    NSLog(@"Distance from center: %fl",offset);
+    //Clamp camera at bottom
+    else if (nodePositionInScene.y <= -self.size.height/4 && node.position.y < -self.size.height/4) {
+        node.parent.position = CGPointMake(0, 0);
+    }
 }
 
 
