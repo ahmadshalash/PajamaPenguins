@@ -25,23 +25,23 @@
     [self setZRotation:(M_PI * self.physicsBody.velocity.dy * .00025) + SSKDegreesToRadians(90)];
  
     //Clamp rotation between 45 and 135 degrees
-    if (self.zRotation >= SSKDegreesToRadians(45)) {
-        [self setZRotation:SSKDegreesToRadians(45)];
+    if (self.zRotation >= SSKDegreesToRadians(30)) {
+        [self setZRotation:SSKDegreesToRadians(30)];
     }
     
-    if (self.zRotation <= SSKDegreesToRadians(135)) {
-        [self setZRotation:SSKDegreesToRadians(135)];
+    if (self.zRotation <= SSKDegreesToRadians(150)) {
+        [self setZRotation:SSKDegreesToRadians(150)];
     }
 
     if (_playerShouldDive) {
-        [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy + _yVelocity)];
+        [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy + _currentVelocity)];
         
-        _yVelocity -= 1;
-        if (_yVelocity <= veloCap) {
-            _yVelocity = veloCap;
+        _currentVelocity -= 1;
+        if (_currentVelocity <= veloCap) {
+            _currentVelocity = veloCap;
         }
     } else {
-        _yVelocity = 0;
+        _currentVelocity = 0;
     }
 }
 

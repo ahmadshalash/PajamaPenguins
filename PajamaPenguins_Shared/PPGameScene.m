@@ -64,7 +64,7 @@ CGFloat const kEdgePadding = 50;
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
                                               atPosition:CGPointMake(-self.size.width/4, 0)];
-    [player setScale:2];
+    [player setScale:3];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
@@ -196,11 +196,24 @@ CGFloat const kEdgePadding = 50;
     }
 }
 
+- (void)resizeWorldNode {
+    SKNode *player = [self.worldNode childNodeWithName:@"player"];
+}
+
 - (void)followNode:(SKNode*)node {
     CGPoint nodePositionInScene = [node.scene convertPoint:node.position fromNode:node.parent];
-    NSLog(@"(%fl,%fl)",nodePositionInScene.x,nodePositionInScene.y);
-    node.parent.position = CGPointMake(0, node.parent.position.y - nodePositionInScene.y);
+    CGFloat offset = node.parent.position.y - nodePositionInScene.y;
+    
+    if (nodePositionInScene.y >= self.size.height/3) {
+        node.parent.position = CGPointMake(0, offset + self.size.height/3);
+    }
+    if (nodePositionInScene.y <= -self.size.height/3) {
+        node.parent.position = CGPointMake(0, offset - self.size.height/3);
+    }
+    
+    NSLog(@"Distance from center: %fl",offset);
 }
+
 
 #pragma mark - Loading Assets
 + (void)loadSceneAssets {
