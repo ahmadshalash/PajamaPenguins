@@ -178,7 +178,8 @@ CGFloat const kEdgePadding = 50;
 }
 
 - (void)didSimulatePhysics {
-    [self resizeWorldNode];
+    [self updateWorldNodeZoom];
+    [self updateWorldNodeZoomOffset];
 }
 
 - (void)didFinishUpdate {
@@ -197,11 +198,27 @@ CGFloat const kEdgePadding = 50;
     }
 }
 
-- (void)resizeWorldNode {
+- (void)updateWorldNodeZoom {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
-    NSLog(@"height in node: %fl",player.position.y);
-    if (player.position.y > self.size.height/3) {
+    CGFloat boundary = self.size.height/4;
+    CGFloat maxDistance = self.size.height - boundary;
+    CGFloat currentDistance = fabsf(player.position.y - boundary);
+    CGFloat ratio = (currentDistance/maxDistance)/2;
+    CGFloat scaleCap = 0.50;
+    
+    if (player.position.y > boundary) {
+        [self.worldNode setScale:1 - ratio];
+        if (self.worldNode.xScale <= scaleCap) {
+            [self.worldNode setScale:scaleCap];
+        }
+    } else {
+        [self.worldNode setScale:1];
     }
+}
+
+- (void)updateWorldNodeZoomOffset {
+    SKNode *world = [self childNodeWithName:@"world"];
+    [world setPosition:CGPointMake(0, world.position.y)];
 }
 
 - (void)followNode:(SKNode*)node {

@@ -279,9 +279,9 @@
 				EE6F92F11A82F39400286DC7 /* SSKColor+Additions.h */,
 				EE6F92F21A82F39400286DC7 /* SSKGraphicsUtils.h */,
 				EE6F92F31A82F39400286DC7 /* SSKGraphicsUtils.m */,
-				EE6F92F41A82F39400286DC7 /* SSKMathUtils.h */,
 				EE6F92F61A82F39400286DC7 /* SSKPhysicsUtils.h */,
 				EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */,
+				EE6F92F41A82F39400286DC7 /* SSKMathUtils.h */,
 			);
 			path = SSKUtils;
 			sourceTree = "<group>";
