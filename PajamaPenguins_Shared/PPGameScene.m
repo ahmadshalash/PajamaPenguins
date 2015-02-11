@@ -25,7 +25,7 @@ typedef enum {
 CGFloat const kAirGravityStrength = -3;
 CGFloat const kWaterGravityStrength = 6;
 CGFloat const kEdgePadding = 50;
-CGFloat const kWorldScaleCap = 0.80;
+CGFloat const kWorldScaleCap = 0.55;
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
@@ -208,7 +208,7 @@ CGFloat const kWorldScaleCap = 0.80;
     CGFloat currentDistanceFromTop = SSKSubtractNumbers(player.position.y, topBoundary);
     CGFloat currentDistanceFromBottom = SSKSubtractNumbers(player.position.y, bottomBoundary);
 
-    CGFloat ratio = 0.15;
+    CGFloat ratio = 0.125;
     CGFloat topRatio = fabsf((currentDistanceFromTop/maxDistance) * ratio);
     CGFloat botRatio = fabsf((currentDistanceFromBottom/maxDistance) * ratio);
     
