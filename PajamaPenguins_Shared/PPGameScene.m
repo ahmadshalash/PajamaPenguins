@@ -25,7 +25,7 @@ typedef enum {
 CGFloat const kAirGravityStrength = -3;
 CGFloat const kWaterGravityStrength = 6;
 CGFloat const kEdgePadding = 50;
-CGFloat const kWorldScaleCap = 0.5;
+CGFloat const kWorldScaleCap = 0.80;
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
@@ -79,12 +79,11 @@ CGFloat const kWorldScaleCap = 0.5;
     [water setZPosition:foregroundLayer];
     [self.worldNode addChild:water];
     
-//    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(water.size.width, self.size.height * 3)];
-//    boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
-//    [boundary.physicsBody setFriction:0];
-//    [boundary.physicsBody setRestitution:0];
-//    [boundary setPosition:CGPointMake(self.size.width/2, boundary.size.height)];
-//    [self.worldNode addChild:boundary];
+    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(water.size.width, water.size.height - kEdgePadding)];
+    boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
+    [boundary.physicsBody setFriction:0];
+    [boundary.physicsBody setRestitution:0];
+    [self.worldNode addChild:boundary];
 }
 
 - (void)createMenu {
@@ -194,6 +193,11 @@ CGFloat const kWorldScaleCap = 0.5;
     }
 }
 
+/* 
+ 
+ @todo NEEDS TO BE DECOUPLED! (Extendable camera class?).
+ 
+ */
 - (void)updateWorldZoom {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
     
@@ -208,8 +212,6 @@ CGFloat const kWorldScaleCap = 0.5;
     CGFloat topRatio = fabsf((currentDistanceFromTop/maxDistance) * ratio);
     CGFloat botRatio = fabsf((currentDistanceFromBottom/maxDistance) * ratio);
     
-    NSLog(@"TopRatio:%fl, BottomRatio:%fl",topRatio,botRatio);
-    
     CGFloat distance = SSKDistanceBetweenPoints(CGPointZero, CGPointMake(self.size.width/2, self.size.height/2));
 
     CGFloat amtToMoveTop = distance*topRatio;
@@ -222,17 +224,17 @@ CGFloat const kWorldScaleCap = 0.5;
         
         if (self.worldNode.xScale <= kWorldScaleCap) {
             [self.worldNode setScale:kWorldScaleCap];
-            [self.worldNode setPosition:CGPointMake(-(distance/2)*kWorldScaleCap, -(distance/2)*kWorldScaleCap)];
+            [self.worldNode setPosition:CGPointMake(-(distance/2) * (1 - kWorldScaleCap), -(distance/2)*(1 - kWorldScaleCap))];
         }
     }
     
-    else if (player.position.y < bottomBoundary) {
+    else if (player.position.y <= bottomBoundary) {
         [self.worldNode setScale:1 - botRatio];
-        [self.worldNode setPosition:CGPointMake(-amtToMoveBottom/2, amtToMoveBottom/2)];
+        [self.worldNode setPosition:CGPointMake(-(amtToMoveBottom/2), amtToMoveBottom/2)];
         
         if (self.worldNode.xScale <= kWorldScaleCap) {
             [self.worldNode setScale:kWorldScaleCap];
-            [self.worldNode setPosition:CGPointMake(-(distance/2)*kWorldScaleCap, (distance/2)*kWorldScaleCap)];
+            [self.worldNode setPosition:CGPointMake(-(distance/2) * (1 - kWorldScaleCap), (distance/2) * (1 - kWorldScaleCap))];
         }
     }
     
@@ -240,6 +242,7 @@ CGFloat const kWorldScaleCap = 0.5;
         [self.worldNode setScale:1];
         [self.worldNode setPosition:CGPointZero];
     }
+    NSLog(@"%fl %fl",self.worldNode.position.x,self.worldNode.position.y);
 }
 
 - (void)updateWorldOffset {
