@@ -65,13 +65,13 @@ CGFloat const kWorldScaleCap = 0.5;
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
                                               atPosition:CGPointMake(-self.size.width/4, 0)];
-    [player setScale:1.5];
+    [player setScale:3];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
     [self.worldNode addChild:player];
     
-    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 2, self.size.height)];
+    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 3, self.size.height * 3)];
     [water setAnchorPoint:CGPointMake(.5, 1)];
     [water setPosition:CGPointMake(self.size.width/2, 0)];
     [water setAlpha:0.5];
@@ -196,24 +196,49 @@ CGFloat const kWorldScaleCap = 0.5;
 
 - (void)updateWorldZoom {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
+    
     CGFloat topBoundary = self.size.height/4;
-//    CGFloat bottomBoundary = self.size.height - topBoundary;
+    CGFloat bottomBoundary = -topBoundary;
+    
     CGFloat maxDistance = self.size.height/2 - topBoundary;
-    CGFloat currentDistance = fabsf(player.position.y - topBoundary);
-    CGFloat ratio = fabsf((currentDistance/maxDistance) * 0.15);
+    CGFloat currentDistanceFromTop = SSKSubtractNumbers(player.position.y, topBoundary);
+    CGFloat currentDistanceFromBottom = SSKSubtractNumbers(player.position.y, bottomBoundary);
+
+    CGFloat ratio = 0.15;
+    CGFloat topRatio = fabsf((currentDistanceFromTop/maxDistance) * ratio);
+    CGFloat botRatio = fabsf((currentDistanceFromBottom/maxDistance) * ratio);
     
-    CGFloat distance = SSKDistanceBetween(CGPointMake(0, 0), CGPointMake(self.size.width/2, self.size.height/2));
+    NSLog(@"TopRatio:%fl, BottomRatio:%fl",topRatio,botRatio);
     
-    NSLog(@"%fl",[self.worldNode childNodeWithName:@"water"].position.x);
+    CGFloat distance = SSKDistanceBetweenPoints(CGPointZero, CGPointMake(self.size.width/2, self.size.height/2));
+
+    CGFloat amtToMoveTop = distance*topRatio;
+    CGFloat amtToMoveBottom = distance*botRatio;
     
     if (player.position.y > topBoundary)
     {
-        [self.worldNode setScale:1 - ratio];
+        [self.worldNode setScale:1 - topRatio];
+        [self.worldNode setPosition:CGPointMake(-(amtToMoveTop/2), -(amtToMoveTop/2))];
+        
         if (self.worldNode.xScale <= kWorldScaleCap) {
             [self.worldNode setScale:kWorldScaleCap];
+            [self.worldNode setPosition:CGPointMake(-(distance/2)*kWorldScaleCap, -(distance/2)*kWorldScaleCap)];
         }
-    } else {
+    }
+    
+    else if (player.position.y < bottomBoundary) {
+        [self.worldNode setScale:1 - botRatio];
+        [self.worldNode setPosition:CGPointMake(-amtToMoveBottom/2, amtToMoveBottom/2)];
+        
+        if (self.worldNode.xScale <= kWorldScaleCap) {
+            [self.worldNode setScale:kWorldScaleCap];
+            [self.worldNode setPosition:CGPointMake(-(distance/2)*kWorldScaleCap, (distance/2)*kWorldScaleCap)];
+        }
+    }
+    
+    else {
         [self.worldNode setScale:1];
+        [self.worldNode setPosition:CGPointZero];
     }
 }
 

@@ -19,15 +19,15 @@ SSK_INLINE CGFloat SSKDegreesToRadians(CGFloat degrees) {
     return M_PI/(180/-degrees);
 }
 
-SSK_INLINE CGFloat SSKSubtract(CGFloat first, CGFloat second) {
+SSK_INLINE CGFloat SSKSubtractNumbers(CGFloat first, CGFloat second) {
     return (first - second);
 }
 
-SSK_INLINE CGFloat SSKSquared(CGFloat num) {
+SSK_INLINE CGFloat SSKSquareNumber(CGFloat num) {
     return (num * num);
 }
 
-SSK_INLINE CGFloat SSKDistanceBetween(CGPoint first, CGPoint second) {
-    return sqrtf(SSKSquared(SSKSubtract(second.x, first.x)) + SSKSquared(SSKSubtract(second.y, first.y)));
+SSK_INLINE CGFloat SSKDistanceBetweenPoints(CGPoint first, CGPoint second) {
+    return sqrtf(SSKSquareNumber(SSKSubtractNumbers(second.x, first.x)) + SSKSquareNumber(SSKSubtractNumbers(second.y, first.y)));
 }
 
