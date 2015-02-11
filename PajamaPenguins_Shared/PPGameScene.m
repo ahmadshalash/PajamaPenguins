@@ -52,7 +52,7 @@ CGFloat const kWorldScaleCap = 0.5;
 #pragma mark - Creating scene layers
 - (void)createScene {
     self.backgroundColor = SSKColorWithRGB(6, 220, 220);
-    self.anchorPoint = CGPointMake(0.0, 0.0);
+    self.anchorPoint = CGPointMake(0.5, 0.5);
 
     [self createWorld];
     [self createMenu];
@@ -64,8 +64,8 @@ CGFloat const kWorldScaleCap = 0.5;
     [self addChild:self.worldNode];
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
-                                              atPosition:CGPointMake(self.size.width/4, self.size.height/2)];
-    [player setScale:3];
+                                              atPosition:CGPointMake(-self.size.width/4, 0)];
+    [player setScale:1.5];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
@@ -73,7 +73,7 @@ CGFloat const kWorldScaleCap = 0.5;
     
     SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 2, self.size.height)];
     [water setAnchorPoint:CGPointMake(.5, 1)];
-    [water setPosition:CGPointMake(self.size.width, self.size.height/2)];
+    [water setPosition:CGPointMake(self.size.width/2, 0)];
     [water setAlpha:0.5];
     [water setName:@"water"];
     [water setZPosition:foregroundLayer];
@@ -176,8 +176,9 @@ CGFloat const kWorldScaleCap = 0.5;
 }
 
 - (void)didSimulatePhysics {
-    [self updateWorldNodeZoom];
+    [self updateWorldZoom];
 }
+
 - (void)didFinishUpdate {
 }
 
@@ -193,15 +194,18 @@ CGFloat const kWorldScaleCap = 0.5;
     }
 }
 
-- (void)updateWorldNodeZoom {
+- (void)updateWorldZoom {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
-    CGFloat topBoundary = self.size.height/5 * 3;
+    CGFloat topBoundary = self.size.height/4;
 //    CGFloat bottomBoundary = self.size.height - topBoundary;
-    CGFloat maxDistance = self.size.height - topBoundary;
+    CGFloat maxDistance = self.size.height/2 - topBoundary;
     CGFloat currentDistance = fabsf(player.position.y - topBoundary);
     CGFloat ratio = fabsf((currentDistance/maxDistance) * 0.15);
     
-
+    CGFloat distance = SSKDistanceBetween(CGPointMake(0, 0), CGPointMake(self.size.width/2, self.size.height/2));
+    
+    NSLog(@"%fl",[self.worldNode childNodeWithName:@"water"].position.x);
+    
     if (player.position.y > topBoundary)
     {
         [self.worldNode setScale:1 - ratio];
@@ -211,6 +215,10 @@ CGFloat const kWorldScaleCap = 0.5;
     } else {
         [self.worldNode setScale:1];
     }
+}
+
+- (void)updateWorldOffset {
+    
 }
 
 #pragma mark - Loading Assets
