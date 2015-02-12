@@ -66,7 +66,7 @@ CGFloat const kWorldScaleCap = 0.55;
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
                                               atPosition:CGPointMake(-self.size.width/4, 0)];
-    [player setScale:1.5];
+    [player setScale:1];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
@@ -101,7 +101,7 @@ CGFloat const kWorldScaleCap = 0.55;
     [startLabel setPosition:CGPointMake(0, -self.size.height/6 * 2)];
     [self.menuNode addChild:startLabel];
 
-    SKSpriteNode *startIcon = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:90]];
+    SKSpriteNode *startIcon = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:120]];
     [startIcon setScale:5];
     [startIcon setPosition:CGPointMake(startLabel.position.x, startLabel.position.y + startIcon.size.height)];
     [self.menuNode addChild:startIcon];
