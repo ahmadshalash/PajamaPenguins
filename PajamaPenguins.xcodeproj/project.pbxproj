@@ -28,14 +28,16 @@
 		EE5575F01A5A16A700B87145 /* PPGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5575E91A5A108100B87145 /* PPGameScene.m */; };
 		EE6F92F81A82F39400286DC7 /* SSKGameCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92E71A82F39400286DC7 /* SSKGameCenter.m */; };
 		EE6F92FA1A82F39400286DC7 /* SSKiAD.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92E91A82F39400286DC7 /* SSKiAD.m */; };
-		EE6F92FC1A82F39400286DC7 /* SSKButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92EC1A82F39400286DC7 /* SSKButton.m */; };
-		EE6F92FD1A82F39400286DC7 /* SSKButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92EC1A82F39400286DC7 /* SSKButton.m */; };
+		EE6F92FC1A82F39400286DC7 /* SSKButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92EC1A82F39400286DC7 /* SSKButtonNode.m */; };
+		EE6F92FD1A82F39400286DC7 /* SSKButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92EC1A82F39400286DC7 /* SSKButtonNode.m */; };
 		EE6F92FE1A82F39400286DC7 /* SSKScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92EF1A82F39400286DC7 /* SSKScene.m */; };
 		EE6F92FF1A82F39400286DC7 /* SSKScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92EF1A82F39400286DC7 /* SSKScene.m */; };
 		EE6F93001A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F31A82F39400286DC7 /* SSKGraphicsUtils.m */; };
 		EE6F93011A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F31A82F39400286DC7 /* SSKGraphicsUtils.m */; };
 		EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
 		EE6F93051A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
+		EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
+		EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EED8E59E1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */; };
 		EED8E59F1A840B23001C8F59 /* PajamaPenguinsSpriteSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */; };
 		EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EED8E5A31A881D79001C8F59 /* PPPlayer.m */; };
@@ -74,8 +76,8 @@
 		EE6F92E71A82F39400286DC7 /* SSKGameCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKGameCenter.m; sourceTree = "<group>"; };
 		EE6F92E81A82F39400286DC7 /* SSKiAD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKiAD.h; sourceTree = "<group>"; };
 		EE6F92E91A82F39400286DC7 /* SSKiAD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKiAD.m; sourceTree = "<group>"; };
-		EE6F92EB1A82F39400286DC7 /* SSKButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKButton.h; sourceTree = "<group>"; };
-		EE6F92EC1A82F39400286DC7 /* SSKButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKButton.m; sourceTree = "<group>"; };
+		EE6F92EB1A82F39400286DC7 /* SSKButtonNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKButtonNode.h; sourceTree = "<group>"; };
+		EE6F92EC1A82F39400286DC7 /* SSKButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKButtonNode.m; sourceTree = "<group>"; };
 		EE6F92EE1A82F39400286DC7 /* SSKScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKScene.h; sourceTree = "<group>"; };
 		EE6F92EF1A82F39400286DC7 /* SSKScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKScene.m; sourceTree = "<group>"; };
 		EE6F92F11A82F39400286DC7 /* SSKColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SSKColor+Additions.h"; sourceTree = "<group>"; };
@@ -84,6 +86,8 @@
 		EE6F92F41A82F39400286DC7 /* SSKMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKMathUtils.h; sourceTree = "<group>"; };
 		EE6F92F61A82F39400286DC7 /* SSKPhysicsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKPhysicsUtils.h; sourceTree = "<group>"; };
 		EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKPhysicsUtils.m; sourceTree = "<group>"; };
+		EEBA93CD1A8C1FED00CBD711 /* SSKCameraNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKCameraNode.h; sourceTree = "<group>"; };
+		EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKCameraNode.m; sourceTree = "<group>"; };
 		EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsSpriteSheet.png; sourceTree = "<group>"; };
 		EED8E5A21A881D79001C8F59 /* PPPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlayer.h; sourceTree = "<group>"; };
 		EED8E5A31A881D79001C8F59 /* PPPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlayer.m; sourceTree = "<group>"; };
@@ -258,8 +262,10 @@
 		EE6F92EA1A82F39400286DC7 /* SSKNodes */ = {
 			isa = PBXGroup;
 			children = (
-				EE6F92EB1A82F39400286DC7 /* SSKButton.h */,
-				EE6F92EC1A82F39400286DC7 /* SSKButton.m */,
+				EE6F92EB1A82F39400286DC7 /* SSKButtonNode.h */,
+				EE6F92EC1A82F39400286DC7 /* SSKButtonNode.m */,
+				EEBA93CD1A8C1FED00CBD711 /* SSKCameraNode.h */,
+				EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */,
 			);
 			path = SSKNodes;
 			sourceTree = "<group>";
@@ -395,7 +401,8 @@
 				EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */,
 				EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */,
 				EE5575EB1A5A108100B87145 /* PPGameScene.m in Sources */,
-				EE6F92FC1A82F39400286DC7 /* SSKButton.m in Sources */,
+				EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
+				EE6F92FC1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
 				41E430A918B09E5200E1427D /* ViewController.m in Sources */,
 				EE6F92FA1A82F39400286DC7 /* SSKiAD.m in Sources */,
 				EE6F92FE1A82F39400286DC7 /* SSKScene.m in Sources */,
@@ -414,8 +421,9 @@
 				EE6F92FF1A82F39400286DC7 /* SSKScene.m in Sources */,
 				EE5575F01A5A16A700B87145 /* PPGameScene.m in Sources */,
 				41E430DF18B09E8600E1427D /* main.m in Sources */,
-				EE6F92FD1A82F39400286DC7 /* SSKButton.m in Sources */,
+				EE6F92FD1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
 				41E430EA18B09E8600E1427D /* AppDelegate.m in Sources */,
+				EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
 				EE6F93051A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

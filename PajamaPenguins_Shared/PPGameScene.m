@@ -7,7 +7,8 @@
 #import "PPGameScene.h"
 #import "PPPlayer.h"
 #import "SSKColor+Additions.h"
-#import "SSKButton.h"
+#import "SSKCameraNode.h"
+#import "SSKButtonNode.h"
 #import "SSKGraphicsUtils.h"
 
 typedef enum {
@@ -30,7 +31,7 @@ CGFloat const kWorldScaleCap = 0.55;
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
 
-@property (nonatomic) SKNode *worldNode;
+@property (nonatomic) SSKCameraNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
 
 @property (nonatomic) NSTimeInterval lastUpdateTime;
@@ -59,13 +60,13 @@ CGFloat const kWorldScaleCap = 0.55;
 }
 
 - (void)createWorld {
-    self.worldNode = [SKNode node];
+    self.worldNode = [SSKCameraNode node];
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
                                               atPosition:CGPointMake(-self.size.width/4, 0)];
-    [player setScale:3];
+    [player setScale:1.5];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
@@ -79,7 +80,7 @@ CGFloat const kWorldScaleCap = 0.55;
     [water setZPosition:foregroundLayer];
     [self.worldNode addChild:water];
     
-    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(water.size.width, water.size.height - kEdgePadding)];
+    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(water.size.width, water.size.height)];
     boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
     [boundary.physicsBody setFriction:0];
     [boundary.physicsBody setRestitution:0];
@@ -113,7 +114,8 @@ CGFloat const kWorldScaleCap = 0.55;
 #pragma mark - Game Start
 - (void)prepareGameStart {
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
-
+//    [self.worldNode zoomToScale:2 duration:2 onPosition:[self.worldNode childNodeWithName:@"player"].position];
+    
     self.gameState = Playing;
 }
 
@@ -176,6 +178,7 @@ CGFloat const kWorldScaleCap = 0.55;
 
 - (void)didSimulatePhysics {
     [self updateWorldZoom];
+//    [self.worldNode centerHorizontallyOnNode:[self.worldNode childNodeWithName:@"player"]];
 }
 
 - (void)didFinishUpdate {
@@ -198,6 +201,7 @@ CGFloat const kWorldScaleCap = 0.55;
  @todo NEEDS TO BE DECOUPLED! (Extendable camera class?).
  
  */
+
 - (void)updateWorldZoom {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
     
@@ -212,29 +216,30 @@ CGFloat const kWorldScaleCap = 0.55;
     CGFloat topRatio = fabsf((currentDistanceFromTop/maxDistance) * ratio);
     CGFloat botRatio = fabsf((currentDistanceFromBottom/maxDistance) * ratio);
     
-    CGFloat distance = SSKDistanceBetweenPoints(CGPointZero, CGPointMake(self.size.width/2, self.size.height/2));
-
-    CGFloat amtToMoveTop = distance*topRatio;
-    CGFloat amtToMoveBottom = distance*botRatio;
+//    CGFloat distance = SSKDistanceBetweenPoints(CGPointZero, CGPointMake(self.size.width/2, self.size.height/2));
+    CGVector distance = SSKDistanceBetweenPoints(CGPointZero, CGPointMake(self.size.width/2, self.size.height/2));
+    
+    CGVector amtToMoveTop =  CGVectorMake(distance.dx * topRatio, distance.dy * topRatio);
+    CGVector amtToMoveBottom = CGVectorMake(distance.dx * botRatio, distance.dy * botRatio);
     
     if (player.position.y > topBoundary)
     {
         [self.worldNode setScale:1 - topRatio];
-        [self.worldNode setPosition:CGPointMake(-(amtToMoveTop/2), -(amtToMoveTop/2))];
+        [self.worldNode setPosition:CGPointMake(-(amtToMoveTop.dx/2), -(amtToMoveTop.dy/2))];
         
         if (self.worldNode.xScale <= kWorldScaleCap) {
             [self.worldNode setScale:kWorldScaleCap];
-            [self.worldNode setPosition:CGPointMake(-(distance/2) * (1 - kWorldScaleCap), -(distance/2)*(1 - kWorldScaleCap))];
+            [self.worldNode setPosition:CGPointMake(-(distance.dx/2) * (1 - kWorldScaleCap), -(distance.dy/2)*(1 - kWorldScaleCap))];
         }
     }
     
     else if (player.position.y <= bottomBoundary) {
         [self.worldNode setScale:1 - botRatio];
-        [self.worldNode setPosition:CGPointMake(-(amtToMoveBottom/2), amtToMoveBottom/2)];
+        [self.worldNode setPosition:CGPointMake(-(amtToMoveBottom.dx/2), amtToMoveBottom.dy/2)];
         
         if (self.worldNode.xScale <= kWorldScaleCap) {
             [self.worldNode setScale:kWorldScaleCap];
-            [self.worldNode setPosition:CGPointMake(-(distance/2) * (1 - kWorldScaleCap), (distance/2) * (1 - kWorldScaleCap))];
+            [self.worldNode setPosition:CGPointMake(-(distance.dx/2) * (1 - kWorldScaleCap), (distance.dy/2) * (1 - kWorldScaleCap))];
         }
     }
     
@@ -242,7 +247,7 @@ CGFloat const kWorldScaleCap = 0.55;
         [self.worldNode setScale:1];
         [self.worldNode setPosition:CGPointZero];
     }
-    NSLog(@"%fl %fl",self.worldNode.position.x,self.worldNode.position.y);
+//    NSLog(@"%fl %fl",self.worldNode.position.x,self.worldNode.position.y);
 }
 
 - (void)updateWorldOffset {

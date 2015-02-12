@@ -1,17 +1,17 @@
 //
-//  SSKButton.m
+//  SSKButtonNode.m
 //
 //  Created by Skye on 12/22/14.
 //  Copyright (c) 2014 skyefreeman. All rights reserved.
 //
 
-#import "SSKButton.h"
+#import "SSKButtonNode.h"
 
-@interface SSKButton()
+@interface SSKButtonNode()
 
 @end
 
-@implementation SSKButton
+@implementation SSKButtonNode
 
 - (id)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture {
     self = [super initWithTexture:idleTexture color:[SKColor clearColor] size:idleTexture.size];
