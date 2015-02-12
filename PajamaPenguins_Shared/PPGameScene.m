@@ -97,11 +97,11 @@ CGFloat const kWorldScaleCap = 0.55;
     [titleLabel setPosition:CGPointMake(0, self.size.height/6 * 2)];
     [self.menuNode addChild:titleLabel];
     
-    SKLabelNode *startLabel = [self createNewLabelWithText:@"Tap to start!" withFontSize:30];
+    SKLabelNode *startLabel = [self createNewLabelWithText:@"Tap to start!" withFontSize:45];
     [startLabel setPosition:CGPointMake(0, -self.size.height/6 * 2)];
     [self.menuNode addChild:startLabel];
 
-    SKSpriteNode *startIcon = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:17]];
+    SKSpriteNode *startIcon = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:90]];
     [startIcon setScale:5];
     [startIcon setPosition:CGPointMake(startLabel.position.x, startLabel.position.y + startIcon.size.height)];
     [self.menuNode addChild:startIcon];
