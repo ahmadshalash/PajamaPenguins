@@ -22,9 +22,4 @@
 - (void)centerVerticallyOnNode:(SKNode*)node;
 - (void)centerHorizontallyOnNode:(SKNode*)node;
 
-//zoom
-- (void)zoomToScale:(CGFloat)scale
-           duration:(NSTimeInterval)duration
-         onPosition:(CGPoint)position;
-
 @end

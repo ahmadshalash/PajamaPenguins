@@ -114,8 +114,6 @@ CGFloat const kWorldScaleCap = 0.55;
 #pragma mark - Game Start
 - (void)prepareGameStart {
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
-//    [self.worldNode zoomToScale:2 duration:2 onPosition:[self.worldNode childNodeWithName:@"player"].position];
-    
     self.gameState = Playing;
 }
 
@@ -178,7 +176,6 @@ CGFloat const kWorldScaleCap = 0.55;
 
 - (void)didSimulatePhysics {
     [self updateWorldZoom];
-//    [self.worldNode centerHorizontallyOnNode:[self.worldNode childNodeWithName:@"player"]];
 }
 
 - (void)didFinishUpdate {
@@ -196,12 +193,6 @@ CGFloat const kWorldScaleCap = 0.55;
     }
 }
 
-/* 
- 
- @todo NEEDS TO BE DECOUPLED! (Extendable camera class?).
- 
- */
-
 - (void)updateWorldZoom {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
     
@@ -216,7 +207,6 @@ CGFloat const kWorldScaleCap = 0.55;
     CGFloat topRatio = fabsf((currentDistanceFromTop/maxDistance) * ratio);
     CGFloat botRatio = fabsf((currentDistanceFromBottom/maxDistance) * ratio);
     
-//    CGFloat distance = SSKDistanceBetweenPoints(CGPointZero, CGPointMake(self.size.width/2, self.size.height/2));
     CGVector distance = SSKDistanceBetweenPoints(CGPointZero, CGPointMake(self.size.width/2, self.size.height/2));
     
     CGVector amtToMoveTop =  CGVectorMake(distance.dx * topRatio, distance.dy * topRatio);
@@ -225,21 +215,21 @@ CGFloat const kWorldScaleCap = 0.55;
     if (player.position.y > topBoundary)
     {
         [self.worldNode setScale:1 - topRatio];
-        [self.worldNode setPosition:CGPointMake(-(amtToMoveTop.dx/2), -(amtToMoveTop.dy/2))];
+        [self.worldNode setPosition:CGPointMake(-(amtToMoveTop.dx), -(amtToMoveTop.dy))];
         
         if (self.worldNode.xScale <= kWorldScaleCap) {
             [self.worldNode setScale:kWorldScaleCap];
-            [self.worldNode setPosition:CGPointMake(-(distance.dx/2) * (1 - kWorldScaleCap), -(distance.dy/2)*(1 - kWorldScaleCap))];
+            [self.worldNode setPosition:CGPointMake(-(distance.dx) * (1 - kWorldScaleCap), -(distance.dy)*(1 - kWorldScaleCap))];
         }
     }
     
     else if (player.position.y <= bottomBoundary) {
         [self.worldNode setScale:1 - botRatio];
-        [self.worldNode setPosition:CGPointMake(-(amtToMoveBottom.dx/2), amtToMoveBottom.dy/2)];
+        [self.worldNode setPosition:CGPointMake(-(amtToMoveBottom.dx), amtToMoveBottom.dy)];
         
         if (self.worldNode.xScale <= kWorldScaleCap) {
             [self.worldNode setScale:kWorldScaleCap];
-            [self.worldNode setPosition:CGPointMake(-(distance.dx/2) * (1 - kWorldScaleCap), (distance.dy/2) * (1 - kWorldScaleCap))];
+            [self.worldNode setPosition:CGPointMake(-(distance.dx) * (1 - kWorldScaleCap), (distance.dy) * (1 - kWorldScaleCap))];
         }
     }
     
