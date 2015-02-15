@@ -7,79 +7,75 @@
 
 #import "SSKiAD.h"
 
-#define IS_WIDESCREEN ([[UIScreen mainScreen] bounds].size.height == 568)
+#define ADBannerIPhonePortraitHeight 50;
+#define ADBannerIPhoneLandscapeHeight 32;
+#define ADBannerIPadUniversalHeight 66;
+
+@interface SSKiAD()
+@property (nonatomic, readwrite) BOOL adBannerViewIsVisible;
+@end
 
 @implementation SSKiAD {
-	int SCREEN_HEIGHT;
-	int SCREEN_WIDTH;
+    CGRect _screenSize;
+    CGFloat _adHeight;
 }
 
--(id)init {
-	self = [super init];
+/* 
+ TODO: Ad ad height to adjust by device/screen-orientation
+ */
 
-	if (self) {
-		if (IS_WIDESCREEN) {
-			SCREEN_HEIGHT = 568;
-		}else {
-			SCREEN_HEIGHT = 480;
-		}
-		SCREEN_WIDTH = 320;
-	}
+- (id)initWithFrame:(CGRect)frame {
+    if ([super initWithFrame:frame]) {
+        _screenSize = frame;
+        _adHeight = ADBannerIPhonePortraitHeight;
+    }
 	return self;
 }
 
-+(instancetype)sharedAdHelper {
-	static SSKiAD *sharedAdHelper;
++ (instancetype)sharedManager {
+	static SSKiAD *sharedInstance;
 	static dispatch_once_t onceToken;
 	
 	dispatch_once(&onceToken,^{
-		sharedAdHelper = [[SSKiAD alloc] init];
+		sharedInstance = [[SSKiAD alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	});
-	return sharedAdHelper;
+	return sharedInstance;
 }
 
--(ADBannerView*)createAdBannerView {
-	self.adBannerView = [[ADBannerView alloc] initWithFrame:
-						 CGRectMake(0,SCREEN_HEIGHT, SCREEN_WIDTH, 50)];
+- (ADBannerView*)createAdBannerView {
+    self.adBannerView = [[ADBannerView alloc] initWithFrame:CGRectMake(0, _screenSize.size.height, _screenSize.size.width, _adHeight)];
 	_adBannerView.delegate = self;
-	NSLog(@"%d",SCREEN_HEIGHT);
 	return self.adBannerView;
 }
 
--(void)showAd {
-	_adBannerView.frame =
-	CGRectMake(0,SCREEN_HEIGHT,SCREEN_WIDTH, 50);
-	
-	if (_adBannerViewIsVisible) {
-		[UIView animateWithDuration:1.0
-						 animations:^{
-							 _adBannerView.frame =
-							 CGRectMake(0, SCREEN_HEIGHT - 50,SCREEN_WIDTH,50);
-						 }];
+- (void)showAd {
+	if (self.adBannerViewIsVisible) {
+		[UIView animateWithDuration:1.0 animations:^{
+            self.adBannerView.frame = [self activeAdPosition];
+        } completion:^(BOOL finished) {
+            self.adBannerView.frame = [self activeAdPosition];
+        }];
 	}
 }
 
--(void)hideAd {
-	[UIView animateWithDuration:1.0
-						  delay:2.0
-						options:UIViewAnimationOptionAllowUserInteraction
-					 animations:^{
-						 _adBannerView.frame =
-						 CGRectMake(0, SCREEN_HEIGHT,SCREEN_WIDTH,50);
-					 } completion:^(BOOL finished) {}];
-	_adBannerView.frame =
-	CGRectMake(0, SCREEN_HEIGHT,SCREEN_WIDTH,50);
+- (void)hideAd {
+    [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+        self.adBannerView.frame = [self inactiveAdPosition];
+    } completion:^(BOOL finished) {
+        _adBannerView.frame = [self inactiveAdPosition];
+    }];
 }
 
--(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-	if (_adBannerViewIsVisible) {
-		_adBannerViewIsVisible = NO;
-		[self hideAd];
-		NSLog(@"Ad hidden");
-	}
+#pragma mark - ADBannerView Delegate Methods
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    if (_adBannerViewIsVisible) {
+        _adBannerViewIsVisible = NO;
+        [self hideAd];
+        NSLog(@"Ad hidden");
+    }
 }
 
--(void)bannerViewDidLoadAd:(ADBannerView *)banner {
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
 	if (!_adBannerViewIsVisible) {
 		_adBannerViewIsVisible = YES;
 		[self showAd];
@@ -87,5 +83,12 @@
 	}
 }
 
+#pragma mark - Convenience
+- (CGRect)activeAdPosition {
+    return CGRectMake(0, _screenSize.size.height - _adHeight, _screenSize.size.width, _adHeight);
+}
 
+- (CGRect)inactiveAdPosition {
+    return CGRectMake(0, _screenSize.size.height, _screenSize.size.width, _adHeight);
+}
 @end

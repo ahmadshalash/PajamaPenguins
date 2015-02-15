@@ -9,10 +9,9 @@
 
 @interface SSKiAD : UIView <ADBannerViewDelegate>
 
-@property (nonatomic,retain) ADBannerView *adBannerView;
-@property (nonatomic,assign) BOOL adBannerViewIsVisible;
+@property (nonatomic, retain) ADBannerView *adBannerView;
+@property (nonatomic, readonly) BOOL adBannerViewIsVisible;
 
-+ (instancetype)sharedAdHelper;
-- (ADBannerView*)createAdBannerView;
++ (instancetype)sharedManager;
 
 @end

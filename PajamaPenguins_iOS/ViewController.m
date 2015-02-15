@@ -21,7 +21,7 @@
     if (!skView.scene) {
         [PPGameScene loadSceneAssetsWithCompletionHandler:^{
             NSLog(@"Loading Complete.");
-            SKScene * scene = [PPGameScene sceneWithSize:skView.bounds.size];
+            SKScene *scene = [PPGameScene sceneWithSize:skView.bounds.size];
             scene.scaleMode = SKSceneScaleModeAspectFill;
             [skView presentScene:scene];
         }];
@@ -34,7 +34,7 @@
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (BOOL)shouldAutorotate {

@@ -53,23 +53,17 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 - (void)setAuthenticationViewController:(UIViewController *)authenticationViewController {
 	if (authenticationViewController != nil) {
 		_authenticationViewController = authenticationViewController;
-		[[NSNotificationCenter defaultCenter]
-		 postNotificationName:PresentAuthenticationViewController
-		 object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:PresentAuthenticationViewController object:self];
 	}
 }
 
 - (void)setLastError:(NSError *)error {
 	_lastError = [error copy];
-	if (_lastError) {
-		NSLog(@"GameKitHelper ERROR: %@", [[_lastError userInfo] description]);
-	}
+	if (_lastError) NSLog(@"GameKitHelper ERROR: %@", [[_lastError userInfo] description]);
 }
 
 - (void)reportScore:(int64_t)score forLeaderboardID:(NSString*)leaderboardID {
-	if (!_enableGameCenter) {
-		NSLog(@"Local Play Is Not Authenticated");
-	}
+	if (!_enableGameCenter)	NSLog(@"Local Play Is Not Authenticated");
 	
 	GKScore *scorereporter = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboardID];
 	scorereporter.value = score;
@@ -77,22 +71,19 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 	
 	NSArray *scores = @[scorereporter];
 	
-	[GKScore reportScores:scores
-	withCompletionHandler:^(NSError *error) {
-		[self setLastError:error];
+    [GKScore reportScores:scores withCompletionHandler:^(NSError *error) {
+        [self setLastError:error];
 	}];
 	
 	NSLog(@"Game Center Score updated");
 }
 
 - (void)reportAchievements:(NSArray*)achievements {
-	if (!_enableGameCenter) {
-		NSLog(@"Local Play is Not Authenticated");
-	}
-	[GKAchievement reportAchievements:achievements
-				withCompletionHandler:^(NSError *error){
-					[self setLastError:error];
-				}];
+	if (!_enableGameCenter) NSLog(@"Local Play is Not Authenticated");
+
+    [GKAchievement reportAchievements:achievements withCompletionHandler:^(NSError *error) {
+        [self setLastError:error];
+    }];
 }
 
 - (void)showGKGameCenterViewController:(UIViewController*)viewController {
@@ -102,17 +93,13 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 	
 	GKGameCenterViewController *gameCenterVC = [[GKGameCenterViewController alloc] init];
 	gameCenterVC.gameCenterDelegate = self;
-	
 	gameCenterVC.viewState = GKGameCenterViewControllerStateDefault;
-	
-	[viewController presentViewController:gameCenterVC
-								 animated:YES
-							   completion:nil];
+
+	[viewController presentViewController:gameCenterVC animated:YES completion:nil];
 }
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
     [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 @end
