@@ -23,18 +23,21 @@ typedef enum {
     menuLayer,
 }Layers;
 
+//Physics Constants
 CGFloat const kAirGravityStrength = -3;
 CGFloat const kWaterGravityStrength = 6;
-CGFloat const kEdgePadding = 50;
+
+//Clamped Constants
 CGFloat const kWorldScaleCap = 0.55;
+CGFloat const kPlayerUpperVelocityLimit = 650.0;
+CGFloat const kPlayerLowerAirVelocityLimit = -600.0;
+CGFloat const kPlayerLowerWaterVelocityLimit = -300.0;
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
 
-@property (nonatomic) SSKCameraNode *worldNode;
+@property (nonatomic) SKNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
-
-@property (nonatomic) NSTimeInterval lastUpdateTime;
 @end
 
 @implementation PPGameScene
@@ -56,7 +59,7 @@ CGFloat const kWorldScaleCap = 0.55;
     self.anchorPoint = CGPointMake(0.5, 0.5);
 
     [self createWorld];
-    [self createMenu];
+//    [self createMenu];
 }
 
 - (void)createWorld {
@@ -113,6 +116,7 @@ CGFloat const kWorldScaleCap = 0.55;
 
 #pragma mark - Game Start
 - (void)prepareGameStart {
+    NSLog(@"Prepare Game");
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
     self.gameState = Playing;
 }
@@ -122,6 +126,31 @@ CGFloat const kWorldScaleCap = 0.55;
     [(PPPlayer*)[self.worldNode childNodeWithName:@"player"] update:dt];
 }
 
+- (void)startPlayerDive {
+    [(PPPlayer*)[self.worldNode childNodeWithName:@"player"] setPlayerShouldDive:YES];
+}
+
+- (void)stopPlayerDive {
+    [(PPPlayer*)[self.worldNode childNodeWithName:@"player"] setPlayerShouldDive:NO];
+}
+
+- (void)clampPlayerVelocity {
+    PPPlayer *player = (PPPlayer*)[self.worldNode childNodeWithName:@"player"];
+    if (player.physicsBody.velocity.dy >= kPlayerUpperVelocityLimit) {
+        [player.physicsBody setVelocity:CGVectorMake(player.physicsBody.velocity.dx, kPlayerUpperVelocityLimit)];
+    }
+    
+    if (player.position.y > [self childNodeWithName:@"water"].position.y) {
+        if (player.physicsBody.velocity.dy <= kPlayerLowerAirVelocityLimit) {
+            [player.physicsBody setVelocity:CGVectorMake(player.physicsBody.velocity.dx, kPlayerLowerAirVelocityLimit)];
+        }
+    } else {
+        if (player.physicsBody.velocity.dy <= kPlayerLowerWaterVelocityLimit) {
+            [player.physicsBody setVelocity:CGVectorMake(player.physicsBody.velocity.dx, kPlayerLowerWaterVelocityLimit)];
+        }
+    }
+    NSLog(@"player speed: %fl",[self.worldNode childNodeWithName:@"player"].physicsBody.velocity.dy);
+}
 #pragma mark - Actions
 - (SKAction*)floatAction {
     SKAction *down = [SKAction moveByX:0 y:-25 duration:2];
@@ -152,14 +181,14 @@ CGFloat const kWorldScaleCap = 0.55;
     }
     
     if (self.gameState == Playing) {
-        SKNode *player = [self.worldNode childNodeWithName:@"player"];
-        [(PPPlayer*)player setPlayerShouldDive:YES];
+        if (self.worldNode.xScale >= kWorldScaleCap) {
+            [self startPlayerDive];
+        }
     }
 }
 
 - (void)interactionEndedAtPosition:(CGPoint)position {
-    SKNode *player = [self.worldNode childNodeWithName:@"player"];
-    [(PPPlayer*)player setPlayerShouldDive:NO];
+    [self stopPlayerDive];
 }
 
 - (void)interactionMovedAtPosition:(CGPoint)position {
@@ -176,6 +205,7 @@ CGFloat const kWorldScaleCap = 0.55;
 
 - (void)didSimulatePhysics {
     [self updateWorldZoom];
+    [self clampPlayerVelocity];
 }
 
 - (void)didFinishUpdate {
@@ -218,6 +248,8 @@ CGFloat const kWorldScaleCap = 0.55;
         [self.worldNode setPosition:CGPointMake(-(amtToMoveTop.dx), -(amtToMoveTop.dy))];
         
         if (self.worldNode.xScale <= kWorldScaleCap) {
+            [self stopPlayerDive];
+            
             [self.worldNode setScale:kWorldScaleCap];
             [self.worldNode setPosition:CGPointMake(-(distance.dx) * (1 - kWorldScaleCap), -(distance.dy)*(1 - kWorldScaleCap))];
         }
@@ -228,6 +260,8 @@ CGFloat const kWorldScaleCap = 0.55;
         [self.worldNode setPosition:CGPointMake(-(amtToMoveBottom.dx), amtToMoveBottom.dy)];
         
         if (self.worldNode.xScale <= kWorldScaleCap) {
+            [self stopPlayerDive];
+            
             [self.worldNode setScale:kWorldScaleCap];
             [self.worldNode setPosition:CGPointMake(-(distance.dx) * (1 - kWorldScaleCap), (distance.dy) * (1 - kWorldScaleCap))];
         }
@@ -237,11 +271,6 @@ CGFloat const kWorldScaleCap = 0.55;
         [self.worldNode setScale:1];
         [self.worldNode setPosition:CGPointZero];
     }
-//    NSLog(@"%fl %fl",self.worldNode.position.x,self.worldNode.position.y);
-}
-
-- (void)updateWorldOffset {
-    
 }
 
 #pragma mark - Loading Assets

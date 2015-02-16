@@ -10,6 +10,10 @@
 
 #define veloCap -30.0
 
+@interface PPPlayer()
+@property (nonatomic) CGFloat currentAccelleration;
+@end
+
 @implementation PPPlayer
 
 - (instancetype)initWithTexture:(SKTexture *)texture atPosition:(CGPoint)position {
@@ -34,14 +38,14 @@
     }
 
     if (_playerShouldDive) {
-        [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy + _currentVelocity)];
+        [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy + _currentAccelleration)];
         
-        _currentVelocity -= 1;
-        if (_currentVelocity <= veloCap) {
-            _currentVelocity = veloCap;
+        _currentAccelleration -= 1;
+        if (_currentAccelleration <= veloCap) {
+            _currentAccelleration = veloCap;
         }
     } else {
-        _currentVelocity = 0;
+        _currentAccelleration = 0;
     }
 }
 
