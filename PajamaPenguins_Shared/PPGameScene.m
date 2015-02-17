@@ -6,6 +6,7 @@
 
 #import "PPGameScene.h"
 #import "PPPlayer.h"
+#import "PPObstacle.h"
 #import "SSKColor+Additions.h"
 #import "SSKCameraNode.h"
 #import "SSKButtonNode.h"
@@ -118,14 +119,13 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
 - (void)prepareGameStart {
     NSLog(@"Prepare Game");
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
+    
+    [self.worldNode addChild:[self newObstacleAtPoint:CGPointMake(0, 0)]];
+    
     self.gameState = Playing;
 }
 
 #pragma mark - Player
-- (void)updatePlayer:(NSTimeInterval)dt {
-    [(PPPlayer*)[self.worldNode childNodeWithName:@"player"] update:dt];
-}
-
 - (void)startPlayerDive {
     [(PPPlayer*)[self.worldNode childNodeWithName:@"player"] setPlayerShouldDive:YES];
 }
@@ -149,7 +149,13 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
             [player.physicsBody setVelocity:CGVectorMake(player.physicsBody.velocity.dx, kPlayerLowerWaterVelocityLimit)];
         }
     }
-    NSLog(@"player speed: %fl",[self.worldNode childNodeWithName:@"player"].physicsBody.velocity.dy);
+}
+
+#pragma mark - Obstacles
+- (PPObstacle*)newObstacleAtPoint:(CGPoint)point {
+    PPObstacle *obstacle = [[PPObstacle alloc] initWithTexturesFromArray:sObstacleTextures];
+    obstacle.position = point;
+    return obstacle;
 }
 
 #pragma mark - Actions
@@ -206,10 +212,11 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
     [self clampPlayerVelocity];
 }
 
-- (void)didFinishUpdate {
+#pragma mark - Updated Per Frame
+- (void)updatePlayer:(NSTimeInterval)dt {
+    [(PPPlayer*)[self.worldNode childNodeWithName:@"player"] update:dt];
 }
 
-#pragma mark - Updated Per Frame
 - (void)updateGravity {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
     SKNode *water = [self.worldNode childNodeWithName:@"water"];
@@ -267,15 +274,23 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
     }
 }
 
-#pragma mark - Loading Assets
+#pragma mark - Managing Assets
 + (void)loadSceneAssets {
     NSDate *startTime = [NSDate date];
 
+    //Shared Textures
     sTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsSpriteSheet"
                                                        frameSize:CGSizeMake(15, 15)
                                                           origin:CGPointMake(0, 225)
                                                        gridWidth:15
                                                       gridHeight:15];
+    
+    //Obstacle Textures
+    NSMutableArray *tempObstacleTextures = [NSMutableArray new];
+    for (int i = 15; i < 30; i++) {
+        [tempObstacleTextures addObject:[sTextures objectAtIndex:i]];
+    }
+    sObstacleTextures = [NSArray arrayWithArray:tempObstacleTextures];
     
     NSLog(@"Scene loaded in %f seconds",[[NSDate date] timeIntervalSinceDate:startTime]);
 }
@@ -283,6 +298,11 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
 static NSArray *sTextures = nil;
 - (NSArray*)sharedTextures {
     return sTextures;
+}
+
+static NSArray *sObstacleTextures = nil;
+- (NSArray*)sharedObstacleTextures {
+    return sObstacleTextures;
 }
 
 @end

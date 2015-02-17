@@ -8,6 +8,19 @@
 
 #import "PPObstacle.h"
 
+@interface PPObstacle()
+@property (nonatomic) NSArray *textureFrames;
+@end
+
 @implementation PPObstacle
+
+- (instancetype)initWithTexturesFromArray:(NSArray*)array {
+    self = [super init];
+    if (self) {
+        self.textureFrames = [NSArray arrayWithArray:array];
+        NSLog(@"%@",self.textureFrames);
+    }
+    return self;
+}
 
 @end

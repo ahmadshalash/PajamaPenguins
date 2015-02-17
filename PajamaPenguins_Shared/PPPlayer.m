@@ -8,7 +8,7 @@
 
 #import "PPPlayer.h"
 
-#define accellerationCap -30.0
+#define accelerationCap -30.0
 
 @interface PPPlayer()
 @property (nonatomic) CGFloat currentAccelleration;
@@ -42,8 +42,8 @@
         [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy + _currentAccelleration)];
 
         _currentAccelleration -= 1;
-        if (_currentAccelleration <= accellerationCap) {
-            _currentAccelleration = accellerationCap;
+        if (_currentAccelleration <= accelerationCap) {
+            _currentAccelleration = accelerationCap;
         }
     } else {
         _currentAccelleration = 0;
