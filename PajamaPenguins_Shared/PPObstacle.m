@@ -68,7 +68,7 @@ CGFloat const kTileWidth = 15.0;
         [self addChild:[self frameAtIndex:rightBottomThin] atGridX:1 atGridY:-2];
         [self addChild:[self frameAtIndex:rightBottomThick] atGridX:1 atGridY:-1];
         [self addChild:[self frameAtIndex:rightTop] atGridX:1 atGridY:0];
-
+        
         [self addChild:self.obstacle];
         
         NSMutableArray *tempPoints = [NSMutableArray new];
