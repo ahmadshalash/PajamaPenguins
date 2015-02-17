@@ -40,6 +40,8 @@
 		EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93D31A8D222100CBD711 /* PPObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93D21A8D222100CBD711 /* PPObstacle.m */; };
 		EEBA93D41A8D222100CBD711 /* PPObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93D21A8D222100CBD711 /* PPObstacle.m */; };
+		EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
+		EEBA93F31A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
 		EED8E59E1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */; };
 		EED8E59F1A840B23001C8F59 /* PajamaPenguinsSpriteSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */; };
 		EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EED8E5A31A881D79001C8F59 /* PPPlayer.m */; };
@@ -82,7 +84,7 @@
 		EE6F92EC1A82F39400286DC7 /* SSKButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKButtonNode.m; sourceTree = "<group>"; };
 		EE6F92EE1A82F39400286DC7 /* SSKScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKScene.h; sourceTree = "<group>"; };
 		EE6F92EF1A82F39400286DC7 /* SSKScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKScene.m; sourceTree = "<group>"; };
-		EE6F92F11A82F39400286DC7 /* SSKColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SSKColor+Additions.h"; sourceTree = "<group>"; };
+		EE6F92F11A82F39400286DC7 /* SKColor+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKColor+SFAdditions.h"; sourceTree = "<group>"; };
 		EE6F92F21A82F39400286DC7 /* SSKGraphicsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKGraphicsUtils.h; sourceTree = "<group>"; };
 		EE6F92F31A82F39400286DC7 /* SSKGraphicsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKGraphicsUtils.m; sourceTree = "<group>"; };
 		EE6F92F41A82F39400286DC7 /* SSKMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKMathUtils.h; sourceTree = "<group>"; };
@@ -92,6 +94,8 @@
 		EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKCameraNode.m; sourceTree = "<group>"; };
 		EEBA93D11A8D222100CBD711 /* PPObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPObstacle.h; sourceTree = "<group>"; };
 		EEBA93D21A8D222100CBD711 /* PPObstacle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPObstacle.m; sourceTree = "<group>"; };
+		EEBA93F01A93FD4F00CBD711 /* TwoDimensionalArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoDimensionalArray.h; sourceTree = "<group>"; };
+		EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoDimensionalArray.m; sourceTree = "<group>"; };
 		EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsSpriteSheet.png; sourceTree = "<group>"; };
 		EED8E5A21A881D79001C8F59 /* PPPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlayer.h; sourceTree = "<group>"; };
 		EED8E5A31A881D79001C8F59 /* PPPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlayer.m; sourceTree = "<group>"; };
@@ -288,7 +292,9 @@
 		EE6F92F01A82F39400286DC7 /* SSKUtils */ = {
 			isa = PBXGroup;
 			children = (
-				EE6F92F11A82F39400286DC7 /* SSKColor+Additions.h */,
+				EE6F92F11A82F39400286DC7 /* SKColor+SFAdditions.h */,
+				EEBA93F01A93FD4F00CBD711 /* TwoDimensionalArray.h */,
+				EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */,
 				EE6F92F21A82F39400286DC7 /* SSKGraphicsUtils.h */,
 				EE6F92F31A82F39400286DC7 /* SSKGraphicsUtils.m */,
 				EE6F92F61A82F39400286DC7 /* SSKPhysicsUtils.h */,
@@ -413,6 +419,7 @@
 				41E430A918B09E5200E1427D /* ViewController.m in Sources */,
 				EE6F92FA1A82F39400286DC7 /* SSKiAD.m in Sources */,
 				EE6F92FE1A82F39400286DC7 /* SSKScene.m in Sources */,
+				EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */,
 				41E430A018B09E5200E1427D /* AppDelegate.m in Sources */,
 				EE6F92F81A82F39400286DC7 /* SSKGameCenter.m in Sources */,
 				41E4309C18B09E5200E1427D /* main.m in Sources */,
@@ -432,6 +439,7 @@
 				EE6F92FD1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
 				41E430EA18B09E8600E1427D /* AppDelegate.m in Sources */,
 				EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
+				EEBA93F31A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */,
 				EE6F93051A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

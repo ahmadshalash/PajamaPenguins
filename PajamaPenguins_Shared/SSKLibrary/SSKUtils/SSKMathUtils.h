@@ -29,6 +29,5 @@ SSK_INLINE CGFloat SSKSquareNumber(CGFloat num) {
 
 SSK_INLINE CGVector SSKDistanceBetweenPoints(CGPoint first, CGPoint second) {
     return CGVectorMake(SSKSubtractNumbers(second.x, first.x), SSKSubtractNumbers(second.y, first.y));
-//    return sqrtf(SSKSquareNumber(SSKSubtractNumbers(second.x, first.x)) + SSKSquareNumber(SSKSubtractNumbers(second.y, first.y)));
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "PPObstacle.h"
+#import "TwoDimensionalArray.h"
 
 typedef enum {
     center = 0,
@@ -27,11 +28,12 @@ typedef enum {
     bottomLong,
 }ObstacleFrameIndex;
 
-CGFloat const kTileWidth = 15.0;
-
 @interface PPObstacle()
 @property (nonatomic) NSArray *textureFrames;
 @property (nonatomic) SKNode *obstacle;
+
+@property (nonatomic) CGFloat textureWidth;
+@property (nonatomic) CGFloat gridWidth;
 @end
 
 @implementation PPObstacle
@@ -49,42 +51,26 @@ CGFloat const kTileWidth = 15.0;
  
  */
 
-- (instancetype)initWithTexturesFromArray:(NSArray*)array {
+- (instancetype)initWithTexturesFromArray:(NSArray*)array textureWidth:(CGFloat)textureWidth gridWidth:(CGFloat)gridWidth {
     self = [super init];
     if (self) {
         self.textureFrames = [NSArray arrayWithArray:array];
-        
-        //Test Node
-        _obstacle = [SKNode new];
-        
-        [self addChild:[self frameAtIndex:center] atGridX:0 atGridY:0];
-        [self addChild:[self frameAtIndex:center] atGridX:0 atGridY:-1];
-        [self addChild:[self frameAtIndex:center] atGridX:0 atGridY:-2];
-        [self addChild:[self frameAtIndex:top] atGridX:0 atGridY:1];
-        [self addChild:[self frameAtIndex:leftTop] atGridX:-1 atGridY:0];
-        [self addChild:[self frameAtIndex:leftBottomThick] atGridX:-1 atGridY:-1];
-        [self addChild:[self frameAtIndex:leftBottomThin] atGridX:-1 atGridY:-2];
-        [self addChild:[self frameAtIndex:bottomLong] atGridX:0 atGridY:-3];
-        [self addChild:[self frameAtIndex:rightBottomThin] atGridX:1 atGridY:-2];
-        [self addChild:[self frameAtIndex:rightBottomThick] atGridX:1 atGridY:-1];
-        [self addChild:[self frameAtIndex:rightTop] atGridX:1 atGridY:0];
-        
-        [self addChild:self.obstacle];
-        
-        NSMutableArray *tempPoints = [NSMutableArray new];
-        [tempPoints addObject:[NSValue valueWithCGPoint:CGPointMake(0, kTileWidth)]];
-        [tempPoints addObject:[NSValue valueWithCGPoint:CGPointMake(-kTileWidth - kTileWidth/2, -kTileWidth/2)]];
-        [tempPoints addObject:[NSValue valueWithCGPoint:CGPointMake(0, -kTileWidth*3.5)]];
-        [tempPoints addObject:[NSValue valueWithCGPoint:CGPointMake(kTileWidth + kTileWidth/2, -kTileWidth/2)]];
+        self.textureWidth = textureWidth;
+        self.gridWidth = gridWidth;
 
-        self.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathFromPoints:tempPoints]];
-        [self.physicsBody setAffectedByGravity:NO];
-        [self.physicsBody setAllowsRotation:NO];
+        self.obstacle = [SKNode new];
         
-        [self setName:@"obstacle"];
+        TwoDimensionalArray *grid = [[TwoDimensionalArray alloc] initWithRows:3 columns:5];
     }
     return self;
 }
+
+//- (NSMutableArray*)newGridWithWidth:(CGFloat)width height:(CGFloat)height {
+//    NSMutableArray *row = [NSMutableArray arrayWithCapacity:width];
+//    for (int i = 0; i < width; i++) {
+//        NSMutableArray *row = [NSMutableArray arrayWithCapacity:height];
+//    }
+//}
 
 #pragma mark - Obstacle Frames
 - (SKSpriteNode*)frameAtIndex:(NSUInteger)index {
@@ -108,7 +94,7 @@ CGFloat const kTileWidth = 15.0;
 
 #pragma mark - Convenience
 - (void)addChild:(SKSpriteNode *)node atGridX:(CGFloat)gridX atGridY:(CGFloat)gridY {
-    [node setPosition:CGPointMake(kTileWidth * gridX, kTileWidth * gridY)];
+    [node setPosition:CGPointMake(_textureWidth * gridX, _textureWidth * gridY)];
     
     if (!_obstacle) {
         NSLog(@"Obstacle node does not exist");

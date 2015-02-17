@@ -7,7 +7,7 @@
 #import "PPGameScene.h"
 #import "PPPlayer.h"
 #import "PPObstacle.h"
-#import "SSKColor+Additions.h"
+#import "SKColor+SFAdditions.h"
 #import "SSKCameraNode.h"
 #import "SSKButtonNode.h"
 #import "SSKGraphicsUtils.h"
@@ -56,7 +56,7 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 
 #pragma mark - Creating scene layers
 - (void)createScene {
-    self.backgroundColor = SSKColorWithRGB(6, 220, 220);
+    self.backgroundColor = SKColorWithRGB(6, 220, 220);
     self.anchorPoint = CGPointMake(0.5, 0.5);
 
     [self createWorld];
@@ -76,7 +76,7 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
     [player setZPosition:playerLayer];
     [self.worldNode addChild:player];
     
-    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SSKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 3, self.size.height * 3)];
+    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 3, self.size.height * 3)];
     [water setAnchorPoint:CGPointMake(.5, 1)];
     [water setPosition:CGPointMake(self.size.width/2, 0)];
     [water setAlpha:0.5];
@@ -170,7 +170,7 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 
 #pragma mark - Obstacles
 - (PPObstacle*)newObstacleAtPoint:(CGPoint)point {
-    PPObstacle *obstacle = [[PPObstacle alloc] initWithTexturesFromArray:sObstacleTextures];
+    PPObstacle *obstacle = [[PPObstacle alloc] initWithTexturesFromArray:sObstacleTextures textureWidth:15 gridWidth:10];
     obstacle.position = point;
     return obstacle;
 }

@@ -10,6 +10,7 @@
 
 @interface PPObstacle : SKNode
 
-- (instancetype)initWithTexturesFromArray:(NSArray*)array;
-
+- (instancetype)initWithTexturesFromArray:(NSArray*)array
+                             textureWidth:(CGFloat)textureWidth
+                                gridWidth:(CGFloat)gridWidth;
 @end
