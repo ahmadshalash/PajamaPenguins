@@ -31,8 +31,8 @@ CGFloat const kWaterGravityStrength = 6;
 //Clamped Constants
 CGFloat const kWorldScaleCap = 0.60;
 CGFloat const kPlayerUpperVelocityLimit = 700.0;
-CGFloat const kPlayerLowerAirVelocityLimit = -600.0;
-CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
+CGFloat const kPlayerLowerAirVelocityLimit = -700.0;
+CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
@@ -60,7 +60,7 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
     self.anchorPoint = CGPointMake(0.5, 0.5);
 
     [self createWorld];
-//    [self createMenu];
+    [self createMenu];
 }
 
 - (void)createWorld {
@@ -105,14 +105,26 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
     [startLabel setPosition:CGPointMake(0, -self.size.height/6 * 2)];
     [self.menuNode addChild:startLabel];
 
-    SKSpriteNode *startIcon = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:120]];
-    [startIcon setScale:5];
-    [startIcon setPosition:CGPointMake(startLabel.position.x, startLabel.position.y + startIcon.size.height)];
-    [self.menuNode addChild:startIcon];
+    SKSpriteNode *startFinger = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:120]];
+    [startFinger setScale:5];
+    [startFinger setPosition:CGPointMake(startLabel.position.x, startLabel.position.y + startFinger.size.height)];
+    [startFinger setName:@"finger"];
+    [self.menuNode addChild:startFinger];
+    
+    SKSpriteNode *startFingerEffect = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:121]];
+    [startFingerEffect setScale:5];
+    [startFingerEffect setPosition:CGPointMake(startFinger.position.x - startFinger.size.width/8, startFinger.position.y + startFinger.size.height/6 * 4)];
+    [startFingerEffect setAlpha:0];
+    [startFingerEffect setName:@"fingerEffect"];
+    [self.menuNode addChild:startFingerEffect];
 }
 
 #pragma mark - Initial scene animations
 - (void)startSceneAnimations {
+    //To offset opening scene frame drop
+    [self runAction:[SKAction waitForDuration:.5] completion:^{
+        [self runMenuFingerAction];
+    }];
 }
 
 #pragma mark - Game Start
@@ -120,7 +132,7 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
     NSLog(@"Prepare Game");
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
     
-    SKAction *wait = [SKAction waitForDuration:3];
+    SKAction *wait = [SKAction waitForDuration:1];
     SKAction *spawn = [SKAction runBlock:^{
         [self spawnAndMove];
     }];
@@ -184,9 +196,29 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
     return [SKAction moveToX:-self.size.width duration:duration];
 }
 
+#pragma mark - Menu
+- (void)runMenuFingerAction {
+    SKNode *finger = [self.menuNode childNodeWithName:@"finger"];
+    SKNode *fingerEffect = [self.menuNode childNodeWithName:@"fingerEffect"];
+    
+    SKAction *fingerFloatUp = [SKAction moveByX:0 y:10 duration:.5];
+    fingerFloatUp.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *fingerFloatDown = fingerFloatUp.reversedAction;
+    SKAction *effectOn = [SKAction runBlock:^{
+        [fingerEffect setAlpha:1];
+    }];
+    SKAction *effectOff = [SKAction runBlock:^{
+        [fingerEffect setAlpha:0];
+    }];
+    SKAction *effectWait = [SKAction waitForDuration:.25];
+    SKAction *sequence = [SKAction sequence:@[fingerFloatUp,effectOn,effectWait,effectOff,fingerFloatDown]];
+    
+    [finger runAction:[SKAction repeatActionForever:sequence]];
+}
+
 #pragma mark - Convenience
 - (SKLabelNode *)createNewLabelWithText:(NSString*)text withFontSize:(CGFloat)fontSize {
-    SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"Verdana"];
+    SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"AppleColorEmoji"];
     [label setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
     [label setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
     [label setFontColor:[SKColor blackColor]];
