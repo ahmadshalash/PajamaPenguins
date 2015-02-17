@@ -21,7 +21,7 @@
 }
 
 /* 
- TODO: Ad ad height to adjust by device/screen-orientation
+ TODO: Add height to adjust by device/screen-orientation
  */
 
 - (id)initWithFrame:(CGRect)frame {

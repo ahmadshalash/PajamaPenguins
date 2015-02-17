@@ -29,9 +29,9 @@ CGFloat const kWaterGravityStrength = 6;
 
 //Clamped Constants
 CGFloat const kWorldScaleCap = 0.55;
-CGFloat const kPlayerUpperVelocityLimit = 650.0;
+CGFloat const kPlayerUpperVelocityLimit = 700.0;
 CGFloat const kPlayerLowerAirVelocityLimit = -600.0;
-CGFloat const kPlayerLowerWaterVelocityLimit = -300.0;
+CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
@@ -151,6 +151,7 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -300.0;
     }
     NSLog(@"player speed: %fl",[self.worldNode childNodeWithName:@"player"].physicsBody.velocity.dy);
 }
+
 #pragma mark - Actions
 - (SKAction*)floatAction {
     SKAction *down = [SKAction moveByX:0 y:-25 duration:2];
@@ -189,9 +190,6 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -300.0;
 
 - (void)interactionEndedAtPosition:(CGPoint)position {
     [self stopPlayerDive];
-}
-
-- (void)interactionMovedAtPosition:(CGPoint)position {
 }
 
 #pragma mark - Scene Processing
@@ -248,8 +246,6 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -300.0;
         [self.worldNode setPosition:CGPointMake(-(amtToMoveTop.dx), -(amtToMoveTop.dy))];
         
         if (self.worldNode.xScale <= kWorldScaleCap) {
-            [self stopPlayerDive];
-            
             [self.worldNode setScale:kWorldScaleCap];
             [self.worldNode setPosition:CGPointMake(-(distance.dx) * (1 - kWorldScaleCap), -(distance.dy)*(1 - kWorldScaleCap))];
         }
@@ -260,8 +256,6 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -300.0;
         [self.worldNode setPosition:CGPointMake(-(amtToMoveBottom.dx), amtToMoveBottom.dy)];
         
         if (self.worldNode.xScale <= kWorldScaleCap) {
-            [self stopPlayerDive];
-            
             [self.worldNode setScale:kWorldScaleCap];
             [self.worldNode setPosition:CGPointMake(-(distance.dx) * (1 - kWorldScaleCap), (distance.dy) * (1 - kWorldScaleCap))];
         }

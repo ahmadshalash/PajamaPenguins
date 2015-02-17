@@ -8,7 +8,7 @@
 
 #import "PPPlayer.h"
 
-#define veloCap -30.0
+#define accellerationCap -30.0
 
 @interface PPPlayer()
 @property (nonatomic) CGFloat currentAccelleration;
@@ -36,13 +36,14 @@
     if (self.zRotation <= SSKDegreesToRadians(150)) {
         [self setZRotation:SSKDegreesToRadians(150)];
     }
-
+    
+    //Acceleration
     if (_playerShouldDive) {
         [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy + _currentAccelleration)];
-        
+
         _currentAccelleration -= 1;
-        if (_currentAccelleration <= veloCap) {
-            _currentAccelleration = veloCap;
+        if (_currentAccelleration <= accellerationCap) {
+            _currentAccelleration = accellerationCap;
         }
     } else {
         _currentAccelleration = 0;
