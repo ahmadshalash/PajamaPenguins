@@ -29,7 +29,7 @@ CGFloat const kAirGravityStrength = -3;
 CGFloat const kWaterGravityStrength = 6;
 
 //Clamped Constants
-CGFloat const kWorldScaleCap = 0.55;
+CGFloat const kWorldScaleCap = 0.60;
 CGFloat const kPlayerUpperVelocityLimit = 700.0;
 CGFloat const kPlayerLowerAirVelocityLimit = -600.0;
 CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
@@ -120,7 +120,12 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
     NSLog(@"Prepare Game");
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
     
-    [self.worldNode addChild:[self newObstacleAtPoint:CGPointMake(0, 0)]];
+    SKAction *wait = [SKAction waitForDuration:3];
+    SKAction *spawn = [SKAction runBlock:^{
+        [self spawnAndMove];
+    }];
+    SKAction *seq = [SKAction sequence:@[wait,spawn]];
+    [self runAction:[SKAction repeatActionForever:seq] withKey:@"gamePlaying"];
     
     self.gameState = Playing;
 }
@@ -158,12 +163,25 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
     return obstacle;
 }
 
+- (void)spawnAndMove {
+    SKNode *obstacle = [self newObstacleAtPoint:CGPointMake(self.size.width * 1.5, 0)];
+    [self.worldNode addChild:obstacle];
+    
+    [obstacle runAction:[self moveObstacleWithDuration:6] completion:^{
+        [obstacle removeFromParent];
+    }];
+}
+
 #pragma mark - Actions
 - (SKAction*)floatAction {
     SKAction *down = [SKAction moveByX:0 y:-25 duration:2];
     [down setTimingMode:SKActionTimingEaseInEaseOut];
     SKAction *up = [down reversedAction];
     return [SKAction sequence:@[down,up]];
+}
+
+- (SKAction*)moveObstacleWithDuration:(NSTimeInterval)duration {
+    return [SKAction moveToX:-self.size.width duration:duration];
 }
 
 #pragma mark - Convenience
@@ -287,7 +305,7 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -400.0;
     
     //Obstacle Textures
     NSMutableArray *tempObstacleTextures = [NSMutableArray new];
-    for (int i = 15; i < 30; i++) {
+    for (int i = 15; i < 31; i++) {
         [tempObstacleTextures addObject:[sTextures objectAtIndex:i]];
     }
     sObstacleTextures = [NSArray arrayWithArray:tempObstacleTextures];
