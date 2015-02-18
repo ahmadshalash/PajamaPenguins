@@ -70,18 +70,22 @@ typedef enum {
 
 #pragma mark - Grid Array
 - (void)populateGridArray:(TwoDimensionalArray*)grid {
+    BOOL gridWidthEven = [self numberIsEven:grid.rowCount];
+    CGPoint leftEdgeTracker, rightEdgeTracker = CGPointZero;
     NSUInteger topBoundary;
+    
     if (grid.rowCount > 2) {
-        topBoundary = floor(grid.rowCount/2);
+        if (gridWidthEven) {
+            topBoundary = (grid.rowCount/2) - 1;
+        } else {
+            topBoundary = grid.rowCount/2;
+        }
     } else {
         topBoundary = 0;
     }
-    NSLog(@"Top bounds %lu",topBoundary);
-    
-    CGPoint leftEdgeTracker, rightEdgeTracker = CGPointZero;
     
     //Start with custom tile placement for top and bottom
-    if ([self numberIsEven:grid.rowCount]) {
+    if (gridWidthEven) {
         [grid insertObject:[self tileWithFrameAtIndex:leftTop] atRow:(grid.rowCount/2 - 1) atColumn:0]; //Top Left Cap
         [grid insertObject:[self tileWithFrameAtIndex:rightTop] atRow:(grid.rowCount/2) atColumn:0]; //Top Right Cap
         [grid insertObject:[self tileWithFrameAtIndex:leftBottomThin] atRow:(grid.rowCount/2 - 1) atColumn:grid.columnCount - 1]; //Bottom Left Cap
@@ -98,28 +102,53 @@ typedef enum {
     }
     
     //First Pass
+    NSUInteger bottomSectionRow = 0;
+    
     for (int i = 1; i < grid.columnCount; i++) {
         if (i <= topBoundary) {
             leftEdgeTracker = CGPointMake(leftEdgeTracker.x - 1, leftEdgeTracker.y + 1);
             rightEdgeTracker = CGPointMake(rightEdgeTracker.x + 1, rightEdgeTracker.y + 1);
-//            NSLog(@"Left Tracker: (%fl,%fl) Right Tracker: (%fl,%fl)",leftEdgeTracker.x,leftEdgeTracker.y,rightEdgeTracker.x,rightEdgeTracker.y);
+        }
+        else if (i > topBoundary && i < (grid.columnCount - 1)){
+            bottomSectionRow++;
+            if (bottomSectionRow < 3) {
+                leftEdgeTracker = CGPointMake(leftEdgeTracker.x, leftEdgeTracker.y + 1);
+                rightEdgeTracker = CGPointMake(rightEdgeTracker.x, rightEdgeTracker.y + 1);
+            } else {
+                leftEdgeTracker = CGPointMake(leftEdgeTracker.x + (bottomSectionRow % 2), leftEdgeTracker.y + 1);
+                rightEdgeTracker = CGPointMake(rightEdgeTracker.x - (bottomSectionRow % 2), rightEdgeTracker.y + 1);
+            }
+            NSLog(@"Left: (%fl,%fl)",leftEdgeTracker.x,leftEdgeTracker.y);
+            NSLog(@"Right: (%fl,%fl)",rightEdgeTracker.x,rightEdgeTracker.y);
         }
         
         for (int j = 0; j < grid.rowCount; j++) {
+            ObstacleFrameIndex leftFrameType, rightFrameType;
+            if (i <= topBoundary) {
+                leftFrameType = leftTop;
+                rightFrameType = rightTop;
+            } else {
+                if ([self numberIsEven:bottomSectionRow]) {
+                    leftFrameType = leftBottomThin;
+                    rightFrameType = rightBottomThin;
+                } else {
+                    leftFrameType = leftBottomThick;
+                    rightFrameType = rightBottomThick;
+                }
+            }
+            
+            //Left edge tiles
             if (j == leftEdgeTracker.x && i == leftEdgeTracker.y) {
-                [grid insertObject:[self tileWithFrameAtIndex:leftTop] atRow:j atColumn:i];
-                NSLog(@"Left: %d,%d",j,i);
+                [grid insertObject:[self tileWithFrameAtIndex:leftFrameType] atRow:j atColumn:i];
             }
+            //Right edge tiles
             else if (j == rightEdgeTracker.x && i == rightEdgeTracker.y) {
-                NSLog(@"Right: %d,%d",j,i);
-                [grid insertObject:[self tileWithFrameAtIndex:rightTop] atRow:j atColumn:i];
+                [grid insertObject:[self tileWithFrameAtIndex:rightFrameType] atRow:j atColumn:i];
             }
-        }
-    }
-    
-    //Second Pass
-    for (int i = 0; i < grid.columnCount; i++) {
-        for (int j = 0; j < grid.rowCount; j++) {
+            //Center tiles
+            else if (j > leftEdgeTracker.x && j < rightEdgeTracker.x && i > 0 && i < (grid.columnCount - 1)) {
+                [grid insertObject:[self tileWithFrameAtIndex:center] atRow:j atColumn:i];
+            }
         }
     }
 }

@@ -138,7 +138,7 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 //    }];
 //    SKAction *seq = [SKAction sequence:@[wait,spawn]];
 //    [self runAction:[SKAction repeatActionForever:seq] withKey:@"gamePlaying"];
-    [self.worldNode addChild:[self newObstacleAtPoint:CGPointMake(0, 0)]];
+    [self.worldNode addChild:[self newObstacleAtPoint:CGPointMake(0, 0) withWidth:10]];
     
     self.gameState = Playing;
 }
@@ -170,14 +170,14 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 }
 
 #pragma mark - Obstacles
-- (PPObstacle*)newObstacleAtPoint:(CGPoint)point {
-    PPObstacle *obstacle = [[PPObstacle alloc] initWithTexturesFromArray:sObstacleTextures textureWidth:15 numHorizontalCells:4];
+- (PPObstacle*)newObstacleAtPoint:(CGPoint)point withWidth:(NSUInteger)width{
+    PPObstacle *obstacle = [[PPObstacle alloc] initWithTexturesFromArray:sObstacleTextures textureWidth:15 numHorizontalCells:width];
     obstacle.position = point;
     return obstacle;
 }
 
 - (void)spawnAndMove {
-    SKNode *obstacle = [self newObstacleAtPoint:CGPointMake(self.size.width * 1.5, 0)];
+    SKNode *obstacle = [self newObstacleAtPoint:CGPointMake(self.size.width * 1.5, 0) withWidth:3];
     [self.worldNode addChild:obstacle];
     
     [obstacle runAction:[self moveObstacleWithDuration:6] completion:^{
