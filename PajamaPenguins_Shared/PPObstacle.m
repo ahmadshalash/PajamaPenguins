@@ -59,7 +59,7 @@ typedef enum {
         self.gridWidth = gridWidth;
 
         NSUInteger gridHeight = ceil(gridWidth * 1.5);
-        NSLog(@"%lu",gridHeight);
+//        NSLog(@"%lu",gridHeight);
         
         TwoDimensionalArray *grid = [[TwoDimensionalArray alloc] initWithRows:gridWidth columns:gridHeight];
         [self populateGridArray:grid];
@@ -70,26 +70,54 @@ typedef enum {
 
 #pragma mark - Grid Array
 - (void)populateGridArray:(TwoDimensionalArray*)grid {
-    //First pass populate with center tiles
-    for (int i = 0; i < grid.columnCount; i++) {
+    NSUInteger topBoundary;
+    if (grid.rowCount > 2) {
+        topBoundary = floor(grid.rowCount/2);
+    } else {
+        topBoundary = 0;
+    }
+    NSLog(@"Top bounds %lu",topBoundary);
+    
+    CGPoint leftEdgeTracker, rightEdgeTracker = CGPointZero;
+    
+    //Start with custom tile placement for top and bottom
+    if ([self numberIsEven:grid.rowCount]) {
+        [grid insertObject:[self tileWithFrameAtIndex:leftTop] atRow:(grid.rowCount/2 - 1) atColumn:0]; //Top Left Cap
+        [grid insertObject:[self tileWithFrameAtIndex:rightTop] atRow:(grid.rowCount/2) atColumn:0]; //Top Right Cap
+        [grid insertObject:[self tileWithFrameAtIndex:leftBottomThin] atRow:(grid.rowCount/2 - 1) atColumn:grid.columnCount - 1]; //Bottom Left Cap
+        [grid insertObject:[self tileWithFrameAtIndex:rightBottomThin] atRow:(grid.rowCount/2) atColumn:grid.columnCount - 1]; //Bottom Right Cap
+        
+        leftEdgeTracker = CGPointMake((grid.rowCount/2 - 1), 0);
+        rightEdgeTracker = CGPointMake(grid.rowCount/2, 0);
+    } else {
+        [grid insertObject:[self tileWithFrameAtIndex:top] atRow:floor(grid.rowCount/2) atColumn:0]; //Top cap
+        [grid insertObject:[self tileWithFrameAtIndex:bottomLong] atRow:floor(grid.rowCount/2) atColumn:grid.columnCount - 1]; //Bottom cap
+        
+        leftEdgeTracker = CGPointMake(floor(grid.rowCount/2), 0);
+        rightEdgeTracker = leftEdgeTracker;
+    }
+    
+    //First Pass
+    for (int i = 1; i < grid.columnCount; i++) {
+        if (i <= topBoundary) {
+            leftEdgeTracker = CGPointMake(leftEdgeTracker.x - 1, leftEdgeTracker.y + 1);
+            rightEdgeTracker = CGPointMake(rightEdgeTracker.x + 1, rightEdgeTracker.y + 1);
+//            NSLog(@"Left Tracker: (%fl,%fl) Right Tracker: (%fl,%fl)",leftEdgeTracker.x,leftEdgeTracker.y,rightEdgeTracker.x,rightEdgeTracker.y);
+        }
+        
         for (int j = 0; j < grid.rowCount; j++) {
-            [grid insertObject:[self tileWithFrameAtIndex:center] atRow:j atColumn:i];
+            if (j == leftEdgeTracker.x && i == leftEdgeTracker.y) {
+                [grid insertObject:[self tileWithFrameAtIndex:leftTop] atRow:j atColumn:i];
+                NSLog(@"Left: %d,%d",j,i);
+            }
+            else if (j == rightEdgeTracker.x && i == rightEdgeTracker.y) {
+                NSLog(@"Right: %d,%d",j,i);
+                [grid insertObject:[self tileWithFrameAtIndex:rightTop] atRow:j atColumn:i];
+            }
         }
     }
     
     //Second Pass
-    if ([self numberIsEven:_gridWidth]) {
-        [grid insertObject:[self tileWithFrameAtIndex:leftTop] atRow:(grid.rowCount/2 - 1) atColumn:0]; //Left top cap
-        [grid insertObject:[self tileWithFrameAtIndex:rightTop] atRow:(grid.rowCount/2) atColumn:0]; //Right top cap
-        [grid insertObject:[self tileWithFrameAtIndex:leftBottomThin] atRow:(grid.rowCount/2 - 1) atColumn:grid.columnCount - 1]; //Left bottom cap
-        [grid insertObject:[self tileWithFrameAtIndex:rightBottomThin] atRow:(grid.rowCount/2) atColumn:grid.columnCount - 1]; //Right bottom cap
-        NSLog(@"is even");
-    } else {
-        [grid insertObject:[self tileWithFrameAtIndex:top] atRow:floor(grid.rowCount/2) atColumn:0]; //Top cap
-        [grid insertObject:[self tileWithFrameAtIndex:bottomLong] atRow:floor(grid.rowCount/2) atColumn:grid.columnCount - 1]; //Bottom cap
-        NSLog(@"is odd");
-    }
-    
     for (int i = 0; i < grid.columnCount; i++) {
         for (int j = 0; j < grid.rowCount; j++) {
         }
@@ -126,9 +154,11 @@ typedef enum {
 
 #pragma mark - Convenience
 - (void)addChild:(SKSpriteNode *)node atGridX:(CGFloat)gridX atGridY:(CGFloat)gridY {
-//    [node setPosition:CGPointMake(_textureWidth * gridX, -_textureWidth * gridY)];
-    [node setPosition:CGPointMake(_textureWidth * gridX + (1 * gridX), -_textureWidth * gridY - (1 * gridY))]; // For Segment Testing
-    [self addChild:node];
+    if ([node isKindOfClass:[SKNode class]]) {
+        //    [node setPosition:CGPointMake(_textureWidth * gridX, -_textureWidth * gridY)];
+        [node setPosition:CGPointMake(_textureWidth * gridX + (1 * gridX), -_textureWidth * gridY - (1 * gridY))]; // For Segment Testing
+        [self addChild:node];
+    }
 }
 
 - (BOOL)numberIsEven:(NSUInteger)num {

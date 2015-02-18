@@ -171,7 +171,7 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 
 #pragma mark - Obstacles
 - (PPObstacle*)newObstacleAtPoint:(CGPoint)point {
-    PPObstacle *obstacle = [[PPObstacle alloc] initWithTexturesFromArray:sObstacleTextures textureWidth:15 numHorizontalCells:10];
+    PPObstacle *obstacle = [[PPObstacle alloc] initWithTexturesFromArray:sObstacleTextures textureWidth:15 numHorizontalCells:4];
     obstacle.position = point;
     return obstacle;
 }
