@@ -12,5 +12,5 @@
 
 - (instancetype)initWithTexturesFromArray:(NSArray*)array
                              textureWidth:(CGFloat)textureWidth
-                                gridWidth:(CGFloat)gridWidth;
+                    numHorizontalCells:(NSUInteger)gridWidth;
 @end

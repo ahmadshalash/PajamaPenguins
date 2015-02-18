@@ -10,12 +10,13 @@
 
 @interface TwoDimensionalArray : NSObject
 
-@property (nonatomic, readonly) NSMutableArray *rows;
-@property (nonatomic, readonly) NSMutableArray *columns;
+@property (nonatomic, readonly) NSUInteger rowCount;
+@property (nonatomic, readonly) NSUInteger columnCount;
 
 - (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns;
 
 - (void)insertObject:(id)object atRow:(NSUInteger)row atColumn:(NSUInteger)column;
+- (void)removeObjectAtRow:(NSUInteger)row atColumn:(NSUInteger)column;
 - (id)getObjectAtRow:(NSUInteger)row atColumn:(NSUInteger)column;
 
 @end
