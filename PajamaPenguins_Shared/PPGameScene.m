@@ -69,7 +69,7 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
     [self addChild:self.worldNode];
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
-                                              atPosition:CGPointMake(-self.size.width/4, 0)];
+                                              atPosition:CGPointMake(-self.size.width/4, 150)];
     [player setScale:1];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
@@ -97,17 +97,17 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
     [self.menuNode setName:@"menu"];
     [self addChild:self.menuNode];
     
-    SKLabelNode *titleLabel = [self createNewLabelWithText:@"Pajama Penguins" withFontSize:50];
-    [titleLabel setPosition:CGPointMake(0, self.size.height/6 * 2)];
-    [self.menuNode addChild:titleLabel];
-    
-    SKLabelNode *startLabel = [self createNewLabelWithText:@"Tap to start!" withFontSize:45];
-    [startLabel setPosition:CGPointMake(0, -self.size.height/6 * 2)];
-    [self.menuNode addChild:startLabel];
+//    SKLabelNode *titleLabel = [self createNewLabelWithText:@"Pajama Penguins" withFontSize:50];
+//    [titleLabel setPosition:CGPointMake(0, self.size.height/6 * 2)];
+//    [self.menuNode addChild:titleLabel];
+//    
+//    SKLabelNode *startLabel = [self createNewLabelWithText:@"Tap to start!" withFontSize:45];
+//    [startLabel setPosition:CGPointMake(0, -self.size.height/6 * 2)];
+//    [self.menuNode addChild:startLabel];
 
     SKSpriteNode *startFinger = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:120]];
     [startFinger setScale:5];
-    [startFinger setPosition:CGPointMake(startLabel.position.x, startLabel.position.y + startFinger.size.height)];
+    [startFinger setPosition:CGPointMake(0, -self.size.height/3)];
     [startFinger setName:@"finger"];
     [self.menuNode addChild:startFinger];
     

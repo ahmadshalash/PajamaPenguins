@@ -9,7 +9,7 @@
 #import "PPPlayer.h"
 
 //#define accelerationCap -30.0
-#define kAccelerationCap 35.0
+#define kAccelerationCap 45.0
 
 @interface PPPlayer()
 @property (nonatomic) CGFloat currentAccelleration;
@@ -29,6 +29,7 @@
 - (void)update:(NSTimeInterval)dt {
     [self setZRotation:(M_PI * self.physicsBody.velocity.dy * .00025) + SSKDegreesToRadians(90)];
  
+    
     //Clamp rotation between 45 and 135 degrees
     if (self.zRotation >= SSKDegreesToRadians(30)) {
         [self setZRotation:SSKDegreesToRadians(30)];

@@ -33,7 +33,7 @@ typedef enum {
 @property (nonatomic) CGFloat textureWidth;
 @property (nonatomic) NSUInteger gridWidth;
 
-@property (nonatomic) SKNode *obstacle;
+@property (nonatomic) SKSpriteNode *obstacle;
 @end
 
 @implementation PPObstacle
@@ -62,15 +62,17 @@ typedef enum {
         CGFloat actualObstacleWidth = gridWidth * textureWidth;
         CGFloat actualObstacleHeight = actualObstacleWidth * 1.5;
         
-        self.obstacle = [SKNode new];
-        
+        self.obstacle = [SKSpriteNode new];
+        [self.obstacle setPosition:CGPointMake(-actualObstacleWidth/2, actualObstacleHeight/3)]; //Center obstacle within node
+        [self addChild:self.obstacle];
+
+        //Populate iceberg grid
         TwoDimensionalArray *grid = [[TwoDimensionalArray alloc] initWithRows:gridWidth columns:gridHeight];
         [self populateGridArray:grid];
         [self addGrid:grid toNode:self.obstacle];
         
-        //Offset obstacle to top cap height
-        [self.obstacle setPosition:CGPointMake(-actualObstacleWidth/2, actualObstacleHeight/3)];
-        [self addChild:self.obstacle];
+        //Adding a physics body to the iceberg
+//        self.obstacle.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:[self pathFromPoints:<#(NSArray *)#>]];
     }
     return self;
 }
@@ -125,8 +127,6 @@ typedef enum {
                 leftEdgeTracker = CGPointMake(leftEdgeTracker.x + (bottomSectionRow % 2), leftEdgeTracker.y + 1);
                 rightEdgeTracker = CGPointMake(rightEdgeTracker.x - (bottomSectionRow % 2), rightEdgeTracker.y + 1);
             }
-            NSLog(@"Left: (%fl,%fl)",leftEdgeTracker.x,leftEdgeTracker.y);
-            NSLog(@"Right: (%fl,%fl)",rightEdgeTracker.x,rightEdgeTracker.y);
         }
         
         for (int j = 0; j < grid.rowCount; j++) {
@@ -143,7 +143,7 @@ typedef enum {
                     rightFrameType = rightBottomThick;
                 }
             }
-            
+
             //Left edge tiles
             if (j == leftEdgeTracker.x && i == leftEdgeTracker.y) {
                 [grid insertObject:[self tileWithFrameAtIndex:leftFrameType] atRow:j atColumn:i];
@@ -171,21 +171,6 @@ typedef enum {
 #pragma mark - Obstacle Frames
 - (SKSpriteNode*)tileWithFrameAtIndex:(NSUInteger)index {
     return [SKSpriteNode spriteNodeWithTexture:[self.textureFrames objectAtIndex:index]];
-}
-
-#pragma mark - Creating a path
-- (CGPathRef)pathFromPoints:(NSArray*)points {
-    CGMutablePathRef path = CGPathCreateMutable();
-    
-    CGPathMoveToPoint(path, nil, [(NSValue*)[points objectAtIndex:0] CGPointValue].x, [(NSValue*)[points objectAtIndex:0] CGPointValue].y);
-    
-    for (NSValue *point in points) {
-        CGPathAddLineToPoint(path, nil, [point CGPointValue].x, [point CGPointValue].y);
-        NSLog(@"%fl %fl",[point CGPointValue].x,[point CGPointValue].y);
-    }
-    CGPathCloseSubpath(path);
-    
-    return path;
 }
 
 #pragma mark - Convenience

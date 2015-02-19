@@ -22,6 +22,8 @@
 		41E430E518B09E8600E1427D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41E430E418B09E8600E1427D /* MainMenu.xib */; };
 		41E430EA18B09E8600E1427D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E430E918B09E8600E1427D /* AppDelegate.m */; };
 		41E430EF18B09E8600E1427D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41E430EE18B09E8600E1427D /* Images.xcassets */; };
+		EE168C8B1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168C8A1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m */; };
+		EE168C8C1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168C8A1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m */; };
 		EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E430A118B09E5200E1427D /* Main_iPhone.storyboard */; };
 		EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E430A418B09E5200E1427D /* Main_iPad.storyboard */; };
 		EE5575EB1A5A108100B87145 /* PPGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5575E91A5A108100B87145 /* PPGameScene.m */; };
@@ -74,6 +76,9 @@
 		41E430E918B09E8600E1427D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		41E430EB18B09E8600E1427D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		41E430EE18B09E8600E1427D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EE168C811A96A51D005403E6 /* SKColor+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKColor+SFAdditions.h"; sourceTree = "<group>"; };
+		EE168C891A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKPhysicsBody+SFAdditions.h"; sourceTree = "<group>"; };
+		EE168C8A1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKPhysicsBody+SFAdditions.m"; sourceTree = "<group>"; };
 		EE5575E81A5A108100B87145 /* PPGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPGameScene.h; sourceTree = "<group>"; };
 		EE5575E91A5A108100B87145 /* PPGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPGameScene.m; sourceTree = "<group>"; };
 		EE6F92E61A82F39400286DC7 /* SSKGameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKGameCenter.h; sourceTree = "<group>"; };
@@ -84,7 +89,6 @@
 		EE6F92EC1A82F39400286DC7 /* SSKButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKButtonNode.m; sourceTree = "<group>"; };
 		EE6F92EE1A82F39400286DC7 /* SSKScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKScene.h; sourceTree = "<group>"; };
 		EE6F92EF1A82F39400286DC7 /* SSKScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKScene.m; sourceTree = "<group>"; };
-		EE6F92F11A82F39400286DC7 /* SKColor+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKColor+SFAdditions.h"; sourceTree = "<group>"; };
 		EE6F92F21A82F39400286DC7 /* SSKGraphicsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKGraphicsUtils.h; sourceTree = "<group>"; };
 		EE6F92F31A82F39400286DC7 /* SSKGraphicsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKGraphicsUtils.m; sourceTree = "<group>"; };
 		EE6F92F41A82F39400286DC7 /* SSKMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKMathUtils.h; sourceTree = "<group>"; };
@@ -227,6 +231,16 @@
 			name = Scenes;
 			sourceTree = "<group>";
 		};
+		EE168C7C1A96A2A8005403E6 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				EE168C811A96A51D005403E6 /* SKColor+SFAdditions.h */,
+				EE168C891A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.h */,
+				EE168C8A1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		EE5575ED1A5A10B600B87145 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +264,7 @@
 		EE6F92E41A82F39400286DC7 /* SSKLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				EE168C7C1A96A2A8005403E6 /* Categories */,
 				EE6F92E51A82F39400286DC7 /* SSKGameHelpers */,
 				EE6F92EA1A82F39400286DC7 /* SSKNodes */,
 				EE6F92ED1A82F39400286DC7 /* SSKScenes */,
@@ -292,7 +307,6 @@
 		EE6F92F01A82F39400286DC7 /* SSKUtils */ = {
 			isa = PBXGroup;
 			children = (
-				EE6F92F11A82F39400286DC7 /* SKColor+SFAdditions.h */,
 				EEBA93F01A93FD4F00CBD711 /* TwoDimensionalArray.h */,
 				EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */,
 				EE6F92F21A82F39400286DC7 /* SSKGraphicsUtils.h */,
@@ -409,6 +423,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE168C8B1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m in Sources */,
 				EE6F93001A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */,
 				EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */,
 				EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */,
@@ -430,6 +445,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE168C8C1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m in Sources */,
 				EEBA93D41A8D222100CBD711 /* PPObstacle.m in Sources */,
 				EE6F93011A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */,
 				EED8E5A51A881D79001C8F59 /* PPPlayer.m in Sources */,
