@@ -132,13 +132,15 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
     NSLog(@"Prepare Game");
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
     
-//    SKAction *wait = [SKAction waitForDuration:1];
-//    SKAction *spawn = [SKAction runBlock:^{
-//        [self spawnAndMove];
-//    }];
-//    SKAction *seq = [SKAction sequence:@[wait,spawn]];
-//    [self runAction:[SKAction repeatActionForever:seq] withKey:@"gamePlaying"];
-    [self.worldNode addChild:[self newObstacleAtPoint:CGPointMake(0, 0) withWidth:10]];
+    SKAction *wait = [SKAction waitForDuration:2];
+    SKAction *spawnFloatMove = [SKAction runBlock:^{
+        SKNode *obstacle = [self generateNewObstacleWithRandomSize];
+        [self.worldNode addChild:obstacle];
+        [obstacle runAction:[SKAction repeatActionForever:[self floatAction]]];
+        [obstacle runAction:[SKAction moveToX:-self.size.width duration:6]];
+    }];
+    SKAction *sequence = [SKAction sequence:@[wait,spawnFloatMove]];
+    [self runAction:[SKAction repeatActionForever:sequence] withKey:@"gamePlaying"];
     
     self.gameState = Playing;
 }
@@ -176,13 +178,11 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
     return obstacle;
 }
 
-- (void)spawnAndMove {
-    SKNode *obstacle = [self newObstacleAtPoint:CGPointMake(self.size.width * 1.5, 0) withWidth:3];
-    [self.worldNode addChild:obstacle];
-    
-    [obstacle runAction:[self moveObstacleWithDuration:6] completion:^{
-        [obstacle removeFromParent];
-    }];
+- (SKNode*)generateNewObstacleWithRandomSize {
+    CGFloat randomNum = SSKRandomFloatInRange(1, 15);
+    CGPoint spawnPoint = CGPointMake(self.size.width * 1.5, 0);
+//    CGPoint spawnPoint = CGPointMake(0, 0);
+    return [self newObstacleAtPoint:spawnPoint withWidth:randomNum];
 }
 
 #pragma mark - Actions

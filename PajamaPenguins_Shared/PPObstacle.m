@@ -30,10 +30,10 @@ typedef enum {
 
 @interface PPObstacle()
 @property (nonatomic) NSArray *textureFrames;
-@property (nonatomic) SKNode *obstacle;
-
 @property (nonatomic) CGFloat textureWidth;
 @property (nonatomic) NSUInteger gridWidth;
+
+@property (nonatomic) SKNode *obstacle;
 @end
 
 @implementation PPObstacle
@@ -57,13 +57,20 @@ typedef enum {
         self.textureFrames = [NSArray arrayWithArray:array];
         self.textureWidth = textureWidth;
         self.gridWidth = gridWidth;
-
+        
         NSUInteger gridHeight = ceil(gridWidth * 1.5);
-//        NSLog(@"%lu",gridHeight);
+        CGFloat actualObstacleWidth = gridWidth * textureWidth;
+        CGFloat actualObstacleHeight = actualObstacleWidth * 1.5;
+        
+        self.obstacle = [SKNode new];
         
         TwoDimensionalArray *grid = [[TwoDimensionalArray alloc] initWithRows:gridWidth columns:gridHeight];
         [self populateGridArray:grid];
-        [self placeGrid:grid];
+        [self addGrid:grid toNode:self.obstacle];
+        
+        //Offset obstacle to top cap height
+        [self.obstacle setPosition:CGPointMake(-actualObstacleWidth/2, actualObstacleHeight/3)];
+        [self addChild:self.obstacle];
     }
     return self;
 }
@@ -153,10 +160,10 @@ typedef enum {
     }
 }
 
-- (void)placeGrid:(TwoDimensionalArray*)grid {
+- (void)addGrid:(TwoDimensionalArray*)grid toNode:(SKNode*)parent {
     for (int i = 0 ; i < grid.columnCount; i++) {
         for (int j = 0; j < grid.rowCount; j++) {
-            [self addChild:[grid getObjectAtRow:j atColumn:i] atGridX:j atGridY:i];
+            [self addChild:[grid getObjectAtRow:j atColumn:i] toNode:parent atGridX:j atGridY:i];
         }
     }
 }
@@ -182,11 +189,11 @@ typedef enum {
 }
 
 #pragma mark - Convenience
-- (void)addChild:(SKSpriteNode *)node atGridX:(CGFloat)gridX atGridY:(CGFloat)gridY {
+- (void)addChild:(SKSpriteNode *)node toNode:(SKNode*)parent atGridX:(CGFloat)gridX atGridY:(CGFloat)gridY {
     if ([node isKindOfClass:[SKNode class]]) {
         //    [node setPosition:CGPointMake(_textureWidth * gridX, -_textureWidth * gridY)];
         [node setPosition:CGPointMake(_textureWidth * gridX + (1 * gridX), -_textureWidth * gridY - (1 * gridY))]; // For Segment Testing
-        [self addChild:node];
+        [parent addChild:node];
     }
 }
 
