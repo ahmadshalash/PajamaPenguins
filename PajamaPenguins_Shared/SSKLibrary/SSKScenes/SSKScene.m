@@ -8,8 +8,12 @@
 
 @implementation SSKScene
 
--(id)initWithSize:(CGSize)size {
-    return [super initWithSize:size];
+- (id)initWithSize:(CGSize)size {
+    self = [super initWithSize:size];
+    if (self) {
+        self.physicsWorld.contactDelegate = self;
+    }
+    return self;
 }
 
 #pragma mark - Scene Asset Preloading

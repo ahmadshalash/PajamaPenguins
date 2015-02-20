@@ -93,6 +93,7 @@ typedef enum {
                                          [NSValue valueWithCGPoint:rightPoint], nil];
         
         self.iceberg.physicsBody = [SKPhysicsBody bodyWithEdgeLoopPathFromPoints:pointsForPhysicsPath];
+        [self.iceberg.physicsBody setDynamic:NO];
         [self.iceberg.physicsBody setRestitution:0];
         [self.iceberg.physicsBody setFriction:0];
     }

@@ -16,7 +16,6 @@
     
     for (NSValue *point in points) {
         CGPathAddLineToPoint(path, nil, [point CGPointValue].x, [point CGPointValue].y);
-        NSLog(@"%fl %fl",[point CGPointValue].x,[point CGPointValue].y);
     }
     CGPathCloseSubpath(path);
 

@@ -16,6 +16,7 @@
 typedef enum {
     MainMenu,
     Playing,
+    GameOver,
 }GameState;
 
 typedef enum {
@@ -29,6 +30,7 @@ typedef enum {
 //Physics Constants
 static const uint32_t playerCategory   = 0x1 << 0;
 static const uint32_t obstacleCategory = 0x1 << 1;
+static const uint32_t edgeCategory     = 0x1 << 2;
 
 CGFloat const kAirGravityStrength = -3;
 CGFloat const kWaterGravityStrength = 6;
@@ -83,6 +85,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
     [player.physicsBody setCategoryBitMask:playerCategory];
+    [player.physicsBody setCollisionBitMask:obstacleCategory | edgeCategory];
     [player.physicsBody setContactTestBitMask:obstacleCategory];
     [self.worldNode addChild:player];
     
@@ -98,6 +101,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
     [boundary.physicsBody setFriction:0];
     [boundary.physicsBody setRestitution:0];
+    [boundary.physicsBody setCategoryBitMask:edgeCategory];
     [self.worldNode addChild:boundary];
 }
 
@@ -152,26 +156,36 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     }];
 }
 
-#pragma mark - Game Start
-- (void)startObstacleSequence {
+#pragma mark - Game In Progress
+- (void)startObstacleSpawnSequence {
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
     SKAction *wait = [SKAction waitForDuration:2];
     SKAction *spawnFloatMove = [SKAction runBlock:^{
         SKNode *obstacle = [self generateNewObstacleWithRandomSize];
         [self.worldNode addChild:obstacle];
         [obstacle runAction:[SKAction repeatActionForever:[self floatAction]]];
-        [obstacle runAction:[SKAction moveToX:-self.size.width duration:6]];
+        [obstacle runAction:[SKAction moveToX:-self.size.width duration:6] withKey:@"moveObstacle"];
     }];
     SKAction *sequence = [SKAction sequence:@[wait,spawnFloatMove]];
     [self runAction:[SKAction repeatActionForever:sequence] withKey:@"gamePlaying"];
 }
 
+- (void)stopObstacleSpawnSequence {
+    [self removeActionForKey:@"gamePlaying"];
+}
+
 - (void)gameStart {
     [self createHud];
-    [self startObstacleSequence];
+    [self startObstacleSpawnSequence];
     [self startScoreCounter];
     
     self.gameState = Playing;
+}
+
+- (void)gameEnd {
+    [self stopScoreCounter];
+    [self stopObstacleSpawnSequence];
+    [self stopObstacleMovement];
 }
 
 #pragma mark - Player
@@ -204,7 +218,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 - (PPObstacle*)newObstacleAtPoint:(CGPoint)point withWidth:(NSUInteger)width{
     PPObstacle *obstacle = [[PPObstacle alloc] initWithTexturesFromArray:sObstacleTextures textureWidth:15 numHorizontalCells:width];
     [obstacle setPosition:point];
+    [obstacle setName:@"obstacle"];
     [obstacle.iceberg.physicsBody setCategoryBitMask:obstacleCategory];
+    [obstacle.iceberg.physicsBody setCollisionBitMask:playerCategory];
     [obstacle.iceberg.physicsBody setContactTestBitMask:playerCategory];
     return obstacle;
 }
@@ -215,6 +231,12 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     return [self newObstacleAtPoint:spawnPoint withWidth:randomNum];
 }
 
+- (void)stopObstacleMovement {
+    [self.worldNode enumerateChildNodesWithName:@"obstacle" usingBlock:^(SKNode *node, BOOL *stop) {
+        [node removeActionForKey:@"moveObstacle"];
+    }];
+}
+
 #pragma mark - Score Tracking
 - (void)startScoreCounter {
     SKAction *timerDelay = [SKAction waitForDuration:.25];
@@ -223,6 +245,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     }];
     SKAction *sequence = [SKAction sequence:@[timerDelay,incrementScore]];
     [self runAction:[SKAction repeatActionForever:sequence] withKey:@"scoreKey"];
+}
+
+- (void)stopScoreCounter {
+    [self removeActionForKey:@"scoreKey"];
 }
 
 #pragma mark - Actions
@@ -276,6 +302,11 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 - (void)runAction:(SKAction*)action onNode:(SKNode*)node {
     [node runAction:action];
+}
+
+#pragma mark - Collisions
+- (void)resolveCollisionFromFirstBody:(SKPhysicsBody *)firstBody secondBody:(SKPhysicsBody *)secondBody {
+    [self gameEnd];
 }
 
 #pragma mark - Input
