@@ -34,7 +34,6 @@ typedef enum {
 @property (nonatomic) CGFloat textureWidth;
 @property (nonatomic) NSUInteger gridWidth;
 
-@property (nonatomic) SKSpriteNode *obstacle;
 @end
 
 @implementation PPObstacle
@@ -63,14 +62,14 @@ typedef enum {
         CGFloat actualObstacleWidth = gridWidth * textureWidth;
         CGFloat actualObstacleHeight = actualObstacleWidth * 1.5;
         
-        self.obstacle = [SKSpriteNode new];
-        [self.obstacle setPosition:CGPointMake(-actualObstacleWidth/2, actualObstacleHeight/3)]; //Center obstacle within node
-        [self addChild:self.obstacle];
+        self.iceberg = [SKSpriteNode new];
+        [self.iceberg setPosition:CGPointMake(-actualObstacleWidth/2, actualObstacleHeight/3)]; //Center obstacle within node
+        [self addChild:self.iceberg];
 
         //Populate iceberg grid
         TwoDimensionalArray *grid = [[TwoDimensionalArray alloc] initWithRows:gridWidth columns:gridHeight];
         [self populateGridArray:grid];
-        [self addGrid:grid toNode:self.obstacle];
+        [self addGrid:grid toNode:self.iceberg];
         
         //Adding a physics body to the iceberg
         CGFloat tileWidthOffset = textureWidth/2;
@@ -93,7 +92,9 @@ typedef enum {
                                          [NSValue valueWithCGPoint:bottomPoint],
                                          [NSValue valueWithCGPoint:rightPoint], nil];
         
-        self.obstacle.physicsBody = [SKPhysicsBody bodyWithEdgeLoopPathFromPoints:pointsForPhysicsPath];
+        self.iceberg.physicsBody = [SKPhysicsBody bodyWithEdgeLoopPathFromPoints:pointsForPhysicsPath];
+        [self.iceberg.physicsBody setRestitution:0];
+        [self.iceberg.physicsBody setFriction:0];
     }
     
     return self;

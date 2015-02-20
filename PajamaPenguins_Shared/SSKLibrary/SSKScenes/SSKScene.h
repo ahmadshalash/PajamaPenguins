@@ -14,7 +14,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface SSKScene : SKScene
+@interface SSKScene : SKScene <SKPhysicsContactDelegate>
 
 //Loading Scene Assets
 typedef void (^AssetCompletionHandler)(void);
@@ -30,5 +30,8 @@ typedef void (^AssetCompletionHandler)(void);
 #if !TARGET_OS_IPHONE
 - (void)handleKeyEvent:(NSEvent*)theEvent keyDown:(BOOL)downOrUp;
 #endif
+
+//Collision Detection
+- (void)resolveCollisionFromFirstBody:(SKPhysicsBody*)firstBody secondBody:(SKPhysicsBody*)secondBody;
 
 @end

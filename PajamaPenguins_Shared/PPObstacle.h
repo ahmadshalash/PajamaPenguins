@@ -10,6 +10,8 @@
 
 @interface PPObstacle : SKNode
 
+@property (nonatomic) SKSpriteNode *iceberg;
+
 - (instancetype)initWithTexturesFromArray:(NSArray*)array
                              textureWidth:(CGFloat)textureWidth
                     numHorizontalCells:(NSUInteger)gridWidth;

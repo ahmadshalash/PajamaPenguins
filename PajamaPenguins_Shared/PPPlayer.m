@@ -22,6 +22,8 @@
     if (self) {
         self.position = position;
         self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:texture.size.width/2];
+        [self.physicsBody setFriction:0];
+        [self.physicsBody setRestitution:0];
     }
     return self;
 }

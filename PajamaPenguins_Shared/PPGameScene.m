@@ -27,6 +27,9 @@ typedef enum {
 }Layers;
 
 //Physics Constants
+static const uint32_t playerCategory   = 0x1 << 0;
+static const uint32_t obstacleCategory = 0x1 << 1;
+
 CGFloat const kAirGravityStrength = -3;
 CGFloat const kWaterGravityStrength = 6;
 
@@ -79,6 +82,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
+    [player.physicsBody setCategoryBitMask:playerCategory];
+    [player.physicsBody setContactTestBitMask:obstacleCategory];
     [self.worldNode addChild:player];
     
     SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SKColorWithRGB(85, 65, 50) size:CGSizeMake(self.size.width * 3, self.size.height * 3)];
@@ -198,7 +203,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 #pragma mark - Obstacles
 - (PPObstacle*)newObstacleAtPoint:(CGPoint)point withWidth:(NSUInteger)width{
     PPObstacle *obstacle = [[PPObstacle alloc] initWithTexturesFromArray:sObstacleTextures textureWidth:15 numHorizontalCells:width];
-    obstacle.position = point;
+    [obstacle setPosition:point];
+    [obstacle.iceberg.physicsBody setCategoryBitMask:obstacleCategory];
+    [obstacle.iceberg.physicsBody setContactTestBitMask:playerCategory];
     return obstacle;
 }
 

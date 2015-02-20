@@ -85,6 +85,7 @@
 }
 #endif
 
+#pragma mark - Input Abstraction
 - (void)interactionBeganAtPosition:(CGPoint)position {
     /* Overridden by subclasses */
 }
@@ -94,6 +95,26 @@
 }
 
 - (void)interactionEndedAtPosition:(CGPoint)position {
+    /* Overridden by subclasses */
+}
+
+#pragma mark - Collision Detection
+- (void)didBeginContact:(SKPhysicsContact *)contact {
+    SKPhysicsBody *firstBody;
+    SKPhysicsBody *secondBody;
+    
+    if (contact.bodyA.contactTestBitMask < contact.bodyB.contactTestBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    } else {
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
+    
+    [self resolveCollisionFromFirstBody:firstBody secondBody:secondBody];
+}
+
+- (void)resolveCollisionFromFirstBody:(SKPhysicsBody*)firstBody secondBody:(SKPhysicsBody*)secondBody {
     /* Overridden by subclasses */
 }
 
