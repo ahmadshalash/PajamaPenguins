@@ -142,7 +142,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Initial scene animations
 - (void)startSceneAnimations {
-    //To offset opening scene frame drop
     [self runAction:[SKAction waitForDuration:.5] completion:^{
         [self runMenuFingerAction];
     }];
@@ -162,10 +161,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self runAction:[SKAction repeatActionForever:sequence] withKey:@"gamePlaying"];
 }
 
-- (void)prepareGameStart {
-    NSLog(@"Prepare Game");
+- (void)gameStart {
     [self createHud];
     [self startObstacleSequence];
+    [self startScoreCounter];
     
     self.gameState = Playing;
 }
@@ -206,8 +205,17 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 - (SKNode*)generateNewObstacleWithRandomSize {
     CGFloat randomNum = SSKRandomFloatInRange(1, 15);
     CGPoint spawnPoint = CGPointMake(self.size.width * 1.5, 0);
-//    CGPoint spawnPoint = CGPointMake(0, 0);
     return [self newObstacleAtPoint:spawnPoint withWidth:randomNum];
+}
+
+#pragma mark - Score Tracking
+- (void)startScoreCounter {
+    SKAction *timerDelay = [SKAction waitForDuration:.25];
+    SKAction *incrementScore = [SKAction runBlock:^{
+        [(SSKScoreNode*)[self.hudNode childNodeWithName:@"scoreCounter"] increment];
+    }];
+    SKAction *sequence = [SKAction sequence:@[timerDelay,incrementScore]];
+    [self runAction:[SKAction repeatActionForever:sequence] withKey:@"scoreKey"];
 }
 
 #pragma mark - Actions
@@ -266,7 +274,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 #pragma mark - Input
 - (void)interactionBeganAtPosition:(CGPoint)position {
     if (self.gameState == MainMenu) {
-        [self prepareGameStart];
+        [self gameStart];
     }
     
     if (self.gameState == Playing) {
