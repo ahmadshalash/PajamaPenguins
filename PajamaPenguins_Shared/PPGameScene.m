@@ -256,10 +256,10 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 }
 
 - (void)didEvaluateActions {
+    [self updateWorldZoom];
 }
 
 - (void)didSimulatePhysics {
-    [self updateWorldZoom];
     [self clampPlayerVelocity];
 }
 

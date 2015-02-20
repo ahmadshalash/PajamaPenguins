@@ -73,12 +73,19 @@ typedef enum {
         [self addGrid:grid toNode:self.obstacle];
         
         //Adding a physics body to the iceberg
-//        CGFloat tileOffset = textureWidth/2;
+        CGFloat tileWidthOffset = textureWidth/2;
+        CGFloat tileHeightOffset;
         
-        CGPoint topPoint = CGPointMake(actualObstacleWidth/2, 0);
-        CGPoint leftPoint = CGPointMake(0, -actualObstacleHeight/3);
-        CGPoint rightPoint = CGPointMake(actualObstacleWidth, -actualObstacleHeight/3);
-        CGPoint bottomPoint = CGPointMake(actualObstacleWidth/2, -actualObstacleHeight);
+        if ([self numberIsEven:gridWidth]) {
+            tileHeightOffset = tileWidthOffset;
+        } else {
+            tileHeightOffset = 0;
+        }
+        
+        CGPoint topPoint = CGPointMake(actualObstacleWidth/2 - tileWidthOffset, tileHeightOffset);
+        CGPoint leftPoint = CGPointMake(-tileWidthOffset, -actualObstacleHeight/3 + tileHeightOffset);
+        CGPoint rightPoint = CGPointMake(actualObstacleWidth - tileWidthOffset, -actualObstacleHeight/3 + tileHeightOffset);
+        CGPoint bottomPoint = CGPointMake(actualObstacleWidth/2 - tileWidthOffset, -actualObstacleHeight + tileHeightOffset);
         
         NSArray *pointsForPhysicsPath = [NSArray arrayWithObjects:
                                          [NSValue valueWithCGPoint:topPoint],
@@ -191,8 +198,8 @@ typedef enum {
 #pragma mark - Convenience
 - (void)addChild:(SKSpriteNode *)node toNode:(SKNode*)parent atGridX:(CGFloat)gridX atGridY:(CGFloat)gridY {
     if ([node isKindOfClass:[SKNode class]]) {
-        //    [node setPosition:CGPointMake(_textureWidth * gridX, -_textureWidth * gridY)];
-        [node setPosition:CGPointMake(_textureWidth * gridX + (1 * gridX), -_textureWidth * gridY - (1 * gridY))]; // For Segment Testing
+            [node setPosition:CGPointMake(_textureWidth * gridX, -_textureWidth * gridY)];
+//        [node setPosition:CGPointMake(_textureWidth * gridX + (1 * gridX), -_textureWidth * gridY - (1 * gridY))]; // For Segment Testing
         [parent addChild:node];
     }
 }
