@@ -8,6 +8,7 @@
 
 #import "PPObstacle.h"
 #import "TwoDimensionalArray.h"
+#import "SKPhysicsBody+SFAdditions.h"
 
 typedef enum {
     center = 0,
@@ -72,8 +73,22 @@ typedef enum {
         [self addGrid:grid toNode:self.obstacle];
         
         //Adding a physics body to the iceberg
-//        self.obstacle.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:[self pathFromPoints:<#(NSArray *)#>]];
+//        CGFloat tileOffset = textureWidth/2;
+        
+        CGPoint topPoint = CGPointMake(actualObstacleWidth/2, 0);
+        CGPoint leftPoint = CGPointMake(0, -actualObstacleHeight/3);
+        CGPoint rightPoint = CGPointMake(actualObstacleWidth, -actualObstacleHeight/3);
+        CGPoint bottomPoint = CGPointMake(actualObstacleWidth/2, -actualObstacleHeight);
+        
+        NSArray *pointsForPhysicsPath = [NSArray arrayWithObjects:
+                                         [NSValue valueWithCGPoint:topPoint],
+                                         [NSValue valueWithCGPoint:leftPoint],
+                                         [NSValue valueWithCGPoint:bottomPoint],
+                                         [NSValue valueWithCGPoint:rightPoint], nil];
+        
+        self.obstacle.physicsBody = [SKPhysicsBody bodyWithEdgeLoopPathFromPoints:pointsForPhysicsPath];
     }
+    
     return self;
 }
 

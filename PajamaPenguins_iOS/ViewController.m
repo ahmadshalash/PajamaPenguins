@@ -28,6 +28,7 @@
     }
     
 #ifdef DEBUG_MODE
+    skView.showsPhysics = YES;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
 #endif
