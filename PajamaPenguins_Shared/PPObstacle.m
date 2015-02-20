@@ -198,7 +198,7 @@ typedef enum {
 #pragma mark - Convenience
 - (void)addChild:(SKSpriteNode *)node toNode:(SKNode*)parent atGridX:(CGFloat)gridX atGridY:(CGFloat)gridY {
     if ([node isKindOfClass:[SKNode class]]) {
-            [node setPosition:CGPointMake(_textureWidth * gridX, -_textureWidth * gridY)];
+        [node setPosition:CGPointMake(_textureWidth * gridX, -_textureWidth * gridY)];
 //        [node setPosition:CGPointMake(_textureWidth * gridX + (1 * gridX), -_textureWidth * gridY - (1 * gridY))]; // For Segment Testing
         [parent addChild:node];
     }
@@ -207,4 +207,5 @@ typedef enum {
 - (BOOL)numberIsEven:(NSUInteger)num {
     return ((num % 2) == 0);
 }
+
 @end

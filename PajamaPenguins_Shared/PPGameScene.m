@@ -36,9 +36,9 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
-
 @property (nonatomic) SKNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
+@property (nonatomic) SKNode *hudNode;
 @end
 
 @implementation PPGameScene
@@ -70,7 +70,7 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
                                               atPosition:CGPointMake(-self.size.width/4, 150)];
-    [player setScale:1];
+    [player setScale:1.5];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
@@ -97,13 +97,9 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
     [self.menuNode setName:@"menu"];
     [self addChild:self.menuNode];
     
-//    SKLabelNode *titleLabel = [self createNewLabelWithText:@"Pajama Penguins" withFontSize:50];
-//    [titleLabel setPosition:CGPointMake(0, self.size.height/6 * 2)];
-//    [self.menuNode addChild:titleLabel];
-//    
-//    SKLabelNode *startLabel = [self createNewLabelWithText:@"Tap to start!" withFontSize:45];
-//    [startLabel setPosition:CGPointMake(0, -self.size.height/6 * 2)];
-//    [self.menuNode addChild:startLabel];
+    SKLabelNode *titleLabel = [self createNewLabelWithText:@"Pajama Penguins" withFontSize:18];
+    [titleLabel setPosition:CGPointMake(0, self.size.height/6 * 2)];
+    [self.menuNode addChild:titleLabel];
 
     SKSpriteNode *startFinger = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:120]];
     [startFinger setScale:5];
@@ -117,6 +113,10 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
     [startFingerEffect setAlpha:0];
     [startFingerEffect setName:@"fingerEffect"];
     [self.menuNode addChild:startFingerEffect];
+}
+
+- (void)createHud {
+
 }
 
 #pragma mark - Initial scene animations
@@ -219,10 +219,10 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 
 #pragma mark - Convenience
 - (SKLabelNode *)createNewLabelWithText:(NSString*)text withFontSize:(CGFloat)fontSize {
-    SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"AppleColorEmoji"];
+    SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"Fipps-Regular"];
     [label setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
     [label setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
-    [label setFontColor:[SKColor blackColor]];
+    [label setFontColor:SKColorWithRGB(6, 100, 100)];
     [label setText:text];
     [label setFontSize:fontSize];
     return label;
