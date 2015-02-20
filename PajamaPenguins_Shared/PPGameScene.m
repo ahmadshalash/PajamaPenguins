@@ -10,6 +10,7 @@
 #import "SKColor+SFAdditions.h"
 #import "SSKCameraNode.h"
 #import "SSKButtonNode.h"
+#import "SSKScoreNode.h"
 #import "SSKGraphicsUtils.h"
 
 typedef enum {
@@ -21,6 +22,7 @@ typedef enum {
     backgroundLayer = 0,
     playerLayer,
     foregroundLayer,
+    hudLayer,
     menuLayer,
 }Layers;
 
@@ -33,6 +35,9 @@ CGFloat const kWorldScaleCap = 0.60;
 CGFloat const kPlayerUpperVelocityLimit = 700.0;
 CGFloat const kPlayerLowerAirVelocityLimit = -700.0;
 CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
+
+//Name Constants
+NSString * const kPixelFontName = @"Fipps-Regular";
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
@@ -116,7 +121,23 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 }
 
 - (void)createHud {
-
+    self.hudNode = [SKNode node];
+    [self.hudNode setZPosition:hudLayer];
+    [self.hudNode setName:@"hud"];
+    [self.hudNode setAlpha:0];
+    [self addChild:self.hudNode];
+    
+    SSKScoreNode *scoreCounter = [SSKScoreNode scoreNodeWithFontNamed:kPixelFontName fontSize:12 fontColor:[SKColor blackColor]];
+    [scoreCounter setName:@"scoreCounter"];
+    [scoreCounter setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeLeft];
+    [scoreCounter setVerticalAlignmentMode:SKLabelVerticalAlignmentModeBottom];
+    [scoreCounter setPosition:CGPointMake(-self.size.width/2 + 5, -self.size.height/2 + 5)];
+    [self.hudNode addChild:scoreCounter];
+    
+    //Offset fade in movement
+    CGFloat moveDistance = 10;
+    [self.hudNode setPosition:CGPointMake(0, -moveDistance)];
+    [self.hudNode runAction:[self moveDistance:CGVectorMake(0, moveDistance) andFadeInWithDuration:.2]];
 }
 
 #pragma mark - Initial scene animations
@@ -128,10 +149,8 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 }
 
 #pragma mark - Game Start
-- (void)prepareGameStart {
-    NSLog(@"Prepare Game");
+- (void)startObstacleSequence {
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
-    
     SKAction *wait = [SKAction waitForDuration:2];
     SKAction *spawnFloatMove = [SKAction runBlock:^{
         SKNode *obstacle = [self generateNewObstacleWithRandomSize];
@@ -141,6 +160,12 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
     }];
     SKAction *sequence = [SKAction sequence:@[wait,spawnFloatMove]];
     [self runAction:[SKAction repeatActionForever:sequence] withKey:@"gamePlaying"];
+}
+
+- (void)prepareGameStart {
+    NSLog(@"Prepare Game");
+    [self createHud];
+    [self startObstacleSequence];
     
     self.gameState = Playing;
 }
@@ -197,6 +222,12 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
     return [SKAction moveToX:-self.size.width duration:duration];
 }
 
+- (SKAction*)moveDistance:(CGVector)distance andFadeInWithDuration:(NSTimeInterval)duration {
+    SKAction *fadeIn = [SKAction fadeInWithDuration:duration];
+    SKAction *moveIn = [SKAction moveBy:distance duration:duration];
+    return [SKAction group:@[fadeIn,moveIn]];
+}
+
 #pragma mark - Menu
 - (void)runMenuFingerAction {
     SKNode *finger = [self.menuNode childNodeWithName:@"finger"];
@@ -219,10 +250,10 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 
 #pragma mark - Convenience
 - (SKLabelNode *)createNewLabelWithText:(NSString*)text withFontSize:(CGFloat)fontSize {
-    SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"Fipps-Regular"];
+    SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:kPixelFontName];
     [label setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
     [label setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
-    [label setFontColor:SKColorWithRGB(6, 100, 100)];
+    [label setFontColor:[SKColor blackColor]];
     [label setText:text];
     [label setFontSize:fontSize];
     return label;

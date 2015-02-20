@@ -10,7 +10,10 @@
 
 @interface SSKScoreNode : SKLabelNode
 
-- (instancetype)initWithFontNamed:(NSString *)fontName fontSize:(CGFloat)fontSize fontColor:(SKColor*)fontColor;
+@property (nonatomic, readonly) NSInteger score;
+
++ (instancetype)scoreNodeWithFontNamed:(NSString*)fontName fontSize:(CGFloat)fontSize fontColor:(SKColor*)fontColor;
+- (instancetype)initWithFontNamed:(NSString*)fontName fontSize:(CGFloat)fontSize fontColor:(SKColor*)fontColor;
 
 - (void)increment;
 - (void)decrement;

@@ -9,12 +9,12 @@
 #import "SSKScoreNode.h"
 
 @interface SSKScoreNode()
-@property (nonatomic) NSInteger counter;
+@property (nonatomic, readwrite) NSInteger score;
 @end
 
 @implementation SSKScoreNode
 
-- (instancetype)initWithFontNamed:(NSString *)fontName fontSize:(CGFloat)fontSize fontColor:(SKColor*)fontColor {
+- (instancetype)initWithFontNamed:(NSString*)fontName fontSize:(CGFloat)fontSize fontColor:(SKColor*)fontColor {
     self = [super initWithFontNamed:fontName];
     
     if (self) {
@@ -27,13 +27,21 @@
     return self;
 }
 
++ (instancetype)scoreNodeWithFontNamed:(NSString*)fontName fontSize:(CGFloat)fontSize fontColor:(SKColor*)fontColor {
+    return [[self alloc] initWithFontNamed:fontName fontSize:fontSize fontColor:fontColor];
+}
+
+- (instancetype)initWithFontNamed:(NSString *)fontName {
+    return [self initWithFontNamed:fontName fontSize:20 fontColor:[SKColor blackColor]];
+}
+
 #pragma mark - Counter
 - (void)increment {
-    [self updateTextWithCount:self.counter++];
+    [self updateTextWithCount:self.score++];
 }
 
 - (void)decrement {
-    [self updateTextWithCount:self.counter--];
+    [self updateTextWithCount:self.score--];
 }
 
 - (void)updateTextWithCount:(NSInteger)count {
