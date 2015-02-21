@@ -28,6 +28,10 @@
 		EE168C8F1A97C952005403E6 /* Fipps-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = EE168C8D1A97C952005403E6 /* Fipps-Regular.otf */; };
 		EE168C971A97CEC2005403E6 /* SSKScoreNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168C961A97CEC2005403E6 /* SSKScoreNode.m */; };
 		EE168C981A97CEC2005403E6 /* SSKScoreNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168C961A97CEC2005403E6 /* SSKScoreNode.m */; };
+		EE168CDA1A994D68005403E6 /* PajamaPenguinsCharacters.png in Resources */ = {isa = PBXBuildFile; fileRef = EE168CD91A994D68005403E6 /* PajamaPenguinsCharacters.png */; };
+		EE168CDB1A994D68005403E6 /* PajamaPenguinsCharacters.png in Resources */ = {isa = PBXBuildFile; fileRef = EE168CD91A994D68005403E6 /* PajamaPenguinsCharacters.png */; };
+		EE168CDE1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */; };
+		EE168CDF1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */; };
 		EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E430A118B09E5200E1427D /* Main_iPhone.storyboard */; };
 		EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E430A418B09E5200E1427D /* Main_iPad.storyboard */; };
 		EE5575EB1A5A108100B87145 /* PPGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5575E91A5A108100B87145 /* PPGameScene.m */; };
@@ -86,6 +90,9 @@
 		EE168C8D1A97C952005403E6 /* Fipps-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fipps-Regular.otf"; sourceTree = "<group>"; };
 		EE168C951A97CEC2005403E6 /* SSKScoreNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKScoreNode.h; sourceTree = "<group>"; };
 		EE168C961A97CEC2005403E6 /* SSKScoreNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKScoreNode.m; sourceTree = "<group>"; };
+		EE168CD91A994D68005403E6 /* PajamaPenguinsCharacters.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsCharacters.png; sourceTree = "<group>"; };
+		EE168CDC1A994DFE005403E6 /* PPIcebergObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPIcebergObstacle.h; sourceTree = "<group>"; };
+		EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPIcebergObstacle.m; sourceTree = "<group>"; };
 		EE5575E81A5A108100B87145 /* PPGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPGameScene.h; sourceTree = "<group>"; };
 		EE5575E91A5A108100B87145 /* PPGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPGameScene.m; sourceTree = "<group>"; };
 		EE6F92E61A82F39400286DC7 /* SSKGameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKGameCenter.h; sourceTree = "<group>"; };
@@ -260,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */,
+				EE168CD91A994D68005403E6 /* PajamaPenguinsCharacters.png */,
 				EE168C931A97CCEF005403E6 /* Fonts */,
 			);
 			name = Assets;
@@ -271,6 +279,8 @@
 			children = (
 				EED8E5A21A881D79001C8F59 /* PPPlayer.h */,
 				EED8E5A31A881D79001C8F59 /* PPPlayer.m */,
+				EE168CDC1A994DFE005403E6 /* PPIcebergObstacle.h */,
+				EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */,
 				EEBA93D11A8D222100CBD711 /* PPObstacle.h */,
 				EEBA93D21A8D222100CBD711 /* PPObstacle.m */,
 			);
@@ -420,6 +430,7 @@
 				EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */,
 				EE168C8E1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				41E430B018B09E5200E1427D /* Images.xcassets in Resources */,
+				EE168CDA1A994D68005403E6 /* PajamaPenguinsCharacters.png in Resources */,
 				41E4309A18B09E5200E1427D /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,6 +441,7 @@
 			files = (
 				41E430EF18B09E8600E1427D /* Images.xcassets in Resources */,
 				41E430DD18B09E8600E1427D /* InfoPlist.strings in Resources */,
+				EE168CDB1A994D68005403E6 /* PajamaPenguinsCharacters.png in Resources */,
 				EE168C8F1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				41E430E518B09E8600E1427D /* MainMenu.xib in Resources */,
 				EED8E59F1A840B23001C8F59 /* PajamaPenguinsSpriteSheet.png in Resources */,
@@ -455,6 +467,7 @@
 				EE6F92FA1A82F39400286DC7 /* SSKiAD.m in Sources */,
 				EE6F92FE1A82F39400286DC7 /* SSKScene.m in Sources */,
 				EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */,
+				EE168CDE1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */,
 				EE168C971A97CEC2005403E6 /* SSKScoreNode.m in Sources */,
 				41E430A018B09E5200E1427D /* AppDelegate.m in Sources */,
 				EE6F92F81A82F39400286DC7 /* SSKGameCenter.m in Sources */,
@@ -474,6 +487,7 @@
 				EE6F92FF1A82F39400286DC7 /* SSKScene.m in Sources */,
 				EE5575F01A5A16A700B87145 /* PPGameScene.m in Sources */,
 				41E430DF18B09E8600E1427D /* main.m in Sources */,
+				EE168CDF1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */,
 				EE6F92FD1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
 				41E430EA18B09E8600E1427D /* AppDelegate.m in Sources */,
 				EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,

@@ -65,6 +65,11 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     self.anchorPoint = CGPointMake(0.5, 0.5);
     
     [self createNewGame];
+    [self testStuff];
+}
+
+#pragma mark - Test Stuff
+- (void)testStuff {
 }
 
 #pragma mark - Creating scene layers
@@ -80,7 +85,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
                                               atPosition:CGPointMake(-self.size.width/4, 150)];
-    [player setScale:1.5];
+    [player setScale:1];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
@@ -493,6 +498,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     NSDate *startTime = [NSDate date];
 
     //Shared Textures
+    
     sTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsSpriteSheet"
                                                        frameSize:CGSizeMake(15, 15)
                                                           origin:CGPointMake(0, 225)
