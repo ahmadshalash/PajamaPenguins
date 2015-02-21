@@ -21,7 +21,7 @@
     self = [super initWithTexture:texture];
     if (self) {
         self.position = position;
-        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:texture.size.width/2];
+        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:texture.size.width/2 - 1];
         [self.physicsBody setDynamic:YES];
         [self.physicsBody setFriction:0];
         [self.physicsBody setRestitution:0];

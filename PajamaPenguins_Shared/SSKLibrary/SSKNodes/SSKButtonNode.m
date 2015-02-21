@@ -25,11 +25,11 @@
             [self setSelectedTexture:selectedTexture];
         }
         
-        //For button scaling
-        self.centerRect = CGRectMake((self.size.width/2 - 1)/self.size.width,
-                                     (self.size.height/2 - 1)/self.size.height,
-                                     2/self.size.width,
-                                     2/self.size.height);
+//        //For button scaling
+//        self.centerRect = CGRectMake((self.size.width/2 - 1)/self.size.width,
+//                                     (self.size.height/2 - 1)/self.size.height,
+//                                     2/self.size.width,
+//                                     2/self.size.height);
         
         [self setIsSelected:NO];
         [self setUserInteractionEnabled:YES];

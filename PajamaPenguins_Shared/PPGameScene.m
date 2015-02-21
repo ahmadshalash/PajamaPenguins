@@ -25,6 +25,7 @@ typedef enum {
     foregroundLayer,
     hudLayer,
     menuLayer,
+    fadeOutLayer,
 }Layers;
 
 //Physics Constants
@@ -34,6 +35,7 @@ static const uint32_t edgeCategory     = 0x1 << 2;
 
 CGFloat const kAirGravityStrength = -3;
 CGFloat const kWaterGravityStrength = 6;
+CGFloat const kGameOverGravityStrength = -9.8;
 
 //Clamped Constants
 CGFloat const kWorldScaleCap = 0.60;
@@ -49,6 +51,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 @property (nonatomic) SKNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
 @property (nonatomic) SKNode *hudNode;
+@property (nonatomic) SKNode *gameOverNode;
 @end
 
 @implementation PPGameScene
@@ -58,22 +61,19 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 - (void)didMoveToView:(SKView *)view {
-    self.gameState = MainMenu;
+    self.backgroundColor = SKColorWithRGB(6, 220, 220);
+    self.anchorPoint = CGPointMake(0.5, 0.5);
     
-    [self createScene];
-    [self startSceneAnimations];
+    [self createNewGame];
 }
 
 #pragma mark - Creating scene layers
-- (void)createScene {
-    self.backgroundColor = SKColorWithRGB(6, 220, 220);
-    self.anchorPoint = CGPointMake(0.5, 0.5);
-
-    [self createWorld];
-    [self createMenu];
+- (void)createNewGame {
+    [self createWorldLayer];
+    [self gameMenu];
 }
 
-- (void)createWorld {
+- (void)createWorldLayer {
     self.worldNode = [SSKCameraNode node];
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
@@ -105,7 +105,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.worldNode addChild:boundary];
 }
 
-- (void)createMenu {
+- (void)createMenuLayer {
     self.menuNode = [SKNode node];
     [self.menuNode setZPosition:menuLayer];
     [self.menuNode setName:@"menu"];
@@ -129,7 +129,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.menuNode addChild:startFingerEffect];
 }
 
-- (void)createHud {
+- (void)createHudLayer {
     self.hudNode = [SKNode node];
     [self.hudNode setZPosition:hudLayer];
     [self.hudNode setName:@"hud"];
@@ -143,49 +143,116 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [scoreCounter setPosition:CGPointMake(-self.size.width/2 + 5, -self.size.height/2 + 5)];
     [self.hudNode addChild:scoreCounter];
     
-    //Offset fade in movement
-    CGFloat moveDistance = 10;
+    CGFloat moveDistance = 5;
     [self.hudNode setPosition:CGPointMake(0, -moveDistance)];
     [self.hudNode runAction:[self moveDistance:CGVectorMake(0, moveDistance) andFadeInWithDuration:.2]];
 }
 
-#pragma mark - Initial scene animations
-- (void)startSceneAnimations {
+- (void)createGameOverLayer {
+    self.gameOverNode = [SKNode node];
+    [self.gameOverNode setZPosition:menuLayer];
+    [self.gameOverNode setName:@"gameOver"];
+    [self.gameOverNode setAlpha:0];
+    [self addChild:self.gameOverNode];
+    
+    SKLabelNode *gameOverLabel = [self createNewLabelWithText:@"Game Over" withFontSize:30];
+    [gameOverLabel setFontColor:SKColorWithRGB(150, 5, 5)];
+    [gameOverLabel setPosition:CGPointMake(0, self.size.height/4)];
+    [self.gameOverNode addChild:gameOverLabel];
+    
+    NSString *currentScore = [(SSKScoreNode*)[self.hudNode childNodeWithName:@"scoreCounter"] text];
+    NSString *currentScoreWithMeters = [NSString stringWithFormat:@"%@ meters.",currentScore];
+
+    SKLabelNode *scoreLabel = [self createNewLabelWithText:currentScoreWithMeters withFontSize:20];
+    [scoreLabel setPosition:CGPointMake(gameOverLabel.position.x, gameOverLabel.position.y - 50)];
+    [self.gameOverNode addChild:scoreLabel];
+    
+    SSKButtonNode *restartButton = [[SSKButtonNode alloc] initWithIdleTexture:[sTextures objectAtIndex:135] selectedTexture:[sTextures objectAtIndex:136]];
+    [restartButton setScale:6];
+    [restartButton setPosition:CGPointMake(0, -self.size.height/4)];
+    [restartButton setTouchUpInsideTarget:self selector:@selector(resetGame)];
+    [self.gameOverNode addChild:restartButton];
+    
+    
+    CGFloat moveDistance = 30;
+    [self.gameOverNode setPosition:CGPointMake(-moveDistance, 0)];
+    [self.gameOverNode runAction:[self moveDistance:CGVectorMake(moveDistance, 0) andFadeInWithDuration:.35]];
+}
+
+#pragma mark - GameState MainMenu
+- (void)gameMenu {
+    self.gameState = MainMenu;
+
+    [self createMenuLayer];
+    [self startMenuAnimations];
+}
+
+- (void)startMenuAnimations {
     [self runAction:[SKAction waitForDuration:.5] completion:^{
         [self runMenuFingerAction];
     }];
 }
 
-#pragma mark - Game In Progress
-- (void)startObstacleSpawnSequence {
-    [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
-    SKAction *wait = [SKAction waitForDuration:2];
-    SKAction *spawnFloatMove = [SKAction runBlock:^{
-        SKNode *obstacle = [self generateNewObstacleWithRandomSize];
-        [self.worldNode addChild:obstacle];
-        [obstacle runAction:[SKAction repeatActionForever:[self floatAction]]];
-        [obstacle runAction:[SKAction moveToX:-self.size.width duration:6] withKey:@"moveObstacle"];
+- (void)runMenuFingerAction {
+    SKNode *finger = [self.menuNode childNodeWithName:@"finger"];
+    SKNode *fingerEffect = [self.menuNode childNodeWithName:@"fingerEffect"];
+    
+    SKAction *fingerFloatUp = [SKAction moveByX:0 y:10 duration:.5];
+    fingerFloatUp.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *fingerFloatDown = fingerFloatUp.reversedAction;
+    SKAction *effectOn = [SKAction runBlock:^{
+        [fingerEffect setAlpha:1];
     }];
-    SKAction *sequence = [SKAction sequence:@[wait,spawnFloatMove]];
-    [self runAction:[SKAction repeatActionForever:sequence] withKey:@"gamePlaying"];
+    SKAction *effectOff = [SKAction runBlock:^{
+        [fingerEffect setAlpha:0];
+    }];
+    SKAction *effectWait = [SKAction waitForDuration:.25];
+    SKAction *sequence = [SKAction sequence:@[fingerFloatUp,effectOn,effectWait,effectOff,fingerFloatDown]];
+    
+    [finger runAction:[SKAction repeatActionForever:sequence]];
 }
 
-- (void)stopObstacleSpawnSequence {
-    [self removeActionForKey:@"gamePlaying"];
-}
-
+#pragma mark - GameState Playing
 - (void)gameStart {
-    [self createHud];
+    self.gameState = Playing;
+
+    [self createHudLayer];
     [self startObstacleSpawnSequence];
     [self startScoreCounter];
-    
-    self.gameState = Playing;
 }
 
+#pragma mark - GameState GameOver
 - (void)gameEnd {
+    self.gameState = GameOver;
+    
     [self stopScoreCounter];
     [self stopObstacleSpawnSequence];
     [self stopObstacleMovement];
+    [self runGameOverSequence];
+}
+
+- (void)runGameOverSequence {
+    [self setGravity:kGameOverGravityStrength];
+    [self playerGameOverCatapult];
+    [self createGameOverLayer];
+}
+
+- (void)resetGame {
+    SKSpriteNode *fadeNode = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor] size:self.size];
+    [fadeNode setZPosition:fadeOutLayer];
+    [fadeNode setAlpha:0];
+    [self addChild:fadeNode];
+    
+    [fadeNode runAction:[SKAction fadeInWithDuration:.5] completion:^{
+        [self.worldNode removeFromParent];
+        [self.menuNode removeFromParent];
+        [self.hudNode removeFromParent];
+        [self.gameOverNode removeFromParent];
+        [self createNewGame];
+        [fadeNode runAction:[SKAction fadeOutWithDuration:.5] completion:^{
+            [fadeNode removeFromParent];
+        }];
+    }];
 }
 
 #pragma mark - Player
@@ -214,14 +281,22 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     }
 }
 
+- (void)playerGameOverCatapult {
+    PPPlayer *player = (PPPlayer*)[self.worldNode childNodeWithName:@"player"];
+    [player.physicsBody setVelocity:CGVectorMake(0, 0)];
+    [player.physicsBody setCollisionBitMask:0x0];
+    [player.physicsBody setContactTestBitMask:0x0];
+    
+    [player.physicsBody applyImpulse:CGVectorMake(.5, 6.5)];
+    [player.physicsBody applyAngularImpulse:-.00015];
+}
+
 #pragma mark - Obstacles
 - (PPObstacle*)newObstacleAtPoint:(CGPoint)point withWidth:(NSUInteger)width{
     PPObstacle *obstacle = [[PPObstacle alloc] initWithTexturesFromArray:sObstacleTextures textureWidth:15 numHorizontalCells:width];
     [obstacle setPosition:point];
     [obstacle setName:@"obstacle"];
     [obstacle.iceberg.physicsBody setCategoryBitMask:obstacleCategory];
-    [obstacle.iceberg.physicsBody setCollisionBitMask:playerCategory];
-    [obstacle.iceberg.physicsBody setContactTestBitMask:playerCategory];
     return obstacle;
 }
 
@@ -229,6 +304,24 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     CGFloat randomNum = SSKRandomFloatInRange(1, 15);
     CGPoint spawnPoint = CGPointMake(self.size.width * 1.5, 0);
     return [self newObstacleAtPoint:spawnPoint withWidth:randomNum];
+}
+
+#pragma mark - Obstacle Spawn Sequence
+- (void)startObstacleSpawnSequence {
+    [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
+    SKAction *wait = [SKAction waitForDuration:2];
+    SKAction *spawnFloatMove = [SKAction runBlock:^{
+        SKNode *obstacle = [self generateNewObstacleWithRandomSize];
+        [self.worldNode addChild:obstacle];
+        [obstacle runAction:[SKAction repeatActionForever:[self floatAction]]];
+        [obstacle runAction:[SKAction moveToX:-self.size.width duration:6] withKey:@"moveObstacle"];
+    }];
+    SKAction *sequence = [SKAction sequence:@[wait,spawnFloatMove]];
+    [self runAction:[SKAction repeatActionForever:sequence] withKey:@"gamePlaying"];
+}
+
+- (void)stopObstacleSpawnSequence {
+    [self removeActionForKey:@"gamePlaying"];
 }
 
 - (void)stopObstacleMovement {
@@ -251,6 +344,11 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self removeActionForKey:@"scoreKey"];
 }
 
+#pragma mark - World Gravity
+- (void)setGravity:(CGFloat)gravity {
+    [self.physicsWorld setGravity:CGVectorMake(0, gravity)];
+}
+
 #pragma mark - Actions
 - (SKAction*)floatAction {
     SKAction *down = [SKAction moveByX:0 y:-25 duration:2];
@@ -267,26 +365,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     SKAction *fadeIn = [SKAction fadeInWithDuration:duration];
     SKAction *moveIn = [SKAction moveBy:distance duration:duration];
     return [SKAction group:@[fadeIn,moveIn]];
-}
-
-#pragma mark - Menu
-- (void)runMenuFingerAction {
-    SKNode *finger = [self.menuNode childNodeWithName:@"finger"];
-    SKNode *fingerEffect = [self.menuNode childNodeWithName:@"fingerEffect"];
-    
-    SKAction *fingerFloatUp = [SKAction moveByX:0 y:10 duration:.5];
-    fingerFloatUp.timingMode = SKActionTimingEaseInEaseOut;
-    SKAction *fingerFloatDown = fingerFloatUp.reversedAction;
-    SKAction *effectOn = [SKAction runBlock:^{
-        [fingerEffect setAlpha:1];
-    }];
-    SKAction *effectOff = [SKAction runBlock:^{
-        [fingerEffect setAlpha:0];
-    }];
-    SKAction *effectWait = [SKAction waitForDuration:.25];
-    SKAction *sequence = [SKAction sequence:@[fingerFloatUp,effectOn,effectWait,effectOff,fingerFloatDown]];
-    
-    [finger runAction:[SKAction repeatActionForever:sequence]];
 }
 
 #pragma mark - Convenience
@@ -306,7 +384,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Collisions
 - (void)resolveCollisionFromFirstBody:(SKPhysicsBody *)firstBody secondBody:(SKPhysicsBody *)secondBody {
-    [self gameEnd];
+    if (self.gameState == Playing) {
+        [self gameEnd];
+    }
 }
 
 #pragma mark - Input
@@ -328,16 +408,22 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Scene Processing
 - (void)update:(NSTimeInterval)currentTime {
-    [self updateGravity];
-    [self updatePlayer:currentTime];
+    if (!(self.gameState == GameOver)) {
+        [self updatePlayingGravity];
+        [self updatePlayer:currentTime];
+    }
 }
 
 - (void)didEvaluateActions {
-    [self updateWorldZoom];
+    if (!(self.gameState == GameOver)) {
+        [self updateWorldZoom];
+    }
 }
 
 - (void)didSimulatePhysics {
-    [self clampPlayerVelocity];
+    if (!(self.gameState == GameOver)) {
+        [self clampPlayerVelocity];
+    }
 }
 
 #pragma mark - Updated Per Frame
@@ -345,14 +431,14 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [(PPPlayer*)[self.worldNode childNodeWithName:@"player"] update:dt];
 }
 
-- (void)updateGravity {
+- (void)updatePlayingGravity {
     SKNode *player = [self.worldNode childNodeWithName:@"player"];
     SKNode *water = [self.worldNode childNodeWithName:@"water"];
     
     if (player.position.y > water.position.y) {
-        [self.physicsWorld setGravity:CGVectorMake(0, kAirGravityStrength)];
+        [self setGravity:kAirGravityStrength];
     } else {
-        [self.physicsWorld setGravity:CGVectorMake(0, kWaterGravityStrength)];
+        [self setGravity:kWaterGravityStrength];
     }
 }
 
