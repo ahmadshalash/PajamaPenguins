@@ -11,18 +11,23 @@
 @implementation PPIcebergObstacle
 
 - (instancetype)initWithWidth:(CGFloat)width {
-//    self = [SKShapeNode shape];
-//    
-//    if (self) {
-//    }
+    self = [PPIcebergObstacle shapeNodeWithPath:[self pathFromPoints:[self cornerPointsWithWidth:width]]];
+
+    if (self) {
+        self.fillColor = [SKColor whiteColor];
+
+        self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:self.path];
+        self.physicsBody.restitution = 0;
+        self.physicsBody.friction = 0;
+    }
     return self;
 }
 
-- (SKShapeNode*)testShape {
-    CGPoint topPoint = CGPointMake(0, 50);
-    CGPoint leftPoint = CGPointMake(-50, 0);
-    CGPoint bottomPoint = CGPointMake(0, -50);
-    CGPoint rightPoint = CGPointMake(50, 0);
+- (NSArray*)cornerPointsWithWidth:(CGFloat)width {
+    CGPoint topPoint = CGPointMake(0, width/2);
+    CGPoint leftPoint = CGPointMake(-width/2, 0);
+    CGPoint bottomPoint = CGPointMake(0, -width);
+    CGPoint rightPoint = CGPointMake(width/2, 0);
     
     NSArray *pointsArray = [NSArray arrayWithObjects:
                             [NSValue valueWithCGPoint:topPoint],
@@ -30,13 +35,7 @@
                             [NSValue valueWithCGPoint:bottomPoint],
                             [NSValue valueWithCGPoint:rightPoint],
                             nil];
-    
-    SKShapeNode *shape = [SKShapeNode shapeNodeWithPath:[self pathFromPoints:pointsArray] centered:NO];
-    shape.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:shape.path];
-    [shape.physicsBody setAffectedByGravity:YES];
-    [shape setFillColor:[SKColor whiteColor]];
-    [shape setScale:5];
-    return shape;
+    return pointsArray;
 }
 
 - (CGPathRef)pathFromPoints:(NSArray*)points {

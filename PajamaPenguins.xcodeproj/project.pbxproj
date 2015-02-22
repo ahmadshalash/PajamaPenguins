@@ -48,8 +48,6 @@
 		EE6F93051A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
 		EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
-		EEBA93D31A8D222100CBD711 /* PPObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93D21A8D222100CBD711 /* PPObstacle.m */; };
-		EEBA93D41A8D222100CBD711 /* PPObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93D21A8D222100CBD711 /* PPObstacle.m */; };
 		EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
 		EEBA93F31A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
 		EED8E59E1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */; };
@@ -110,8 +108,6 @@
 		EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKPhysicsUtils.m; sourceTree = "<group>"; };
 		EEBA93CD1A8C1FED00CBD711 /* SSKCameraNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKCameraNode.h; sourceTree = "<group>"; };
 		EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKCameraNode.m; sourceTree = "<group>"; };
-		EEBA93D11A8D222100CBD711 /* PPObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPObstacle.h; sourceTree = "<group>"; };
-		EEBA93D21A8D222100CBD711 /* PPObstacle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPObstacle.m; sourceTree = "<group>"; };
 		EEBA93F01A93FD4F00CBD711 /* TwoDimensionalArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoDimensionalArray.h; sourceTree = "<group>"; };
 		EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoDimensionalArray.m; sourceTree = "<group>"; };
 		EED8E59D1A840B1D001C8F59 /* PajamaPenguinsSpriteSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsSpriteSheet.png; sourceTree = "<group>"; };
@@ -281,8 +277,6 @@
 				EED8E5A31A881D79001C8F59 /* PPPlayer.m */,
 				EE168CDC1A994DFE005403E6 /* PPIcebergObstacle.h */,
 				EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */,
-				EEBA93D11A8D222100CBD711 /* PPObstacle.h */,
-				EEBA93D21A8D222100CBD711 /* PPObstacle.m */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -459,7 +453,6 @@
 				EE6F93001A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */,
 				EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */,
 				EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */,
-				EEBA93D31A8D222100CBD711 /* PPObstacle.m in Sources */,
 				EE5575EB1A5A108100B87145 /* PPGameScene.m in Sources */,
 				EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
 				EE6F92FC1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
@@ -480,7 +473,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE168C8C1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m in Sources */,
-				EEBA93D41A8D222100CBD711 /* PPObstacle.m in Sources */,
 				EE6F93011A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */,
 				EE168C981A97CEC2005403E6 /* SSKScoreNode.m in Sources */,
 				EED8E5A51A881D79001C8F59 /* PPPlayer.m in Sources */,

@@ -6,7 +6,7 @@
 
 #import "PPGameScene.h"
 #import "PPPlayer.h"
-#import "PPObstacle.h"
+#import "PPIcebergObstacle.h"
 #import "SKColor+SFAdditions.h"
 #import "SSKCameraNode.h"
 #import "SSKButtonNode.h"
@@ -178,7 +178,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [restartButton setTouchUpInsideTarget:self selector:@selector(resetGame)];
     [self.gameOverNode addChild:restartButton];
     
-    
     CGFloat moveDistance = 30;
     [self.gameOverNode setPosition:CGPointMake(-moveDistance, 0)];
     [self.gameOverNode runAction:[self moveDistance:CGVectorMake(moveDistance, 0) andFadeInWithDuration:.35]];
@@ -297,18 +296,18 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 #pragma mark - Obstacles
-- (PPObstacle*)newObstacleAtPoint:(CGPoint)point withWidth:(NSUInteger)width{
-    PPObstacle *obstacle = [[PPObstacle alloc] initWithTexturesFromArray:sObstacleTextures textureWidth:15 numHorizontalCells:width];
-    [obstacle setPosition:point];
+- (PPIcebergObstacle*)newIceBergAtPosition:(CGPoint)position withWidth:(CGFloat)width {
+    PPIcebergObstacle *obstacle = [[PPIcebergObstacle alloc] initWithWidth:width];
+    [obstacle setPosition:position];
     [obstacle setName:@"obstacle"];
-    [obstacle.iceberg.physicsBody setCategoryBitMask:obstacleCategory];
+    [obstacle.physicsBody setCategoryBitMask:obstacleCategory];
     return obstacle;
 }
 
 - (SKNode*)generateNewObstacleWithRandomSize {
-    CGFloat randomNum = SSKRandomFloatInRange(1, 15);
+    CGFloat randomNum = SSKRandomFloatInRange(15, 225);
     CGPoint spawnPoint = CGPointMake(self.size.width * 1.5, 0);
-    return [self newObstacleAtPoint:spawnPoint withWidth:randomNum];
+    return [self newIceBergAtPosition:spawnPoint withWidth:randomNum];
 }
 
 #pragma mark - Obstacle Spawn Sequence
