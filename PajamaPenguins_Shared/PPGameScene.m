@@ -439,10 +439,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Updated Per Frame
 - (void)updatePlayingGravity {
-    SKNode *player = [self.worldNode childNodeWithName:@"player"];
-    SKNode *water = [self.worldNode childNodeWithName:@"water"];
-    
-    if (player.position.y > water.position.y) {
+    if ([self currentPlayer].position.y > [self.worldNode childNodeWithName:@"water"].position.y) {
         [self setGravity:kAirGravityStrength];
     } else {
         [self setGravity:kWaterGravityStrength];
@@ -543,32 +540,18 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 + (void)loadSceneAssets {
     NSDate *startTime = [NSDate date];
 
-    //Shared Textures
-    
     sTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsSpriteSheet"
                                                        frameSize:CGSizeMake(15, 15)
                                                           origin:CGPointMake(0, 225)
                                                        gridWidth:15
                                                       gridHeight:15];
-    
-    //Obstacle Textures
-    NSMutableArray *tempObstacleTextures = [NSMutableArray new];
-    for (int i = 15; i < 31; i++) {
-        [tempObstacleTextures addObject:[sTextures objectAtIndex:i]];
-    }
-    sObstacleTextures = [NSArray arrayWithArray:tempObstacleTextures];
-    
+
     NSLog(@"Scene loaded in %f seconds",[[NSDate date] timeIntervalSinceDate:startTime]);
 }
 
 static NSArray *sTextures = nil;
 - (NSArray*)sharedTextures {
     return sTextures;
-}
-
-static NSArray *sObstacleTextures = nil;
-- (NSArray*)sharedObstacleTextures {
-    return sObstacleTextures;
 }
 
 @end
