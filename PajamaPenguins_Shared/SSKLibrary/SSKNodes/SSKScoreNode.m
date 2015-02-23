@@ -45,7 +45,7 @@
 }
 
 - (void)updateTextWithCount:(NSInteger)count {
-    self.text = [NSString stringWithFormat:@"%lu",count];
+    self.text = [NSString stringWithFormat:@"%lu",(long)count];
 }
 
 @end

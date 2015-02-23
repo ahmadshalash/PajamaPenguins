@@ -29,6 +29,9 @@ typedef enum {
     fadeOutLayer,
 }Layers;
 
+//Player Constants
+CGFloat const kPlayerTextureWidth = 16.0;
+
 //Physics Constants
 static const uint32_t playerCategory   = 0x1 << 0;
 static const uint32_t obstacleCategory = 0x1 << 1;
@@ -39,7 +42,7 @@ CGFloat const kWaterGravityStrength = 6;
 CGFloat const kGameOverGravityStrength = -9.8;
 
 //Clamped Constants
-CGFloat const kWorldScaleCap = 0.70;
+CGFloat const kWorldScaleCap = 0.50;
 CGFloat const kWorldZoomSpeed = 0.15;
 
 CGFloat const kPlayerUpperVelocityLimit = 600.0;
@@ -87,10 +90,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     self.worldNode = [SSKCameraNode node];
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
-    
+
     PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
                                               atPosition:CGPointMake(-self.size.width/4, 150)];
-    [player setScale:2];
+    [player setScale:[self getPlayerScale]];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
@@ -227,7 +230,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
     [self createHudLayer];
-    [self startObstacleSpawnSequence];
+//    [self startObstacleSpawnSequence];
     [self startScoreCounter];
 }
 
@@ -313,7 +316,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 - (SKNode*)generateNewObstacleWithRandomSize {
     CGFloat randomNum = SSKRandomFloatInRange(15, 225);
-    CGPoint spawnPoint = CGPointMake(self.size.width * 1.5, 0);
+    CGFloat spawnXPosition = (self.size.width/2 + (self.size.width * (1 - kWorldScaleCap)));
+    CGPoint spawnPoint = CGPointMake(spawnXPosition, 0);
+    NSLog(@"Spawn Point: (%fl,%fl)",spawnPoint.x,spawnPoint.y);
+//    NSLog(@"Distance from right edge = %fl",);
     return [self newIceBergAtPosition:spawnPoint withWidth:randomNum];
 }
 
@@ -398,6 +404,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     return (PPPlayer*)[self.worldNode childNodeWithName:@"player"];
 }
 
+- (CGFloat)getPlayerScale {
+    CGFloat playerWidth = self.size.width/10;
+    return (playerWidth/kPlayerTextureWidth);
+}
 #pragma mark - Collisions
 - (void)resolveCollisionFromFirstBody:(SKPhysicsBody *)firstBody secondBody:(SKPhysicsBody *)secondBody {
     if (self.gameState == Playing) {
@@ -430,7 +440,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     if (deltaTime > 1) {
         deltaTime = 0;
     }
-
+    
+    
     if (!(self.gameState == GameOver)) {
         [self updatePlayingGravity];
         [[self currentPlayer] update:deltaTime];
@@ -461,8 +472,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 #pragma mark - World Zoom
 - (void)updateWorldZoom {
     if ([self playerIsAboveTopBoundary]) {
-        [self.worldNode setScale:(1 - [self topZoomRatio])];
-        [self.worldNode setPosition:CGPointMake(-[self amountToZoomTop].dx, -[self amountToZoomTop].dy)];
+        CGFloat currentScale = 1 * (1 - [self topZoomRatio]);
+        [self.worldNode setScale:currentScale];
+        [self.worldNode setPosition:CGPointMake([self amountToOffsetTop].dx, [self amountToOffsetTop].dy)];
         
         if ([self worldIsBelowMinZoom]) {
             [self capMaxZoom];
@@ -470,8 +482,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     }
     
     else if ([self playerIsBelowBottomBoundary]) {
-        [self.worldNode setScale:1 - [self bottomZoomRatio]];
-        [self.worldNode setPosition:CGPointMake(-[self amountToZoomBottom].dx, [self amountToZoomBottom].dy)];
+        CGFloat currentScale = 1 * (1 - [self bottomZoomRatio]);
+        [self.worldNode setScale:currentScale];
+        [self.worldNode setPosition:CGPointMake([self amountToOffsetBottom].dx, [self amountToOffsetBottom].dy)];
         
         if ([self worldIsBelowMinZoom]) {
             [self capMaxZoom];
@@ -496,31 +509,39 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.worldNode setPosition:CGPointZero];
 }
 
-- (CGVector)amountToZoomTop {
-    return CGVectorMake([self distanceFromCenterToTopRight].dx * [self topZoomRatio], [self distanceFromCenterToTopRight].dy * [self topZoomRatio]);
+- (CGVector)amountToOffsetTop {
+    return CGVectorMake(-([self distanceFromCenterToTopRight].dx * [self topZoomRatio]), -([self distanceFromCenterToTopRight].dy * [self topZoomRatio]));
 }
 
-- (CGVector)amountToZoomBottom {
-    return CGVectorMake([self distanceFromCenterToTopRight].dx * [self bottomZoomRatio], [self distanceFromCenterToTopRight].dy * [self bottomZoomRatio]);
+- (CGVector)amountToOffsetBottom {
+    return CGVectorMake(-([self distanceFromCenterToTopRight].dx * [self bottomZoomRatio]), [self distanceFromCenterToTopRight].dy * [self bottomZoomRatio]);
 }
 
 - (CGFloat)topZoomRatio {
-    return (fabsf(([self currentPlayerDistanceFromSceneTop]/[self distanceFromBoundaryToEdge]) * kWorldZoomSpeed));
+    CGFloat ratioDistanceFromTop = fabsf(([self currentPlayerDistanceFromTopBoundary]/[self distanceFromBoundaryToEdge]));
+    if (ratioDistanceFromTop > 1) {
+        ratioDistanceFromTop = 1;
+    }
+    return ratioDistanceFromTop;
 }
 
 - (CGFloat)bottomZoomRatio {
-    return (fabsf(([self currentPlayerDistanceFromSceneBottom]/[self distanceFromBoundaryToEdge]) * kWorldZoomSpeed));
+    CGFloat ratioDistanceFromBottom = fabsf(([self currentPlayerDistanceFromBottomBoundary]/[self distanceFromBoundaryToEdge]));
+    if (ratioDistanceFromBottom > 1) {
+        ratioDistanceFromBottom = 1;
+    }
+    return ratioDistanceFromBottom;
 }
 
 - (CGVector)distanceFromCenterToTopRight {
     return SSKDistanceBetweenPoints(CGPointZero, CGPointMake(self.size.width/2, self.size.height/2));
 }
 
-- (CGFloat)currentPlayerDistanceFromSceneTop {
+- (CGFloat)currentPlayerDistanceFromTopBoundary {
     return ([self currentPlayer].position.y - [self topZoomBoundary]);
 }
 
-- (CGFloat)currentPlayerDistanceFromSceneBottom {
+- (CGFloat)currentPlayerDistanceFromBottomBoundary {
     return ([self currentPlayer].position.y - [self bottomZoomBoundary]);
 }
 
@@ -534,6 +555,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 - (CGFloat)bottomZoomBoundary {
     return -self.size.height/5;
+}
+
+- (CGFloat)worldDistanceFromRightEdge {
+    return fabsf(self.worldNode.position.x - (self.size.width/2));
 }
 
 - (BOOL)worldIsBelowMinZoom {
