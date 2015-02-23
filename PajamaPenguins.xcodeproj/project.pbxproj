@@ -32,6 +32,8 @@
 		EE168CDB1A994D68005403E6 /* PajamaPenguinsCharacters.png in Resources */ = {isa = PBXBuildFile; fileRef = EE168CD91A994D68005403E6 /* PajamaPenguinsCharacters.png */; };
 		EE168CDE1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */; };
 		EE168CDF1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */; };
+		EE168CEA1A9B01A6005403E6 /* SKNode+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168CE91A9B01A6005403E6 /* SKNode+SFAdditions.m */; };
+		EE168CEB1A9B01A6005403E6 /* SKNode+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168CE91A9B01A6005403E6 /* SKNode+SFAdditions.m */; };
 		EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E430A118B09E5200E1427D /* Main_iPhone.storyboard */; };
 		EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E430A418B09E5200E1427D /* Main_iPad.storyboard */; };
 		EE5575EB1A5A108100B87145 /* PPGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5575E91A5A108100B87145 /* PPGameScene.m */; };
@@ -91,6 +93,8 @@
 		EE168CD91A994D68005403E6 /* PajamaPenguinsCharacters.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsCharacters.png; sourceTree = "<group>"; };
 		EE168CDC1A994DFE005403E6 /* PPIcebergObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPIcebergObstacle.h; sourceTree = "<group>"; };
 		EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPIcebergObstacle.m; sourceTree = "<group>"; };
+		EE168CE81A9B01A6005403E6 /* SKNode+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKNode+SFAdditions.h"; sourceTree = "<group>"; };
+		EE168CE91A9B01A6005403E6 /* SKNode+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKNode+SFAdditions.m"; sourceTree = "<group>"; };
 		EE5575E81A5A108100B87145 /* PPGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPGameScene.h; sourceTree = "<group>"; };
 		EE5575E91A5A108100B87145 /* PPGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPGameScene.m; sourceTree = "<group>"; };
 		EE6F92E61A82F39400286DC7 /* SSKGameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKGameCenter.h; sourceTree = "<group>"; };
@@ -247,6 +251,8 @@
 				EE168C811A96A51D005403E6 /* SKColor+SFAdditions.h */,
 				EE168C891A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.h */,
 				EE168C8A1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m */,
+				EE168CE81A9B01A6005403E6 /* SKNode+SFAdditions.h */,
+				EE168CE91A9B01A6005403E6 /* SKNode+SFAdditions.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -453,6 +459,7 @@
 				EE6F93001A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */,
 				EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */,
 				EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */,
+				EE168CEA1A9B01A6005403E6 /* SKNode+SFAdditions.m in Sources */,
 				EE5575EB1A5A108100B87145 /* PPGameScene.m in Sources */,
 				EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
 				EE6F92FC1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
@@ -472,6 +479,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE168CEB1A9B01A6005403E6 /* SKNode+SFAdditions.m in Sources */,
 				EE168C8C1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m in Sources */,
 				EE6F93011A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */,
 				EE168C981A97CEC2005403E6 /* SSKScoreNode.m in Sources */,

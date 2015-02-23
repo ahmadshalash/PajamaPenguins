@@ -8,6 +8,7 @@
 #import "PPPlayer.h"
 #import "PPIcebergObstacle.h"
 #import "SKColor+SFAdditions.h"
+#import "SKNode+SFAdditions.h"
 #import "SSKCameraNode.h"
 #import "SSKButtonNode.h"
 #import "SSKScoreNode.h"
@@ -56,7 +57,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 @property (nonatomic) SKNode *gameOverNode;
 @end
 
-@implementation PPGameScene
+@implementation PPGameScene {
+    NSTimeInterval _lastUpdateTime;
+}
 
 - (id)initWithSize:(CGSize)size {
     return [super initWithSize:size];
@@ -316,12 +319,14 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Obstacle Spawn Sequence
 - (void)startObstacleSpawnSequence {
-    SKAction *wait = [SKAction waitForDuration:2];
+    SKAction *wait = [SKAction waitForDuration:1.5];
     SKAction *spawnFloatMove = [SKAction runBlock:^{
         SKNode *obstacle = [self generateNewObstacleWithRandomSize];
         [self.worldNode addChild:obstacle];
         [obstacle runAction:[SKAction repeatActionForever:[self floatAction]]];
-        [obstacle runAction:[SKAction moveToX:-self.size.width duration:5] withKey:@"moveObstacle"];
+        [obstacle runAction:[SKAction moveToX:-self.size.width duration:4] withKey:@"moveObstacle" completion:^{
+            [obstacle removeFromParent];
+        }];
     }];
     SKAction *sequence = [SKAction sequence:@[wait,spawnFloatMove]];
     [self runAction:[SKAction repeatActionForever:sequence] withKey:@"gamePlaying"];
@@ -419,21 +424,28 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Scene Processing
 - (void)update:(NSTimeInterval)currentTime {
+    NSTimeInterval deltaTime = currentTime - _lastUpdateTime;
+    _lastUpdateTime = currentTime;
+    
+    if (deltaTime > 1) {
+        deltaTime = 0;
+    }
+
     if (!(self.gameState == GameOver)) {
         [self updatePlayingGravity];
-        [[self currentPlayer] update:currentTime];
+        [[self currentPlayer] update:deltaTime];
+        [self clampPlayerVelocity];
     }
 }
 
 - (void)didEvaluateActions {
     if (!(self.gameState == GameOver)) {
-        [self updateWorldZoom];
     }
 }
 
 - (void)didSimulatePhysics {
     if (!(self.gameState == GameOver)) {
-        [self clampPlayerVelocity];
+        [self updateWorldZoom];
     }
 }
 

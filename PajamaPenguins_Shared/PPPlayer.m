@@ -30,9 +30,10 @@
 }
 
 - (void)update:(NSTimeInterval)dt {
-    [self setZRotation:(M_PI * self.physicsBody.velocity.dy * .00025) + SSKDegreesToRadians(90)];
+    CGFloat rotateSpeed = .08 * dt;
+    [self setZRotation:(M_PI_2 * self.physicsBody.velocity.dy * rotateSpeed) + SSKDegreesToRadians(90)];
     
-    //Clamp rotation between 45 and 135 degrees
+    //Clamp rotation
     if (self.zRotation >= SSKDegreesToRadians(30)) {
         [self setZRotation:SSKDegreesToRadians(30)];
     }
