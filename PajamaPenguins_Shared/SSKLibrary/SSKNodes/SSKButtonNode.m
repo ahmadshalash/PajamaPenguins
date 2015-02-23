@@ -91,15 +91,6 @@
     _SELTouchDownInside = theSelector;
 }
 
-#pragma mark - Adding a LabelNode
-- (void)addLabelWithString:(NSString*)string {
-    SKNode *node = [SKNode new];
-    [self addChild:node];
-    
-    self.labelNode = [SKLabelNode labelNodeWithText:string];
-    [node addChild:self.labelNode];
-}
-
 #pragma mark - Handling user node input
 
 #if TARGET_OS_IPHONE

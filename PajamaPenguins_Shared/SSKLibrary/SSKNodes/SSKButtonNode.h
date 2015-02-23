@@ -31,9 +31,6 @@
 
 @property (nonatomic) BOOL isSelected;
 
-- (void)addLabelWithString:(NSString*)string;
-
-//Designated initializer
 - (id)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture;
 - (id)initWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName;
 
