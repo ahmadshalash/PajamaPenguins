@@ -39,11 +39,11 @@ CGFloat const kWaterGravityStrength = 6;
 CGFloat const kGameOverGravityStrength = -9.8;
 
 //Clamped Constants
-CGFloat const kWorldScaleCap = 0.50;
-CGFloat const kWorldZoomSpeed = 0.135;
+CGFloat const kWorldScaleCap = 0.70;
+CGFloat const kWorldZoomSpeed = 0.15;
 
-CGFloat const kPlayerUpperVelocityLimit = 700.0;
-CGFloat const kPlayerLowerAirVelocityLimit = -700.0;
+CGFloat const kPlayerUpperVelocityLimit = 600.0;
+CGFloat const kPlayerLowerAirVelocityLimit = -600.0;
 CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 
 //Name Constants
@@ -529,11 +529,11 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 - (CGFloat)topZoomBoundary {
-    return self.size.height/4;
+    return self.size.height/5;
 }
 
 - (CGFloat)bottomZoomBoundary {
-    return -self.size.height/4;
+    return -self.size.height/5;
 }
 
 - (BOOL)worldIsBelowMinZoom {
