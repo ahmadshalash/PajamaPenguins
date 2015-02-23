@@ -31,7 +31,6 @@
 
 - (void)update:(NSTimeInterval)dt {
     [self setZRotation:(M_PI * self.physicsBody.velocity.dy * .00025) + SSKDegreesToRadians(90)];
- 
     
     //Clamp rotation between 45 and 135 degrees
     if (self.zRotation >= SSKDegreesToRadians(30)) {

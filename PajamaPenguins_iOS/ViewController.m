@@ -16,7 +16,7 @@
     [super viewWillLayoutSubviews];
     
     SKView * skView = (SKView *)self.view;
-    skView.ignoresSiblingOrder = YES; //Provides extra rendering optimizations. (However, zPositions need to be explicitly set)
+    [skView setIgnoresSiblingOrder:YES]; //Provides extra rendering optimizations. (However, zPositions need to be explicitly set)
 
     if (!skView.scene) {
         [PPGameScene loadSceneAssetsWithCompletionHandler:^{
