@@ -8,6 +8,7 @@
 #import "PPPlayer.h"
 #import "PPIcebergObstacle.h"
 #import "PPWaterSprite.h"
+#import "SSKParallaxNode.h"
 #import "SKColor+SFAdditions.h"
 #import "SKNode+SFAdditions.h"
 #import "SSKCameraNode.h"
@@ -80,6 +81,13 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Test Stuff
 - (void)testStuff {
+    SKNode *backgroundNode = [SKNode new];
+    [backgroundNode setZPosition:10];
+    [backgroundNode addChild:[self waterSurfaceNode]];
+
+    SSKParallaxNode *parallaxNode = [[SSKParallaxNode alloc] initWithSize:self.size attachNode:backgroundNode withMoveSpeed:CGPointMake(-50, 0)];
+    [parallaxNode setName:@"parallaxNode"];
+    [self.worldNode addChild:parallaxNode];
 }
 
 #pragma mark - Creating scene layers
@@ -94,14 +102,16 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self addChild:self.worldNode];
 
     //Water Surface Tiles
-    SKNode *waterSurfaceNode = [SKNode new];
-    for (int i = 0; i < 3; i ++) {
-        SKNode *screenWidthWaterSurface = [self waterSurfaceNode];
-        [screenWidthWaterSurface setPosition:CGPointMake(self.size.width * i, 0)];
-        [waterSurfaceNode addChild:screenWidthWaterSurface];
-    }
-    [self.worldNode addChild:waterSurfaceNode];
+//    SKNode *waterSurfaceNode = [SKNode new];
+//    [waterSurfaceNode setName:@"waterSurface"];
+//    for (int i = 0; i < 3; i ++) {
+//        SKNode *screenWidthWaterSurface = [self waterSurfaceNode];
+//        [screenWidthWaterSurface setPosition:CGPointMake(self.size.width * i, 0)];
+//        [waterSurfaceNode addChild:screenWidthWaterSurface];
+//    }
+//    [self.worldNode addChild:waterSurfaceNode];
     
+    //Player
     PPPlayer *player = [[PPPlayer alloc] initWithIdleTexture:[sLargeTextures objectAtIndex:0]
                                                activeTexture:[sLargeTextures objectAtIndex:1]
                                                   atPosition:CGPointMake(-self.size.width/4, 50)];
@@ -331,6 +341,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 #pragma mark - Obstacles
 - (PPIcebergObstacle*)newIceBergAtPosition:(CGPoint)position withWidth:(CGFloat)width {
     PPIcebergObstacle *obstacle = [[PPIcebergObstacle alloc] initWithWidth:width];
+    [obstacle setZPosition:1];
     [obstacle setPosition:position];
     [obstacle setName:@"obstacle"];
     [obstacle.physicsBody setCategoryBitMask:obstacleCategory];
@@ -473,6 +484,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     }
     
     if (!(self.gameState == GameOver)) {
+        [(SSKParallaxNode*)[self.worldNode childNodeWithName:@"parallaxNode"] update:deltaTime];
         [self updatePlayingGravity];
         [[self currentPlayer] update:deltaTime];
         [self clampPlayerVelocity];

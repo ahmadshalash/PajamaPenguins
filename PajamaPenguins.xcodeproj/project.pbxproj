@@ -58,6 +58,8 @@
 		EEFA23421A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */; };
 		EEFA23491A9D0FE10003B009 /* PPWaterSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA23481A9D0FE10003B009 /* PPWaterSprite.m */; };
 		EEFA234A1A9D0FE10003B009 /* PPWaterSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA23481A9D0FE10003B009 /* PPWaterSprite.m */; };
+		EEFA234D1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA234C1A9D3B5E0003B009 /* SSKParallaxNode.m */; };
+		EEFA234E1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA234C1A9D3B5E0003B009 /* SSKParallaxNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +123,8 @@
 		EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsSmallSheet.png; sourceTree = "<group>"; };
 		EEFA23471A9D0FE10003B009 /* PPWaterSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWaterSprite.h; path = ../PPWaterSprite.h; sourceTree = "<group>"; };
 		EEFA23481A9D0FE10003B009 /* PPWaterSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPWaterSprite.m; path = ../PPWaterSprite.m; sourceTree = "<group>"; };
+		EEFA234B1A9D3B5E0003B009 /* SSKParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKParallaxNode.h; sourceTree = "<group>"; };
+		EEFA234C1A9D3B5E0003B009 /* SSKParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKParallaxNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,6 +329,8 @@
 				EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */,
 				EE168C951A97CEC2005403E6 /* SSKScoreNode.h */,
 				EE168C961A97CEC2005403E6 /* SSKScoreNode.m */,
+				EEFA234B1A9D3B5E0003B009 /* SSKParallaxNode.h */,
+				EEFA234C1A9D3B5E0003B009 /* SSKParallaxNode.m */,
 			);
 			path = SSKNodes;
 			sourceTree = "<group>";
@@ -461,6 +467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEFA234D1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */,
 				EE168C8B1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m in Sources */,
 				EE6F93001A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */,
 				EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */,
@@ -494,6 +501,7 @@
 				EE6F92FF1A82F39400286DC7 /* SSKScene.m in Sources */,
 				EE5575F01A5A16A700B87145 /* PPGameScene.m in Sources */,
 				41E430DF18B09E8600E1427D /* main.m in Sources */,
+				EEFA234E1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */,
 				EE168CDF1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */,
 				EE6F92FD1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
 				EEFA234A1A9D0FE10003B009 /* PPWaterSprite.m in Sources */,
