@@ -42,7 +42,7 @@ CGFloat const kWaterGravityStrength = 6;
 CGFloat const kGameOverGravityStrength = -9.8;
 
 //Clamped Constants
-CGFloat const kWorldScaleCap = 0.60;
+CGFloat const kWorldScaleCap = 0.6;
 CGFloat const kWorldZoomSpeed = 0.15;
 
 CGFloat const kPlayerUpperVelocityLimit = 600.0;
@@ -103,8 +103,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.worldNode addChild:player];
     
     SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SKColorWithRGB(85, 65, 50)
-                                                       size:CGSizeMake((self.size.width/[self percentageOfMaxScaleWithRatio:1.0]),
-                                                                       ((self.size.height/2)/[self percentageOfMaxScaleWithRatio:1.0]))];
+                                                       size:CGSizeMake(self.size.width/2 + (self.size.width/kWorldScaleCap),
+                                                                       self.size.height/2 + (self.size.height/2)/kWorldScaleCap)];
     [water setAnchorPoint:CGPointMake(0, 1)];
     [water setPosition:CGPointMake(-self.size.width/2, 0)];
     [water setAlpha:0.5];
@@ -113,8 +113,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.worldNode addChild:water];
     
     SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor]
-                                                          size:CGSizeMake(self.size.width/[self percentageOfMaxScaleWithRatio:1.0],
-                                                                          (self.size.height/[self percentageOfMaxScaleWithRatio:1.0]) - (player.size.width * 2))];
+                                                          size:CGSizeMake(self.size.width/2 + (self.size.width/kWorldScaleCap),
+                                                                          self.size.height/2 + (self.size.height/kWorldScaleCap))];
     [boundary setAnchorPoint:CGPointMake(0, .5)];
     [boundary setPosition:CGPointMake(-self.size.width/2, 0)];
     boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
@@ -518,7 +518,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     if (ratioDistanceFromTop > 1) {
         ratioDistanceFromTop = 1;
     }
-//    NSLog(@"top ratio : %fl",ratioDistanceFromTop);
     return ratioDistanceFromTop;
 }
 
@@ -527,7 +526,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     if (ratioDistanceFromBottom > 1) {
         ratioDistanceFromBottom = 1;
     }
-//    NSLog(@"bottom ratio : %fl",ratioDistanceFromBottom);
     return ratioDistanceFromBottom;
 }
 
