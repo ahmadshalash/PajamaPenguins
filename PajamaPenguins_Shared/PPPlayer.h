@@ -12,7 +12,7 @@
 
 @property (nonatomic) BOOL playerShouldDive;
 
-- (instancetype)initWithTexture:(SKTexture *)texture atPosition:(CGPoint)position;
+- (instancetype)initWithIdleTexture:(SKTexture *)idleTexture activeTexture:(SKTexture*)activeTexture atPosition:(CGPoint)position;
 - (void)update:(NSTimeInterval)dt;
 
 @end

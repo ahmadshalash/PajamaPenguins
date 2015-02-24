@@ -30,7 +30,7 @@ typedef enum {
 }Layers;
 
 //Player Constants
-CGFloat const kPlayerTextureWidth = 16.0;
+CGFloat const kPlayerTextureWidth = 30.0;
 
 //Physics Constants
 static const uint32_t playerCategory   = 0x1 << 0;
@@ -91,8 +91,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
 
-    PPPlayer *player = [[PPPlayer alloc] initWithTexture:[sTextures objectAtIndex:0]
-                                              atPosition:CGPointMake(-self.size.width/4, 150)];
+    PPPlayer *player = [[PPPlayer alloc] initWithIdleTexture:[sLargeTextures objectAtIndex:0]
+                                               activeTexture:[sLargeTextures objectAtIndex:1]
+                                                  atPosition:CGPointMake(-self.size.width/4, 50)];
     [player setScale:[self getPlayerScale]];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
@@ -112,16 +113,12 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [water setZPosition:foregroundLayer];
     [self.worldNode addChild:water];
     
-    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor]
-                                                          size:CGSizeMake(self.size.width/2 + (self.size.width/kWorldScaleCap),
-                                                                          self.size.height/2 + (self.size.height/kWorldScaleCap))];
-    [boundary setAnchorPoint:CGPointMake(0, .5)];
-    [boundary setPosition:CGPointMake(-self.size.width/2, 0)];
+    SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width,self.size.height)];
     boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
     [boundary.physicsBody setFriction:0];
     [boundary.physicsBody setRestitution:0];
     [boundary.physicsBody setCategoryBitMask:edgeCategory];
-    [self.worldNode addChild:boundary];
+    [self addChild:boundary];
 }
 
 - (void)createMenuLayer {
@@ -134,13 +131,13 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [titleLabel setPosition:CGPointMake(0, self.size.height/6 * 2)];
     [self.menuNode addChild:titleLabel];
 
-    SKSpriteNode *startFinger = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:120]];
+    SKSpriteNode *startFinger = [SKSpriteNode spriteNodeWithTexture:[sSmallTextures objectAtIndex:120]];
     [startFinger setScale:5];
     [startFinger setPosition:CGPointMake(0, -self.size.height/3)];
     [startFinger setName:@"finger"];
     [self.menuNode addChild:startFinger];
     
-    SKSpriteNode *startFingerEffect = [SKSpriteNode spriteNodeWithTexture:[sTextures objectAtIndex:121]];
+    SKSpriteNode *startFingerEffect = [SKSpriteNode spriteNodeWithTexture:[sSmallTextures objectAtIndex:121]];
     [startFingerEffect setScale:5];
     [startFingerEffect setPosition:CGPointMake(startFinger.position.x - startFinger.size.width/8, startFinger.position.y + startFinger.size.height/6 * 4)];
     [startFingerEffect setAlpha:0];
@@ -186,7 +183,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [scoreLabel setPosition:CGPointMake(gameOverLabel.position.x, gameOverLabel.position.y - 50)];
     [self.gameOverNode addChild:scoreLabel];
     
-    SSKButtonNode *restartButton = [[SSKButtonNode alloc] initWithIdleTexture:[sTextures objectAtIndex:135] selectedTexture:[sTextures objectAtIndex:136]];
+    SSKButtonNode *restartButton = [[SSKButtonNode alloc] initWithIdleTexture:[sSmallTextures objectAtIndex:135] selectedTexture:[sSmallTextures objectAtIndex:136]];
     [restartButton setScale:6];
     [restartButton setPosition:CGPointMake(0, -self.size.height/4)];
     [restartButton setTouchUpInsideTarget:self selector:@selector(resetGame)];
@@ -306,9 +303,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [player.physicsBody setVelocity:CGVectorMake(0, 0)];
     [player.physicsBody setCollisionBitMask:0x0];
     [player.physicsBody setContactTestBitMask:0x0];
-    
-    [player.physicsBody applyImpulse:CGVectorMake(.5, 6.5)];
-    [player.physicsBody applyAngularImpulse:-.00015];
+    [player.physicsBody applyImpulse:CGVectorMake(.85, 20)];
+    [player.physicsBody applyAngularImpulse:-.0005];
 }
 
 #pragma mark - Obstacles
@@ -414,7 +410,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 - (CGFloat)getPlayerScale {
-    CGFloat playerWidth = self.size.width/10;
+    CGFloat playerWidth = self.size.width/7.5;
+    NSLog(@"Player Scale: %fl",playerWidth/kPlayerTextureWidth);
     return (playerWidth/kPlayerTextureWidth);
 }
 
@@ -495,7 +492,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     else {
         [self resetWorldZoom];
     }
-    NSLog(@"World Node Position: (%fl,%fl)",self.worldNode.position.x,self.worldNode.position.y);
 }
 
 - (void)resetWorldZoom {
@@ -577,18 +573,29 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 + (void)loadSceneAssets {
     NSDate *startTime = [NSDate date];
 
-    sTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsSpriteSheet"
+    sSmallTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsSpriteSheet"
                                                        frameSize:CGSizeMake(15, 15)
                                                           origin:CGPointMake(0, 225)
                                                        gridWidth:15
                                                       gridHeight:15];
-
+    
+    sLargeTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsCharacters"
+                                                            frameSize:CGSizeMake(30, 30)
+                                                               origin:CGPointMake(0, 280)
+                                                            gridWidth:30
+                                                           gridHeight:30];
+    
     NSLog(@"Scene loaded in %f seconds",[[NSDate date] timeIntervalSinceDate:startTime]);
 }
 
-static NSArray *sTextures = nil;
-- (NSArray*)sharedTextures {
-    return sTextures;
+static NSArray *sSmallTextures = nil;
+- (NSArray*)sharedSmallTextures {
+    return sSmallTextures;
+}
+
+static NSArray *sLargeTextures = nil;
+- (NSArray*)sharedLargeTextures {
+    return sLargeTextures;
 }
 
 @end

@@ -12,16 +12,22 @@
 #define kAccelerationCap 45.0
 
 @interface PPPlayer()
+@property (nonatomic) SKTexture *idleTexture;
+@property (nonatomic) SKTexture *activeTexture;
 @property (nonatomic) CGFloat currentAccelleration;
 @end
 
 @implementation PPPlayer
 
-- (instancetype)initWithTexture:(SKTexture *)texture atPosition:(CGPoint)position {
-    self = [super initWithTexture:texture];
+- (instancetype)initWithIdleTexture:(SKTexture *)idleTexture activeTexture:(SKTexture*)activeTexture atPosition:(CGPoint)position {
+    self = [super initWithTexture:idleTexture];
     if (self) {
+        self.idleTexture = idleTexture;
+        self.activeTexture = activeTexture;
+        
         self.position = position;
-        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:texture.size.width/2 - 1];
+
+        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:idleTexture.size.width/2 - 1];
         [self.physicsBody setDynamic:YES];
         [self.physicsBody setFriction:0];
         [self.physicsBody setRestitution:0];
@@ -30,7 +36,7 @@
 }
 
 - (void)update:(NSTimeInterval)dt {
-    CGFloat rotateSpeed = .08 * dt;
+    CGFloat rotateSpeed = .05 * dt;
     [self setZRotation:(M_PI_2 * self.physicsBody.velocity.dy * rotateSpeed) + SSKDegreesToRadians(90)];
     
     //Clamp rotation
@@ -42,11 +48,13 @@
         [self setZRotation:SSKDegreesToRadians(150)];
     }
     
-    //Acceleration
+    //Player State
     if (_playerShouldDive) {
+        [self setTexture:self.activeTexture];
         [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy - _currentAccelleration)];
         _currentAccelleration = kAccelerationCap;
     } else {
+        [self setTexture:self.idleTexture];
         _currentAccelleration = 0;
     }
 }
