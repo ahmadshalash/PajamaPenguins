@@ -452,6 +452,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
         [self updatePlayingGravity];
         [[self currentPlayer] update:deltaTime];
         [self clampPlayerVelocity];
+        [self updateWorldZoom];
     }
 }
 
@@ -462,7 +463,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 - (void)didSimulatePhysics {
     if (self.gameState == Playing) {
-        [self updateWorldZoom];
     }
 }
 
