@@ -7,6 +7,7 @@
 #import "PPGameScene.h"
 #import "PPPlayer.h"
 #import "PPIcebergObstacle.h"
+#import "PPWaterSprite.h"
 #import "SKColor+SFAdditions.h"
 #import "SKNode+SFAdditions.h"
 #import "SSKCameraNode.h"
@@ -29,8 +30,9 @@ typedef enum {
     fadeOutLayer,
 }Layers;
 
-//Player Constants
-CGFloat const kPlayerTextureWidth = 30.0;
+//Texture Constants
+CGFloat const kLargeTileWidth = 30.0;
+CGFloat const kSmallTileWidth = 15.0;
 
 //Physics Constants
 static const uint32_t playerCategory   = 0x1 << 0;
@@ -91,6 +93,15 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
 
+    //Water Surface Tiles
+    SKNode *waterSurfaceNode = [SKNode new];
+    for (int i = 0; i < 3; i ++) {
+        SKNode *screenWidthWaterSurface = [self waterSurfaceNode];
+        [screenWidthWaterSurface setPosition:CGPointMake(self.size.width * i, 0)];
+        [waterSurfaceNode addChild:screenWidthWaterSurface];
+    }
+    [self.worldNode addChild:waterSurfaceNode];
+    
     PPPlayer *player = [[PPPlayer alloc] initWithIdleTexture:[sLargeTextures objectAtIndex:0]
                                                activeTexture:[sLargeTextures objectAtIndex:1]
                                                   atPosition:CGPointMake(-self.size.width/4, 50)];
@@ -113,6 +124,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [water setZPosition:foregroundLayer];
     [self.worldNode addChild:water];
     
+    
+    //Screen Physics Boundary
     SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width,self.size.height)];
     boundary.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:boundary.frame];
     [boundary.physicsBody setFriction:0];
@@ -272,14 +285,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 #pragma mark - Player
-- (void)startPlayerDive {
-    [[self currentPlayer] setPlayerShouldDive:YES];
-}
-
-- (void)stopPlayerDive {
-    [[self currentPlayer] setPlayerShouldDive:NO];
-}
-
 - (void)clampPlayerVelocity {
     PPPlayer *player = [self currentPlayer];
     
@@ -303,8 +308,24 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [player.physicsBody setVelocity:CGVectorMake(0, 0)];
     [player.physicsBody setCollisionBitMask:0x0];
     [player.physicsBody setContactTestBitMask:0x0];
-    [player.physicsBody applyImpulse:CGVectorMake(.85, 20)];
+    [player.physicsBody applyImpulse:CGVectorMake(.85, 25)];
     [player.physicsBody applyAngularImpulse:-.0005];
+}
+
+#pragma mark - Water
+- (SKNode*)waterSurfaceNode {
+    SKNode *node = [SKNode new];
+    
+    NSInteger newTileSize = [self getWaterSurfaceScale] * kLargeTileWidth;
+    NSInteger numTilesForScreenWidth = self.size.width/newTileSize;
+    
+    for (int i = 0; i < numTilesForScreenWidth; i++) {
+        PPWaterSprite *waterTile = [[PPWaterSprite alloc] initWithTexture:[sLargeTextures objectAtIndex:11]];
+        [waterTile setScale:[self getWaterSurfaceScale]];
+        [waterTile setPosition:CGPointMake(-self.size.width/2 + (newTileSize * i), 0)];
+        [node addChild:waterTile];
+    }
+    return node;
 }
 
 #pragma mark - Obstacles
@@ -411,10 +432,13 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 - (CGFloat)getPlayerScale {
     CGFloat playerWidth = self.size.width/7.5;
-    NSLog(@"Player Scale: %fl",playerWidth/kPlayerTextureWidth);
-    return (playerWidth/kPlayerTextureWidth);
+    return (playerWidth/kLargeTileWidth);
 }
 
+- (CGFloat)getWaterSurfaceScale {
+    CGFloat waterWidth = self.size.width/5;
+    return (waterWidth/kLargeTileWidth);
+}
 #pragma mark - Collisions
 - (void)resolveCollisionFromFirstBody:(SKPhysicsBody *)firstBody secondBody:(SKPhysicsBody *)secondBody {
     if (self.gameState == Playing) {
@@ -430,13 +454,13 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     
     if (self.gameState == Playing) {
         if (self.worldNode.xScale >= kWorldScaleCap) {
-            [self startPlayerDive];
+            [[self currentPlayer] setPlayerShouldDive:YES];
         }
     }
 }
 
 - (void)interactionEndedAtPosition:(CGPoint)position {
-    [self stopPlayerDive];
+    [[self currentPlayer] setPlayerShouldDive:NO];
 }
 
 #pragma mark - Scene Processing
@@ -573,17 +597,17 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 + (void)loadSceneAssets {
     NSDate *startTime = [NSDate date];
 
-    sSmallTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsSpriteSheet"
+    sSmallTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsSmallSheet"
                                                        frameSize:CGSizeMake(15, 15)
                                                           origin:CGPointMake(0, 225)
                                                        gridWidth:15
                                                       gridHeight:15];
     
-    sLargeTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsCharacters"
+    sLargeTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsLargeSheet"
                                                             frameSize:CGSizeMake(30, 30)
                                                                origin:CGPointMake(0, 280)
-                                                            gridWidth:30
-                                                           gridHeight:30];
+                                                            gridWidth:10
+                                                           gridHeight:10];
     
     NSLog(@"Scene loaded in %f seconds",[[NSDate date] timeIntervalSinceDate:startTime]);
 }
