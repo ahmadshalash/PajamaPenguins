@@ -12,22 +12,15 @@
 #define kAccelerationCap 45.0
 
 @interface PPPlayer()
-@property (nonatomic) SKTexture *idleTexture;
-@property (nonatomic) SKTexture *activeTexture;
 @property (nonatomic) CGFloat currentAccelleration;
 @end
 
 @implementation PPPlayer
 
-- (instancetype)initWithIdleTexture:(SKTexture *)idleTexture activeTexture:(SKTexture*)activeTexture atPosition:(CGPoint)position {
-    self = [super initWithTexture:idleTexture];
+- (instancetype)initWithFirstTexture:(SKTexture *)firstTexture secondTexture:(SKTexture *)secondTexture {
+    self = [super initWithFirstTexture:firstTexture secondTexture:secondTexture];
     if (self) {
-        self.idleTexture = idleTexture;
-        self.activeTexture = activeTexture;
-        
-        self.position = position;
-
-        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:idleTexture.size.width/2 - 1];
+        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.firstTexture.size.width/2 - 1];
         [self.physicsBody setDynamic:YES];
         [self.physicsBody setFriction:0];
         [self.physicsBody setRestitution:0];
@@ -50,11 +43,11 @@
     
     //Player State
     if (_playerShouldDive) {
-        [self setTexture:self.activeTexture];
+        [self animateToSecondTexture];
         [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy - _currentAccelleration)];
         _currentAccelleration = kAccelerationCap;
     } else {
-        [self setTexture:self.idleTexture];
+        [self animateToFirstTexture];
         _currentAccelleration = 0;
     }
 }

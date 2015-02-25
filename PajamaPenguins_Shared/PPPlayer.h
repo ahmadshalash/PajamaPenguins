@@ -6,13 +6,11 @@
 //  Copyright (c) 2015 Skye Freeman. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
+#import "PPSimpleAnimatedSprite.h"
 
-@interface PPPlayer : SKSpriteNode
+@interface PPPlayer : PPSimpleAnimatedSprite
 
 @property (nonatomic) BOOL playerShouldDive;
-
-- (instancetype)initWithIdleTexture:(SKTexture *)idleTexture activeTexture:(SKTexture*)activeTexture atPosition:(CGPoint)position;
 - (void)update:(NSTimeInterval)dt;
 
 @end

@@ -18,7 +18,8 @@ typedef NS_ENUM(NSInteger, MoveState) {
 @property (nonatomic) CGPoint moveSpeed;
 @property (nonatomic, readonly) MoveState moveState;
 
-- (instancetype)initWithSize:(CGSize)size attachNode:(SKNode*)node withMoveSpeed:(CGPoint)moveSpeed;
++ (instancetype)nodeWithSize:(CGSize)size attachedNodes:(NSArray*)nodes moveSpeed:(CGPoint)moveSpeed;
+- (instancetype)initWithSize:(CGSize)size attachedNodes:(NSArray*)nodes moveSpeed:(CGPoint)moveSpeed;
 
 - (void)update:(NSTimeInterval)dt;
 - (void)startMovement;

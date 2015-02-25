@@ -10,7 +10,4 @@
 
 @interface PPWaterSprite : SKSpriteNode
 
-- (instancetype)initWithTexture:(SKTexture *)texture;
-
-
 @end

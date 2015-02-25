@@ -12,11 +12,9 @@
 
 - (instancetype)initWithTexture:(SKTexture *)texture {
     self = [super initWithTexture:texture];
-    
     if (self) {
         self.anchorPoint = CGPointMake(0, 0);
     }
-    
     return self;
 }
 

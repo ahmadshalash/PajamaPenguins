@@ -8,9 +8,12 @@
 #import "PPPlayer.h"
 #import "PPIcebergObstacle.h"
 #import "PPWaterSprite.h"
-#import "SSKParallaxNode.h"
+
 #import "SKColor+SFAdditions.h"
 #import "SKNode+SFAdditions.h"
+#import "SKScene+SFAdditions.h"
+
+#import "SSKParallaxNode.h"
 #import "SSKCameraNode.h"
 #import "SSKButtonNode.h"
 #import "SSKScoreNode.h"
@@ -81,13 +84,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Test Stuff
 - (void)testStuff {
-    SKNode *backgroundNode = [SKNode new];
-    [backgroundNode setZPosition:10];
-    [backgroundNode addChild:[self waterSurfaceNode]];
-
-    SSKParallaxNode *parallaxNode = [[SSKParallaxNode alloc] initWithSize:self.size attachNode:backgroundNode withMoveSpeed:CGPointMake(-50, 0)];
-    [parallaxNode setName:@"parallaxNode"];
-    [self.worldNode addChild:parallaxNode];
 }
 
 #pragma mark - Creating scene layers
@@ -102,19 +98,21 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self addChild:self.worldNode];
 
     //Water Surface Tiles
-//    SKNode *waterSurfaceNode = [SKNode new];
-//    [waterSurfaceNode setName:@"waterSurface"];
-//    for (int i = 0; i < 3; i ++) {
-//        SKNode *screenWidthWaterSurface = [self waterSurfaceNode];
-//        [screenWidthWaterSurface setPosition:CGPointMake(self.size.width * i, 0)];
-//        [waterSurfaceNode addChild:screenWidthWaterSurface];
-//    }
-//    [self.worldNode addChild:waterSurfaceNode];
+    NSMutableArray *waterTiles = [NSMutableArray array];
+    for (int i = 0; i < 2; i++) {
+        [waterTiles addObject:[self waterSurfaceNode]];
+    }
+    
+    SSKParallaxNode *backgroundNode = [SSKParallaxNode nodeWithSize:[self maxWorldScaleSize]
+                                                      attachedNodes:waterTiles
+                                                          moveSpeed:CGPointMake(-30, 0)];
+    [backgroundNode setName:@"parallaxNode"];
+    [self.worldNode addChild:backgroundNode];
     
     //Player
-    PPPlayer *player = [[PPPlayer alloc] initWithIdleTexture:[sLargeTextures objectAtIndex:0]
-                                               activeTexture:[sLargeTextures objectAtIndex:1]
-                                                  atPosition:CGPointMake(-self.size.width/4, 50)];
+    PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[sLargeTextures objectAtIndex:0]
+                                                secondTexture:[sLargeTextures objectAtIndex:1]];
+    [player setPosition:CGPointMake(-self.size.width/4, 50)];
     [player setScale:[self getPlayerScale]];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
@@ -327,12 +325,24 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     SKNode *node = [SKNode new];
     
     NSInteger newTileSize = [self getWaterSurfaceScale] * kLargeTileWidth;
-    NSInteger numTilesForScreenWidth = self.size.width/newTileSize;
+    NSInteger numTilesForScreen = (self.size.width * (1 + kWorldScaleCap))/newTileSize;
     
-    for (int i = 0; i < numTilesForScreenWidth; i++) {
-        PPWaterSprite *waterTile = [[PPWaterSprite alloc] initWithTexture:[sLargeTextures objectAtIndex:11]];
+    for (int i = 0; i < numTilesForScreen; i++) {
+        PPWaterSprite *waterTile;
+        
+        if (i % 3 == 0) {
+            waterTile = [PPWaterSprite spriteNodeWithTexture:[sLargeTextures objectAtIndex:10]];
+        }
+        else if (i % 3 == 1) {
+            waterTile = [PPWaterSprite spriteNodeWithTexture:[sLargeTextures objectAtIndex:11]];
+        }
+        else if (i % 3 == 2){
+            waterTile = [PPWaterSprite spriteNodeWithTexture:[sLargeTextures objectAtIndex:12]];
+        }
+        
         [waterTile setScale:[self getWaterSurfaceScale]];
         [waterTile setPosition:CGPointMake(-self.size.width/2 + (newTileSize * i), 0)];
+        [waterTile setName:@"waterTile"];
         [node addChild:waterTile];
     }
     return node;
@@ -593,6 +603,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     return (1 - kWorldScaleCap);
 }
 
+- (CGSize)maxWorldScaleSize {
+    return CGSizeMake(self.size.width * (1 + kWorldScaleCap), self.size.height * (1 + kWorldScaleCap));
+}
 - (BOOL)worldIsBelowMinZoom {
     return (self.worldNode.xScale <= kWorldScaleCap);
 }
