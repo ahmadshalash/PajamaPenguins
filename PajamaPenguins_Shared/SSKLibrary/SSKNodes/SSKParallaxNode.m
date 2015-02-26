@@ -40,20 +40,10 @@
         for (int i = 0; i < self.allAttachedNodes.count; i++) {
             SKNode *attachedNode = [self.allAttachedNodes objectAtIndex:i];
             [attachedNode setName:@"parallaxNode"];
-            [attachedNode setPosition:CGPointMake(self.size.width * i, 0)];
+            [attachedNode setPosition:CGPointMake((self.size.width * i) - (1 * i), 0)];
             [self addChild:attachedNode];
         }
 
-//        
-//        self.firstNode = node;
-//        [self.firstNode setName:@"parallaxNode"];
-//        [self.firstNode setPosition:CGPointMake(0, 0)];
-//        [self addChild:self.firstNode];
-//        
-//        self.secondNode = self.firstNode.copy;
-//        [self.secondNode setName:@"parallaxNode"];
-//        [self.secondNode setPosition:CGPointMake(self.size.width, 0)];
-//        [self addChild:self.secondNode];
     }
     return self;
 }
@@ -72,7 +62,7 @@
         [self enumerateChildNodesWithName:@"parallaxNode" usingBlock:^(SKNode *node, BOOL *stop) {
             node.position = CGPointMake(node.position.x + amountToMove.x, node.position.y + amountToMove.y);
             if (node.position.x <= -self.size.width) {
-                [node setPosition:CGPointMake(self.size.width, 0)];
+                [node setPosition:CGPointMake(self.size.width - 2, 0)];
             }
         }];
     }

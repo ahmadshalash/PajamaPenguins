@@ -75,7 +75,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 - (void)didMoveToView:(SKView *)view {
-    self.backgroundColor = SKColorWithRGB(6, 220, 220);
+    self.backgroundColor = SKColorWithRGB(0, 194, 255);
     self.anchorPoint = CGPointMake(0.5, 0.5);
     
     [self createNewGame];
@@ -97,17 +97,19 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
 
-    //Water Surface Tiles
-    NSMutableArray *waterTiles = [NSMutableArray array];
-    for (int i = 0; i < 2; i++) {
-        [waterTiles addObject:[self waterSurfaceNode]];
-    }
-    
+    //Parallaxing Nodes
     SSKParallaxNode *backgroundNode = [SSKParallaxNode nodeWithSize:[self maxWorldScaleSize]
-                                                      attachedNodes:waterTiles
+                                                      attachedNodes:[self waterSurfaceForParallax]
                                                           moveSpeed:CGPointMake(-30, 0)];
     [backgroundNode setName:@"parallaxNode"];
+    [backgroundNode setZPosition:backgroundLayer];
     [self.worldNode addChild:backgroundNode];
+    
+    //Water background
+    SKSpriteNode *waterBackground = [self waterBackgroundNode];
+    [waterBackground setPosition:CGPointMake(-self.size.width/2, 0)];
+    [waterBackground setName:@"water"];
+    [self.worldNode addChild:waterBackground];
     
     //Player
     PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[sLargeTextures objectAtIndex:0]
@@ -121,17 +123,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [player.physicsBody setCollisionBitMask:obstacleCategory | edgeCategory];
     [player.physicsBody setContactTestBitMask:obstacleCategory];
     [self.worldNode addChild:player];
-    
-    SKSpriteNode *water = [SKSpriteNode spriteNodeWithColor:SKColorWithRGB(85, 65, 50)
-                                                       size:CGSizeMake(self.size.width/2 + (self.size.width/kWorldScaleCap),
-                                                                       self.size.height/2 + (self.size.height/2)/kWorldScaleCap)];
-    [water setAnchorPoint:CGPointMake(0, 1)];
-    [water setPosition:CGPointMake(-self.size.width/2, 0)];
-    [water setAlpha:0.5];
-    [water setName:@"water"];
-    [water setZPosition:foregroundLayer];
-    [self.worldNode addChild:water];
-    
     
     //Screen Physics Boundary
     SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width,self.size.height)];
@@ -300,7 +291,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
         [player.physicsBody setVelocity:CGVectorMake(player.physicsBody.velocity.dx, kPlayerUpperVelocityLimit)];
     }
     
-    if (player.position.y > [self childNodeWithName:@"water"].position.y) {
+    if (player.position.y > [self childNodeWithName:@"//water"].position.y) {
         if (player.physicsBody.velocity.dy <= kPlayerLowerAirVelocityLimit) {
             [player.physicsBody setVelocity:CGVectorMake(player.physicsBody.velocity.dx, kPlayerLowerAirVelocityLimit)];
         }
@@ -321,6 +312,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 #pragma mark - Water
+//Top Of Water Background
 - (SKNode*)waterSurfaceNode {
     SKNode *node = [SKNode new];
     
@@ -342,10 +334,26 @@ NSString * const kPixelFontName = @"Fipps-Regular";
         
         [waterTile setScale:[self getWaterSurfaceScale]];
         [waterTile setPosition:CGPointMake(-self.size.width/2 + (newTileSize * i), 0)];
-        [waterTile setName:@"waterTile"];
         [node addChild:waterTile];
     }
     return node;
+}
+
+- (NSArray*)waterSurfaceForParallax {
+    NSMutableArray *waterTiles = [NSMutableArray array];
+    for (int i = 0; i < 2; i++) {
+        [waterTiles addObject:[self waterSurfaceNode]];
+    }
+    return [NSArray arrayWithArray:waterTiles];
+}
+
+//Underwater background
+- (SKSpriteNode*)waterBackgroundNode {
+    SKSpriteNode *waterBackground = [SKSpriteNode spriteNodeWithTexture:[SSKGraphicsUtils loadPixelTextureWithName:@"WaterBackground"]];
+    [waterBackground setScale:((self.size.width/kWorldScaleCap)/self.size.width) + ((self.size.width/2)/kWorldScaleCap)/self.size.width/2];
+    [waterBackground setAnchorPoint:CGPointMake(0, 1)];
+    [waterBackground setAlpha:0.65];
+    return waterBackground;
 }
 
 #pragma mark - Obstacles
@@ -362,10 +370,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     CGFloat randomNum = SSKRandomFloatInRange(15, 250);
     
     //Max zoom width position
-    CGFloat spawnXPosition = (self.size.width/2 + ((self.size.width * (1 - kWorldScaleCap)) * 2));
+    CGFloat spawnPosition = self.size.width/kWorldScaleCap;
     
     //Offset by half of iceberg width
-    CGPoint spawnPoint = CGPointMake(spawnXPosition + randomNum/2, 0);
+    CGPoint spawnPoint = CGPointMake(spawnPosition + randomNum/2, 0);
     
     return [self newIceBergAtPosition:spawnPoint withWidth:randomNum];
 }
@@ -412,6 +420,14 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 #pragma mark - World Gravity
 - (void)setGravity:(CGFloat)gravity {
     [self.physicsWorld setGravity:CGVectorMake(0, gravity)];
+}
+
+- (void)updatePlayingGravity {
+    if ([self currentPlayer].position.y > [self childNodeWithName:@"//water"].position.y) {
+        [self setGravity:kAirGravityStrength];
+    } else {
+        [self setGravity:kWaterGravityStrength];
+    }
 }
 
 #pragma mark - Actions
@@ -492,9 +508,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     if (deltaTime > 1) {
         deltaTime = 0;
     }
-    
+
     if (!(self.gameState == GameOver)) {
-        [(SSKParallaxNode*)[self.worldNode childNodeWithName:@"parallaxNode"] update:deltaTime];
+        [self updateParallaxNodesWithDelta:deltaTime];
         [self updatePlayingGravity];
         [[self currentPlayer] update:deltaTime];
         [self clampPlayerVelocity];
@@ -511,14 +527,11 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     if (self.gameState == Playing) {
     }
 }
-
-#pragma mark - Updated Per Frame
-- (void)updatePlayingGravity {
-    if ([self currentPlayer].position.y > [self.worldNode childNodeWithName:@"water"].position.y) {
-        [self setGravity:kAirGravityStrength];
-    } else {
-        [self setGravity:kWaterGravityStrength];
-    }
+#pragma mark - Parallaxing
+- (void)updateParallaxNodesWithDelta:(NSTimeInterval)dt {
+    [self.worldNode enumerateChildNodesWithName:@"parallaxNode" usingBlock:^(SKNode *node, BOOL *stop) {
+        [(SSKParallaxNode*)node update:dt];
+    }];
 }
 
 #pragma mark - World Zoom
@@ -606,6 +619,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 - (CGSize)maxWorldScaleSize {
     return CGSizeMake(self.size.width * (1 + kWorldScaleCap), self.size.height * (1 + kWorldScaleCap));
 }
+
 - (BOOL)worldIsBelowMinZoom {
     return (self.worldNode.xScale <= kWorldScaleCap);
 }

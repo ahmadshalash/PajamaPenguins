@@ -56,6 +56,8 @@
 		EEF798251A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */; };
 		EEF798281A9D7ECA0000DD14 /* SKScene+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798271A9D7ECA0000DD14 /* SKScene+SFAdditions.m */; };
 		EEF798291A9D7ECA0000DD14 /* SKScene+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798271A9D7ECA0000DD14 /* SKScene+SFAdditions.m */; };
+		EEF7982F1A9E7CF10000DD14 /* WaterBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = EEF7982E1A9E7CF10000DD14 /* WaterBackground.png */; };
+		EEF798301A9E7CF10000DD14 /* WaterBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = EEF7982E1A9E7CF10000DD14 /* WaterBackground.png */; };
 		EEFA233E1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */; };
 		EEFA233F1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */; };
 		EEFA23411A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */; };
@@ -127,6 +129,7 @@
 		EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSimpleAnimatedSprite.m; sourceTree = "<group>"; };
 		EEF798261A9D7ECA0000DD14 /* SKScene+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKScene+SFAdditions.h"; sourceTree = "<group>"; };
 		EEF798271A9D7ECA0000DD14 /* SKScene+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKScene+SFAdditions.m"; sourceTree = "<group>"; };
+		EEF7982E1A9E7CF10000DD14 /* WaterBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WaterBackground.png; sourceTree = "<group>"; };
 		EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsLargeSheet.png; sourceTree = "<group>"; };
 		EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsSmallSheet.png; sourceTree = "<group>"; };
 		EEFA23471A9D0FE10003B009 /* PPWaterSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWaterSprite.h; path = ../PPWaterSprite.h; sourceTree = "<group>"; };
@@ -288,6 +291,7 @@
 			children = (
 				EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */,
 				EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */,
+				EEF7982E1A9E7CF10000DD14 /* WaterBackground.png */,
 				EE168C931A97CCEF005403E6 /* Fonts */,
 			);
 			name = Assets;
@@ -450,6 +454,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */,
+				EEF7982F1A9E7CF10000DD14 /* WaterBackground.png in Resources */,
 				EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */,
 				EE168C8E1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				EEFA23411A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
@@ -464,6 +469,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEFA23421A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
+				EEF798301A9E7CF10000DD14 /* WaterBackground.png in Resources */,
 				41E430EF18B09E8600E1427D /* Images.xcassets in Resources */,
 				41E430DD18B09E8600E1427D /* InfoPlist.strings in Resources */,
 				EEFA233F1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */,
