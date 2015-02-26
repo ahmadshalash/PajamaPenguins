@@ -8,6 +8,7 @@
 #import "PPPlayer.h"
 #import "PPIcebergObstacle.h"
 #import "PPWaterSprite.h"
+#import "PPGradientSprite.h"
 
 #import "SKColor+SFAdditions.h"
 #import "SKNode+SFAdditions.h"
@@ -27,6 +28,8 @@ typedef enum {
 
 typedef enum {
     backgroundLayer = 0,
+    waterSurfaceLayer,
+    obstacleLayer,
     playerLayer,
     foregroundLayer,
     hudLayer,
@@ -98,12 +101,12 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self addChild:self.worldNode];
 
     //Parallaxing Nodes
-    SSKParallaxNode *backgroundNode = [SSKParallaxNode nodeWithSize:[self maxWorldScaleSize]
+    SSKParallaxNode *waterSurfaceNode = [SSKParallaxNode nodeWithSize:[self maxWorldScaleSize]
                                                       attachedNodes:[self waterSurfaceForParallax]
                                                           moveSpeed:CGPointMake(-30, 0)];
-    [backgroundNode setName:@"parallaxNode"];
-    [backgroundNode setZPosition:backgroundLayer];
-    [self.worldNode addChild:backgroundNode];
+    [waterSurfaceNode setName:@"parallaxNode"];
+    [waterSurfaceNode setZPosition:waterSurfaceLayer];
+    [self.worldNode addChild:waterSurfaceNode];
     
     //Water background
     SKSpriteNode *waterBackground = [self waterBackgroundNode];
@@ -111,6 +114,14 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [waterBackground setZPosition:foregroundLayer];
     [waterBackground setName:@"water"];
     [self.worldNode addChild:waterBackground];
+
+    //Sky background
+    PPGradientSprite *skyGradient = [[PPGradientSprite alloc] initWithTexture:[SSKGraphicsUtils loadPixelTextureWithName:@"SkyGradientTexture"]
+                                                                 blendedColor:SKColorWithRGB(80, 175, 235)];
+    [skyGradient setAnchorPoint:CGPointMake(0, 0)];
+    [skyGradient setZPosition:backgroundLayer];
+    [skyGradient setPosition:CGPointMake(-self.size.width/2, 0)];
+    [self.worldNode addChild:skyGradient];
     
     //Player
     PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[sLargeTextures objectAtIndex:0]
@@ -313,7 +324,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 #pragma mark - Water
-//Top Of Water Background
+//Water Surface Background
 - (SKNode*)waterSurfaceNode {
     SKNode *node = [SKNode new];
     
@@ -348,7 +359,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     return [NSArray arrayWithArray:waterTiles];
 }
 
-//Underwater background
+//Underwater Background
 - (SKSpriteNode*)waterBackgroundNode {
     SKSpriteNode *waterBackground = [SKSpriteNode spriteNodeWithTexture:[SSKGraphicsUtils loadPixelTextureWithName:@"WaterBackground"]];
     [waterBackground setScale:[self backgroundSpriteScale]];
@@ -357,12 +368,20 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     return waterBackground;
 }
 
+#pragma mark - Sky
+- (SKSpriteNode*)skyBackgroundNode {
+    SKSpriteNode *skyBackground = [SKSpriteNode spriteNodeWithTexture:[SSKGraphicsUtils loadPixelTextureWithName:@"SkyBackground"]];
+    [skyBackground setScale:[self backgroundSpriteScale]];
+    [skyBackground setAnchorPoint:CGPointMake(0, 0)];
+    return skyBackground;
+}
+
 #pragma mark - Obstacles
 - (PPIcebergObstacle*)newIceBergAtPosition:(CGPoint)position withWidth:(CGFloat)width {
     PPIcebergObstacle *obstacle = [[PPIcebergObstacle alloc] initWithWidth:width];
-    [obstacle setZPosition:1];
     [obstacle setPosition:position];
     [obstacle setName:@"obstacle"];
+    [obstacle setZPosition:obstacleLayer];
     [obstacle.physicsBody setCategoryBitMask:obstacleCategory];
     return obstacle;
 }
