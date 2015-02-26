@@ -108,6 +108,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     //Water background
     SKSpriteNode *waterBackground = [self waterBackgroundNode];
     [waterBackground setPosition:CGPointMake(-self.size.width/2, 0)];
+    [waterBackground setZPosition:foregroundLayer];
     [waterBackground setName:@"water"];
     [self.worldNode addChild:waterBackground];
     
@@ -350,7 +351,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 //Underwater background
 - (SKSpriteNode*)waterBackgroundNode {
     SKSpriteNode *waterBackground = [SKSpriteNode spriteNodeWithTexture:[SSKGraphicsUtils loadPixelTextureWithName:@"WaterBackground"]];
-    [waterBackground setScale:((self.size.width/kWorldScaleCap)/self.size.width) + ((self.size.width/2)/kWorldScaleCap)/self.size.width/2];
+    [waterBackground setScale:[self backgroundSpriteScale]];
     [waterBackground setAnchorPoint:CGPointMake(0, 1)];
     [waterBackground setAlpha:0.65];
     return waterBackground;
@@ -618,6 +619,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 - (CGSize)maxWorldScaleSize {
     return CGSizeMake(self.size.width * (1 + kWorldScaleCap), self.size.height * (1 + kWorldScaleCap));
+}
+
+- (CGFloat)backgroundSpriteScale {
+    return ((self.size.width/kWorldScaleCap)/self.size.width) + ((self.size.width/2)/kWorldScaleCap)/(self.size.width/2);
 }
 
 - (BOOL)worldIsBelowMinZoom {
