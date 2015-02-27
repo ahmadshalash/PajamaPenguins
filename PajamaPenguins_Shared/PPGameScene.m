@@ -78,6 +78,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 - (void)didMoveToView:(SKView *)view {
+    self.backgroundColor = SKColorWithRGB(0,180,255);
     self.anchorPoint = CGPointMake(0.5, 0.5);
     
     [self createNewGame];
@@ -539,7 +540,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
         [self updatePlayingGravity];
         [[self currentPlayer] update:deltaTime];
         [self clampPlayerVelocity];
-        [self updateWorldZoom];
     }
 }
 
@@ -550,6 +550,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 - (void)didSimulatePhysics {
     if (self.gameState == Playing) {
+        [self updateWorldZoom];
     }
 }
 #pragma mark - Parallaxing
