@@ -86,7 +86,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Test Stuff
 - (void)testStuff {
-    [(PPGradientSprite*)[self.worldNode childNodeWithName:@"sky"] crossFadeToRed:100 green:30 blue:50 duration:3];
+//    [(PPGradientSprite*)[self.worldNode childNodeWithName:@"sky"] crossFadeToRed:100 green:30 blue:50 duration:3];
 }
 
 #pragma mark - Creating scene layers
@@ -101,28 +101,32 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self addChild:self.worldNode];
 
     //Parallaxing Nodes
-    SSKParallaxNode *waterSurfaceNode = [SSKParallaxNode nodeWithSize:[self maxWorldScaleSize]
-                                                        attachedNodes:[self waterSurfaceForParallax]
-                                                            moveSpeed:CGPointMake(-30, 0)];
-    [waterSurfaceNode setName:@"parallaxNode"];
-    [waterSurfaceNode setZPosition:waterSurfaceLayer];
-    [self.worldNode addChild:waterSurfaceNode];
+//    SSKParallaxNode *waterSurfaceNode = [SSKParallaxNode nodeWithSize:[self maxWorldScaleSize]
+//                                                        attachedNodes:[self waterSurfaceForParallax]
+//                                                            moveSpeed:CGPointMake(-30, 0)];
+//    [waterSurfaceNode setName:@"parallaxNode"];
+//    [waterSurfaceNode setZPosition:waterSurfaceLayer];
+//    [self.worldNode addChild:waterSurfaceNode];
     
-    //Water background
-    SKSpriteNode *waterBackground = [self waterBackgroundNode];
-    [waterBackground setPosition:CGPointMake(-self.size.width/2, 0)];
-    [waterBackground setZPosition:foregroundLayer];
-    [waterBackground setName:@"water"];
-    [self.worldNode addChild:waterBackground];
-
     //Sky background
     PPGradientSprite *skyGradient = [PPGradientSprite spriteNodeWithGradientTexture:
-                                     [SSKGraphicsUtils loadPixelTextureWithName:@"SkyGradientTexture"] red:0 green:255 blue:255];
+                                     [SSKGraphicsUtils loadPixelTextureWithName:@"SkyGradientTexture"] red:100 green:200 blue:255];
     [skyGradient setAnchorPoint:CGPointMake(0, 0)];
     [skyGradient setZPosition:backgroundLayer];
     [skyGradient setPosition:CGPointMake(-self.size.width/2, 0)];
     [skyGradient setName:@"sky"];
     [self.worldNode addChild:skyGradient];
+    
+    //Water background
+    PPGradientSprite *waterBackground = [PPGradientSprite spriteNodeWithGradientTexture:
+                                         [SSKGraphicsUtils loadPixelTextureWithName:@"WaterGradientTexture"] red:0 green:128 blue:255];
+    [waterBackground setPosition:CGPointMake(-self.size.width/2, 0)];
+    [waterBackground setZPosition:foregroundLayer];
+    [waterBackground setAnchorPoint:CGPointMake(0, 1)];
+    [waterBackground setAlpha:.6];
+    [waterBackground setName:@"water"];
+    [self.worldNode addChild:waterBackground];
+
     
     //Player
     PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[sLargeTextures objectAtIndex:0]

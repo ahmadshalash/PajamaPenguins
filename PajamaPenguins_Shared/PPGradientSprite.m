@@ -27,7 +27,12 @@ CGFloat const kMaxColorValue = 255.0f;
     self = [super initWithTexture:texture];
     
     if (self) {
-        self.blendMode = SKBlendModeAdd;
+        /* 
+         As of iOS 8.1 changing blendmode messes with zPositions. /sad
+         
+         self.blendMode = SKBlendModeAdd;
+         */
+        
         self.colorBlendFactor = 1.0;
         
         [self setColorWithRed:red green:green blue:blue];
