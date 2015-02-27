@@ -78,7 +78,6 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 - (void)didMoveToView:(SKView *)view {
-    self.backgroundColor = SKColorWithRGB(0, 194, 255);
     self.anchorPoint = CGPointMake(0.5, 0.5);
     
     [self createNewGame];
@@ -87,6 +86,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Test Stuff
 - (void)testStuff {
+    [(PPGradientSprite*)[self.worldNode childNodeWithName:@"sky"] crossFadeToRed:100 green:30 blue:50 duration:3];
 }
 
 #pragma mark - Creating scene layers
@@ -102,8 +102,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
     //Parallaxing Nodes
     SSKParallaxNode *waterSurfaceNode = [SSKParallaxNode nodeWithSize:[self maxWorldScaleSize]
-                                                      attachedNodes:[self waterSurfaceForParallax]
-                                                          moveSpeed:CGPointMake(-30, 0)];
+                                                        attachedNodes:[self waterSurfaceForParallax]
+                                                            moveSpeed:CGPointMake(-30, 0)];
     [waterSurfaceNode setName:@"parallaxNode"];
     [waterSurfaceNode setZPosition:waterSurfaceLayer];
     [self.worldNode addChild:waterSurfaceNode];
@@ -116,11 +116,12 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.worldNode addChild:waterBackground];
 
     //Sky background
-    PPGradientSprite *skyGradient = [[PPGradientSprite alloc] initWithTexture:[SSKGraphicsUtils loadPixelTextureWithName:@"SkyGradientTexture"]
-                                                                 blendedColor:SKColorWithRGB(80, 175, 235)];
+    PPGradientSprite *skyGradient = [PPGradientSprite spriteNodeWithGradientTexture:
+                                     [SSKGraphicsUtils loadPixelTextureWithName:@"SkyGradientTexture"] red:0 green:255 blue:255];
     [skyGradient setAnchorPoint:CGPointMake(0, 0)];
     [skyGradient setZPosition:backgroundLayer];
     [skyGradient setPosition:CGPointMake(-self.size.width/2, 0)];
+    [skyGradient setName:@"sky"];
     [self.worldNode addChild:skyGradient];
     
     //Player
