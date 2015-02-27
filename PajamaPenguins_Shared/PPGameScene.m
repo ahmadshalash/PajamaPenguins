@@ -63,6 +63,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
+@property (nonatomic) SSKDynamicColorSpriteNode *blendNode;
 @property (nonatomic) SKNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
 @property (nonatomic) SKNode *hudNode;
@@ -78,9 +79,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 - (void)didMoveToView:(SKView *)view {
-    self.backgroundColor = SKColorWithRGB(0,255,255);
     self.anchorPoint = CGPointMake(0.5, 0.5);
     
+    NSLog(@"Screen Size: %fl,%fl",self.size.width, self.size.height);
+   
     [self createNewGame];
     [self testStuff];
 }
@@ -108,12 +110,13 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 //    [waterSurfaceNode setName:@"parallaxNode"];
 //    [waterSurfaceNode setZPosition:waterSurfaceLayer];
 //    [self.worldNode addChild:waterSurfaceNode];
-    
+
     //Color blend background
+    self.blendNode = [SSKDynamicColorSpriteNode nodeWithRed:100 green:205 blue:255 size:self.size];
+    [self addChild:self.blendNode];
     
     //Sky background
-    SSKDynamicColorSpriteNode *skyBackround = [SSKDynamicColorSpriteNode nodeWithTexture:
-                                               [SSKGraphicsUtils loadPixelTextureWithName:@"SkyGradient"] red:0 green:240 blue:255];
+    SSKDynamicColorSpriteNode *skyBackround = [SSKDynamicColorSpriteNode nodeWithTexture:sSkyGradient red:255 green:255 blue:255];
     [skyBackround setAnchorPoint:CGPointMake(0, 0)];
     [skyBackround setZPosition:backgroundLayer];
     [skyBackround setPosition:CGPointMake(-self.size.width/2, 0)];
@@ -122,8 +125,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.worldNode addChild:skyBackround];
     
     //Water background
-    SSKDynamicColorSpriteNode *waterBackground = [SSKDynamicColorSpriteNode nodeWithTexture:
-                                                  [SSKGraphicsUtils loadPixelTextureWithName:@"WaterGradient"] red:0 green:100 blue:255];
+    SSKDynamicColorSpriteNode *waterBackground = [SSKDynamicColorSpriteNode nodeWithTexture:sWaterGradient red:140 green:170 blue:222];
     [waterBackground setPosition:CGPointMake(-self.size.width/2, 0)];
     [waterBackground setZPosition:foregroundLayer];
     [waterBackground setAnchorPoint:CGPointMake(0, 1)];
@@ -680,17 +682,42 @@ NSString * const kPixelFontName = @"Fipps-Regular";
                                                             gridWidth:10
                                                            gridHeight:10];
     
+    switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
+
+        case UIUserInterfaceIdiomPhone:
+            sSkyGradient = [SKTexture textureWithImageNamed:@"SkyGradient-iphone"];
+            sWaterGradient = [SKTexture textureWithImageNamed:@"WaterGradient-iphone"];
+            break;
+            
+        case UIUserInterfaceIdiomPad:
+            sSkyGradient = [SKTexture textureWithImageNamed:@"SkyGradient-ipad"];
+            sWaterGradient = [SKTexture textureWithImageNamed:@"WaterGradient-ipad"];
+            break;
+            
+        default:
+            break;
+    }
+    
     NSLog(@"Scene loaded in %f seconds",[[NSDate date] timeIntervalSinceDate:startTime]);
 }
 
 static NSArray *sSmallTextures = nil;
-- (NSArray*)sharedSmallTextures {
++ (NSArray*)sharedSmallTextures {
     return sSmallTextures;
 }
 
 static NSArray *sLargeTextures = nil;
-- (NSArray*)sharedLargeTextures {
++ (NSArray*)sharedLargeTextures {
     return sLargeTextures;
 }
 
+static SKTexture *sSkyGradient = nil;
++ (SKTexture*)sharedSkyGradient {
+    return sSkyGradient;
+}
+
+static SKTexture *sWaterGradient = nil;
++ (SKTexture*)sharedWaterGradient {
+    return sWaterGradient;
+}
 @end

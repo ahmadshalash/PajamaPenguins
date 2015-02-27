@@ -9,26 +9,20 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface SSKDynamicColorSpriteNode : SKSpriteNode
-+ (instancetype)nodeWithTexture:(SKTexture *)texture
-                                          red:(int)red
-                                        green:(int)green
-                                         blue:(int)blue;
 
-- (instancetype)initWithTexture:(SKTexture *)texture
-                                    red:(int)red
-                                  green:(int)green
-                                   blue:(int)blue;
+//Initializing with only color
++ (instancetype)nodeWithRed:(int)red green:(int)green blue:(int)blue size:(CGSize)size;
+- (instancetype)initWithRed:(int)red green:(int)green blue:(int)blue size:(CGSize)size;
+
+//Initializing with texture blended with color
++ (instancetype)nodeWithTexture:(SKTexture *)texture red:(int)red green:(int)green blue:(int)blue;
+- (instancetype)initWithTexture:(SKTexture *)texture red:(int)red green:(int)green blue:(int)blue;
 
 //Set New Color
-- (void)setColorWithRed:(int)red
-                  green:(int)green
-                   blue:(int)blue;
+- (void)setColorWithRed:(int)red green:(int)green blue:(int)blue;
 
 //Fade To New Color
-- (void)crossFadeToRed:(int)targetRed
-                 green:(int)targetGreen
-                  blue:(int)targetBlue
-              duration:(NSTimeInterval)duration;
+- (void)crossFadeToRed:(int)targetRed green:(int)targetGreen blue:(int)targetBlue duration:(NSTimeInterval)duration;
 
 @property (nonatomic, readonly) int red;
 @property (nonatomic, readonly) int green;

@@ -19,6 +19,24 @@ CGFloat const kMaxColorValue = 255.0f;
 
 @implementation SSKDynamicColorSpriteNode
 
+
+#pragma mark - Init with color
++ (instancetype)nodeWithRed:(int)red green:(int)green blue:(int)blue size:(CGSize)size {
+    return [[self alloc] initWithRed:red green:green blue:blue size:size];
+}
+
+- (instancetype)initWithRed:(int)red green:(int)green blue:(int)blue size:(CGSize)size {
+    self = [super init];
+    
+    if (self) {
+        self.size = size;
+        [self setColorWithRed:red green:green blue:blue];
+    }
+    
+    return self;
+}
+
+#pragma mark - Init with texture
 + (instancetype)nodeWithTexture:(SKTexture *)texture red:(int)red green:(int)green blue:(int)blue {
     return [[self alloc] initWithTexture:texture red:red green:green blue:blue];
 }
@@ -34,7 +52,6 @@ CGFloat const kMaxColorValue = 255.0f;
          */
         
         self.colorBlendFactor = 1.0;
-        
         [self setColorWithRed:red green:green blue:blue];
     }
     

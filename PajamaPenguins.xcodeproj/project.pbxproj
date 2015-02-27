@@ -50,6 +50,10 @@
 		EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
 		EEBA93F31A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
+		EECC66871AA11C7B004CB609 /* SkyGradient-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = EECC66851AA11C7B004CB609 /* SkyGradient-ipad.png */; };
+		EECC66881AA11C7B004CB609 /* SkyGradient-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = EECC66861AA11C7B004CB609 /* SkyGradient-iphone.png */; };
+		EECC668C1AA12599004CB609 /* WaterGradient-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = EECC668A1AA12599004CB609 /* WaterGradient-ipad.png */; };
+		EECC668D1AA12599004CB609 /* WaterGradient-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = EECC668B1AA12599004CB609 /* WaterGradient-iphone.png */; };
 		EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EED8E5A31A881D79001C8F59 /* PPPlayer.m */; };
 		EED8E5A51A881D79001C8F59 /* PPPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EED8E5A31A881D79001C8F59 /* PPPlayer.m */; };
 		EEF798241A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */; };
@@ -58,12 +62,12 @@
 		EEF798291A9D7ECA0000DD14 /* SKScene+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798271A9D7ECA0000DD14 /* SKScene+SFAdditions.m */; };
 		EEF7983C1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF7983B1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m */; };
 		EEF7983D1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF7983B1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m */; };
+		EEF798491AA0FD440000DD14 /* PPWaterSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798481AA0FD440000DD14 /* PPWaterSprite.m */; };
+		EEF7984A1AA0FD440000DD14 /* PPWaterSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798481AA0FD440000DD14 /* PPWaterSprite.m */; };
 		EEFA233E1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */; };
 		EEFA233F1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */; };
 		EEFA23411A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */; };
 		EEFA23421A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */; };
-		EEFA23491A9D0FE10003B009 /* PPWaterSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA23481A9D0FE10003B009 /* PPWaterSprite.m */; };
-		EEFA234A1A9D0FE10003B009 /* PPWaterSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA23481A9D0FE10003B009 /* PPWaterSprite.m */; };
 		EEFA234D1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA234C1A9D3B5E0003B009 /* SSKParallaxNode.m */; };
 		EEFA234E1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA234C1A9D3B5E0003B009 /* SSKParallaxNode.m */; };
 /* End PBXBuildFile section */
@@ -123,6 +127,10 @@
 		EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKCameraNode.m; sourceTree = "<group>"; };
 		EEBA93F01A93FD4F00CBD711 /* TwoDimensionalArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoDimensionalArray.h; sourceTree = "<group>"; };
 		EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoDimensionalArray.m; sourceTree = "<group>"; };
+		EECC66851AA11C7B004CB609 /* SkyGradient-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SkyGradient-ipad.png"; sourceTree = "<group>"; };
+		EECC66861AA11C7B004CB609 /* SkyGradient-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SkyGradient-iphone.png"; sourceTree = "<group>"; };
+		EECC668A1AA12599004CB609 /* WaterGradient-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaterGradient-ipad.png"; sourceTree = "<group>"; };
+		EECC668B1AA12599004CB609 /* WaterGradient-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaterGradient-iphone.png"; sourceTree = "<group>"; };
 		EED8E5A21A881D79001C8F59 /* PPPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlayer.h; sourceTree = "<group>"; };
 		EED8E5A31A881D79001C8F59 /* PPPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlayer.m; sourceTree = "<group>"; };
 		EEF798221A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSimpleAnimatedSprite.h; sourceTree = "<group>"; };
@@ -131,10 +139,10 @@
 		EEF798271A9D7ECA0000DD14 /* SKScene+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKScene+SFAdditions.m"; sourceTree = "<group>"; };
 		EEF7983A1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSKDynamicColorSpriteNode.h; path = ../../SSKDynamicColorSpriteNode.h; sourceTree = "<group>"; };
 		EEF7983B1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSKDynamicColorSpriteNode.m; path = ../../SSKDynamicColorSpriteNode.m; sourceTree = "<group>"; };
+		EEF798471AA0FD440000DD14 /* PPWaterSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPWaterSprite.h; sourceTree = "<group>"; };
+		EEF798481AA0FD440000DD14 /* PPWaterSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPWaterSprite.m; sourceTree = "<group>"; };
 		EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsLargeSheet.png; sourceTree = "<group>"; };
 		EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsSmallSheet.png; sourceTree = "<group>"; };
-		EEFA23471A9D0FE10003B009 /* PPWaterSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWaterSprite.h; path = ../PPWaterSprite.h; sourceTree = "<group>"; };
-		EEFA23481A9D0FE10003B009 /* PPWaterSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPWaterSprite.m; path = ../PPWaterSprite.m; sourceTree = "<group>"; };
 		EEFA234B1A9D3B5E0003B009 /* SSKParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKParallaxNode.h; sourceTree = "<group>"; };
 		EEFA234C1A9D3B5E0003B009 /* SSKParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKParallaxNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -292,6 +300,7 @@
 			children = (
 				EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */,
 				EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */,
+				EECC66891AA11C7E004CB609 /* BackgroundGradients */,
 				EE168C931A97CCEF005403E6 /* Fonts */,
 			);
 			name = Assets;
@@ -305,10 +314,10 @@
 				EED8E5A31A881D79001C8F59 /* PPPlayer.m */,
 				EE168CDC1A994DFE005403E6 /* PPIcebergObstacle.h */,
 				EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */,
-				EEFA23471A9D0FE10003B009 /* PPWaterSprite.h */,
-				EEFA23481A9D0FE10003B009 /* PPWaterSprite.m */,
 				EEF798221A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.h */,
 				EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */,
+				EEF798471AA0FD440000DD14 /* PPWaterSprite.h */,
+				EEF798481AA0FD440000DD14 /* PPWaterSprite.m */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -374,6 +383,17 @@
 				EE6F92F41A82F39400286DC7 /* SSKMathUtils.h */,
 			);
 			path = SSKUtils;
+			sourceTree = "<group>";
+		};
+		EECC66891AA11C7E004CB609 /* BackgroundGradients */ = {
+			isa = PBXGroup;
+			children = (
+				EECC66851AA11C7B004CB609 /* SkyGradient-ipad.png */,
+				EECC66861AA11C7B004CB609 /* SkyGradient-iphone.png */,
+				EECC668A1AA12599004CB609 /* WaterGradient-ipad.png */,
+				EECC668B1AA12599004CB609 /* WaterGradient-iphone.png */,
+			);
+			name = BackgroundGradients;
 			sourceTree = "<group>";
 		};
 		EEEB9CA31A82D9DE005E94B3 /* Libraries */ = {
@@ -457,11 +477,15 @@
 			files = (
 				EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */,
 				EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */,
+				EECC668D1AA12599004CB609 /* WaterGradient-iphone.png in Resources */,
 				EE168C8E1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				EEFA23411A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
 				41E430B018B09E5200E1427D /* Images.xcassets in Resources */,
 				EEFA233E1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */,
+				EECC66881AA11C7B004CB609 /* SkyGradient-iphone.png in Resources */,
 				41E4309A18B09E5200E1427D /* InfoPlist.strings in Resources */,
+				EECC66871AA11C7B004CB609 /* SkyGradient-ipad.png in Resources */,
+				EECC668C1AA12599004CB609 /* WaterGradient-ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +519,7 @@
 				EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
 				EE6F92FC1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
 				41E430A918B09E5200E1427D /* ViewController.m in Sources */,
+				EEF798491AA0FD440000DD14 /* PPWaterSprite.m in Sources */,
 				EE6F92FA1A82F39400286DC7 /* SSKiAD.m in Sources */,
 				EE6F92FE1A82F39400286DC7 /* SSKScene.m in Sources */,
 				EEF7983C1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m in Sources */,
@@ -505,7 +530,6 @@
 				EEF798241A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m in Sources */,
 				41E430A018B09E5200E1427D /* AppDelegate.m in Sources */,
 				EE6F92F81A82F39400286DC7 /* SSKGameCenter.m in Sources */,
-				EEFA23491A9D0FE10003B009 /* PPWaterSprite.m in Sources */,
 				41E4309C18B09E5200E1427D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,9 +551,9 @@
 				EEFA234E1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */,
 				EE168CDF1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */,
 				EE6F92FD1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
-				EEFA234A1A9D0FE10003B009 /* PPWaterSprite.m in Sources */,
 				41E430EA18B09E8600E1427D /* AppDelegate.m in Sources */,
 				EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
+				EEF7984A1AA0FD440000DD14 /* PPWaterSprite.m in Sources */,
 				EEF798291A9D7ECA0000DD14 /* SKScene+SFAdditions.m in Sources */,
 				EEBA93F31A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */,
 				EE6F93051A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */,
