@@ -56,16 +56,8 @@
 		EEF798251A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */; };
 		EEF798281A9D7ECA0000DD14 /* SKScene+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798271A9D7ECA0000DD14 /* SKScene+SFAdditions.m */; };
 		EEF798291A9D7ECA0000DD14 /* SKScene+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798271A9D7ECA0000DD14 /* SKScene+SFAdditions.m */; };
-		EEF7982F1A9E7CF10000DD14 /* WaterBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = EEF7982E1A9E7CF10000DD14 /* WaterBackground.png */; };
-		EEF798301A9E7CF10000DD14 /* WaterBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = EEF7982E1A9E7CF10000DD14 /* WaterBackground.png */; };
-		EEF798321A9EC3540000DD14 /* SkyBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = EEF798311A9EC3540000DD14 /* SkyBackground.png */; };
-		EEF798331A9EC3540000DD14 /* SkyBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = EEF798311A9EC3540000DD14 /* SkyBackground.png */; };
-		EEF798361A9FCABA0000DD14 /* SkyGradientTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = EEF798341A9FCABA0000DD14 /* SkyGradientTexture.png */; };
-		EEF798371A9FCABA0000DD14 /* SkyGradientTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = EEF798341A9FCABA0000DD14 /* SkyGradientTexture.png */; };
-		EEF798381A9FCABA0000DD14 /* WaterGradientTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = EEF798351A9FCABA0000DD14 /* WaterGradientTexture.png */; };
-		EEF798391A9FCABA0000DD14 /* WaterGradientTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = EEF798351A9FCABA0000DD14 /* WaterGradientTexture.png */; };
-		EEF7983C1A9FCAE80000DD14 /* PPGradientSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF7983B1A9FCAE80000DD14 /* PPGradientSprite.m */; };
-		EEF7983D1A9FCAE80000DD14 /* PPGradientSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF7983B1A9FCAE80000DD14 /* PPGradientSprite.m */; };
+		EEF7983C1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF7983B1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m */; };
+		EEF7983D1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF7983B1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m */; };
 		EEFA233E1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */; };
 		EEFA233F1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */; };
 		EEFA23411A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */; };
@@ -137,12 +129,8 @@
 		EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSimpleAnimatedSprite.m; sourceTree = "<group>"; };
 		EEF798261A9D7ECA0000DD14 /* SKScene+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKScene+SFAdditions.h"; sourceTree = "<group>"; };
 		EEF798271A9D7ECA0000DD14 /* SKScene+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKScene+SFAdditions.m"; sourceTree = "<group>"; };
-		EEF7982E1A9E7CF10000DD14 /* WaterBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WaterBackground.png; sourceTree = "<group>"; };
-		EEF798311A9EC3540000DD14 /* SkyBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkyBackground.png; sourceTree = "<group>"; };
-		EEF798341A9FCABA0000DD14 /* SkyGradientTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkyGradientTexture.png; sourceTree = "<group>"; };
-		EEF798351A9FCABA0000DD14 /* WaterGradientTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WaterGradientTexture.png; sourceTree = "<group>"; };
-		EEF7983A1A9FCAE80000DD14 /* PPGradientSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPGradientSprite.h; sourceTree = "<group>"; };
-		EEF7983B1A9FCAE80000DD14 /* PPGradientSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPGradientSprite.m; sourceTree = "<group>"; };
+		EEF7983A1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSKDynamicColorSpriteNode.h; path = ../../SSKDynamicColorSpriteNode.h; sourceTree = "<group>"; };
+		EEF7983B1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSKDynamicColorSpriteNode.m; path = ../../SSKDynamicColorSpriteNode.m; sourceTree = "<group>"; };
 		EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsLargeSheet.png; sourceTree = "<group>"; };
 		EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PajamaPenguinsSmallSheet.png; sourceTree = "<group>"; };
 		EEFA23471A9D0FE10003B009 /* PPWaterSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWaterSprite.h; path = ../PPWaterSprite.h; sourceTree = "<group>"; };
@@ -304,10 +292,6 @@
 			children = (
 				EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */,
 				EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */,
-				EEF7982E1A9E7CF10000DD14 /* WaterBackground.png */,
-				EEF798311A9EC3540000DD14 /* SkyBackground.png */,
-				EEF798341A9FCABA0000DD14 /* SkyGradientTexture.png */,
-				EEF798351A9FCABA0000DD14 /* WaterGradientTexture.png */,
 				EE168C931A97CCEF005403E6 /* Fonts */,
 			);
 			name = Assets;
@@ -325,8 +309,6 @@
 				EEFA23481A9D0FE10003B009 /* PPWaterSprite.m */,
 				EEF798221A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.h */,
 				EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */,
-				EEF7983A1A9FCAE80000DD14 /* PPGradientSprite.h */,
-				EEF7983B1A9FCAE80000DD14 /* PPGradientSprite.m */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -357,6 +339,8 @@
 		EE6F92EA1A82F39400286DC7 /* SSKNodes */ = {
 			isa = PBXGroup;
 			children = (
+				EEF7983A1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.h */,
+				EEF7983B1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m */,
 				EE6F92EB1A82F39400286DC7 /* SSKButtonNode.h */,
 				EE6F92EC1A82F39400286DC7 /* SSKButtonNode.m */,
 				EEBA93CD1A8C1FED00CBD711 /* SSKCameraNode.h */,
@@ -472,16 +456,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */,
-				EEF7982F1A9E7CF10000DD14 /* WaterBackground.png in Resources */,
 				EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */,
 				EE168C8E1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				EEFA23411A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
 				41E430B018B09E5200E1427D /* Images.xcassets in Resources */,
 				EEFA233E1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */,
-				EEF798321A9EC3540000DD14 /* SkyBackground.png in Resources */,
-				EEF798381A9FCABA0000DD14 /* WaterGradientTexture.png in Resources */,
 				41E4309A18B09E5200E1427D /* InfoPlist.strings in Resources */,
-				EEF798361A9FCABA0000DD14 /* SkyGradientTexture.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,13 +470,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEFA23421A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
-				EEF798301A9E7CF10000DD14 /* WaterBackground.png in Resources */,
 				41E430EF18B09E8600E1427D /* Images.xcassets in Resources */,
-				EEF798331A9EC3540000DD14 /* SkyBackground.png in Resources */,
-				EEF798371A9FCABA0000DD14 /* SkyGradientTexture.png in Resources */,
 				41E430DD18B09E8600E1427D /* InfoPlist.strings in Resources */,
 				EEFA233F1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */,
-				EEF798391A9FCABA0000DD14 /* WaterGradientTexture.png in Resources */,
 				EE168C8F1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				41E430E518B09E8600E1427D /* MainMenu.xib in Resources */,
 			);
@@ -521,7 +497,7 @@
 				41E430A918B09E5200E1427D /* ViewController.m in Sources */,
 				EE6F92FA1A82F39400286DC7 /* SSKiAD.m in Sources */,
 				EE6F92FE1A82F39400286DC7 /* SSKScene.m in Sources */,
-				EEF7983C1A9FCAE80000DD14 /* PPGradientSprite.m in Sources */,
+				EEF7983C1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m in Sources */,
 				EEF798281A9D7ECA0000DD14 /* SKScene+SFAdditions.m in Sources */,
 				EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */,
 				EE168CDE1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */,
@@ -538,7 +514,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEF7983D1A9FCAE80000DD14 /* PPGradientSprite.m in Sources */,
+				EEF7983D1A9FCAE80000DD14 /* SSKDynamicColorSpriteNode.m in Sources */,
 				EE168CEB1A9B01A6005403E6 /* SKNode+SFAdditions.m in Sources */,
 				EEF798251A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m in Sources */,
 				EE168C8C1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m in Sources */,

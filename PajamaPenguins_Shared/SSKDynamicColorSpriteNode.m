@@ -1,29 +1,29 @@
 //
-//  PPGradientSprite.m
+//  SSKDynamicColorSpriteNode.m
 //  PajamaPenguins
 //
 //  Created by Skye on 2/26/15.
 //  Copyright (c) 2015 Skye Freeman. All rights reserved.
 //
 
-#import "PPGradientSprite.h"
+#import "SSKDynamicColorSpriteNode.h"
 
 CGFloat const kMinColorValue = 0.0f;
 CGFloat const kMaxColorValue = 255.0f;
 
-@interface PPGradientSprite()
+@interface SSKDynamicColorSpriteNode()
 @property (nonatomic, readwrite) int red;
 @property (nonatomic, readwrite) int green;
 @property (nonatomic, readwrite) int blue;
 @end
 
-@implementation PPGradientSprite
+@implementation SSKDynamicColorSpriteNode
 
-+ (instancetype)spriteNodeWithGradientTexture:(SKTexture *)texture red:(int)red green:(int)green blue:(int)blue {
-    return [[self alloc] initWithGradientTexture:texture red:red green:green blue:blue];
++ (instancetype)nodeWithTexture:(SKTexture *)texture red:(int)red green:(int)green blue:(int)blue {
+    return [[self alloc] initWithTexture:texture red:red green:green blue:blue];
 }
 
-- (instancetype)initWithGradientTexture:(SKTexture *)texture red:(int)red green:(int)green blue:(int)blue {
+- (instancetype)initWithTexture:(SKTexture *)texture red:(int)red green:(int)green blue:(int)blue {
     self = [super initWithTexture:texture];
     
     if (self) {

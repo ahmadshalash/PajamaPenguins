@@ -8,12 +8,12 @@
 #import "PPPlayer.h"
 #import "PPIcebergObstacle.h"
 #import "PPWaterSprite.h"
-#import "PPGradientSprite.h"
 
 #import "SKColor+SFAdditions.h"
 #import "SKNode+SFAdditions.h"
 #import "SKScene+SFAdditions.h"
 
+#import "SSKDynamicColorSpriteNode.h"
 #import "SSKParallaxNode.h"
 #import "SSKCameraNode.h"
 #import "SSKButtonNode.h"
@@ -40,6 +40,7 @@ typedef enum {
 //Texture Constants
 CGFloat const kLargeTileWidth = 30.0;
 CGFloat const kSmallTileWidth = 15.0;
+CGFloat const kBackgroundAlpha = 0.6;
 
 //Physics Constants
 static const uint32_t playerCategory   = 0x1 << 0;
@@ -51,10 +52,9 @@ CGFloat const kWaterGravityStrength = 6;
 CGFloat const kGameOverGravityStrength = -9.8;
 
 //Clamped Constants
-CGFloat const kWorldScaleCap = 0.6;
-CGFloat const kWorldZoomSpeed = 0.15;
+CGFloat const kWorldScaleCap = 0.55;
 
-CGFloat const kPlayerUpperVelocityLimit = 600.0;
+CGFloat const kPlayerUpperVelocityLimit = 700.0;
 CGFloat const kPlayerLowerAirVelocityLimit = -600.0;
 CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 
@@ -78,7 +78,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 - (void)didMoveToView:(SKView *)view {
-    self.backgroundColor = SKColorWithRGB(0,180,255);
+    self.backgroundColor = SKColorWithRGB(0,255,255);
     self.anchorPoint = CGPointMake(0.5, 0.5);
     
     [self createNewGame];
@@ -87,7 +87,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Test Stuff
 - (void)testStuff {
-//    [(PPGradientSprite*)[self.worldNode childNodeWithName:@"sky"] crossFadeToRed:100 green:30 blue:50 duration:3];
+//    [(SSKDynamicColorSpriteNode*)[self.worldNode childNodeWithName:@"sky"] crossFadeToRed:100 green:30 blue:50 duration:3];
 }
 
 #pragma mark - Creating scene layers
@@ -109,25 +109,27 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 //    [waterSurfaceNode setZPosition:waterSurfaceLayer];
 //    [self.worldNode addChild:waterSurfaceNode];
     
+    //Color blend background
+    
     //Sky background
-    PPGradientSprite *skyGradient = [PPGradientSprite spriteNodeWithGradientTexture:
-                                     [SSKGraphicsUtils loadPixelTextureWithName:@"SkyGradientTexture"] red:100 green:200 blue:255];
-    [skyGradient setAnchorPoint:CGPointMake(0, 0)];
-    [skyGradient setZPosition:backgroundLayer];
-    [skyGradient setPosition:CGPointMake(-self.size.width/2, 0)];
-    [skyGradient setName:@"sky"];
-    [self.worldNode addChild:skyGradient];
+    SSKDynamicColorSpriteNode *skyBackround = [SSKDynamicColorSpriteNode nodeWithTexture:
+                                               [SSKGraphicsUtils loadPixelTextureWithName:@"SkyGradient"] red:0 green:240 blue:255];
+    [skyBackround setAnchorPoint:CGPointMake(0, 0)];
+    [skyBackround setZPosition:backgroundLayer];
+    [skyBackround setPosition:CGPointMake(-self.size.width/2, 0)];
+    [skyBackround setAlpha:kBackgroundAlpha];
+    [skyBackround setName:@"sky"];
+    [self.worldNode addChild:skyBackround];
     
     //Water background
-    PPGradientSprite *waterBackground = [PPGradientSprite spriteNodeWithGradientTexture:
-                                         [SSKGraphicsUtils loadPixelTextureWithName:@"WaterGradientTexture"] red:0 green:128 blue:255];
+    SSKDynamicColorSpriteNode *waterBackground = [SSKDynamicColorSpriteNode nodeWithTexture:
+                                                  [SSKGraphicsUtils loadPixelTextureWithName:@"WaterGradient"] red:0 green:100 blue:255];
     [waterBackground setPosition:CGPointMake(-self.size.width/2, 0)];
     [waterBackground setZPosition:foregroundLayer];
     [waterBackground setAnchorPoint:CGPointMake(0, 1)];
-    [waterBackground setAlpha:.6];
+    [waterBackground setAlpha:kBackgroundAlpha];
     [waterBackground setName:@"water"];
     [self.worldNode addChild:waterBackground];
-
     
     //Player
     PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[sLargeTextures objectAtIndex:0]
