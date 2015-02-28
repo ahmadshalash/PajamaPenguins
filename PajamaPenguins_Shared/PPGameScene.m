@@ -13,6 +13,7 @@
 #import "SKNode+SFAdditions.h"
 #import "SKScene+SFAdditions.h"
 
+#import "SSKDynamicColorNode.h"
 #import "SSKColorNode.h"
 #import "SSKParallaxNode.h"
 #import "SSKCameraNode.h"
@@ -63,7 +64,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
-@property (nonatomic) SSKColorNode *blendBackground;
+@property (nonatomic) SSKDynamicColorNode *blendBackground;
 @property (nonatomic) SKNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
 @property (nonatomic) SKNode *hudNode;
@@ -89,9 +90,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Test Stuff
 - (void)testStuff {
-//    [self.blendBackground crossFadeToRed:255 green:0 blue:0 duration:5 completion:^{
-//        NSLog(@"finished fading!!");
-//    }];
+    [self.blendBackground startCrossfadeForeverWithMax:255 min:125 interval:2];
 }
 
 #pragma mark - Creating scene layers
@@ -114,7 +113,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 //    [self.worldNode addChild:waterSurfaceNode];
 
     //Color blend background
-    self.blendBackground = [SSKColorNode nodeWithRed:125 green:255 blue:255 size:self.size];
+    self.blendBackground = [SSKDynamicColorNode nodeWithRed:125 green:255 blue:255 size:self.size];
     [self addChild:self.blendBackground];
     
     //Sky background

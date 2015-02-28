@@ -10,8 +10,8 @@
 
 NSString * const kColorChangeKey = @"colorChangeKey";
 
-int const kMinColorValue = 0;
-int const kMaxColorValue = 255;
+CGFloat const kMinColorValue = 0.0f;
+CGFloat const kMaxColorValue = 255.0f;
 
 @interface SSKColorNode()
 @end
@@ -84,6 +84,7 @@ int const kMaxColorValue = 255;
 - (void)crossFadeToRed:(int)targetRed green:(int)targetGreen blue:(int)targetBlue duration:(NSTimeInterval)duration completion:(void(^)(void))block {
     if (![self actionForKey:kColorChangeKey]) {
         [self runAction:[self crossFadeActionToRed:targetRed green:targetGreen blue:targetBlue duration:duration] withKey:kColorChangeKey completion:^{
+            [self removeActionForKey:kColorChangeKey];
             block();
         }];
     }
@@ -96,7 +97,9 @@ int const kMaxColorValue = 255;
     int blueRange = [self getRangeFrom:self.blue to:targetBlue];
     
     NSArray *colorRanges = @[[NSNumber numberWithInt:redRange],[NSNumber numberWithInt:greenRange],[NSNumber numberWithInt:blueRange]];
-
+    
+    
+    
     CGFloat minInterval = CGFLOAT_MAX;
     NSNumber *maxRange = 0;
     
@@ -114,6 +117,8 @@ int const kMaxColorValue = 255;
     
     SKAction *wait = [SKAction waitForDuration:minInterval];
 
+    NSLog(@"Count : %d]",[maxRange intValue]);
+    
     SKAction *colorChange = [SKAction runBlock:^{
         int newRed = [self increment:self.red toTargetValue:targetRed];
         int newGreen = [self increment:self.green toTargetValue:targetGreen];
