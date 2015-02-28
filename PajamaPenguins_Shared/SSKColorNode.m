@@ -1,24 +1,22 @@
 //
-//  SSKDynamicColorSpriteNode.m
-//  PajamaPenguins
+//  SSKColorNode.m
 //
 //  Created by Skye on 2/26/15.
 //  Copyright (c) 2015 Skye Freeman. All rights reserved.
 //
 
-#import "SSKDynamicColorSpriteNode.h"
+#import "SSKColorNode.h"
+#import "SKNode+SFAdditions.h"
 
-CGFloat const kMinColorValue = 0.0f;
-CGFloat const kMaxColorValue = 255.0f;
+NSString * const kColorChangeKey = @"colorChangeKey";
 
-@interface SSKDynamicColorSpriteNode()
-@property (nonatomic, readwrite) int red;
-@property (nonatomic, readwrite) int green;
-@property (nonatomic, readwrite) int blue;
+int const kMinColorValue = 0;
+int const kMaxColorValue = 255;
+
+@interface SSKColorNode()
 @end
 
-@implementation SSKDynamicColorSpriteNode
-
+@implementation SSKColorNode
 
 #pragma mark - Init with color
 + (instancetype)nodeWithRed:(int)red green:(int)green blue:(int)blue size:(CGSize)size {
@@ -78,6 +76,21 @@ CGFloat const kMaxColorValue = 255.0f;
 }
 
 - (void)crossFadeToRed:(int)targetRed green:(int)targetGreen blue:(int)targetBlue duration:(NSTimeInterval)duration {
+    if (![self actionForKey:kColorChangeKey]) {
+        [self runAction:[self crossFadeActionToRed:targetRed green:targetGreen blue:targetBlue duration:duration] withKey:kColorChangeKey];
+    }
+}
+
+- (void)crossFadeToRed:(int)targetRed green:(int)targetGreen blue:(int)targetBlue duration:(NSTimeInterval)duration completion:(void(^)(void))block {
+    if (![self actionForKey:kColorChangeKey]) {
+        [self runAction:[self crossFadeActionToRed:targetRed green:targetGreen blue:targetBlue duration:duration] withKey:kColorChangeKey completion:^{
+            block();
+        }];
+    }
+}
+
+#pragma mark -
+- (SKAction*)crossFadeActionToRed:(int)targetRed green:(int)targetGreen blue:(int)targetBlue duration:(NSTimeInterval)duration {
     int redRange = [self getRangeFrom:self.red to:targetRed];
     int greenRange = [self getRangeFrom:self.green to:targetGreen];
     int blueRange = [self getRangeFrom:self.blue to:targetBlue];
@@ -100,7 +113,7 @@ CGFloat const kMaxColorValue = 255.0f;
     }
     
     SKAction *wait = [SKAction waitForDuration:minInterval];
-    NSLog(@"Interval Time: %fl",wait.duration);
+
     SKAction *colorChange = [SKAction runBlock:^{
         int newRed = [self increment:self.red toTargetValue:targetRed];
         int newGreen = [self increment:self.green toTargetValue:targetGreen];
@@ -108,10 +121,7 @@ CGFloat const kMaxColorValue = 255.0f;
         [self setColorWithRed:newRed green:newGreen blue:newBlue];
     }];
     
-    if (![self actionForKey:@"colorChanging"]) {
-        [self runAction:[SKAction repeatAction:[SKAction sequence:@[wait,colorChange]]
-                                         count:[maxRange intValue]] withKey:@"colorChanging"];
-    }
+    return [SKAction repeatAction:[SKAction sequence:@[wait,colorChange]] count:[maxRange intValue]];
 }
 
 #pragma mark - Convenience

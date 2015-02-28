@@ -13,7 +13,7 @@
 #import "SKNode+SFAdditions.h"
 #import "SKScene+SFAdditions.h"
 
-#import "SSKDynamicColorSpriteNode.h"
+#import "SSKColorNode.h"
 #import "SSKParallaxNode.h"
 #import "SSKCameraNode.h"
 #import "SSKButtonNode.h"
@@ -40,7 +40,7 @@ typedef enum {
 //Texture Constants
 CGFloat const kLargeTileWidth = 30.0;
 CGFloat const kSmallTileWidth = 15.0;
-CGFloat const kBackgroundAlpha = 0.6;
+CGFloat const kBackgroundAlpha = 0.55;
 
 //Physics Constants
 static const uint32_t playerCategory   = 0x1 << 0;
@@ -63,7 +63,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
-@property (nonatomic) SSKDynamicColorSpriteNode *blendNode;
+@property (nonatomic) SSKColorNode *blendBackground;
 @property (nonatomic) SKNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
 @property (nonatomic) SKNode *hudNode;
@@ -89,7 +89,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Test Stuff
 - (void)testStuff {
-//    [(SSKDynamicColorSpriteNode*)[self.worldNode childNodeWithName:@"sky"] crossFadeToRed:100 green:30 blue:50 duration:3];
+//    [self.blendBackground crossFadeToRed:255 green:0 blue:0 duration:5 completion:^{
+//        NSLog(@"finished fading!!");
+//    }];
 }
 
 #pragma mark - Creating scene layers
@@ -112,26 +114,26 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 //    [self.worldNode addChild:waterSurfaceNode];
 
     //Color blend background
-    self.blendNode = [SSKDynamicColorSpriteNode nodeWithRed:100 green:205 blue:255 size:self.size];
-    [self addChild:self.blendNode];
+    self.blendBackground = [SSKColorNode nodeWithRed:125 green:255 blue:255 size:self.size];
+    [self addChild:self.blendBackground];
     
     //Sky background
-    SSKDynamicColorSpriteNode *skyBackround = [SSKDynamicColorSpriteNode nodeWithTexture:sSkyGradient red:255 green:255 blue:255];
-    [skyBackround setAnchorPoint:CGPointMake(0, 0)];
-    [skyBackround setZPosition:backgroundLayer];
-    [skyBackround setPosition:CGPointMake(-self.size.width/2, 0)];
-    [skyBackround setAlpha:kBackgroundAlpha];
-    [skyBackround setName:@"sky"];
-    [self.worldNode addChild:skyBackround];
+    SSKColorNode *skyGradient = [SSKColorNode nodeWithTexture:sSkyGradient red:255 green:255 blue:255];
+    [skyGradient setAnchorPoint:CGPointMake(0, 0)];
+    [skyGradient setZPosition:backgroundLayer];
+    [skyGradient setPosition:CGPointMake(-self.size.width/2, 0)];
+    [skyGradient setAlpha:kBackgroundAlpha];
+    [skyGradient setName:@"sky"];
+    [self.worldNode addChild:skyGradient];
     
     //Water background
-    SSKDynamicColorSpriteNode *waterBackground = [SSKDynamicColorSpriteNode nodeWithTexture:sWaterGradient red:140 green:170 blue:222];
-    [waterBackground setPosition:CGPointMake(-self.size.width/2, 0)];
-    [waterBackground setZPosition:foregroundLayer];
-    [waterBackground setAnchorPoint:CGPointMake(0, 1)];
-    [waterBackground setAlpha:kBackgroundAlpha];
-    [waterBackground setName:@"water"];
-    [self.worldNode addChild:waterBackground];
+    SSKColorNode *waterGradient = [SSKColorNode nodeWithTexture:sWaterGradient red:200 green:200 blue:255];
+    [waterGradient setPosition:CGPointMake(-self.size.width/2, 0)];
+    [waterGradient setZPosition:foregroundLayer];
+    [waterGradient setAnchorPoint:CGPointMake(0, 1)];
+    [waterGradient setAlpha:kBackgroundAlpha];
+    [waterGradient setName:@"water"];
+    [self.worldNode addChild:waterGradient];
     
     //Player
     PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[sLargeTextures objectAtIndex:0]
@@ -333,6 +335,11 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [player.physicsBody applyAngularImpulse:-.0005];
 }
 
+- (void)updatePlayer:(NSTimeInterval)dt {
+    [[self currentPlayer] update:dt];
+    [self clampPlayerVelocity];
+}
+
 #pragma mark - Water
 //Water Surface Background
 - (SKNode*)waterSurfaceNode {
@@ -452,7 +459,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.physicsWorld setGravity:CGVectorMake(0, gravity)];
 }
 
-- (void)updatePlayingGravity {
+- (void)updateGravity {
     if ([self currentPlayer].position.y > [self childNodeWithName:@"//water"].position.y) {
         [self setGravity:kAirGravityStrength];
     } else {
@@ -541,9 +548,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
     if (!(self.gameState == GameOver)) {
         [self updateParallaxNodesWithDelta:deltaTime];
-        [self updatePlayingGravity];
-        [[self currentPlayer] update:deltaTime];
-        [self clampPlayerVelocity];
+        [self updatePlayer:deltaTime];
+        [self updateGravity];
     }
 }
 
