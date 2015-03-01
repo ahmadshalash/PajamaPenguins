@@ -90,12 +90,13 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Test Stuff
 - (void)testStuff {
-    [self.blendBackground startCrossfadeForeverWithMax:255 min:125 interval:2];
+
 }
 
 #pragma mark - Creating scene layers
 - (void)createNewGame {
     [self createWorldLayer];
+    [self startGameAnimations];
     [self gameMenu];
 }
 
@@ -229,6 +230,12 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.gameOverNode runAction:[self moveDistance:CGVectorMake(moveDistance, 0) andFadeInWithDuration:.35]];
 }
 
+- (void)startGameAnimations {
+    [self runAction:[SKAction waitForDuration:.5] completion:^{
+        [self.blendBackground startCrossfadeForeverWithMax:255 min:125 interval:5];
+    }];
+}
+
 #pragma mark - GameState MainMenu
 - (void)gameMenu {
     self.gameState = MainMenu;
@@ -283,6 +290,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 - (void)runGameOverSequence {
+    [self.blendBackground stopCrossfadeForever];
     [self setGravity:kGameOverGravityStrength];
     [self playerGameOverCatapult];
     [self createGameOverLayer];

@@ -117,8 +117,6 @@ CGFloat const kMaxColorValue = 255.0f;
     
     SKAction *wait = [SKAction waitForDuration:minInterval];
 
-    NSLog(@"Count : %d]",[maxRange intValue]);
-    
     SKAction *colorChange = [SKAction runBlock:^{
         int newRed = [self increment:self.red toTargetValue:targetRed];
         int newGreen = [self increment:self.green toTargetValue:targetGreen];

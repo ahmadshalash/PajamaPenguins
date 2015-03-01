@@ -66,11 +66,12 @@ NSString * const kCrossFadeForeverKey = @"crossFadeForeverKey";
     }
     
     [self crossFadeToRed:[self fadeIndexInGroup:redGroup] green:[self fadeIndexInGroup:greenGroup] blue:[self fadeIndexInGroup:blueGroup] duration:interval completion:^{
+
         self.fadeIndex++;
         if (self.fadeIndex > 5) {
             self.fadeIndex = 0;
         }
-        
+
         [self crossFadeForeverWithReds:redGroup greens:greenGroup blues:blueGroup interval:interval];
     }];
 }
