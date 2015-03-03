@@ -123,29 +123,12 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     self.blendBackground = [SSKDynamicColorNode nodeWithRed:125 green:255 blue:255 size:self.size];
     [self addChild:self.blendBackground];
     
-    //Sky background
-    SSKColorNode *skyGradient = [SSKColorNode nodeWithTexture:sSkyGradient red:255 green:255 blue:255];
-    [skyGradient setAnchorPoint:CGPointMake(0, 0)];
-    [skyGradient setZPosition:backgroundLayer];
-    [skyGradient setPosition:CGPointMake(-self.size.width/2, 0)];
-    [skyGradient setAlpha:kBackgroundAlpha];
-    [skyGradient setName:@"sky"];
-    [self.worldNode addChild:skyGradient];
-    
-    //Water background
-//    SSKColorNode *waterGradient = [SSKColorNode nodeWithTexture:sWaterGradient red:200 green:200 blue:255];
-//    [waterGradient setPosition:CGPointMake(-self.size.width/2, 0)];
-//    [waterGradient setZPosition:foregroundLayer];
-//    [waterGradient setAnchorPoint:CGPointMake(0, 1)];
-//    [waterGradient setAlpha:kBackgroundAlpha];
-//    [waterGradient setName:@"water"];
-//    [self.worldNode addChild:waterGradient];
-    
     CGPoint surfaceStart = CGPointMake(-self.size.width/2, 0);
     CGPoint surfaceEnd = CGPointMake(self.size.width/kWorldScaleCap, 0);
     
     self.waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd jointWidth:5];
-    [self.waterSurface setAlpha:kBackgroundAlpha];
+    [self.waterSurface setName:@"water"];
+    [self.waterSurface setAlpha:.8];
     [self.waterSurface setZPosition:waterSurfaceLayer];
     [self.waterSurface setBodyWithDepth:(self.size.height)/kWorldScaleCap];
     [self.waterSurface setTexture:sWaterGradient];
@@ -774,13 +757,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
 
         case UIUserInterfaceIdiomPhone:
-            sSkyGradient = [SKTexture textureWithImageNamed:@"SkyGradient-iphone"];
-            sWaterGradient = [SKTexture textureWithImageNamed:@"WaterGradient-iphone"];
+            sWaterGradient = [SKTexture textureWithImageNamed:@"WaterGradientBlue-iphone"];
             break;
             
         case UIUserInterfaceIdiomPad:
-            sSkyGradient = [SKTexture textureWithImageNamed:@"SkyGradient-ipad"];
-            sWaterGradient = [SKTexture textureWithImageNamed:@"WaterGradient-ipad"];
             break;
             
         default:

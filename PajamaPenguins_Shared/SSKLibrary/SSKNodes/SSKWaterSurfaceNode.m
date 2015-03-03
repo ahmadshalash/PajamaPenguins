@@ -60,7 +60,7 @@
         self.waterJoints = [self createSurfacePointsWithStart:startPoint end:endPoint];
 
         self.waterSurface = [SKShapeNode shapeNodeWithPath:[self pathFromJoints:self.waterJoints]];
-        [self.waterSurface setLineWidth:2.0];
+        [self.waterSurface setLineWidth:5];
         
         [self addChild:self.waterSurface];
     }

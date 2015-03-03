@@ -46,14 +46,11 @@
 		EE6F93011A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F31A82F39400286DC7 /* SSKGraphicsUtils.m */; };
 		EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
 		EE6F93051A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
+		EEAE6F971AA665E200215C7E /* WaterGradientBlue-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */; };
 		EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
 		EEBA93F31A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
-		EECC66871AA11C7B004CB609 /* SkyGradient-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = EECC66851AA11C7B004CB609 /* SkyGradient-ipad.png */; };
-		EECC66881AA11C7B004CB609 /* SkyGradient-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = EECC66861AA11C7B004CB609 /* SkyGradient-iphone.png */; };
-		EECC668C1AA12599004CB609 /* WaterGradient-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = EECC668A1AA12599004CB609 /* WaterGradient-ipad.png */; };
-		EECC668D1AA12599004CB609 /* WaterGradient-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = EECC668B1AA12599004CB609 /* WaterGradient-iphone.png */; };
 		EECC66901AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */; };
 		EECC66911AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */; };
 		EECC66CE1AA56DFE004CB609 /* SSKWaterSurfaceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC66CD1AA56DFE004CB609 /* SSKWaterSurfaceNode.m */; };
@@ -127,14 +124,11 @@
 		EE6F92F41A82F39400286DC7 /* SSKMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKMathUtils.h; sourceTree = "<group>"; };
 		EE6F92F61A82F39400286DC7 /* SSKPhysicsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKPhysicsUtils.h; sourceTree = "<group>"; };
 		EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKPhysicsUtils.m; sourceTree = "<group>"; };
+		EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaterGradientBlue-iphone.png"; sourceTree = "<group>"; };
 		EEBA93CD1A8C1FED00CBD711 /* SSKCameraNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKCameraNode.h; sourceTree = "<group>"; };
 		EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKCameraNode.m; sourceTree = "<group>"; };
 		EEBA93F01A93FD4F00CBD711 /* TwoDimensionalArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoDimensionalArray.h; sourceTree = "<group>"; };
 		EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoDimensionalArray.m; sourceTree = "<group>"; };
-		EECC66851AA11C7B004CB609 /* SkyGradient-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SkyGradient-ipad.png"; sourceTree = "<group>"; };
-		EECC66861AA11C7B004CB609 /* SkyGradient-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SkyGradient-iphone.png"; sourceTree = "<group>"; };
-		EECC668A1AA12599004CB609 /* WaterGradient-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaterGradient-ipad.png"; sourceTree = "<group>"; };
-		EECC668B1AA12599004CB609 /* WaterGradient-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaterGradient-iphone.png"; sourceTree = "<group>"; };
 		EECC668E1AA14B28004CB609 /* SSKDynamicColorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKDynamicColorNode.h; sourceTree = "<group>"; };
 		EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKDynamicColorNode.m; sourceTree = "<group>"; };
 		EECC66CC1AA56DFE004CB609 /* SSKWaterSurfaceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKWaterSurfaceNode.h; sourceTree = "<group>"; };
@@ -400,10 +394,7 @@
 		EECC66891AA11C7E004CB609 /* BackgroundGradients */ = {
 			isa = PBXGroup;
 			children = (
-				EECC66851AA11C7B004CB609 /* SkyGradient-ipad.png */,
-				EECC66861AA11C7B004CB609 /* SkyGradient-iphone.png */,
-				EECC668A1AA12599004CB609 /* WaterGradient-ipad.png */,
-				EECC668B1AA12599004CB609 /* WaterGradient-iphone.png */,
+				EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */,
 			);
 			name = BackgroundGradients;
 			sourceTree = "<group>";
@@ -489,15 +480,12 @@
 			files = (
 				EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */,
 				EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */,
-				EECC668D1AA12599004CB609 /* WaterGradient-iphone.png in Resources */,
 				EE168C8E1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
+				EEAE6F971AA665E200215C7E /* WaterGradientBlue-iphone.png in Resources */,
 				EEFA23411A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
 				41E430B018B09E5200E1427D /* Images.xcassets in Resources */,
 				EEFA233E1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */,
-				EECC66881AA11C7B004CB609 /* SkyGradient-iphone.png in Resources */,
 				41E4309A18B09E5200E1427D /* InfoPlist.strings in Resources */,
-				EECC66871AA11C7B004CB609 /* SkyGradient-ipad.png in Resources */,
-				EECC668C1AA12599004CB609 /* WaterGradient-ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

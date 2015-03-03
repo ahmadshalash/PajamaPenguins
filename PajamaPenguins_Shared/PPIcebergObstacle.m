@@ -14,7 +14,10 @@
     self = [PPIcebergObstacle shapeNodeWithPath:[self pathFromPoints:[self cornerPointsWithWidth:width]]];
 
     if (self) {
-        self.fillColor = [SKColor whiteColor];
+        [self setFillColor:[SKColor whiteColor]];
+        [self setStrokeColor:[SKColor blackColor]];
+        [self setLineWidth:2];
+        
         
         self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:self.path];
         self.physicsBody.restitution = 0;
