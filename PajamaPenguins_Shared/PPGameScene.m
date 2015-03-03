@@ -13,6 +13,7 @@
 #import "SKNode+SFAdditions.h"
 #import "SKScene+SFAdditions.h"
 
+#import "SSKWaterSurfaceNode.h"
 #import "SSKDynamicColorNode.h"
 #import "SSKColorNode.h"
 #import "SSKParallaxNode.h"
@@ -29,10 +30,10 @@ typedef enum {
 
 typedef enum {
     backgroundLayer = 0,
-    waterSurfaceLayer,
     obstacleLayer,
     playerLayer,
     foregroundLayer,
+    waterSurfaceLayer,
     hudLayer,
     menuLayer,
     fadeOutLayer,
@@ -51,6 +52,7 @@ static const uint32_t edgeCategory     = 0x1 << 2;
 CGFloat const kAirGravityStrength = -3;
 CGFloat const kWaterGravityStrength = 6;
 CGFloat const kGameOverGravityStrength = -9.8;
+CGFloat const kSplashStrength = 50;
 
 //Clamped Constants
 CGFloat const kWorldScaleCap = 0.55;
@@ -65,6 +67,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
 @property (nonatomic) SSKDynamicColorNode *blendBackground;
+@property (nonatomic) SSKWaterSurfaceNode *waterSurface;
 @property (nonatomic) SKNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
 @property (nonatomic) SKNode *hudNode;
@@ -73,6 +76,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 @implementation PPGameScene {
     NSTimeInterval _lastUpdateTime;
+    CGFloat _lastPlayerHeight;
 }
 
 - (id)initWithSize:(CGSize)size {
@@ -135,6 +139,15 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [waterGradient setName:@"water"];
     [self.worldNode addChild:waterGradient];
     
+    CGPoint surfaceStart = CGPointMake(-self.size.width/2, 0);
+    CGPoint surfaceEnd = CGPointMake(self.size.width/kWorldScaleCap, 0);
+    
+    self.waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd jointWidth:5];
+    [self.waterSurface setZPosition:waterSurfaceLayer];
+    [self.waterSurface setSplashDamping:.08];
+    [self.waterSurface setSplashTension:.05];
+    [self.worldNode addChild:self.waterSurface];
+
     //Player
     PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[sLargeTextures objectAtIndex:0]
                                                 secondTexture:[sLargeTextures objectAtIndex:1]];
@@ -147,6 +160,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [player.physicsBody setCollisionBitMask:obstacleCategory | edgeCategory];
     [player.physicsBody setContactTestBitMask:obstacleCategory];
     [self.worldNode addChild:player];
+    
+    //Setting Players initial position height (for water surface tracking)
+    _lastPlayerHeight = player.position.y;
     
     //Screen Physics Boundary
     SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width,self.size.height)];
@@ -322,7 +338,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
         [player.physicsBody setVelocity:CGVectorMake(player.physicsBody.velocity.dx, kPlayerUpperVelocityLimit)];
     }
     
-    if (player.position.y > [self childNodeWithName:@"//water"].position.y) {
+    if (player.position.y > [self.worldNode childNodeWithName:@"water"].position.y) {
         if (player.physicsBody.velocity.dy <= kPlayerLowerAirVelocityLimit) {
             [player.physicsBody setVelocity:CGVectorMake(player.physicsBody.velocity.dx, kPlayerLowerAirVelocityLimit)];
         }
@@ -347,7 +363,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self clampPlayerVelocity];
 }
 
-#pragma mark - Water
+#pragma mark - Water Background
 //Water Surface Background
 - (SKNode*)waterSurfaceNode {
     SKNode *node = [SKNode new];
@@ -390,6 +406,22 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [waterBackground setAnchorPoint:CGPointMake(0, 1)];
     [waterBackground setAlpha:0.65];
     return waterBackground;
+}
+
+#pragma mark - Water Surface
+- (void)trackPlayerForSplash {
+    CGFloat newPlayerHeight = [self currentPlayer].position.y;
+    
+    //Cross surface from bottom
+    if (_lastPlayerHeight < 0 && newPlayerHeight > 0) {
+        [self.waterSurface splash:[self currentPlayer].position speed:kSplashStrength];
+        _lastPlayerHeight = newPlayerHeight;
+    }
+    //Cross surface from top
+    else if (_lastPlayerHeight > 0 && newPlayerHeight < 0) {
+        [self.waterSurface splash:[self currentPlayer].position speed:-kSplashStrength];
+        _lastPlayerHeight = newPlayerHeight;
+    }
 }
 
 #pragma mark - Sky
@@ -467,7 +499,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 - (void)updateGravity {
-    if ([self currentPlayer].position.y > [self childNodeWithName:@"//water"].position.y) {
+    if ([self currentPlayer].position.y > [self.worldNode childNodeWithName:@"water"].position.y) {
         [self setGravity:kAirGravityStrength];
     } else {
         [self setGravity:kWaterGravityStrength];
@@ -552,12 +584,16 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     if (deltaTime > 1) {
         deltaTime = 0;
     }
-
+    
     if (!(self.gameState == GameOver)) {
         [self updateParallaxNodesWithDelta:deltaTime];
         [self updatePlayer:deltaTime];
         [self updateGravity];
     }
+    
+    //Water surface
+    [self trackPlayerForSplash];
+    [self.waterSurface update:deltaTime];
 }
 
 - (void)didEvaluateActions {

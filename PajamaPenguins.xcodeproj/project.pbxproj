@@ -56,6 +56,8 @@
 		EECC668D1AA12599004CB609 /* WaterGradient-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = EECC668B1AA12599004CB609 /* WaterGradient-iphone.png */; };
 		EECC66901AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */; };
 		EECC66911AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */; };
+		EECC66CE1AA56DFE004CB609 /* SSKWaterSurfaceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC66CD1AA56DFE004CB609 /* SSKWaterSurfaceNode.m */; };
+		EECC66CF1AA56DFE004CB609 /* SSKWaterSurfaceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC66CD1AA56DFE004CB609 /* SSKWaterSurfaceNode.m */; };
 		EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EED8E5A31A881D79001C8F59 /* PPPlayer.m */; };
 		EED8E5A51A881D79001C8F59 /* PPPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EED8E5A31A881D79001C8F59 /* PPPlayer.m */; };
 		EEF798241A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */; };
@@ -135,6 +137,8 @@
 		EECC668B1AA12599004CB609 /* WaterGradient-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaterGradient-iphone.png"; sourceTree = "<group>"; };
 		EECC668E1AA14B28004CB609 /* SSKDynamicColorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKDynamicColorNode.h; sourceTree = "<group>"; };
 		EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKDynamicColorNode.m; sourceTree = "<group>"; };
+		EECC66CC1AA56DFE004CB609 /* SSKWaterSurfaceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKWaterSurfaceNode.h; sourceTree = "<group>"; };
+		EECC66CD1AA56DFE004CB609 /* SSKWaterSurfaceNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKWaterSurfaceNode.m; sourceTree = "<group>"; };
 		EED8E5A21A881D79001C8F59 /* PPPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlayer.h; sourceTree = "<group>"; };
 		EED8E5A31A881D79001C8F59 /* PPPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlayer.m; sourceTree = "<group>"; };
 		EEF798221A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSimpleAnimatedSprite.h; sourceTree = "<group>"; };
@@ -352,6 +356,8 @@
 		EE6F92EA1A82F39400286DC7 /* SSKNodes */ = {
 			isa = PBXGroup;
 			children = (
+				EECC66CC1AA56DFE004CB609 /* SSKWaterSurfaceNode.h */,
+				EECC66CD1AA56DFE004CB609 /* SSKWaterSurfaceNode.m */,
 				EEF7983A1A9FCAE80000DD14 /* SSKColorNode.h */,
 				EEF7983B1A9FCAE80000DD14 /* SSKColorNode.m */,
 				EECC668E1AA14B28004CB609 /* SSKDynamicColorNode.h */,
@@ -518,6 +524,7 @@
 				EEFA234D1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */,
 				EE168C8B1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m in Sources */,
 				EE6F93001A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */,
+				EECC66CE1AA56DFE004CB609 /* SSKWaterSurfaceNode.m in Sources */,
 				EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */,
 				EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */,
 				EE168CEA1A9B01A6005403E6 /* SKNode+SFAdditions.m in Sources */,
@@ -551,6 +558,7 @@
 				EECC66911AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */,
 				EE168C8C1A96A7E7005403E6 /* SKPhysicsBody+SFAdditions.m in Sources */,
 				EE6F93011A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */,
+				EECC66CF1AA56DFE004CB609 /* SSKWaterSurfaceNode.m in Sources */,
 				EE168C981A97CEC2005403E6 /* SSKScoreNode.m in Sources */,
 				EED8E5A51A881D79001C8F59 /* PPPlayer.m in Sources */,
 				EE6F92FF1A82F39400286DC7 /* SSKScene.m in Sources */,
