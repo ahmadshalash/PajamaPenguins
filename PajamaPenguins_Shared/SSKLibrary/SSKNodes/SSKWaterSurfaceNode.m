@@ -129,7 +129,7 @@
     
     NSMutableArray *leftDeltas = [self arrayWithCapacity:self.waterJoints.count];
     NSMutableArray *rightDeltas = [self arrayWithCapacity:self.waterJoints.count];
-    NSUInteger iterations = 3;
+    NSUInteger iterations = 1;
     
     for (int j = 0; j < iterations; j ++) {
         for (int i = 0; i < self.waterJoints.count; i++) {

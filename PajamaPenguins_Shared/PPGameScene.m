@@ -52,7 +52,9 @@ static const uint32_t edgeCategory     = 0x1 << 2;
 CGFloat const kAirGravityStrength = -3;
 CGFloat const kWaterGravityStrength = 6;
 CGFloat const kGameOverGravityStrength = -9.8;
-CGFloat const kSplashStrength = 50;
+
+CGFloat const kObstacleSplashStrength = 10;
+CGFloat const kMaxSplashStrength = 20;
 
 //Clamped Constants
 CGFloat const kWorldScaleCap = 0.55;
@@ -144,8 +146,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     
     self.waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd jointWidth:5];
     [self.waterSurface setZPosition:waterSurfaceLayer];
-    [self.waterSurface setSplashDamping:.08];
-    [self.waterSurface setSplashTension:.05];
+    [self.waterSurface setSplashDamping:.05];
+    [self.waterSurface setSplashTension:.005];
     [self.worldNode addChild:self.waterSurface];
 
     //Player
@@ -291,7 +293,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
     [self createHudLayer];
+
     [self startObstacleSpawnSequence];
+    [self startSplashAtObstaclesForever];
+    
     [self startScoreCounter];
 }
 
@@ -302,6 +307,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self stopScoreCounter];
     [self stopObstacleSpawnSequence];
     [self stopObstacleMovement];
+    [self stopObstacleSplash];
+    
     [self runGameOverSequence];
 }
 
@@ -414,14 +421,44 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     
     //Cross surface from bottom
     if (_lastPlayerHeight < 0 && newPlayerHeight > 0) {
-        [self.waterSurface splash:[self currentPlayer].position speed:kSplashStrength];
+        CGFloat splashRatio = [self currentPlayer].physicsBody.velocity.dy / kPlayerUpperVelocityLimit;
+        CGFloat splashStrength = kMaxSplashStrength * splashRatio;
+        
+        [self.waterSurface splash:[self currentPlayer].position speed:splashStrength];
         _lastPlayerHeight = newPlayerHeight;
     }
     //Cross surface from top
     else if (_lastPlayerHeight > 0 && newPlayerHeight < 0) {
-        [self.waterSurface splash:[self currentPlayer].position speed:-kSplashStrength];
+        CGFloat splashRatio = [self currentPlayer].physicsBody.velocity.dy / kPlayerLowerAirVelocityLimit;
+        CGFloat splashStrength = kMaxSplashStrength * splashRatio;
+        
+        [self.waterSurface splash:[self currentPlayer].position speed:-splashStrength];
         _lastPlayerHeight = newPlayerHeight;
     }
+}
+
+- (void)startSplashAtObstaclesForever {
+    if ([self actionForKey:@"obstacleSplash"]) {
+        NSLog(@"An action with name obstacleSplash is already active");
+        return;
+    }
+    
+    SKAction *splashBlock = [SKAction runBlock:^{
+        [self.worldNode enumerateChildNodesWithName:@"obstacle" usingBlock:^(SKNode *node, BOOL *stop) {
+            PPIcebergObstacle *obstacle = (PPIcebergObstacle*)node;
+            CGPoint splashLocation = CGPointMake(obstacle.position.x - obstacle.frame.size.width/2, obstacle.position.y);
+            [self.waterSurface splash:splashLocation speed:kObstacleSplashStrength];
+        }];
+    }];
+    
+    SKAction *wait = [SKAction waitForDuration:.4];
+    SKAction *sequence = [SKAction sequence:@[wait,splashBlock]];
+    [self runAction:[SKAction repeatActionForever:sequence] withKey:@"obstacleSplash"];
+    
+}
+
+- (void)stopObstacleSplash {
+    [self removeActionForKey:@"obstacleSplash"];
 }
 
 #pragma mark - Sky
