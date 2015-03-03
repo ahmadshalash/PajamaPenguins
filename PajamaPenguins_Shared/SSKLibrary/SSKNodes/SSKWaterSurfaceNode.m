@@ -41,6 +41,9 @@
 @property (nonatomic) SKShapeNode *waterSurface;
 @property (nonatomic) CGFloat spread;
 @property (nonatomic, readwrite) CGFloat jointWidth;
+
+@property (nonatomic) BOOL hasDepth;
+@property (nonatomic) CGFloat bodyDepth;
 @end
 
 @implementation SSKWaterSurfaceNode
@@ -94,6 +97,16 @@
     
     for (SSKWaterJoint *joint in joints) {
         CGPathAddLineToPoint(path, nil, [joint currentPosition].x, [joint currentPosition].y);
+    }
+    
+    //Only if surface has a body
+    if (self.hasDepth) {
+        SSKWaterJoint *firstJoint = (SSKWaterJoint*)[joints firstObject];;
+        SSKWaterJoint *lastJoint = (SSKWaterJoint*)[joints lastObject];
+        
+        CGPathAddLineToPoint(path, nil, lastJoint.currentPosition.x, lastJoint.currentPosition.y - self.bodyDepth - (lastJoint.currentPosition.y - lastJoint.startPosition.y));
+        CGPathAddLineToPoint(path, nil, firstJoint.currentPosition.x, firstJoint.currentPosition.y - self.bodyDepth - (firstJoint.currentPosition.y - firstJoint.startPosition.y));
+        CGPathCloseSubpath(path);
     }
     return path;
 }
@@ -160,6 +173,20 @@
 
 - (void)updateSurfaceNodes:(NSTimeInterval)dt {
     [self.waterSurface setPath:[self pathFromJoints:self.waterJoints]];
+}
+
+#pragma mark - Setting a texture to the body
+- (void)setTexture:(SKTexture*)texture {
+    if (self.hasDepth) {
+        [self.waterSurface setFillColor:[SKColor whiteColor]];
+        [self.waterSurface setFillTexture:texture];
+    }
+}
+
+#pragma mark - Setting a body to the water surface
+- (void)setBodyWithDepth:(CGFloat)depth {
+    self.hasDepth = YES;
+    self.bodyDepth = depth;
 }
 
 #pragma mark - Changing SSKWaterJoint Properties

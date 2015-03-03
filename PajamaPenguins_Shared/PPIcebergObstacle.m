@@ -15,7 +15,7 @@
 
     if (self) {
         self.fillColor = [SKColor whiteColor];
-
+        
         self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:self.path];
         self.physicsBody.restitution = 0;
         self.physicsBody.friction = 0;

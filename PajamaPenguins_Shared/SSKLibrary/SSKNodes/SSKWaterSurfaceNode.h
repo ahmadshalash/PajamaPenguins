@@ -17,6 +17,9 @@
 - (void)setSplashDamping:(CGFloat)damping;
 - (void)setSplashTension:(CGFloat)tension;
 
+- (void)setBodyWithDepth:(CGFloat)depth;
+- (void)setTexture:(SKTexture*)texture; //Need to have a depth
+
 @property (nonatomic, readonly) CGFloat jointWidth;
 @end
 

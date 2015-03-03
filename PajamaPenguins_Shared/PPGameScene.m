@@ -133,19 +133,22 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.worldNode addChild:skyGradient];
     
     //Water background
-    SSKColorNode *waterGradient = [SSKColorNode nodeWithTexture:sWaterGradient red:200 green:200 blue:255];
-    [waterGradient setPosition:CGPointMake(-self.size.width/2, 0)];
-    [waterGradient setZPosition:foregroundLayer];
-    [waterGradient setAnchorPoint:CGPointMake(0, 1)];
-    [waterGradient setAlpha:kBackgroundAlpha];
-    [waterGradient setName:@"water"];
-    [self.worldNode addChild:waterGradient];
+//    SSKColorNode *waterGradient = [SSKColorNode nodeWithTexture:sWaterGradient red:200 green:200 blue:255];
+//    [waterGradient setPosition:CGPointMake(-self.size.width/2, 0)];
+//    [waterGradient setZPosition:foregroundLayer];
+//    [waterGradient setAnchorPoint:CGPointMake(0, 1)];
+//    [waterGradient setAlpha:kBackgroundAlpha];
+//    [waterGradient setName:@"water"];
+//    [self.worldNode addChild:waterGradient];
     
     CGPoint surfaceStart = CGPointMake(-self.size.width/2, 0);
     CGPoint surfaceEnd = CGPointMake(self.size.width/kWorldScaleCap, 0);
     
     self.waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd jointWidth:5];
+    [self.waterSurface setAlpha:kBackgroundAlpha];
     [self.waterSurface setZPosition:waterSurfaceLayer];
+    [self.waterSurface setBodyWithDepth:(self.size.height)/kWorldScaleCap];
+    [self.waterSurface setTexture:sWaterGradient];
     [self.waterSurface setSplashDamping:.05];
     [self.waterSurface setSplashTension:.005];
     [self.worldNode addChild:self.waterSurface];
