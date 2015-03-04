@@ -411,7 +411,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
         CGFloat splashStrength = kMaxSplashStrength * splashRatio;
         
         [self.waterSurface splash:[self currentPlayer].position speed:splashStrength];
-        [self runSplashEmitter:[self sharedPlayerSplashEmitter] location:[self currentPlayer].position];
+        [self runOneShotEmitter:[self sharedPlayerSplashEmitter] location:[self currentPlayer].position];
         
         _lastPlayerHeight = newPlayerHeight;
     }
@@ -421,7 +421,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
         CGFloat splashStrength = kMaxSplashStrength * splashRatio;
         
         [self.waterSurface splash:[self currentPlayer].position speed:-splashStrength];
-        [self runSplashEmitter:[self sharedPlayerSplashEmitter] location:[self currentPlayer].position];
+        [self runOneShotEmitter:[self sharedPlayerSplashEmitter] location:[self currentPlayer].position];
         
         _lastPlayerHeight = newPlayerHeight;
     }
@@ -439,7 +439,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
             CGPoint splashLocation = CGPointMake(obstacle.position.x - obstacle.frame.size.width/2, obstacle.position.y);
             
             [self.waterSurface splash:splashLocation speed:kObstacleSplashStrength];
-            [self runSplashEmitter:[self sharedObstacleSplashEmitter] location:CGPointMake(splashLocation.x, splashLocation.y + 30)];
+            [self runOneShotEmitter:[self sharedObstacleSplashEmitter] location:CGPointMake(splashLocation.x, splashLocation.y + 30)];
         }];
     }];
     
@@ -453,7 +453,14 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self removeActionForKey:@"obstacleSplash"];
 }
 
-- (void)runSplashEmitter:(SKEmitterNode*)emitter location:(CGPoint)location {
+- (void)trackPlayerForBubbles {
+    if ([self playerIsBelowBottomBoundary]) {
+        [self runOneShotEmitter:[self sharedBubbleEmitter] location:[self currentPlayer].position];
+    }
+}
+
+#pragma mark - Emitters
+- (void)runOneShotEmitter:(SKEmitterNode*)emitter location:(CGPoint)location {
     SKEmitterNode *splashEmitter = emitter.copy;
     [splashEmitter setPosition:location];
     [splashEmitter setZPosition:waterSurfaceLayer];
@@ -631,6 +638,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     //Water surface
     [self trackPlayerForSplash];
     [self.waterSurface update:deltaTime];
+    
+    //Bubbles
+    [self trackPlayerForBubbles];
 }
 
 - (void)didEvaluateActions {
@@ -771,6 +781,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     
     sPlayerSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"PlayerSplashEmitter"];
     sObstacleSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"ObstacleSplashEmitter"];
+    sBubbleEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"BubbleEmitter"];
     
     switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
 
@@ -811,6 +822,11 @@ static SKEmitterNode *sPlayerSplashEmitter = nil;
 static SKEmitterNode *sObstacleSplashEmitter = nil;
 - (SKEmitterNode*)sharedObstacleSplashEmitter {
     return sObstacleSplashEmitter;
+}
+
+static SKEmitterNode *sBubbleEmitter = nil;
+- (SKEmitterNode*)sharedBubbleEmitter {
+    return sBubbleEmitter;
 }
 
 @end
