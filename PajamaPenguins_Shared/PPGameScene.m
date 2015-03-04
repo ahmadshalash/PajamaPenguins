@@ -110,7 +110,13 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     self.worldNode = [SSKCameraNode node];
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
-
+    
+    SKEmitterNode *snowEmitter = [self sharedSnowEmitter].copy;
+    [snowEmitter setZPosition:foregroundLayer];
+    [snowEmitter setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
+    [snowEmitter setName:@"snowEmitter"];
+    [self addChild:snowEmitter];
+    
     //Parallaxing Nodes
 //    SSKParallaxNode *waterSurfaceNode = [SSKParallaxNode nodeWithSize:[self maxWorldScaleSize]
 //                                                        attachedNodes:[self waterSurfaceForParallax]
@@ -762,7 +768,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     return ([self currentPlayer].position.y > [self topZoomBoundary]);
 }
 
-#pragma mark - Managing Assets
+#pragma mark - Loading Assets
 + (void)loadSceneAssets {
     NSDate *startTime = [NSDate date];
 
@@ -778,12 +784,12 @@ NSString * const kPixelFontName = @"Fipps-Regular";
                                                             gridWidth:10
                                                            gridHeight:10];
     
-    
     sPlayerUpSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"PlayerSplashUpEmitter"];
     sPlayerDownSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"PlayerSplashDownEmitter"];
     sObstacleSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"ObstacleSplashEmitter"];
     sBubbleEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"BubbleEmitter"];
-    
+    sSnowEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"SnowEmitter"];
+
     switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
 
         case UIUserInterfaceIdiomPhone:
@@ -800,6 +806,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     NSLog(@"Scene loaded in %f seconds",[[NSDate date] timeIntervalSinceDate:startTime]);
 }
 
+#pragma mark - Shared Textures
 static NSArray *sSmallTextures = nil;
 - (NSArray*)sharedSmallTextures {
     return sSmallTextures;
@@ -834,6 +841,11 @@ static SKEmitterNode *sObstacleSplashEmitter = nil;
 static SKEmitterNode *sBubbleEmitter = nil;
 - (SKEmitterNode*)sharedBubbleEmitter {
     return sBubbleEmitter;
+}
+
+static SKEmitterNode *sSnowEmitter = nil;
+- (SKEmitterNode*)sharedSnowEmitter {
+    return sSnowEmitter;
 }
 
 @end
