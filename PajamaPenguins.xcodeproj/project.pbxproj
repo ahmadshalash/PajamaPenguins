@@ -47,8 +47,8 @@
 		EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
 		EE6F93051A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
 		EEAE6F971AA665E200215C7E /* WaterGradientBlue-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */; };
-		EEAE6F9C1AA67A9C00215C7E /* PlayerSplashEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9A1AA67A9C00215C7E /* PlayerSplashEmitter.sks */; };
-		EEAE6F9D1AA67A9C00215C7E /* PlayerSplashEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9A1AA67A9C00215C7E /* PlayerSplashEmitter.sks */; };
+		EEAE6F9C1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */; };
+		EEAE6F9D1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */; };
 		EEAE6F9E1AA67A9C00215C7E /* ReusableEmitterImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9B1AA67A9C00215C7E /* ReusableEmitterImage.png */; };
 		EEAE6F9F1AA67A9C00215C7E /* ReusableEmitterImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9B1AA67A9C00215C7E /* ReusableEmitterImage.png */; };
 		EEAE6FA41AA68B8B00215C7E /* ObstacleSplashEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6FA31AA68B8B00215C7E /* ObstacleSplashEmitter.sks */; };
@@ -59,6 +59,10 @@
 		EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
 		EEBA93F31A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
+		EEC9DB7C1AA7B2040022CDF1 /* EmitterParticle.png in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB7B1AA7B2040022CDF1 /* EmitterParticle.png */; };
+		EEC9DB7D1AA7B2040022CDF1 /* EmitterParticle.png in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB7B1AA7B2040022CDF1 /* EmitterParticle.png */; };
+		EEC9DB821AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB811AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks */; };
+		EEC9DB831AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB811AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks */; };
 		EECC66901AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */; };
 		EECC66911AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */; };
 		EECC66CE1AA56DFE004CB609 /* SSKWaterSurfaceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC66CD1AA56DFE004CB609 /* SSKWaterSurfaceNode.m */; };
@@ -133,7 +137,7 @@
 		EE6F92F61A82F39400286DC7 /* SSKPhysicsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKPhysicsUtils.h; sourceTree = "<group>"; };
 		EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKPhysicsUtils.m; sourceTree = "<group>"; };
 		EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaterGradientBlue-iphone.png"; sourceTree = "<group>"; };
-		EEAE6F9A1AA67A9C00215C7E /* PlayerSplashEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = PlayerSplashEmitter.sks; path = ../PajamaPenguins_Shared/PlayerSplashEmitter.sks; sourceTree = "<group>"; };
+		EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = PlayerSplashUpEmitter.sks; path = ../PajamaPenguins_Shared/PlayerSplashUpEmitter.sks; sourceTree = "<group>"; };
 		EEAE6F9B1AA67A9C00215C7E /* ReusableEmitterImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ReusableEmitterImage.png; path = ../PajamaPenguins_Shared/ReusableEmitterImage.png; sourceTree = "<group>"; };
 		EEAE6FA31AA68B8B00215C7E /* ObstacleSplashEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = ObstacleSplashEmitter.sks; path = ../PajamaPenguins_Shared/ObstacleSplashEmitter.sks; sourceTree = "<group>"; };
 		EEAE6FA91AA68F9900215C7E /* BubbleEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = BubbleEmitter.sks; path = PajamaPenguins_Shared/BubbleEmitter.sks; sourceTree = SOURCE_ROOT; };
@@ -141,6 +145,8 @@
 		EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKCameraNode.m; sourceTree = "<group>"; };
 		EEBA93F01A93FD4F00CBD711 /* TwoDimensionalArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoDimensionalArray.h; sourceTree = "<group>"; };
 		EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoDimensionalArray.m; sourceTree = "<group>"; };
+		EEC9DB7B1AA7B2040022CDF1 /* EmitterParticle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmitterParticle.png; sourceTree = "<group>"; };
+		EEC9DB811AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = PlayerSplashDownEmitter.sks; path = PajamaPenguins_Shared/PlayerSplashDownEmitter.sks; sourceTree = SOURCE_ROOT; };
 		EECC668E1AA14B28004CB609 /* SSKDynamicColorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKDynamicColorNode.h; sourceTree = "<group>"; };
 		EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKDynamicColorNode.m; sourceTree = "<group>"; };
 		EECC66CC1AA56DFE004CB609 /* SSKWaterSurfaceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKWaterSurfaceNode.h; sourceTree = "<group>"; };
@@ -407,7 +413,8 @@
 		EEAE6FA61AA68EC300215C7E /* Emitters */ = {
 			isa = PBXGroup;
 			children = (
-				EEAE6F9A1AA67A9C00215C7E /* PlayerSplashEmitter.sks */,
+				EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */,
+				EEC9DB811AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks */,
 				EEAE6FA31AA68B8B00215C7E /* ObstacleSplashEmitter.sks */,
 				EEAE6FA91AA68F9900215C7E /* BubbleEmitter.sks */,
 				EEAE6FA71AA68ED000215C7E /* EmitterAssets */,
@@ -418,6 +425,7 @@
 		EEAE6FA71AA68ED000215C7E /* EmitterAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EEC9DB7B1AA7B2040022CDF1 /* EmitterParticle.png */,
 				EEAE6F9B1AA67A9C00215C7E /* ReusableEmitterImage.png */,
 			);
 			name = EmitterAssets;
@@ -512,11 +520,13 @@
 			files = (
 				EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */,
 				EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */,
-				EEAE6F9C1AA67A9C00215C7E /* PlayerSplashEmitter.sks in Resources */,
+				EEAE6F9C1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */,
 				EE168C8E1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				EEAE6FA41AA68B8B00215C7E /* ObstacleSplashEmitter.sks in Resources */,
 				EEAE6F971AA665E200215C7E /* WaterGradientBlue-iphone.png in Resources */,
 				EEAE6F9E1AA67A9C00215C7E /* ReusableEmitterImage.png in Resources */,
+				EEC9DB7C1AA7B2040022CDF1 /* EmitterParticle.png in Resources */,
+				EEC9DB821AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks in Resources */,
 				EEFA23411A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
 				41E430B018B09E5200E1427D /* Images.xcassets in Resources */,
 				EEFA233E1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */,
@@ -529,11 +539,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEC9DB831AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks in Resources */,
 				EEFA23421A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
 				41E430EF18B09E8600E1427D /* Images.xcassets in Resources */,
-				EEAE6F9D1AA67A9C00215C7E /* PlayerSplashEmitter.sks in Resources */,
+				EEAE6F9D1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */,
 				41E430DD18B09E8600E1427D /* InfoPlist.strings in Resources */,
 				EEAE6FA51AA68B8B00215C7E /* ObstacleSplashEmitter.sks in Resources */,
+				EEC9DB7D1AA7B2040022CDF1 /* EmitterParticle.png in Resources */,
 				EEFA233F1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */,
 				EEAE6F9F1AA67A9C00215C7E /* ReusableEmitterImage.png in Resources */,
 				EE168C8F1A97C952005403E6 /* Fipps-Regular.otf in Resources */,

@@ -411,7 +411,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
         CGFloat splashStrength = kMaxSplashStrength * splashRatio;
         
         [self.waterSurface splash:[self currentPlayer].position speed:splashStrength];
-        [self runOneShotEmitter:[self sharedPlayerSplashEmitter] location:[self currentPlayer].position];
+        [self runOneShotEmitter:[self sharedPlayerUpSplashEmitter] location:[self currentPlayer].position];
         
         _lastPlayerHeight = newPlayerHeight;
     }
@@ -421,7 +421,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
         CGFloat splashStrength = kMaxSplashStrength * splashRatio;
         
         [self.waterSurface splash:[self currentPlayer].position speed:-splashStrength];
-        [self runOneShotEmitter:[self sharedPlayerSplashEmitter] location:[self currentPlayer].position];
+        [self runOneShotEmitter:[self sharedPlayerDownPlashEmitter] location:[self currentPlayer].position];
         
         _lastPlayerHeight = newPlayerHeight;
     }
@@ -779,7 +779,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
                                                            gridHeight:10];
     
     
-    sPlayerSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"PlayerSplashEmitter"];
+    sPlayerUpSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"PlayerSplashUpEmitter"];
+    sPlayerDownSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"PlayerSplashDownEmitter"];
     sObstacleSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"ObstacleSplashEmitter"];
     sBubbleEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"BubbleEmitter"];
     
@@ -814,9 +815,15 @@ static SKTexture *sWaterGradient = nil;
     return sWaterGradient;
 }
 
-static SKEmitterNode *sPlayerSplashEmitter = nil;
-- (SKEmitterNode*)sharedPlayerSplashEmitter {
-    return sPlayerSplashEmitter;
+#pragma mark - Shared Emitters
+static SKEmitterNode *sPlayerUpSplashEmitter = nil;
+- (SKEmitterNode*)sharedPlayerUpSplashEmitter {
+    return sPlayerUpSplashEmitter;
+}
+
+static SKEmitterNode *sPlayerDownSplashEmitter = nil;
+- (SKEmitterNode*)sharedPlayerDownPlashEmitter {
+    return sPlayerDownSplashEmitter;
 }
 
 static SKEmitterNode *sObstacleSplashEmitter = nil;
