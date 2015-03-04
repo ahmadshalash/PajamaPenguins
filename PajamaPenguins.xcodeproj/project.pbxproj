@@ -47,6 +47,10 @@
 		EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
 		EE6F93051A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
 		EEAE6F971AA665E200215C7E /* WaterGradientBlue-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */; };
+		EEAE6F9C1AA67A9C00215C7E /* SplashEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9A1AA67A9C00215C7E /* SplashEmitter.sks */; };
+		EEAE6F9D1AA67A9C00215C7E /* SplashEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9A1AA67A9C00215C7E /* SplashEmitter.sks */; };
+		EEAE6F9E1AA67A9C00215C7E /* waterDroplet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9B1AA67A9C00215C7E /* waterDroplet.png */; };
+		EEAE6F9F1AA67A9C00215C7E /* waterDroplet.png in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9B1AA67A9C00215C7E /* waterDroplet.png */; };
 		EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
@@ -125,6 +129,8 @@
 		EE6F92F61A82F39400286DC7 /* SSKPhysicsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKPhysicsUtils.h; sourceTree = "<group>"; };
 		EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKPhysicsUtils.m; sourceTree = "<group>"; };
 		EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaterGradientBlue-iphone.png"; sourceTree = "<group>"; };
+		EEAE6F9A1AA67A9C00215C7E /* SplashEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SplashEmitter.sks; sourceTree = "<group>"; };
+		EEAE6F9B1AA67A9C00215C7E /* waterDroplet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = waterDroplet.png; path = ../PajamaPenguins_Shared/waterDroplet.png; sourceTree = "<group>"; };
 		EEBA93CD1A8C1FED00CBD711 /* SSKCameraNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKCameraNode.h; sourceTree = "<group>"; };
 		EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKCameraNode.m; sourceTree = "<group>"; };
 		EEBA93F01A93FD4F00CBD711 /* TwoDimensionalArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoDimensionalArray.h; sourceTree = "<group>"; };
@@ -302,6 +308,7 @@
 			children = (
 				EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */,
 				EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */,
+				EEAE6F9B1AA67A9C00215C7E /* waterDroplet.png */,
 				EECC66891AA11C7E004CB609 /* BackgroundGradients */,
 				EE168C931A97CCEF005403E6 /* Fonts */,
 			);
@@ -320,6 +327,7 @@
 				EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */,
 				EEF798471AA0FD440000DD14 /* PPWaterSprite.h */,
 				EEF798481AA0FD440000DD14 /* PPWaterSprite.m */,
+				EEAE6F9A1AA67A9C00215C7E /* SplashEmitter.sks */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -480,8 +488,10 @@
 			files = (
 				EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */,
 				EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */,
+				EEAE6F9C1AA67A9C00215C7E /* SplashEmitter.sks in Resources */,
 				EE168C8E1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				EEAE6F971AA665E200215C7E /* WaterGradientBlue-iphone.png in Resources */,
+				EEAE6F9E1AA67A9C00215C7E /* waterDroplet.png in Resources */,
 				EEFA23411A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
 				41E430B018B09E5200E1427D /* Images.xcassets in Resources */,
 				EEFA233E1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */,
@@ -495,8 +505,10 @@
 			files = (
 				EEFA23421A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
 				41E430EF18B09E8600E1427D /* Images.xcassets in Resources */,
+				EEAE6F9D1AA67A9C00215C7E /* SplashEmitter.sks in Resources */,
 				41E430DD18B09E8600E1427D /* InfoPlist.strings in Resources */,
 				EEFA233F1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */,
+				EEAE6F9F1AA67A9C00215C7E /* waterDroplet.png in Resources */,
 				EE168C8F1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				41E430E518B09E8600E1427D /* MainMenu.xib in Resources */,
 			);

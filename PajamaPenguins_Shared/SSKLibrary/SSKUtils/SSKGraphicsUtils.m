@@ -8,21 +8,6 @@
 #import "SSKGraphicsUtils.h"
 
 @implementation SSKGraphicsUtils
-
-//Designated
-+ (SKTexture*)loadPixelTexture:(SKTexture*)texture {
-    texture.filteringMode = SKTextureFilteringNearest;
-    return texture;
-}
-
-+ (SKTexture*)loadPixelTextureWithName:(NSString*)name {
-    return [SSKGraphicsUtils loadPixelTexture:[SKTexture textureWithImageNamed:name]];
-}
-
-+ (SKTexture*)loadPixelTextureWithName:(NSString*)name inAtlas:(SKTextureAtlas*)atlas {
-    return [SSKGraphicsUtils loadPixelTexture:[atlas textureNamed:name]];
-}
-
 + (NSArray*)loadPixelAnimationFromAtlas:(SKTextureAtlas*)atlas
                            fromBaseFile:(NSString*)baseFileName
                          withFrameCount:(NSUInteger)count
@@ -31,7 +16,7 @@
     for (int i = 1; i <= count; i++) {
         NSString *fileName = [NSString stringWithFormat:@"%@%d.png", baseFileName, i];
         SKTexture *texture = [atlas textureNamed:fileName];
-        [SSKGraphicsUtils loadPixelTexture:texture];
+        [SKTexture loadPixelTexture:texture];
         if (texture) {
             [frames addObject:texture];
         } else {
@@ -49,7 +34,7 @@
                                 gridHeight:(NSUInteger)gridHeight
 {
     NSMutableArray *images = [NSMutableArray array];
-    SKTexture *spriteSheet = [SSKGraphicsUtils loadPixelTextureWithName:name];
+    SKTexture *spriteSheet = [SKTexture loadPixelTextureWithName:name];
     
     for (int y = 0; y < gridHeight; y++) {
         for (int x = 0; x < gridWidth; x++) {
@@ -70,4 +55,36 @@
     return [NSArray arrayWithArray:images];
 }
 
++ (void)runOneShotActionWithEmitter:(SKEmitterNode*)emitter duration:(CGFloat)duration {
+    SKAction *wait = [SKAction waitForDuration:duration];
+    SKAction *waitParticleLifetime = [SKAction waitForDuration:emitter.particleLifetime + emitter.particleLifetimeRange];
+    SKAction *removeEmitter = [SKAction removeFromParent];
+    SKAction *turnOffBirthRate = [SKAction runBlock:^{
+        [emitter setParticleBirthRate:0];
+    }];
+    
+    [emitter runAction:[SKAction sequence:@[wait, turnOffBirthRate, waitParticleLifetime, removeEmitter]]];
+}
+
+@end
+
+@implementation SKTexture (SFAdditions)
++ (SKTexture*)loadPixelTexture:(SKTexture*)texture {
+    texture.filteringMode = SKTextureFilteringNearest;
+    return texture;
+}
+
++ (SKTexture*)loadPixelTextureWithName:(NSString*)name {
+    return [SKTexture loadPixelTexture:[SKTexture textureWithImageNamed:name]];
+}
+
++ (SKTexture*)loadPixelTextureWithName:(NSString*)name inAtlas:(SKTextureAtlas*)atlas {
+    return [SKTexture loadPixelTexture:[atlas textureNamed:name]];
+}
+@end
+
+@implementation SKEmitterNode (SFAdditions)
++ (instancetype)emitterNodeWithFileNamed:(NSString*)emitterName {
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:emitterName ofType:@"sks"]];
+}
 @end

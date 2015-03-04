@@ -131,7 +131,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self.waterSurface setAlpha:.8];
     [self.waterSurface setZPosition:waterSurfaceLayer];
     [self.waterSurface setBodyWithDepth:(self.size.height)/kWorldScaleCap];
-    [self.waterSurface setTexture:sWaterGradient];
+    [self.waterSurface setTexture:[self sharedWaterGradient]];
     [self.waterSurface setSplashDamping:.05];
     [self.waterSurface setSplashTension:.005];
     [self.worldNode addChild:self.waterSurface];
@@ -394,7 +394,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 //Underwater Background
 - (SKSpriteNode*)waterBackgroundNode {
-    SKSpriteNode *waterBackground = [SKSpriteNode spriteNodeWithTexture:[SSKGraphicsUtils loadPixelTextureWithName:@"WaterBackground"]];
+    SKSpriteNode *waterBackground = [SKSpriteNode spriteNodeWithTexture:[SKTexture loadPixelTextureWithName:@"WaterBackground"]];
     [waterBackground setScale:[self backgroundSpriteScale]];
     [waterBackground setAnchorPoint:CGPointMake(0, 1)];
     [waterBackground setAlpha:0.65];
@@ -410,7 +410,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
         CGFloat splashRatio = [self currentPlayer].physicsBody.velocity.dy / kPlayerUpperVelocityLimit;
         CGFloat splashStrength = kMaxSplashStrength * splashRatio;
         
-        [self.waterSurface splash:[self currentPlayer].position speed:splashStrength];
+        [self.waterSurface splash:[self currentPlayer].position speed:splashStrength]; //Surface splash
+        [self runSplashEmitter];                                                     //Emitter splash
+        
         _lastPlayerHeight = newPlayerHeight;
     }
     //Cross surface from top
@@ -419,6 +421,8 @@ NSString * const kPixelFontName = @"Fipps-Regular";
         CGFloat splashStrength = kMaxSplashStrength * splashRatio;
         
         [self.waterSurface splash:[self currentPlayer].position speed:-splashStrength];
+        [self runSplashEmitter];
+        
         _lastPlayerHeight = newPlayerHeight;
     }
 }
@@ -447,9 +451,16 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self removeActionForKey:@"obstacleSplash"];
 }
 
+- (void)runSplashEmitter {
+    SKEmitterNode *splashEmitter = [[self sharedSplashEmitter] copy];
+    [splashEmitter setPosition:[self currentPlayer].position];
+    [self.worldNode addChild:splashEmitter];
+    [SSKGraphicsUtils runOneShotActionWithEmitter:splashEmitter duration:0.15];
+}
+
 #pragma mark - Sky
 - (SKSpriteNode*)skyBackgroundNode {
-    SKSpriteNode *skyBackground = [SKSpriteNode spriteNodeWithTexture:[SSKGraphicsUtils loadPixelTextureWithName:@"SkyBackground"]];
+    SKSpriteNode *skyBackground = [SKSpriteNode spriteNodeWithTexture:[SKTexture loadPixelTextureWithName:@"SkyBackground"]];
     [skyBackground setScale:[self backgroundSpriteScale]];
     [skyBackground setAnchorPoint:CGPointMake(0, 0)];
     return skyBackground;
@@ -754,6 +765,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
                                                             gridWidth:10
                                                            gridHeight:10];
     
+    
+    sSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"SplashEmitter"];
+    
     switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
 
         case UIUserInterfaceIdiomPhone:
@@ -771,22 +785,23 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 static NSArray *sSmallTextures = nil;
-+ (NSArray*)sharedSmallTextures {
+- (NSArray*)sharedSmallTextures {
     return sSmallTextures;
 }
 
 static NSArray *sLargeTextures = nil;
-+ (NSArray*)sharedLargeTextures {
+- (NSArray*)sharedLargeTextures {
     return sLargeTextures;
 }
 
-static SKTexture *sSkyGradient = nil;
-+ (SKTexture*)sharedSkyGradient {
-    return sSkyGradient;
-}
-
 static SKTexture *sWaterGradient = nil;
-+ (SKTexture*)sharedWaterGradient {
+- (SKTexture*)sharedWaterGradient {
     return sWaterGradient;
 }
+
+static SKEmitterNode *sSplashEmitter = nil;
+- (SKEmitterNode*)sharedSplashEmitter {
+    return sSplashEmitter;
+}
+
 @end
