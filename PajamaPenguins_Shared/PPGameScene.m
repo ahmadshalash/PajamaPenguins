@@ -13,6 +13,7 @@
 #import "SKNode+SFAdditions.h"
 #import "SKScene+SFAdditions.h"
 
+#import "SSKProgressBarNode.h"
 #import "SSKWaterSurfaceNode.h"
 #import "SSKDynamicColorNode.h"
 #import "SSKColorNode.h"
@@ -66,6 +67,10 @@ CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 //Name Constants
 NSString * const kPixelFontName = @"Fipps-Regular";
 
+//Action Constants
+CGFloat const kMoveAndFadeTime = 0.2;
+CGFloat const kMoveAndFadeDistance = 20;
+
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
 @property (nonatomic) SSKDynamicColorNode *blendBackground;
@@ -96,7 +101,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 
 #pragma mark - Test Stuff
 - (void)testStuff {
-
+    
 }
 
 #pragma mark - Creating scene layers
@@ -192,7 +197,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 }
 
 - (void)createHudLayer {
-    self.hudNode = [SKNode node];
+    self.hudNode = [SKNode new];
     [self.hudNode setZPosition:hudLayer];
     [self.hudNode setName:@"hud"];
     [self.hudNode setAlpha:0];
@@ -201,13 +206,17 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     SSKScoreNode *scoreCounter = [SSKScoreNode scoreNodeWithFontNamed:kPixelFontName fontSize:12 fontColor:[SKColor blackColor]];
     [scoreCounter setName:@"scoreCounter"];
     [scoreCounter setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeLeft];
-    [scoreCounter setVerticalAlignmentMode:SKLabelVerticalAlignmentModeBottom];
-    [scoreCounter setPosition:CGPointMake(-self.size.width/2 + 5, -self.size.height/2 + 5)];
+    [scoreCounter setVerticalAlignmentMode:SKLabelVerticalAlignmentModeTop];
+    [scoreCounter setPosition:CGPointMake(-self.size.width/2 + 5, self.size.height/2 - 5)];
     [self.hudNode addChild:scoreCounter];
     
-    CGFloat moveDistance = 5;
-    [self.hudNode setPosition:CGPointMake(0, -moveDistance)];
-    [self.hudNode runAction:[self moveDistance:CGVectorMake(0, moveDistance) andFadeInWithDuration:.2]];
+    SSKProgressBarNode *progressBar = [[SSKProgressBarNode alloc] initWithFrameColor:[SKColor blackColor] barColor:[SKColor redColor] size:CGSizeMake(150, 20)];
+    [progressBar setName:@"progressBar"];
+    [progressBar setPosition:CGPointMake(0,self.size.height/2 - 20)];
+    [self.hudNode addChild:progressBar];
+    
+    [self.hudNode setPosition:CGPointMake(-kMoveAndFadeDistance, 0)];
+    [self.hudNode runAction:[self moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeInWithDuration:kMoveAndFadeTime]];
 }
 
 - (void)createGameOverLayer {
@@ -235,16 +244,10 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [restartButton setTouchUpInsideTarget:self selector:@selector(resetGame)];
     [self.gameOverNode addChild:restartButton];
     
-    CGFloat moveDistance = 30;
-    [self.gameOverNode setPosition:CGPointMake(-moveDistance, 0)];
-    [self.gameOverNode runAction:[self moveDistance:CGVectorMake(moveDistance, 0) andFadeInWithDuration:.35]];
+    [self.gameOverNode setPosition:CGPointMake(-kMoveAndFadeDistance, 0)];
+    [self.gameOverNode runAction:[self moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeInWithDuration:kMoveAndFadeTime]];
 }
 
-- (void)startGameAnimations {
-    [self runAction:[SKAction waitForDuration:.5] completion:^{
-        [self.blendBackground startCrossfadeForeverWithMax:255 min:125 interval:5];
-    }];
-}
 
 #pragma mark - GameState MainMenu
 - (void)gameMenu {
@@ -292,6 +295,12 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     [self startScoreCounter];
 }
 
+- (void)startGameAnimations {
+    [self runAction:[SKAction waitForDuration:.5] completion:^{
+        [self.blendBackground startCrossfadeForeverWithMax:255 min:125 interval:5];
+    }];
+}
+
 #pragma mark - GameState GameOver
 - (void)gameEnd {
     self.gameState = GameOver;
@@ -307,6 +316,7 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 - (void)runGameOverSequence {
     [self.blendBackground stopCrossfadeForever];
     [self setGravity:kGameOverGravityStrength];
+    [self fadeoutHUD];
     [self playerGameOverCatapult];
     [self createGameOverLayer];
 }
@@ -327,6 +337,13 @@ NSString * const kPixelFontName = @"Fipps-Regular";
             [fadeNode removeFromParent];
         }];
     }];
+}
+
+#pragma mark - Hud
+- (void)fadeoutHUD {
+    if (self.hudNode) {
+        [self.hudNode runAction:[self moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeOutWithDuration:kMoveAndFadeTime]];
+    }
 }
 
 #pragma mark - Player
@@ -572,6 +589,12 @@ NSString * const kPixelFontName = @"Fipps-Regular";
     SKAction *fadeIn = [SKAction fadeInWithDuration:duration];
     SKAction *moveIn = [SKAction moveBy:distance duration:duration];
     return [SKAction group:@[fadeIn,moveIn]];
+}
+
+- (SKAction*)moveDistance:(CGVector)distance andFadeOutWithDuration:(NSTimeInterval)duration {
+    SKAction *fadeOut = [SKAction fadeOutWithDuration:duration];
+    SKAction *moveOut = [SKAction moveBy:distance duration:duration];
+    return [SKAction group:@[fadeOut,moveOut]];
 }
 
 #pragma mark - Convenience

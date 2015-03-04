@@ -63,6 +63,8 @@
 		EEC9DB831AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB811AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks */; };
 		EEC9DB861AA7B5510022CDF1 /* SnowEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB841AA7B5510022CDF1 /* SnowEmitter.sks */; };
 		EEC9DB871AA7B5510022CDF1 /* SnowEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB841AA7B5510022CDF1 /* SnowEmitter.sks */; };
+		EEC9DB8D1AA7BF5E0022CDF1 /* SSKProgressBarNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC9DB8C1AA7BF5E0022CDF1 /* SSKProgressBarNode.m */; };
+		EEC9DB8E1AA7BF5E0022CDF1 /* SSKProgressBarNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC9DB8C1AA7BF5E0022CDF1 /* SSKProgressBarNode.m */; };
 		EECC66901AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */; };
 		EECC66911AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */; };
 		EECC66CE1AA56DFE004CB609 /* SSKWaterSurfaceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC66CD1AA56DFE004CB609 /* SSKWaterSurfaceNode.m */; };
@@ -147,6 +149,8 @@
 		EEC9DB7B1AA7B2040022CDF1 /* EmitterParticle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmitterParticle.png; sourceTree = "<group>"; };
 		EEC9DB811AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = PlayerSplashDownEmitter.sks; path = PajamaPenguins_Shared/PlayerSplashDownEmitter.sks; sourceTree = SOURCE_ROOT; };
 		EEC9DB841AA7B5510022CDF1 /* SnowEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SnowEmitter.sks; sourceTree = "<group>"; };
+		EEC9DB8B1AA7BF5E0022CDF1 /* SSKProgressBarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKProgressBarNode.h; sourceTree = "<group>"; };
+		EEC9DB8C1AA7BF5E0022CDF1 /* SSKProgressBarNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKProgressBarNode.m; sourceTree = "<group>"; };
 		EECC668E1AA14B28004CB609 /* SSKDynamicColorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKDynamicColorNode.h; sourceTree = "<group>"; };
 		EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKDynamicColorNode.m; sourceTree = "<group>"; };
 		EECC66CC1AA56DFE004CB609 /* SSKWaterSurfaceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKWaterSurfaceNode.h; sourceTree = "<group>"; };
@@ -383,6 +387,8 @@
 				EE168C961A97CEC2005403E6 /* SSKScoreNode.m */,
 				EEFA234B1A9D3B5E0003B009 /* SSKParallaxNode.h */,
 				EEFA234C1A9D3B5E0003B009 /* SSKParallaxNode.m */,
+				EEC9DB8B1AA7BF5E0022CDF1 /* SSKProgressBarNode.h */,
+				EEC9DB8C1AA7BF5E0022CDF1 /* SSKProgressBarNode.m */,
 			);
 			path = SSKNodes;
 			sourceTree = "<group>";
@@ -569,6 +575,7 @@
 				EED8E5A41A881D79001C8F59 /* PPPlayer.m in Sources */,
 				EE168CEA1A9B01A6005403E6 /* SKNode+SFAdditions.m in Sources */,
 				EE5575EB1A5A108100B87145 /* PPGameScene.m in Sources */,
+				EEC9DB8D1AA7BF5E0022CDF1 /* SSKProgressBarNode.m in Sources */,
 				EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
 				EE6F92FC1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
 				41E430A918B09E5200E1427D /* ViewController.m in Sources */,
@@ -610,6 +617,7 @@
 				41E430EA18B09E8600E1427D /* AppDelegate.m in Sources */,
 				EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
 				EEF7984A1AA0FD440000DD14 /* PPWaterSprite.m in Sources */,
+				EEC9DB8E1AA7BF5E0022CDF1 /* SSKProgressBarNode.m in Sources */,
 				EEF798291A9D7ECA0000DD14 /* SKScene+SFAdditions.m in Sources */,
 				EEBA93F31A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */,
 				EE6F93051A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */,
