@@ -12,6 +12,8 @@
 @property (nonatomic) SKSpriteNode *barBackground;
 @property (nonatomic) SKSpriteNode *bar;
 @property (nonatomic) SKShapeNode *barFrame;
+
+@property (nonatomic, readwrite) CGFloat currentProgress;
 @end
 
 @implementation SSKProgressBarNode
@@ -29,7 +31,7 @@
         
         self.barFrame = [SKShapeNode shapeNodeWithRect:CGRectMake(-size.width/2, -size.height/2, size.width, size.height)];
         [self.barFrame setStrokeColor:frameColor];
-        [self.barFrame setLineWidth:5];
+        [self.barFrame setLineWidth:2];
         [self addChild:self.barFrame];
     }
     return self;
@@ -39,6 +41,7 @@
 - (void)setProgress:(CGFloat)progress {
     if (progress >= 0.0 && progress <= 1.0 ) {
         [self.bar setXScale:progress];
+        self.currentProgress = progress;
     } else {
         NSLog(@"Can't set progress outside of 0 - 1.0");
     }

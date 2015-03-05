@@ -58,7 +58,7 @@ CGFloat const kObstacleSplashStrength = 10;
 CGFloat const kMaxSplashStrength = 20;
 
 //Clamped Constants
-CGFloat const kMaxBreathTimer = 5.0;
+CGFloat const kMaxBreathTimer = 6.0;
 
 CGFloat const kWorldScaleCap = 0.55;
 
@@ -87,6 +87,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     NSTimeInterval _lastUpdateTime;
     CGFloat _lastPlayerHeight;
     CGFloat _breathTimer;
+    BOOL _playerBubblesOn;
 }
 
 - (id)initWithSize:(CGSize)size {
@@ -215,7 +216,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     
     SSKProgressBarNode *breathMeter = [[SSKProgressBarNode alloc] initWithFrameColor:[SKColor blackColor] barColor:[SKColor redColor] size:CGSizeMake(150, 20)];
     [breathMeter setName:@"progressBar"];
-    [breathMeter setPosition:CGPointMake(0,self.size.height/2 - 20)];
+    [breathMeter setPosition:CGPointMake(0, self.size.height/2 - 20)];
     [self.hudNode addChild:breathMeter];
     
     [self.hudNode setPosition:CGPointMake(-kMoveAndFadeDistance, 0)];
@@ -351,10 +352,18 @@ CGFloat const kMoveAndFadeDistance = 20;
 }
 
 #pragma mark - Breath Meter
+//Meter
 - (void)updateBreathMeter {
     [(SSKProgressBarNode*)[self.hudNode childNodeWithName:@"progressBar"] setProgress:_breathTimer/kMaxBreathTimer];
 }
 
+- (void)checkBreathMeterForGameOver {
+    if ([(SSKProgressBarNode*)[self.hudNode childNodeWithName:@"progressBar"] currentProgress] == 0.0) {
+        [self gameEnd];
+    }
+}
+
+//Timer
 - (void)resetBreathTimer {
     _breathTimer = kMaxBreathTimer;
 }
@@ -505,10 +514,11 @@ CGFloat const kMoveAndFadeDistance = 20;
 }
 
 - (void)trackPlayerForBubbles {
-    if ([self playerIsBelowBottomBoundary]) {
+    if ([self playerIsBelowBottomBoundary] && !_playerBubblesOn) {
         [self runOneShotEmitter:[self sharedBubbleEmitter] location:[self currentPlayer].position];
     }
 }
+
 
 #pragma mark - Emitters
 - (void)runOneShotEmitter:(SKEmitterNode*)emitter location:(CGPoint)location {
@@ -695,6 +705,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     if (self.gameState == Playing) {
         [self updateBreathTimer:deltaTime];
         [self updateBreathMeter];
+        [self checkBreathMeterForGameOver];
     }
     
     //Water surface

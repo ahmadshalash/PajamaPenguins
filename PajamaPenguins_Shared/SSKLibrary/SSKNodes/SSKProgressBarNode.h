@@ -11,4 +11,7 @@
 @interface SSKProgressBarNode : SKNode
 - (instancetype)initWithFrameColor:(SKColor*)frameColor barColor:(SKColor*)barColor size:(CGSize)size;
 - (void)setProgress:(CGFloat)progress;
+
+@property (nonatomic, readonly) CGFloat currentProgress;
+
 @end
