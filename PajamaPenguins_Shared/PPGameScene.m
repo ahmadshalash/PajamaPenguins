@@ -58,6 +58,8 @@ CGFloat const kObstacleSplashStrength = 10;
 CGFloat const kMaxSplashStrength = 20;
 
 //Clamped Constants
+CGFloat const kMaxBreathTimer = 5.0;
+
 CGFloat const kWorldScaleCap = 0.55;
 
 CGFloat const kPlayerUpperVelocityLimit = 700.0;
@@ -84,6 +86,7 @@ CGFloat const kMoveAndFadeDistance = 20;
 @implementation PPGameScene {
     NSTimeInterval _lastUpdateTime;
     CGFloat _lastPlayerHeight;
+    CGFloat _breathTimer;
 }
 
 - (id)initWithSize:(CGSize)size {
@@ -210,10 +213,10 @@ CGFloat const kMoveAndFadeDistance = 20;
     [scoreCounter setPosition:CGPointMake(-self.size.width/2 + 5, self.size.height/2 - 5)];
     [self.hudNode addChild:scoreCounter];
     
-    SSKProgressBarNode *progressBar = [[SSKProgressBarNode alloc] initWithFrameColor:[SKColor blackColor] barColor:[SKColor redColor] size:CGSizeMake(150, 20)];
-    [progressBar setName:@"progressBar"];
-    [progressBar setPosition:CGPointMake(0,self.size.height/2 - 20)];
-    [self.hudNode addChild:progressBar];
+    SSKProgressBarNode *breathMeter = [[SSKProgressBarNode alloc] initWithFrameColor:[SKColor blackColor] barColor:[SKColor redColor] size:CGSizeMake(150, 20)];
+    [breathMeter setName:@"progressBar"];
+    [breathMeter setPosition:CGPointMake(0,self.size.height/2 - 20)];
+    [self.hudNode addChild:breathMeter];
     
     [self.hudNode setPosition:CGPointMake(-kMoveAndFadeDistance, 0)];
     [self.hudNode runAction:[self moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeInWithDuration:kMoveAndFadeTime]];
@@ -247,7 +250,6 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.gameOverNode setPosition:CGPointMake(-kMoveAndFadeDistance, 0)];
     [self.gameOverNode runAction:[self moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeInWithDuration:kMoveAndFadeTime]];
 }
-
 
 #pragma mark - GameState MainMenu
 - (void)gameMenu {
@@ -287,6 +289,8 @@ CGFloat const kMoveAndFadeDistance = 20;
     self.gameState = Playing;
 
     [self runAction:[SKAction fadeOutWithDuration:.5] onNode:[self childNodeWithName:@"menu"]];
+    
+    [self resetBreathTimer];
     [self createHudLayer];
 
     [self startObstacleSpawnSequence];
@@ -343,6 +347,30 @@ CGFloat const kMoveAndFadeDistance = 20;
 - (void)fadeoutHUD {
     if (self.hudNode) {
         [self.hudNode runAction:[self moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeOutWithDuration:kMoveAndFadeTime]];
+    }
+}
+
+#pragma mark - Breath Meter
+- (void)updateBreathMeter {
+    [(SSKProgressBarNode*)[self.hudNode childNodeWithName:@"progressBar"] setProgress:_breathTimer/kMaxBreathTimer];
+}
+
+- (void)resetBreathTimer {
+    _breathTimer = kMaxBreathTimer;
+}
+
+- (void)updateBreathTimer:(NSTimeInterval)dt {
+    if ([self currentPlayer].position.y < [self.worldNode childNodeWithName:@"water"].position.y) {
+        _breathTimer -= dt;
+    } else {
+        _breathTimer += dt;
+    }
+    
+    if (_breathTimer < 0.0) {
+        _breathTimer = 0.0;
+    }
+    else if (_breathTimer > kMaxBreathTimer) {
+        _breathTimer = kMaxBreathTimer;
     }
 }
 
@@ -658,10 +686,15 @@ CGFloat const kMoveAndFadeDistance = 20;
         deltaTime = 0;
     }
     
-    if (!(self.gameState == GameOver)) {
+    if (self.gameState == MainMenu || self.gameState == Playing) {
         [self updateParallaxNodesWithDelta:deltaTime];
         [self updatePlayer:deltaTime];
         [self updateGravity];
+    }
+    
+    if (self.gameState == Playing) {
+        [self updateBreathTimer:deltaTime];
+        [self updateBreathMeter];
     }
     
     //Water surface
