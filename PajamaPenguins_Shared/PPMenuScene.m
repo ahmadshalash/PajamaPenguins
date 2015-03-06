@@ -18,7 +18,6 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
 };
 
 @interface PPMenuScene()
-@property (nonatomic) SSKWaterSurfaceNode *waterSurface;
 @property (nonatomic) SKNode *menuBackgroundNode;
 @property (nonatomic) SKNode *menuNode;
 @end
@@ -32,6 +31,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
 - (void)didMoveToView:(SKView *)view {
     [self createSceneBackground];
     [self createMenu];
+    [self startAnimations];
 }
 
 #pragma mark - Scene Construction
@@ -55,6 +55,10 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     [self.menuNode addChild:[self newLabelNodeWithText:@"Pajama Penguins" position:CGPointMake(0, self.size.height/8 * 3)]];
 }
 
+- (void)startAnimations {
+    [[self.menuBackgroundNode childNodeWithName:@"platformIceberg"] runAction:[SKAction repeatActionForever:[self floatAction]]];
+    [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[[self waterSurfaceSplash],[SKAction waitForDuration:.5]]]]];
+}
 #pragma mark - Nodes
 - (SSKWaterSurfaceNode*)newWaterSurface {
     CGFloat surfacePadding = 5;
@@ -65,8 +69,8 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     [waterSurface setName:@"waterSurface"];
     [waterSurface setBodyWithDepth:self.size.height/2 + surfacePadding];
     [waterSurface setTexture:[self sharedWaterGradient]];
-    [waterSurface setSplashDamping:.05];
-    [waterSurface setSplashTension:.005];
+    [waterSurface setSplashDamping:.003];
+    [waterSurface setSplashTension:.0025];
     return waterSurface;
 }
 
@@ -94,6 +98,21 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     [label setFontColor:[SKColor blackColor]];
     [label setPosition:position];
     return label;
+}
+
+#pragma mark - Actions
+- (SKAction*)floatAction {
+    SKAction *up = [SKAction moveByX:0 y:20 duration:3];
+    [up setTimingMode:SKActionTimingEaseInEaseOut];
+    SKAction *down = [up reversedAction];
+    return [SKAction sequence:@[up,down]];
+}
+
+- (SKAction*)waterSurfaceSplash {
+    return [SKAction runBlock:^{
+        [(SSKWaterSurfaceNode*)[self.menuBackgroundNode childNodeWithName:@"waterSurface"] splash:CGPointMake(self.size.width/2, 0) speed:-5];
+        [(SSKWaterSurfaceNode*)[self.menuBackgroundNode childNodeWithName:@"waterSurface"] splash:CGPointMake(-self.size.width/2, 0) speed:-5];
+    }];
 }
 
 #pragma mark - Update
