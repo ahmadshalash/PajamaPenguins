@@ -12,6 +12,7 @@
 #import "SKColor+SFAdditions.h"
 #import "SKNode+SFAdditions.h"
 #import "SKScene+SFAdditions.h"
+#import "SKAction+SFAdditions.h"
 
 #import "SSKProgressBarNode.h"
 #import "SSKWaterSurfaceNode.h"
@@ -217,7 +218,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.hudNode addChild:breathMeter];
     
     [self.hudNode setPosition:CGPointMake(-kMoveAndFadeDistance, 0)];
-    [self.hudNode runAction:[self moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeInWithDuration:kMoveAndFadeTime]];
+    [self.hudNode runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeInWithDuration:kMoveAndFadeTime]];
 }
 
 - (void)createGameOverLayer {
@@ -246,7 +247,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.gameOverNode addChild:restartButton];
     
     [self.gameOverNode setPosition:CGPointMake(-kMoveAndFadeDistance, 0)];
-    [self.gameOverNode runAction:[self moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeInWithDuration:kMoveAndFadeTime]];
+    [self.gameOverNode runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeInWithDuration:kMoveAndFadeTime]];
 }
 
 #pragma mark - GameState MainMenu
@@ -344,7 +345,7 @@ CGFloat const kMoveAndFadeDistance = 20;
 #pragma mark - Hud
 - (void)fadeoutHUD {
     if (self.hudNode) {
-        [self.hudNode runAction:[self moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeOutWithDuration:kMoveAndFadeTime]];
+        [self.hudNode runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeOutWithDuration:kMoveAndFadeTime]];
     }
 }
 
@@ -618,18 +619,6 @@ CGFloat const kMoveAndFadeDistance = 20;
 
 - (SKAction*)moveObstacleWithDuration:(NSTimeInterval)duration {
     return [SKAction moveToX:-self.size.width duration:duration];
-}
-
-- (SKAction*)moveDistance:(CGVector)distance andFadeInWithDuration:(NSTimeInterval)duration {
-    SKAction *fadeIn = [SKAction fadeInWithDuration:duration];
-    SKAction *moveIn = [SKAction moveBy:distance duration:duration];
-    return [SKAction group:@[fadeIn,moveIn]];
-}
-
-- (SKAction*)moveDistance:(CGVector)distance andFadeOutWithDuration:(NSTimeInterval)duration {
-    SKAction *fadeOut = [SKAction fadeOutWithDuration:duration];
-    SKAction *moveOut = [SKAction moveBy:distance duration:duration];
-    return [SKAction group:@[fadeOut,moveOut]];
 }
 
 #pragma mark - Convenience

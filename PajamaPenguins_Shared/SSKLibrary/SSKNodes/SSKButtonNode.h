@@ -31,8 +31,11 @@
 
 @property (nonatomic) BOOL isSelected;
 
-- (id)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture;
-- (id)initWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName;
++ (instancetype)buttonWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture;
+- (instancetype)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture;
+
++ (instancetype)buttonWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName;
+- (instancetype)initWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName;
 
 - (void)setTouchUpInsideTarget:(id)theTarget selector:(SEL)theSelector;
 - (void)setTouchDownInsideTarget:(id)theTarget selector:(SEL)theSelector;

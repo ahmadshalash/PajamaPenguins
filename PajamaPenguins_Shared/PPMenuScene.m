@@ -7,7 +7,11 @@
 //
 
 #import "PPMenuScene.h"
+#import "PPGameScene.h"
 
+#import "SKAction+SFAdditions.h"
+
+#import "SSKButtonNode.h"
 #import "SSKGraphicsUtils.h"
 #import "SSKWaterSurfaceNode.h"
 #import "SSKDynamicColorNode.h"
@@ -52,13 +56,32 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     [self.menuNode setName:@"menu"];
     [self addChild:self.menuNode];
     
-    [self.menuNode addChild:[self newLabelNodeWithText:@"Pajama Penguins" position:CGPointMake(0, self.size.height/8 * 3)]];
+    SKLabelNode *titleLabel = [self newTitleLabel];
+    [titleLabel setPosition:CGPointMake(0, self.size.height/2 + titleLabel.frame.size.height)]; //For animation
+    [self.menuNode addChild:titleLabel];
+    
+    SSKButtonNode *playButton = [self playButton];
+    [playButton setPosition:CGPointMake(0, -self.size.height/2 - playButton.size.height)];      //For animation
+    [self.menuNode addChild:playButton];
 }
 
 - (void)startAnimations {
-    [[self.menuBackgroundNode childNodeWithName:@"platformIceberg"] runAction:[SKAction repeatActionForever:[self floatAction]]];
+    //Water waves
     [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[[self waterSurfaceSplash],[SKAction waitForDuration:.5]]]]];
+    
+    [self runAction:[SKAction waitForDuration:.5] completion:^{
+        //Iceberg float
+        [[self.menuBackgroundNode childNodeWithName:@"platformIceberg"] runAction:[SKAction repeatActionForever:[self floatAction]]];
+        
+        //Button move in
+        [[self.menuNode childNodeWithName:@"playButton"] runAction:[SKAction moveTo:CGPointMake(0, -self.size.height/4) duration:.75 timingMode:SKActionTimingEaseOut]];
+        
+        //Title move in
+        [[self.menuNode childNodeWithName:@"titleLabel"] runAction:[SKAction moveTo:CGPointMake(0, self.size.height/8 * 3) duration:.75 timingMode:SKActionTimingEaseOut]];
+    }];
+    
 }
+
 #pragma mark - Nodes
 - (SSKWaterSurfaceNode*)newWaterSurface {
     CGFloat surfacePadding = 5;
@@ -89,15 +112,28 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     return platform;
 }
 
-- (SKLabelNode*)newLabelNodeWithText:(NSString*)text position:(CGPoint)position {
+- (SKLabelNode*)newTitleLabel {
     SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"Fipps-Regular"];
-    [label setText:text];
+    [label setText:@"Pajama Penguins"];
     [label setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
     [label setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
     [label setFontSize:20];
     [label setFontColor:[SKColor blackColor]];
-    [label setPosition:position];
+    [label setPosition:CGPointMake(0, self.size.height/8 * 3)];
+    [label setName:@"titleLabel"];
     return label;
+}
+
+- (SSKButtonNode*)playButton {
+    SSKButtonNode *playButton = [SSKButtonNode buttonWithIdleTexture:[sMenuAtlas textureNamed:@"play_button_up"] selectedTexture:[sMenuAtlas textureNamed:@"play_button_down"]];
+    [playButton setTouchUpInsideTarget:self selector:@selector(playButtonTouchUp)];
+    [playButton setName:@"playButton"];
+    [playButton setPosition:CGPointMake(0, -self.size.height/4)];
+    return playButton;
+}
+#pragma mark - Button Selectors
+- (void)playButtonTouchUp {
+    [self loadGameScene];
 }
 
 #pragma mark - Actions
@@ -120,8 +156,18 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     [(SSKWaterSurfaceNode*)[self.menuBackgroundNode childNodeWithName:@"waterSurface"] update:currentTime];
 }
 
+#pragma mark - Transfer To Game Scene
+- (void)loadGameScene {
+    [PPGameScene loadSceneAssetsWithCompletionHandler:^{
+        SKScene *gameScene = [PPGameScene sceneWithSize:self.size];
+        SKTransition *fade = [SKTransition fadeWithColor:[SKColor whiteColor] duration:1];
+        [self.view presentScene:gameScene transition:fade];
+    }];
+}
+
 #pragma mark - Asset Loading
 + (void)loadSceneAssets {
+    sMenuAtlas = [SKTextureAtlas atlasNamed:@"PP_Menu_Assets"];
     switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
             
         case UIUserInterfaceIdiomPhone:
@@ -146,4 +192,10 @@ static SKTexture *sIcebergTexture = nil;
 - (SKTexture*)sharedIcebergTexture {
     return sIcebergTexture;
 }
+
+static SKTextureAtlas *sMenuAtlas = nil;
+- (SKTextureAtlas*)sharedMenuAtlas {
+    return sMenuAtlas;
+}
+
 @end

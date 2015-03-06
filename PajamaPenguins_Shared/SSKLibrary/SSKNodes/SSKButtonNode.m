@@ -13,7 +13,11 @@
 
 @implementation SSKButtonNode
 
-- (id)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture {
++ (instancetype)buttonWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture {
+    return [[self alloc] initWithIdleTexture:idleTexture selectedTexture:selectedTexture];
+}
+
+- (instancetype)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture {
     self = [super initWithTexture:idleTexture color:[SKColor clearColor] size:idleTexture.size];
     if (self) {
         //Instance Textures
@@ -37,15 +41,19 @@
     return self;
 }
 
-- (id)initWithTexture:(SKTexture *)texture {
+- (instancetype)initWithTexture:(SKTexture *)texture {
     return [self initWithIdleTexture:texture selectedTexture:nil];
 }
 
-- (id)initWithTexture:(SKTexture *)texture color:(SKColor*)color size:(CGSize)size {
+- (instancetype)initWithTexture:(SKTexture *)texture color:(SKColor*)color size:(CGSize)size {
     return [self initWithIdleTexture:texture selectedTexture:nil];
 }
 
-- (id)initWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName {
++ (instancetype)buttonWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName {
+    return [[self alloc] initWithIdleImageName:idleImageName selectedImageName:selectedImageName];
+}
+
+- (instancetype)initWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName {
     SKTexture *idleTexture = nil;
     if (idleImageName) {
         idleTexture = [SKTexture textureWithImageNamed:idleImageName];
@@ -59,7 +67,7 @@
     return [self initWithIdleTexture:idleTexture selectedTexture:selectedTexture];
 }
 
-- (id)initWithImageNamed:(NSString *)name {
+- (instancetype)initWithImageNamed:(NSString *)name {
     return [self initWithIdleImageName:name selectedImageName:nil];
 }
 
