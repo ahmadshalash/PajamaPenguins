@@ -11,6 +11,7 @@
 - (id)initWithSize:(CGSize)size {
     self = [super initWithSize:size];
     if (self) {
+        self.anchorPoint = CGPointMake(0.5, 0.5);
         self.physicsWorld.contactDelegate = self;
     }
     return self;

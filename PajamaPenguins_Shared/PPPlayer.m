@@ -8,7 +8,6 @@
 
 #import "PPPlayer.h"
 
-//#define accelerationCap -30.0
 #define kAccelerationCap 45.0
 
 @interface PPPlayer()

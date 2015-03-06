@@ -95,17 +95,14 @@ CGFloat const kMoveAndFadeDistance = 20;
 }
 
 - (void)didMoveToView:(SKView *)view {
-    self.anchorPoint = CGPointMake(0.5, 0.5);
-    
     NSLog(@"Screen Size: %fl,%fl",self.size.width, self.size.height);
-   
+    
     [self createNewGame];
     [self testStuff];
 }
 
 #pragma mark - Test Stuff
 - (void)testStuff {
-    
 }
 
 #pragma mark - Creating scene layers

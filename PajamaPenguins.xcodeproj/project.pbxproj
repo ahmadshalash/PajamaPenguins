@@ -34,6 +34,7 @@
 		EE168CEB1A9B01A6005403E6 /* SKNode+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168CE91A9B01A6005403E6 /* SKNode+SFAdditions.m */; };
 		EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E430A118B09E5200E1427D /* Main_iPhone.storyboard */; };
 		EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E430A418B09E5200E1427D /* Main_iPad.storyboard */; };
+		EE34346F1AAA52ED0010BE71 /* platform_iceberg.png in Resources */ = {isa = PBXBuildFile; fileRef = EE34346E1AAA52ED0010BE71 /* platform_iceberg.png */; };
 		EE5575EB1A5A108100B87145 /* PPGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5575E91A5A108100B87145 /* PPGameScene.m */; };
 		EE5575F01A5A16A700B87145 /* PPGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5575E91A5A108100B87145 /* PPGameScene.m */; };
 		EE6F92F81A82F39400286DC7 /* SSKGameCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92E71A82F39400286DC7 /* SSKGameCenter.m */; };
@@ -65,6 +66,8 @@
 		EEC9DB871AA7B5510022CDF1 /* SnowEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB841AA7B5510022CDF1 /* SnowEmitter.sks */; };
 		EEC9DB8D1AA7BF5E0022CDF1 /* SSKProgressBarNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC9DB8C1AA7BF5E0022CDF1 /* SSKProgressBarNode.m */; };
 		EEC9DB8E1AA7BF5E0022CDF1 /* SSKProgressBarNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC9DB8C1AA7BF5E0022CDF1 /* SSKProgressBarNode.m */; };
+		EEC9DB971AA93F900022CDF1 /* PPMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC9DB961AA93F900022CDF1 /* PPMenuScene.m */; };
+		EEC9DB981AA93F900022CDF1 /* PPMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC9DB961AA93F900022CDF1 /* PPMenuScene.m */; };
 		EECC66901AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */; };
 		EECC66911AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */; };
 		EECC66CE1AA56DFE004CB609 /* SSKWaterSurfaceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EECC66CD1AA56DFE004CB609 /* SSKWaterSurfaceNode.m */; };
@@ -123,6 +126,7 @@
 		EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPIcebergObstacle.m; sourceTree = "<group>"; };
 		EE168CE81A9B01A6005403E6 /* SKNode+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKNode+SFAdditions.h"; sourceTree = "<group>"; };
 		EE168CE91A9B01A6005403E6 /* SKNode+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKNode+SFAdditions.m"; sourceTree = "<group>"; };
+		EE34346E1AAA52ED0010BE71 /* platform_iceberg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = platform_iceberg.png; sourceTree = "<group>"; };
 		EE5575E81A5A108100B87145 /* PPGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPGameScene.h; sourceTree = "<group>"; };
 		EE5575E91A5A108100B87145 /* PPGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPGameScene.m; sourceTree = "<group>"; };
 		EE6F92E61A82F39400286DC7 /* SSKGameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKGameCenter.h; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 		EEC9DB841AA7B5510022CDF1 /* SnowEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SnowEmitter.sks; sourceTree = "<group>"; };
 		EEC9DB8B1AA7BF5E0022CDF1 /* SSKProgressBarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKProgressBarNode.h; sourceTree = "<group>"; };
 		EEC9DB8C1AA7BF5E0022CDF1 /* SSKProgressBarNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKProgressBarNode.m; sourceTree = "<group>"; };
+		EEC9DB951AA93F900022CDF1 /* PPMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMenuScene.h; sourceTree = "<group>"; };
+		EEC9DB961AA93F900022CDF1 /* PPMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMenuScene.m; sourceTree = "<group>"; };
 		EECC668E1AA14B28004CB609 /* SSKDynamicColorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKDynamicColorNode.h; sourceTree = "<group>"; };
 		EECC668F1AA14B28004CB609 /* SSKDynamicColorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKDynamicColorNode.m; sourceTree = "<group>"; };
 		EECC66CC1AA56DFE004CB609 /* SSKWaterSurfaceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKWaterSurfaceNode.h; sourceTree = "<group>"; };
@@ -293,6 +299,8 @@
 			children = (
 				EE5575E81A5A108100B87145 /* PPGameScene.h */,
 				EE5575E91A5A108100B87145 /* PPGameScene.m */,
+				EEC9DB951AA93F900022CDF1 /* PPMenuScene.h */,
+				EEC9DB961AA93F900022CDF1 /* PPMenuScene.m */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -319,11 +327,20 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		EE3434701AAA52F80010BE71 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				EE34346E1AAA52ED0010BE71 /* platform_iceberg.png */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
 		EE5575ED1A5A10B600B87145 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
 				EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */,
 				EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */,
+				EE3434701AAA52F80010BE71 /* Menu */,
 				EEAE6FA61AA68EC300215C7E /* Emitters */,
 				EECC66891AA11C7E004CB609 /* BackgroundGradients */,
 				EE168C931A97CCEF005403E6 /* Fonts */,
@@ -533,6 +550,7 @@
 				EEC9DB7C1AA7B2040022CDF1 /* EmitterParticle.png in Resources */,
 				EEC9DB821AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks in Resources */,
 				EEFA23411A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
+				EE34346F1AAA52ED0010BE71 /* platform_iceberg.png in Resources */,
 				41E430B018B09E5200E1427D /* Images.xcassets in Resources */,
 				EEC9DB861AA7B5510022CDF1 /* SnowEmitter.sks in Resources */,
 				EEFA233E1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */,
@@ -588,6 +606,7 @@
 				EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */,
 				EE168CDE1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */,
 				EE168C971A97CEC2005403E6 /* SSKScoreNode.m in Sources */,
+				EEC9DB971AA93F900022CDF1 /* PPMenuScene.m in Sources */,
 				EEF798241A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m in Sources */,
 				41E430A018B09E5200E1427D /* AppDelegate.m in Sources */,
 				EE6F92F81A82F39400286DC7 /* SSKGameCenter.m in Sources */,
@@ -612,6 +631,7 @@
 				EE5575F01A5A16A700B87145 /* PPGameScene.m in Sources */,
 				41E430DF18B09E8600E1427D /* main.m in Sources */,
 				EEFA234E1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */,
+				EEC9DB981AA93F900022CDF1 /* PPMenuScene.m in Sources */,
 				EE168CDF1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */,
 				EE6F92FD1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
 				41E430EA18B09E8600E1427D /* AppDelegate.m in Sources */,
