@@ -5,6 +5,7 @@
 //  Copyright (c) 2015 Skye Freeman. All rights reserved.
 
 #import "PPGameScene.h"
+#import "PPMenuScene.h"
 #import "PPPlayer.h"
 #import "PPIcebergObstacle.h"
 #import "PPWaterSprite.h"
@@ -179,10 +180,6 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.menuNode setZPosition:menuLayer];
     [self.menuNode setName:@"menu"];
     [self addChild:self.menuNode];
-    
-    SKLabelNode *titleLabel = [self createNewLabelWithText:@"Pajama Penguins" withFontSize:18];
-    [titleLabel setPosition:CGPointMake(0, self.size.height/6 * 2)];
-    [self.menuNode addChild:titleLabel];
 
     SKSpriteNode *startFinger = [SKSpriteNode spriteNodeWithTexture:[sSmallTextures objectAtIndex:120]];
     [startFinger setScale:5];
@@ -218,7 +215,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.hudNode addChild:breathMeter];
     
     [self.hudNode setPosition:CGPointMake(-kMoveAndFadeDistance, 0)];
-    [self.hudNode runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeInWithDuration:kMoveAndFadeTime]];
+    [self.hudNode runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) fadeInWithDuration:kMoveAndFadeTime]];
 }
 
 - (void)createGameOverLayer {
@@ -240,14 +237,14 @@ CGFloat const kMoveAndFadeDistance = 20;
     [scoreLabel setPosition:CGPointMake(gameOverLabel.position.x, gameOverLabel.position.y - 50)];
     [self.gameOverNode addChild:scoreLabel];
     
-    SSKButtonNode *restartButton = [[SSKButtonNode alloc] initWithIdleTexture:[sSmallTextures objectAtIndex:135] selectedTexture:[sSmallTextures objectAtIndex:136]];
-    [restartButton setScale:6];
-    [restartButton setPosition:CGPointMake(0, -self.size.height/4)];
-    [restartButton setTouchUpInsideTarget:self selector:@selector(resetGame)];
-    [self.gameOverNode addChild:restartButton];
+    SSKButtonNode *menuButton = [[SSKButtonNode alloc] initWithIdleTexture:[sSmallTextures objectAtIndex:135] selectedTexture:[sSmallTextures objectAtIndex:136]];
+    [menuButton setScale:6];
+    [menuButton setPosition:CGPointMake(0, -self.size.height/4)];
+    [menuButton setTouchUpInsideTarget:self selector:@selector(loadMenuScene)];
+    [self.gameOverNode addChild:menuButton];
     
     [self.gameOverNode setPosition:CGPointMake(-kMoveAndFadeDistance, 0)];
-    [self.gameOverNode runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeInWithDuration:kMoveAndFadeTime]];
+    [self.gameOverNode runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) fadeInWithDuration:kMoveAndFadeTime]];
 }
 
 #pragma mark - GameState MainMenu
@@ -345,7 +342,7 @@ CGFloat const kMoveAndFadeDistance = 20;
 #pragma mark - Hud
 - (void)fadeoutHUD {
     if (self.hudNode) {
-        [self.hudNode runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) andFadeOutWithDuration:kMoveAndFadeTime]];
+        [self.hudNode runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) fadeOutWithDuration:kMoveAndFadeTime]];
     }
 }
 
@@ -671,6 +668,15 @@ CGFloat const kMoveAndFadeDistance = 20;
 
 - (void)interactionEndedAtPosition:(CGPoint)position {
     [[self currentPlayer] setPlayerShouldDive:NO];
+}
+
+#pragma mark - Scene Transfer
+- (void)loadMenuScene {
+    [PPMenuScene loadSceneAssetsWithCompletionHandler:^{
+        SKScene *menuScene = [PPMenuScene sceneWithSize:self.size];
+        SKTransition *fade = [SKTransition fadeWithColor:[SKColor whiteColor] duration:1];
+        [self.view presentScene:menuScene transition:fade];
+    }];
 }
 
 #pragma mark - Scene Processing

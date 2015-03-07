@@ -9,7 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface SKAction (SFAdditions)
-+ (SKAction*)moveDistance:(CGVector)distance andFadeInWithDuration:(NSTimeInterval)duration;
-+ (SKAction*)moveDistance:(CGVector)distance andFadeOutWithDuration:(NSTimeInterval)duration;
++ (SKAction*)moveDistance:(CGVector)distance fadeInWithDuration:(NSTimeInterval)duration;
++ (SKAction*)moveDistance:(CGVector)distance fadeOutWithDuration:(NSTimeInterval)duration;
 + (SKAction*)moveTo:(CGPoint)location duration:(NSTimeInterval)duration timingMode:(SKActionTimingMode)timingMode;
 @end

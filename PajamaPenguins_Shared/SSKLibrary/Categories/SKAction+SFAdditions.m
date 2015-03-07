@@ -9,13 +9,13 @@
 #import "SKAction+SFAdditions.h"
 
 @implementation SKAction (SFAdditions)
-+ (SKAction*)moveDistance:(CGVector)distance andFadeInWithDuration:(NSTimeInterval)duration {
++ (SKAction*)moveDistance:(CGVector)distance fadeInWithDuration:(NSTimeInterval)duration {
     SKAction *fadeIn = [SKAction fadeInWithDuration:duration];
     SKAction *moveIn = [SKAction moveBy:distance duration:duration];
     return [SKAction group:@[fadeIn,moveIn]];
 }
 
-+ (SKAction*)moveDistance:(CGVector)distance andFadeOutWithDuration:(NSTimeInterval)duration {
++ (SKAction*)moveDistance:(CGVector)distance fadeOutWithDuration:(NSTimeInterval)duration {
     SKAction *fadeOut = [SKAction fadeOutWithDuration:duration];
     SKAction *moveOut = [SKAction moveBy:distance duration:duration];
     return [SKAction group:@[fadeOut,moveOut]];

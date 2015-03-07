@@ -126,14 +126,10 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
 
 - (SSKButtonNode*)playButton {
     SSKButtonNode *playButton = [SSKButtonNode buttonWithIdleTexture:[sMenuAtlas textureNamed:@"play_button_up"] selectedTexture:[sMenuAtlas textureNamed:@"play_button_down"]];
-    [playButton setTouchUpInsideTarget:self selector:@selector(playButtonTouchUp)];
+    [playButton setTouchUpInsideTarget:self selector:@selector(loadGameScene)];
     [playButton setName:@"playButton"];
     [playButton setPosition:CGPointMake(0, -self.size.height/4)];
     return playButton;
-}
-#pragma mark - Button Selectors
-- (void)playButtonTouchUp {
-    [self loadGameScene];
 }
 
 #pragma mark - Actions
@@ -172,7 +168,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
             
         case UIUserInterfaceIdiomPhone:
             sWaterGradient = [SKTexture textureWithImageNamed:@"WaterGradientBlue-iphone"];
-            sIcebergTexture = [SKTexture loadPixelTextureWithName:@"platform_iceberg"];
+            sIcebergTexture = [SKTexture textureWithImageNamed:@"platform_iceberg"];
             break;
             
         case UIUserInterfaceIdiomPad:
