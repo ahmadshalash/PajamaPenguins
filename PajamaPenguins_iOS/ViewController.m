@@ -20,9 +20,9 @@
     [skView setIgnoresSiblingOrder:YES]; //Provides extra rendering optimizations. (However, zPositions need to be explicitly set)
 
     if (!skView.scene) {
-        [PPMenuScene loadSceneAssetsWithCompletionHandler:^{
+        [PPGameScene loadSceneAssetsWithCompletionHandler:^{
             NSLog(@"Loading Complete.");
-            SKScene *scene = [PPMenuScene sceneWithSize:skView.bounds.size];
+            SKScene *scene = [PPGameScene sceneWithSize:skView.bounds.size];
             scene.scaleMode = SKSceneScaleModeAspectFill;
             [skView presentScene:scene];
         }];

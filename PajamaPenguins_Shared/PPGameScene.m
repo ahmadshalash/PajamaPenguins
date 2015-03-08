@@ -89,7 +89,8 @@ CGFloat const kMoveAndFadeDistance = 20;
     NSTimeInterval _lastUpdateTime;
     CGFloat _lastPlayerHeight;
     CGFloat _breathTimer;
-    BOOL _playerBubblesOn;
+    
+    CGFloat _playerBubbleBirthrate;
 }
 
 - (id)initWithSize:(CGSize)size {
@@ -165,6 +166,14 @@ CGFloat const kMoveAndFadeDistance = 20;
     
     //Setting Players initial position height (for water surface tracking)
     _lastPlayerHeight = player.position.y;
+    
+    //Player's bubble emitter
+    SKEmitterNode *playerBubbleEmitter = [self sharedBubbleEmitter].copy;
+    [playerBubbleEmitter setName:@"bubbleEmitter"];
+    [playerBubbleEmitter setZPosition:waterSurfaceLayer];
+    [self.worldNode addChild:playerBubbleEmitter];
+    
+    _playerBubbleBirthrate = playerBubbleEmitter.particleBirthRate; //To reset the simulation
     
     //Screen Physics Boundary
     SKSpriteNode *boundary = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.size.width,self.size.height)];
@@ -509,8 +518,15 @@ CGFloat const kMoveAndFadeDistance = 20;
 }
 
 - (void)trackPlayerForBubbles {
-    if ([self playerIsBelowBottomBoundary] && !_playerBubblesOn) {
-        [self runOneShotEmitter:[self sharedBubbleEmitter] location:[self currentPlayer].position];
+    if ([self playerIsBelowBottomBoundary]) {
+        [[self playerBubbleEmitter] setPosition:[self currentPlayer].position];
+
+        if ([self playerBubbleEmitter].particleBirthRate == 0) {
+            [[self playerBubbleEmitter] resetSimulation];
+            [[self playerBubbleEmitter] setParticleBirthRate:_playerBubbleBirthrate];
+        }
+    } else {
+        [[self playerBubbleEmitter] setParticleBirthRate:0];
     }
 }
 
@@ -524,6 +540,9 @@ CGFloat const kMoveAndFadeDistance = 20;
     [SSKGraphicsUtils runOneShotActionWithEmitter:splashEmitter duration:0.15];
 }
 
+- (SKEmitterNode*)playerBubbleEmitter {
+    return (SKEmitterNode*)[self.worldNode childNodeWithName:@"bubbleEmitter"];
+}
 #pragma mark - Sky
 - (SKSpriteNode*)skyBackgroundNode {
     SKSpriteNode *skyBackground = [SKSpriteNode spriteNodeWithTexture:[SKTexture loadPixelTextureWithName:@"SkyBackground"]];
