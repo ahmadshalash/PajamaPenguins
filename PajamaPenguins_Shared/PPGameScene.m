@@ -153,10 +153,9 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.worldNode addChild:self.waterSurface];
 
     //Player
-    PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[[PPSharedAssets sharedLargeTextures] objectAtIndex:0]
-                                                secondTexture:[[PPSharedAssets sharedLargeTextures] objectAtIndex:1]];
+    PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[PPSharedAssets sharedPenguinNormalIdle]
+                                                secondTexture:[PPSharedAssets sharedPenguinNormalAnim]];
     [player setPosition:CGPointMake(-self.size.width/4, 50)];
-    [player setScale:[self getPlayerScale]];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
     [player setZPosition:playerLayer];
@@ -191,15 +190,14 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.menuNode setName:@"menu"];
     [self addChild:self.menuNode];
 
-    SKSpriteNode *startFinger = [SKSpriteNode spriteNodeWithTexture:[[PPSharedAssets sharedSmallTextures] objectAtIndex:120]];
-    [startFinger setScale:5];
+    SKSpriteNode *startFinger = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedFingerSprite]];
     [startFinger setPosition:CGPointMake(0, -self.size.height/3)];
     [startFinger setName:@"finger"];
     [self.menuNode addChild:startFinger];
     
-    SKSpriteNode *startFingerEffect = [SKSpriteNode spriteNodeWithTexture:[[PPSharedAssets sharedSmallTextures] objectAtIndex:121]];
-    [startFingerEffect setScale:5];
-    [startFingerEffect setPosition:CGPointMake(startFinger.position.x - startFinger.size.width/8, startFinger.position.y + startFinger.size.height/6 * 4)];
+    SKSpriteNode *startFingerEffect = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedFingerSpriteEffect]];
+    [startFingerEffect setPosition:CGPointMake(startFinger.position.x - startFinger.size.width/8,
+                                               startFinger.position.y + startFingerEffect.size.height * 1.5)];
     [startFingerEffect setAlpha:0];
     [startFingerEffect setName:@"fingerEffect"];
     [self.menuNode addChild:startFingerEffect];
@@ -247,8 +245,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     [scoreLabel setPosition:CGPointMake(gameOverLabel.position.x, gameOverLabel.position.y - 50)];
     [self.gameOverNode addChild:scoreLabel];
     
-    SSKButtonNode *menuButton = [[SSKButtonNode alloc] initWithIdleTexture:[[PPSharedAssets sharedSmallTextures] objectAtIndex:135] selectedTexture:[[PPSharedAssets sharedSmallTextures] objectAtIndex:136]];
-    [menuButton setScale:6];
+    SSKButtonNode *menuButton = [[SSKButtonNode alloc] initWithIdleTexture:[PPSharedAssets sharedHomeButtonUpTexture] selectedTexture:[PPSharedAssets sharedHomeButtonDownTexture]];
     [menuButton setPosition:CGPointMake(0, -self.size.height/4)];
     [menuButton setTouchUpInsideTarget:self selector:@selector(loadMenuScene)];
     [self.gameOverNode addChild:menuButton];
@@ -422,42 +419,6 @@ CGFloat const kMoveAndFadeDistance = 20;
 }
 
 #pragma mark - Water Background
-//Water Surface Background
-- (SKNode*)waterSurfaceNode {
-    SKNode *node = [SKNode new];
-    
-    NSInteger newTileSize = [self getWaterSurfaceScale] * kLargeTileWidth;
-    NSInteger numTilesForScreen = (self.size.width * (1 + kWorldScaleCap))/newTileSize;
-    
-    for (int i = 0; i < numTilesForScreen; i++) {
-        PPWaterSprite *waterTile;
-        
-        if (i % 3 == 0) {
-            waterTile = [PPWaterSprite spriteNodeWithTexture:[[PPSharedAssets sharedLargeTextures] objectAtIndex:10]];
-        }
-        else if (i % 3 == 1) {
-            waterTile = [PPWaterSprite spriteNodeWithTexture:[[PPSharedAssets sharedLargeTextures] objectAtIndex:11]];
-        }
-        else if (i % 3 == 2){
-            waterTile = [PPWaterSprite spriteNodeWithTexture:[[PPSharedAssets sharedLargeTextures] objectAtIndex:12]];
-        }
-        
-        [waterTile setScale:[self getWaterSurfaceScale]];
-        [waterTile setPosition:CGPointMake(-self.size.width/2 + (newTileSize * i), 0)];
-        [node addChild:waterTile];
-    }
-    return node;
-}
-
-- (NSArray*)waterSurfaceForParallax {
-    NSMutableArray *waterTiles = [NSMutableArray array];
-    for (int i = 0; i < 2; i++) {
-        [waterTiles addObject:[self waterSurfaceNode]];
-    }
-    return [NSArray arrayWithArray:waterTiles];
-}
-
-//Underwater Background
 - (SKSpriteNode*)waterBackgroundNode {
     SKSpriteNode *waterBackground = [SKSpriteNode spriteNodeWithTexture:[SKTexture loadPixelTextureWithName:@"WaterBackground"]];
     [waterBackground setScale:[self backgroundSpriteScale]];

@@ -16,27 +16,23 @@
 
         SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"pajama_penguins_assets"];
         
-        //Textures
+        //Backgrounds
         sWaterGradient = [SKTexture textureWithImageNamed:@"WaterGradientBlue-iphone"];
         sIcebergTexture = [SKTexture textureWithImageNamed:@"platform_iceberg"];
         
+        //Buttons
         sPlayButtonUpTexture = [atlas textureNamed:@"play_button_up"];
         sPlayButtonDownTexture = [atlas textureNamed:@"play_button_down"];
         sHomeButtonUpTexture = [atlas textureNamed:@"home_button_up"];
         sHomeButtonDownTexture = [atlas textureNamed:@"home_button_down"];
         
-        //Sprite Sheets
-        sSmallTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsSmallSheet"
-                                                                frameSize:CGSizeMake(15, 15)
-                                                                   origin:CGPointMake(0, 225)
-                                                                gridWidth:15
-                                                               gridHeight:15];
+        //Penguins
+        sPenguinNormalIdle = [atlas textureNamed:@"penguin_normal_1"];
+        sPenguinNormalAnim = [atlas textureNamed:@"penguin_normal_2"];
         
-        sLargeTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsLargeSheet"
-                                                                frameSize:CGSizeMake(30, 30)
-                                                                   origin:CGPointMake(0, 280)
-                                                                gridWidth:10
-                                                               gridHeight:10];
+        //Misc.
+        sFingerSprite = [atlas textureNamed:@"finger_sprite"];
+        sFingerSpriteEffect = [atlas textureNamed:@"finger_sprite_effect"];
         
         //Emitters
         sSnowEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"SnowEmitter"];
@@ -44,7 +40,7 @@
         sObstacleSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"ObstacleSplashEmitter"];
         sPlayerSplashDownEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"PlayerSplashDownEmitter"];
         sPlayerSplashUpEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"PlayerSplashUpEmitter"];
-        
+
         NSLog(@"Scene loaded in %f seconds",[[NSDate date] timeIntervalSinceDate:startTime]);
         
         if (!completion) {
@@ -58,6 +54,8 @@
 }
 
 #pragma mark - Shared Textures
+
+//Backgrounds
 static SKTexture *sWaterGradient = nil;
 + (SKTexture*)sharedWaterGradient {
     return sWaterGradient;
@@ -68,6 +66,7 @@ static SKTexture *sIcebergTexture = nil;
     return sIcebergTexture;
 }
 
+//Buttons
 static SKTexture *sPlayButtonUpTexture = nil;
 + (SKTexture*)sharedPlayButtonUpTexture {
     return sPlayButtonUpTexture;
@@ -88,16 +87,29 @@ static SKTexture *sHomeButtonDownTexture = nil;
     return sHomeButtonDownTexture;
 }
 
-#pragma mark - Sprite sheets
-static NSArray *sSmallTextures = nil;
-+ (NSArray*)sharedSmallTextures {
-    return sSmallTextures;
+//Penguins
+static SKTexture *sPenguinNormalIdle = nil;
++ (SKTexture*)sharedPenguinNormalIdle {
+    return sPenguinNormalIdle;
 }
 
-static NSArray *sLargeTextures = nil;
-+ (NSArray*)sharedLargeTextures {
-    return sLargeTextures;
+static SKTexture *sPenguinNormalAnim = nil;
++ (SKTexture*)sharedPenguinNormalAnim {
+    return sPenguinNormalAnim;
 }
+
+//Misc Game Scene
+static SKTexture *sFingerSprite = nil;
++ (SKTexture*)sharedFingerSprite {
+    return sFingerSprite;
+}
+
+static SKTexture *sFingerSpriteEffect = nil;
++ (SKTexture*)sharedFingerSpriteEffect {
+    return sFingerSpriteEffect;
+}
+
+//Misc Menu Scene
 
 #pragma mark - Shared Emitters
 static SKEmitterNode *sSnowEmitter = nil;

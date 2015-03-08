@@ -14,18 +14,24 @@
 typedef void (^AssetCompletionHandler)(void);
 + (void)loadSharedAssetsWithCompletion:(AssetCompletionHandler)completion;
 
-//Shared Textures
+//Shared Background Textures
 + (SKTexture*)sharedWaterGradient;
 + (SKTexture*)sharedIcebergTexture;
 
+//Shared Misc. Textures
++ (SKTexture*)sharedFingerSprite;
++ (SKTexture*)sharedFingerSpriteEffect;
+
+//Shared Button Textures
 + (SKTexture*)sharedPlayButtonUpTexture;
 + (SKTexture*)sharedPlayButtonDownTexture;
 
 + (SKTexture*)sharedHomeButtonUpTexture;
 + (SKTexture*)sharedHomeButtonDownTexture;
 
-+ (NSArray*)sharedSmallTextures;
-+ (NSArray*)sharedLargeTextures;
+//Shared Penguins Textures
++ (SKTexture*)sharedPenguinNormalIdle;
++ (SKTexture*)sharedPenguinNormalAnim;
 
 //Shared Emitters
 + (SKEmitterNode*)sharedSnowEmitter;
