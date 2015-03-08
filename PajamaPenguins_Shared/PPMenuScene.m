@@ -47,6 +47,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     
     [self.menuBackgroundNode addChild:[self newColorBackground]];
     [self.menuBackgroundNode addChild:[self newPlatformIceberg]];
+    [self.menuBackgroundNode addChild:[self newSnowEmitter]];
     [self.menuBackgroundNode addChild:[self newWaterSurface]];
 }
 
@@ -124,6 +125,13 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     return label;
 }
 
+- (SKEmitterNode*)newSnowEmitter {
+    SKEmitterNode *snowEmitter = [self sharedSnowEmitter].copy;
+    [snowEmitter setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
+    [snowEmitter setName:@"snowEmitter"];
+    return snowEmitter;
+}
+
 - (SSKButtonNode*)playButton {
     SSKButtonNode *playButton = [SSKButtonNode buttonWithIdleTexture:[sMenuAtlas textureNamed:@"play_button_up"] selectedTexture:[sMenuAtlas textureNamed:@"play_button_down"]];
     [playButton setTouchUpInsideTarget:self selector:@selector(loadGameScene)];
@@ -164,6 +172,8 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
 #pragma mark - Asset Loading
 + (void)loadSceneAssets {
     sMenuAtlas = [SKTextureAtlas atlasNamed:@"PP_Menu_Assets"];
+    sSnowEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"SnowEmitter"];
+    
     switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
             
         case UIUserInterfaceIdiomPhone:
@@ -194,4 +204,8 @@ static SKTextureAtlas *sMenuAtlas = nil;
     return sMenuAtlas;
 }
 
+static SKEmitterNode *sSnowEmitter = nil;
+- (SKEmitterNode*)sharedSnowEmitter {
+    return sSnowEmitter;
+}
 @end
