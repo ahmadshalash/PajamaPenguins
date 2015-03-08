@@ -8,7 +8,7 @@
 
 #import "PPMenuScene.h"
 #import "PPGameScene.h"
-#import "PPEmitters.h"
+#import "PPSharedAssets.h"
 
 #import "SKAction+SFAdditions.h"
 
@@ -71,7 +71,9 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     //Water waves
     [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[[self waterSurfaceSplash],[SKAction waitForDuration:.5]]]]];
     
+    //Pause to prevent frame skip
     [self runAction:[SKAction waitForDuration:.5] completion:^{
+
         //Iceberg float
         [[self.menuBackgroundNode childNodeWithName:@"platformIceberg"] runAction:[SKAction repeatActionForever:[self floatAction]]];
         
@@ -92,7 +94,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     [waterSurface setAlpha:0.7];
     [waterSurface setName:@"waterSurface"];
     [waterSurface setBodyWithDepth:self.size.height/2 + surfacePadding];
-    [waterSurface setTexture:[self sharedWaterGradient]];
+    [waterSurface setTexture:[PPSharedAssets sharedWaterGradient]];
     [waterSurface setSplashDamping:.003];
     [waterSurface setSplashTension:.0025];
     return waterSurface;
@@ -106,7 +108,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
 }
 
 - (SKSpriteNode*)newPlatformIceberg {
-    SKSpriteNode *platform = [SKSpriteNode spriteNodeWithTexture:[self sharedIcebergTexture]];
+    SKSpriteNode *platform = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedIcebergTexture]];
     [platform setName:@"platformIceberg"];
     [platform setAnchorPoint:CGPointMake(0.5, 1)];
     [platform setPosition:CGPointMake(0, 50)];
@@ -126,14 +128,14 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
 }
 
 - (SKEmitterNode*)newSnowEmitter {
-    SKEmitterNode *snowEmitter = [PPEmitters sharedSnowEmitter].copy;
+    SKEmitterNode *snowEmitter = [PPSharedAssets sharedSnowEmitter].copy;
     [snowEmitter setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
     [snowEmitter setName:@"snowEmitter"];
     return snowEmitter;
 }
 
 - (SSKButtonNode*)playButton {
-    SSKButtonNode *playButton = [SSKButtonNode buttonWithIdleTexture:[sMenuAtlas textureNamed:@"play_button_up"] selectedTexture:[sMenuAtlas textureNamed:@"play_button_down"]];
+    SSKButtonNode *playButton = [SSKButtonNode buttonWithIdleTexture:[PPSharedAssets sharedPlayButtonUpTexture] selectedTexture:[PPSharedAssets sharedPlayButtonDownTexture]];
     [playButton setTouchUpInsideTarget:self selector:@selector(loadGameScene)];
     [playButton setName:@"playButton"];
     [playButton setPosition:CGPointMake(0, -self.size.height/4)];
@@ -162,45 +164,9 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
 
 #pragma mark - Transfer To Game Scene
 - (void)loadGameScene {
-    [PPGameScene loadSceneAssetsWithCompletionHandler:^{
-        SKScene *gameScene = [PPGameScene sceneWithSize:self.size];
-        SKTransition *fade = [SKTransition fadeWithColor:[SKColor whiteColor] duration:1];
-        [self.view presentScene:gameScene transition:fade];
-    }];
-}
-
-#pragma mark - Asset Loading
-+ (void)loadSceneAssets {
-    sMenuAtlas = [SKTextureAtlas atlasNamed:@"PP_Menu_Assets"];
-    
-    switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
-            
-        case UIUserInterfaceIdiomPhone:
-            sWaterGradient = [SKTexture textureWithImageNamed:@"WaterGradientBlue-iphone"];
-            sIcebergTexture = [SKTexture textureWithImageNamed:@"platform_iceberg"];
-            break;
-            
-        case UIUserInterfaceIdiomPad:
-            break;
-            
-        default:
-            break;
-    }
-}
-
-static SKTexture *sWaterGradient = nil;
-- (SKTexture*)sharedWaterGradient {
-    return sWaterGradient;
-}
-
-static SKTexture *sIcebergTexture = nil;
-- (SKTexture*)sharedIcebergTexture {
-    return sIcebergTexture;
-}
-
-static SKTextureAtlas *sMenuAtlas = nil;
-- (SKTextureAtlas*)sharedMenuAtlas {
-    return sMenuAtlas;
+    SKScene *gameScene = [PPGameScene sceneWithSize:self.size];
+    SKTransition *fade = [SKTransition fadeWithColor:[SKColor whiteColor] duration:1];
+    [self.view presentScene:gameScene transition:fade];
 }
 
 @end

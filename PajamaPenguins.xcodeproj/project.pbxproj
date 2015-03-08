@@ -37,10 +37,10 @@
 		EE34346F1AAA52ED0010BE71 /* platform_iceberg.png in Resources */ = {isa = PBXBuildFile; fileRef = EE34346E1AAA52ED0010BE71 /* platform_iceberg.png */; };
 		EE3434731AAA5EB50010BE71 /* SKAction+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3434721AAA5EB50010BE71 /* SKAction+SFAdditions.m */; };
 		EE3434741AAA5EB50010BE71 /* SKAction+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3434721AAA5EB50010BE71 /* SKAction+SFAdditions.m */; };
-		EE3434761AAA628C0010BE71 /* PP_Menu_Assets.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EE3434751AAA628C0010BE71 /* PP_Menu_Assets.atlas */; };
-		EE3434771AAA628C0010BE71 /* PP_Menu_Assets.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EE3434751AAA628C0010BE71 /* PP_Menu_Assets.atlas */; };
-		EE34347B1AABF4180010BE71 /* PPEmitters.m in Sources */ = {isa = PBXBuildFile; fileRef = EE34347A1AABF4180010BE71 /* PPEmitters.m */; };
-		EE34347C1AABF4180010BE71 /* PPEmitters.m in Sources */ = {isa = PBXBuildFile; fileRef = EE34347A1AABF4180010BE71 /* PPEmitters.m */; };
+		EE34347B1AABF4180010BE71 /* PPSharedAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = EE34347A1AABF4180010BE71 /* PPSharedAssets.m */; };
+		EE34347C1AABF4180010BE71 /* PPSharedAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = EE34347A1AABF4180010BE71 /* PPSharedAssets.m */; };
+		EE34347E1AAC125D0010BE71 /* pajama_penguins_assets.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EE34347D1AAC125D0010BE71 /* pajama_penguins_assets.atlas */; };
+		EE34347F1AAC125D0010BE71 /* pajama_penguins_assets.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EE34347D1AAC125D0010BE71 /* pajama_penguins_assets.atlas */; };
 		EE5575EB1A5A108100B87145 /* PPGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5575E91A5A108100B87145 /* PPGameScene.m */; };
 		EE5575F01A5A16A700B87145 /* PPGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5575E91A5A108100B87145 /* PPGameScene.m */; };
 		EE6F92F81A82F39400286DC7 /* SSKGameCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92E71A82F39400286DC7 /* SSKGameCenter.m */; };
@@ -135,9 +135,9 @@
 		EE34346E1AAA52ED0010BE71 /* platform_iceberg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = platform_iceberg.png; sourceTree = "<group>"; };
 		EE3434711AAA5EB50010BE71 /* SKAction+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKAction+SFAdditions.h"; sourceTree = "<group>"; };
 		EE3434721AAA5EB50010BE71 /* SKAction+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKAction+SFAdditions.m"; sourceTree = "<group>"; };
-		EE3434751AAA628C0010BE71 /* PP_Menu_Assets.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = PP_Menu_Assets.atlas; sourceTree = "<group>"; };
-		EE3434791AABF4180010BE71 /* PPEmitters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPEmitters.h; sourceTree = "<group>"; };
-		EE34347A1AABF4180010BE71 /* PPEmitters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPEmitters.m; sourceTree = "<group>"; };
+		EE3434791AABF4180010BE71 /* PPSharedAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPSharedAssets.h; path = ../PajamaPenguins_Shared/PPSharedAssets.h; sourceTree = "<group>"; };
+		EE34347A1AABF4180010BE71 /* PPSharedAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPSharedAssets.m; path = ../PajamaPenguins_Shared/PPSharedAssets.m; sourceTree = "<group>"; };
+		EE34347D1AAC125D0010BE71 /* pajama_penguins_assets.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = pajama_penguins_assets.atlas; sourceTree = "<group>"; };
 		EE5575E81A5A108100B87145 /* PPGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPGameScene.h; sourceTree = "<group>"; };
 		EE5575E91A5A108100B87145 /* PPGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPGameScene.m; sourceTree = "<group>"; };
 		EE6F92E61A82F39400286DC7 /* SSKGameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKGameCenter.h; sourceTree = "<group>"; };
@@ -340,23 +340,25 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
-		EE3434701AAA52F80010BE71 /* Menu */ = {
+		EE3434801AAC180B0010BE71 /* EmitterAssets */ = {
 			isa = PBXGroup;
 			children = (
-				EE34346E1AAA52ED0010BE71 /* platform_iceberg.png */,
+				EEC9DB7B1AA7B2040022CDF1 /* EmitterParticle.png */,
 			);
-			name = Menu;
+			name = EmitterAssets;
 			sourceTree = "<group>";
 		};
 		EE5575ED1A5A10B600B87145 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				EE3434791AABF4180010BE71 /* PPSharedAssets.h */,
+				EE34347A1AABF4180010BE71 /* PPSharedAssets.m */,
 				EEFA23401A9D02370003B009 /* PajamaPenguinsSmallSheet.png */,
 				EEFA233D1A9D02120003B009 /* PajamaPenguinsLargeSheet.png */,
-				EE3434751AAA628C0010BE71 /* PP_Menu_Assets.atlas */,
-				EE3434701AAA52F80010BE71 /* Menu */,
+				EE34346E1AAA52ED0010BE71 /* platform_iceberg.png */,
+				EE34347D1AAC125D0010BE71 /* pajama_penguins_assets.atlas */,
 				EEAE6FA61AA68EC300215C7E /* Emitters */,
-				EECC66891AA11C7E004CB609 /* BackgroundGradients */,
+				EECC66891AA11C7E004CB609 /* Backgrounds */,
 				EE168C931A97CCEF005403E6 /* Fonts */,
 			);
 			name = Assets;
@@ -374,8 +376,6 @@
 				EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */,
 				EEF798471AA0FD440000DD14 /* PPWaterSprite.h */,
 				EEF798481AA0FD440000DD14 /* PPWaterSprite.m */,
-				EE3434791AABF4180010BE71 /* PPEmitters.h */,
-				EE34347A1AABF4180010BE71 /* PPEmitters.m */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -452,30 +452,22 @@
 		EEAE6FA61AA68EC300215C7E /* Emitters */ = {
 			isa = PBXGroup;
 			children = (
+				EE3434801AAC180B0010BE71 /* EmitterAssets */,
 				EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */,
 				EEC9DB811AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks */,
 				EEAE6FA31AA68B8B00215C7E /* ObstacleSplashEmitter.sks */,
 				EEAE6FA91AA68F9900215C7E /* BubbleEmitter.sks */,
 				EEC9DB841AA7B5510022CDF1 /* SnowEmitter.sks */,
-				EEAE6FA71AA68ED000215C7E /* EmitterAssets */,
 			);
 			name = Emitters;
 			sourceTree = "<group>";
 		};
-		EEAE6FA71AA68ED000215C7E /* EmitterAssets */ = {
-			isa = PBXGroup;
-			children = (
-				EEC9DB7B1AA7B2040022CDF1 /* EmitterParticle.png */,
-			);
-			name = EmitterAssets;
-			sourceTree = "<group>";
-		};
-		EECC66891AA11C7E004CB609 /* BackgroundGradients */ = {
+		EECC66891AA11C7E004CB609 /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
 				EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */,
 			);
-			name = BackgroundGradients;
+			name = Backgrounds;
 			sourceTree = "<group>";
 		};
 		EEEB9CA31A82D9DE005E94B3 /* Libraries */ = {
@@ -560,6 +552,7 @@
 				EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */,
 				EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */,
 				EEAE6F9C1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */,
+				EE34347E1AAC125D0010BE71 /* pajama_penguins_assets.atlas in Resources */,
 				EE168C8E1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				EEAE6FA41AA68B8B00215C7E /* ObstacleSplashEmitter.sks in Resources */,
 				EEAE6F971AA665E200215C7E /* WaterGradientBlue-iphone.png in Resources */,
@@ -570,7 +563,6 @@
 				41E430B018B09E5200E1427D /* Images.xcassets in Resources */,
 				EEC9DB861AA7B5510022CDF1 /* SnowEmitter.sks in Resources */,
 				EEFA233E1A9D02120003B009 /* PajamaPenguinsLargeSheet.png in Resources */,
-				EE3434761AAA628C0010BE71 /* PP_Menu_Assets.atlas in Resources */,
 				EEAE6FAA1AA68F9900215C7E /* BubbleEmitter.sks in Resources */,
 				41E4309A18B09E5200E1427D /* InfoPlist.strings in Resources */,
 			);
@@ -582,6 +574,7 @@
 			files = (
 				EEC9DB831AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks in Resources */,
 				EEFA23421A9D02370003B009 /* PajamaPenguinsSmallSheet.png in Resources */,
+				EE34347F1AAC125D0010BE71 /* pajama_penguins_assets.atlas in Resources */,
 				41E430EF18B09E8600E1427D /* Images.xcassets in Resources */,
 				EEAE6F9D1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */,
 				41E430DD18B09E8600E1427D /* InfoPlist.strings in Resources */,
@@ -592,7 +585,6 @@
 				EEAE6FAB1AA68F9900215C7E /* BubbleEmitter.sks in Resources */,
 				EEC9DB871AA7B5510022CDF1 /* SnowEmitter.sks in Resources */,
 				41E430E518B09E8600E1427D /* MainMenu.xib in Resources */,
-				EE3434771AAA628C0010BE71 /* PP_Menu_Assets.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,7 +611,7 @@
 				EEF798491AA0FD440000DD14 /* PPWaterSprite.m in Sources */,
 				EE6F92FA1A82F39400286DC7 /* SSKiAD.m in Sources */,
 				EE6F92FE1A82F39400286DC7 /* SSKScene.m in Sources */,
-				EE34347B1AABF4180010BE71 /* PPEmitters.m in Sources */,
+				EE34347B1AABF4180010BE71 /* PPSharedAssets.m in Sources */,
 				EECC66901AA14B28004CB609 /* SSKDynamicColorNode.m in Sources */,
 				EEF7983C1A9FCAE80000DD14 /* SSKColorNode.m in Sources */,
 				EEF798281A9D7ECA0000DD14 /* SKScene+SFAdditions.m in Sources */,
@@ -653,7 +645,7 @@
 				41E430DF18B09E8600E1427D /* main.m in Sources */,
 				EEFA234E1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */,
 				EEC9DB981AA93F900022CDF1 /* PPMenuScene.m in Sources */,
-				EE34347C1AABF4180010BE71 /* PPEmitters.m in Sources */,
+				EE34347C1AABF4180010BE71 /* PPSharedAssets.m in Sources */,
 				EE168CDF1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */,
 				EE6F92FD1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
 				41E430EA18B09E8600E1427D /* AppDelegate.m in Sources */,

@@ -6,7 +6,7 @@
 
 #import "PPGameScene.h"
 #import "PPMenuScene.h"
-#import "PPEmitters.h"
+#import "PPSharedAssets.h"
 #import "PPPlayer.h"
 #import "PPIcebergObstacle.h"
 #import "PPWaterSprite.h"
@@ -121,7 +121,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
     
-    SKEmitterNode *snowEmitter = [PPEmitters sharedSnowEmitter].copy;
+    SKEmitterNode *snowEmitter = [PPSharedAssets sharedSnowEmitter].copy;
     [snowEmitter setZPosition:foregroundLayer];
     [snowEmitter setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
     [snowEmitter setName:@"snowEmitter"];
@@ -147,14 +147,14 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.waterSurface setAlpha:.8];
     [self.waterSurface setZPosition:waterSurfaceLayer];
     [self.waterSurface setBodyWithDepth:(self.size.height)/kWorldScaleCap];
-    [self.waterSurface setTexture:[self sharedWaterGradient]];
+    [self.waterSurface setTexture:[PPSharedAssets sharedWaterGradient]];
     [self.waterSurface setSplashDamping:.05];
     [self.waterSurface setSplashTension:.005];
     [self.worldNode addChild:self.waterSurface];
 
     //Player
-    PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[sLargeTextures objectAtIndex:0]
-                                                secondTexture:[sLargeTextures objectAtIndex:1]];
+    PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[[PPSharedAssets sharedLargeTextures] objectAtIndex:0]
+                                                secondTexture:[[PPSharedAssets sharedLargeTextures] objectAtIndex:1]];
     [player setPosition:CGPointMake(-self.size.width/4, 50)];
     [player setScale:[self getPlayerScale]];
     [player setName:@"player"];
@@ -169,7 +169,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     _lastPlayerHeight = player.position.y;
     
     //Player's bubble emitter
-    SKEmitterNode *playerBubbleEmitter = [PPEmitters sharedBubbleEmitter].copy;
+    SKEmitterNode *playerBubbleEmitter = [PPSharedAssets sharedBubbleEmitter].copy;
     [playerBubbleEmitter setName:@"bubbleEmitter"];
     [playerBubbleEmitter setZPosition:waterSurfaceLayer];
     [self.worldNode addChild:playerBubbleEmitter];
@@ -191,13 +191,13 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.menuNode setName:@"menu"];
     [self addChild:self.menuNode];
 
-    SKSpriteNode *startFinger = [SKSpriteNode spriteNodeWithTexture:[sSmallTextures objectAtIndex:120]];
+    SKSpriteNode *startFinger = [SKSpriteNode spriteNodeWithTexture:[[PPSharedAssets sharedSmallTextures] objectAtIndex:120]];
     [startFinger setScale:5];
     [startFinger setPosition:CGPointMake(0, -self.size.height/3)];
     [startFinger setName:@"finger"];
     [self.menuNode addChild:startFinger];
     
-    SKSpriteNode *startFingerEffect = [SKSpriteNode spriteNodeWithTexture:[sSmallTextures objectAtIndex:121]];
+    SKSpriteNode *startFingerEffect = [SKSpriteNode spriteNodeWithTexture:[[PPSharedAssets sharedSmallTextures] objectAtIndex:121]];
     [startFingerEffect setScale:5];
     [startFingerEffect setPosition:CGPointMake(startFinger.position.x - startFinger.size.width/8, startFinger.position.y + startFinger.size.height/6 * 4)];
     [startFingerEffect setAlpha:0];
@@ -247,7 +247,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     [scoreLabel setPosition:CGPointMake(gameOverLabel.position.x, gameOverLabel.position.y - 50)];
     [self.gameOverNode addChild:scoreLabel];
     
-    SSKButtonNode *menuButton = [[SSKButtonNode alloc] initWithIdleTexture:[sSmallTextures objectAtIndex:135] selectedTexture:[sSmallTextures objectAtIndex:136]];
+    SSKButtonNode *menuButton = [[SSKButtonNode alloc] initWithIdleTexture:[[PPSharedAssets sharedSmallTextures] objectAtIndex:135] selectedTexture:[[PPSharedAssets sharedSmallTextures] objectAtIndex:136]];
     [menuButton setScale:6];
     [menuButton setPosition:CGPointMake(0, -self.size.height/4)];
     [menuButton setTouchUpInsideTarget:self selector:@selector(loadMenuScene)];
@@ -433,13 +433,13 @@ CGFloat const kMoveAndFadeDistance = 20;
         PPWaterSprite *waterTile;
         
         if (i % 3 == 0) {
-            waterTile = [PPWaterSprite spriteNodeWithTexture:[sLargeTextures objectAtIndex:10]];
+            waterTile = [PPWaterSprite spriteNodeWithTexture:[[PPSharedAssets sharedLargeTextures] objectAtIndex:10]];
         }
         else if (i % 3 == 1) {
-            waterTile = [PPWaterSprite spriteNodeWithTexture:[sLargeTextures objectAtIndex:11]];
+            waterTile = [PPWaterSprite spriteNodeWithTexture:[[PPSharedAssets sharedLargeTextures] objectAtIndex:11]];
         }
         else if (i % 3 == 2){
-            waterTile = [PPWaterSprite spriteNodeWithTexture:[sLargeTextures objectAtIndex:12]];
+            waterTile = [PPWaterSprite spriteNodeWithTexture:[[PPSharedAssets sharedLargeTextures] objectAtIndex:12]];
         }
         
         [waterTile setScale:[self getWaterSurfaceScale]];
@@ -476,7 +476,7 @@ CGFloat const kMoveAndFadeDistance = 20;
         CGFloat splashStrength = kMaxSplashStrength * splashRatio;
         
         [self.waterSurface splash:[self currentPlayer].position speed:splashStrength];
-        [self runOneShotEmitter:[PPEmitters sharedPlayerSplashUpEmitter] location:[self currentPlayer].position];
+        [self runOneShotEmitter:[PPSharedAssets sharedPlayerSplashUpEmitter] location:[self currentPlayer].position];
         
         _lastPlayerHeight = newPlayerHeight;
     }
@@ -486,7 +486,7 @@ CGFloat const kMoveAndFadeDistance = 20;
         CGFloat splashStrength = kMaxSplashStrength * splashRatio;
         
         [self.waterSurface splash:[self currentPlayer].position speed:-splashStrength];
-        [self runOneShotEmitter:[PPEmitters sharedPlayerSplashDownEmitter] location:[self currentPlayer].position];
+        [self runOneShotEmitter:[PPSharedAssets sharedPlayerSplashDownEmitter] location:[self currentPlayer].position];
         
         _lastPlayerHeight = newPlayerHeight;
     }
@@ -504,7 +504,7 @@ CGFloat const kMoveAndFadeDistance = 20;
             CGPoint splashLocation = CGPointMake(obstacle.position.x - obstacle.frame.size.width/2, obstacle.position.y);
             
             [self.waterSurface splash:splashLocation speed:kObstacleSplashStrength];
-            [self runOneShotEmitter:[PPEmitters sharedObstacleSplashEmitter] location:CGPointMake(splashLocation.x, splashLocation.y + 30)];
+            [self runOneShotEmitter:[PPSharedAssets sharedObstacleSplashEmitter] location:CGPointMake(splashLocation.x, splashLocation.y + 30)];
         }];
     }];
     
@@ -845,54 +845,6 @@ CGFloat const kMoveAndFadeDistance = 20;
 
 - (BOOL)playerIsAboveTopBoundary {
     return ([self currentPlayer].position.y > [self topZoomBoundary]);
-}
-
-#pragma mark - Loading Assets
-+ (void)loadSceneAssets {
-    NSDate *startTime = [NSDate date];
-
-    sSmallTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsSmallSheet"
-                                                       frameSize:CGSizeMake(15, 15)
-                                                          origin:CGPointMake(0, 225)
-                                                       gridWidth:15
-                                                      gridHeight:15];
-    
-    sLargeTextures = [SSKGraphicsUtils loadFramesFromSpriteSheetNamed:@"PajamaPenguinsLargeSheet"
-                                                            frameSize:CGSizeMake(30, 30)
-                                                               origin:CGPointMake(0, 280)
-                                                            gridWidth:10
-                                                           gridHeight:10];
-
-    switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
-
-        case UIUserInterfaceIdiomPhone:
-            sWaterGradient = [SKTexture textureWithImageNamed:@"WaterGradientBlue-iphone"];
-            break;
-            
-        case UIUserInterfaceIdiomPad:
-            break;
-            
-        default:
-            break;
-    }
-    
-    NSLog(@"Scene loaded in %f seconds",[[NSDate date] timeIntervalSinceDate:startTime]);
-}
-
-#pragma mark - Shared Textures
-static NSArray *sSmallTextures = nil;
-- (NSArray*)sharedSmallTextures {
-    return sSmallTextures;
-}
-
-static NSArray *sLargeTextures = nil;
-- (NSArray*)sharedLargeTextures {
-    return sLargeTextures;
-}
-
-static SKTexture *sWaterGradient = nil;
-- (SKTexture*)sharedWaterGradient {
-    return sWaterGradient;
 }
 
 @end

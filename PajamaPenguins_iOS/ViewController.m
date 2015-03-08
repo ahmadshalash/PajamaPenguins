@@ -8,7 +8,7 @@
 #import "PPMenuScene.h"
 #import "PPGameScene.h"
 
-#import "PPEmitters.h"
+#import "PPSharedAssets.h"
 
 //#define DEBUG_MODE 1 // Comment/uncomment to toggle debug information.
 
@@ -22,16 +22,12 @@
     [skView setIgnoresSiblingOrder:YES]; //Provides extra rendering optimizations. (However, zPositions need to be explicitly set)
 
     if (!skView.scene) {
-        [PPEmitters loadSharedEmitters];
-        
-        [PPMenuScene loadSceneAssetsWithCompletionHandler:^{
+        [PPSharedAssets loadSharedAssetsWithCompletion:^{
             NSLog(@"Loading Complete.");
             SKScene *scene = [PPMenuScene sceneWithSize:skView.bounds.size];
             scene.scaleMode = SKSceneScaleModeAspectFill;
             [skView presentScene:scene];
         }];
-//        [PPGameScene loadSceneAssetsWithCompletionHandler:^{
-//        }];
     }
     
 #ifdef DEBUG_MODE
