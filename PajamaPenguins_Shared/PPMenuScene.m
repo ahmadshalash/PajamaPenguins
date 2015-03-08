@@ -8,6 +8,7 @@
 
 #import "PPMenuScene.h"
 #import "PPGameScene.h"
+#import "PPEmitters.h"
 
 #import "SKAction+SFAdditions.h"
 
@@ -80,7 +81,6 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
         //Title move in
         [[self.menuNode childNodeWithName:@"titleLabel"] runAction:[SKAction moveTo:CGPointMake(0, self.size.height/8 * 3) duration:.75 timingMode:SKActionTimingEaseOut]];
     }];
-    
 }
 
 #pragma mark - Nodes
@@ -126,7 +126,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
 }
 
 - (SKEmitterNode*)newSnowEmitter {
-    SKEmitterNode *snowEmitter = [self sharedSnowEmitter].copy;
+    SKEmitterNode *snowEmitter = [PPEmitters sharedSnowEmitter].copy;
     [snowEmitter setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
     [snowEmitter setName:@"snowEmitter"];
     return snowEmitter;
@@ -172,7 +172,6 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
 #pragma mark - Asset Loading
 + (void)loadSceneAssets {
     sMenuAtlas = [SKTextureAtlas atlasNamed:@"PP_Menu_Assets"];
-    sSnowEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"SnowEmitter"];
     
     switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
             
@@ -204,8 +203,4 @@ static SKTextureAtlas *sMenuAtlas = nil;
     return sMenuAtlas;
 }
 
-static SKEmitterNode *sSnowEmitter = nil;
-- (SKEmitterNode*)sharedSnowEmitter {
-    return sSnowEmitter;
-}
 @end

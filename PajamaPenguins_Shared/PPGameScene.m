@@ -6,6 +6,7 @@
 
 #import "PPGameScene.h"
 #import "PPMenuScene.h"
+#import "PPEmitters.h"
 #import "PPPlayer.h"
 #import "PPIcebergObstacle.h"
 #import "PPWaterSprite.h"
@@ -120,7 +121,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
     
-    SKEmitterNode *snowEmitter = [self sharedSnowEmitter].copy;
+    SKEmitterNode *snowEmitter = [PPEmitters sharedSnowEmitter].copy;
     [snowEmitter setZPosition:foregroundLayer];
     [snowEmitter setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
     [snowEmitter setName:@"snowEmitter"];
@@ -168,7 +169,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     _lastPlayerHeight = player.position.y;
     
     //Player's bubble emitter
-    SKEmitterNode *playerBubbleEmitter = [self sharedBubbleEmitter].copy;
+    SKEmitterNode *playerBubbleEmitter = [PPEmitters sharedBubbleEmitter].copy;
     [playerBubbleEmitter setName:@"bubbleEmitter"];
     [playerBubbleEmitter setZPosition:waterSurfaceLayer];
     [self.worldNode addChild:playerBubbleEmitter];
@@ -475,7 +476,7 @@ CGFloat const kMoveAndFadeDistance = 20;
         CGFloat splashStrength = kMaxSplashStrength * splashRatio;
         
         [self.waterSurface splash:[self currentPlayer].position speed:splashStrength];
-        [self runOneShotEmitter:[self sharedPlayerUpSplashEmitter] location:[self currentPlayer].position];
+        [self runOneShotEmitter:[PPEmitters sharedPlayerSplashUpEmitter] location:[self currentPlayer].position];
         
         _lastPlayerHeight = newPlayerHeight;
     }
@@ -485,7 +486,7 @@ CGFloat const kMoveAndFadeDistance = 20;
         CGFloat splashStrength = kMaxSplashStrength * splashRatio;
         
         [self.waterSurface splash:[self currentPlayer].position speed:-splashStrength];
-        [self runOneShotEmitter:[self sharedPlayerDownPlashEmitter] location:[self currentPlayer].position];
+        [self runOneShotEmitter:[PPEmitters sharedPlayerSplashDownEmitter] location:[self currentPlayer].position];
         
         _lastPlayerHeight = newPlayerHeight;
     }
@@ -503,7 +504,7 @@ CGFloat const kMoveAndFadeDistance = 20;
             CGPoint splashLocation = CGPointMake(obstacle.position.x - obstacle.frame.size.width/2, obstacle.position.y);
             
             [self.waterSurface splash:splashLocation speed:kObstacleSplashStrength];
-            [self runOneShotEmitter:[self sharedObstacleSplashEmitter] location:CGPointMake(splashLocation.x, splashLocation.y + 30)];
+            [self runOneShotEmitter:[PPEmitters sharedObstacleSplashEmitter] location:CGPointMake(splashLocation.x, splashLocation.y + 30)];
         }];
     }];
     
@@ -861,12 +862,6 @@ CGFloat const kMoveAndFadeDistance = 20;
                                                                origin:CGPointMake(0, 280)
                                                             gridWidth:10
                                                            gridHeight:10];
-    
-    sPlayerUpSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"PlayerSplashUpEmitter"];
-    sPlayerDownSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"PlayerSplashDownEmitter"];
-    sObstacleSplashEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"ObstacleSplashEmitter"];
-    sBubbleEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"BubbleEmitter"];
-    sSnowEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"SnowEmitter"];
 
     switch ([[UIDevice currentDevice] userInterfaceIdiom]) {
 
@@ -898,32 +893,6 @@ static NSArray *sLargeTextures = nil;
 static SKTexture *sWaterGradient = nil;
 - (SKTexture*)sharedWaterGradient {
     return sWaterGradient;
-}
-
-#pragma mark - Shared Emitters
-static SKEmitterNode *sPlayerUpSplashEmitter = nil;
-- (SKEmitterNode*)sharedPlayerUpSplashEmitter {
-    return sPlayerUpSplashEmitter;
-}
-
-static SKEmitterNode *sPlayerDownSplashEmitter = nil;
-- (SKEmitterNode*)sharedPlayerDownPlashEmitter {
-    return sPlayerDownSplashEmitter;
-}
-
-static SKEmitterNode *sObstacleSplashEmitter = nil;
-- (SKEmitterNode*)sharedObstacleSplashEmitter {
-    return sObstacleSplashEmitter;
-}
-
-static SKEmitterNode *sBubbleEmitter = nil;
-- (SKEmitterNode*)sharedBubbleEmitter {
-    return sBubbleEmitter;
-}
-
-static SKEmitterNode *sSnowEmitter = nil;
-- (SKEmitterNode*)sharedSnowEmitter {
-    return sSnowEmitter;
 }
 
 @end
