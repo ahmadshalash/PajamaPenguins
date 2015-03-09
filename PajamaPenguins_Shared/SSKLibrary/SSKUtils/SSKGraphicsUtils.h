@@ -37,3 +37,7 @@
 @interface SKEmitterNode (SFAdditions)
 + (instancetype)emitterNodeWithFileNamed:(NSString*)emitterName;
 @end
+
+@interface NSString (SFAdditions)
++ (NSString*)stringWithFileBase:(NSString*)base index:(int)index;
+@end

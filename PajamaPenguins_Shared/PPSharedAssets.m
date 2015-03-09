@@ -30,18 +30,17 @@
         sPenguinNormalIdle = [atlas textureNamed:@"penguin_normal_1"];
         sPenguinNormalAnim = [atlas textureNamed:@"penguin_normal_2"];
         
-        //Idle Textures
         sPenguinGreyIdleFrames = [NSMutableArray new];
+        sPenguinGreySwimFrames = [NSMutableArray new];
+        
+        //Idle Textures
         for (int i = 0; i < 2; i++) {
-            NSString *idleTextureName = [NSString stringWithFormat:@"penguin_grey_idle_%d",i];
-            [sPenguinGreyIdleFrames addObject:[atlas textureNamed:idleTextureName]];
+            [sPenguinGreyIdleFrames addObject:[SKTexture loadPixelTexture:[atlas textureNamed:[NSString stringWithFileBase:@"penguin_grey_idle_" index:i]]]];
         }
         
         //Swim Textures
-        sPenguinGreySwimFrames = [NSMutableArray new];
         for (int i = 0; i < 8; i++) {
-            NSString *swimTextureName = [NSString stringWithFormat:@"penguin_grey_swim_%d",i];
-            [sPenguinGreySwimFrames addObject:[atlas textureNamed:swimTextureName]];
+            [sPenguinGreySwimFrames addObject:[SKTexture loadPixelTexture:[atlas textureNamed:[NSString stringWithFileBase:@"penguin_grey_swim_" index:i]]]];
         }
 
         //Misc.

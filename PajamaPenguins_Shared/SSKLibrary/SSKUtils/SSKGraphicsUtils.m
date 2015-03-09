@@ -88,3 +88,11 @@
     return [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:emitterName ofType:@"sks"]];
 }
 @end
+
+@implementation NSString (SFAdditions)
++ (NSString*)stringWithFileBase:(NSString *)base index:(int)index {
+    return [NSString stringWithFormat:@"%@%d",base,index];
+}
+@end
+
+
