@@ -8,9 +8,9 @@
 
 #import "PPPlayer.h"
 
-#define kAccelerationCap 45.0
+#define kAcceleration 45.0
 
-CGFloat const kAnimationSpeed = 0.05;
+CGFloat const kAnimationSpeed = 0.035;
 CGFloat const kIdleAnimationSpeed = 0.25;
 
 @interface PPPlayer()
@@ -41,17 +41,6 @@ CGFloat const kIdleAnimationSpeed = 0.25;
     return self;
 }
 
-//
-- (instancetype)initWithFirstTexture:(SKTexture *)firstTexture secondTexture:(SKTexture *)secondTexture {
-    self = [super initWithFirstTexture:firstTexture secondTexture:secondTexture];
-    if (self) {
-        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.firstTexture.size.width/2 - 1];
-        [self.physicsBody setDynamic:YES];
-        [self.physicsBody setFriction:0];
-        [self.physicsBody setRestitution:0];
-    }
-    return self;
-}
 #pragma mark - Rotation
 - (void)setPlayerRotation:(NSTimeInterval)dt {
     CGFloat rotateSpeed = .02 * dt;
@@ -101,14 +90,9 @@ CGFloat const kIdleAnimationSpeed = 0.25;
             break;
     }
     
-    //Player State
+    //Diving Physics
     if (_playerShouldDive) {
-        [self animateToSecondTexture];
-        [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy - _currentAccelleration)];
-        _currentAccelleration = kAccelerationCap;
-    } else {
-        [self animateToFirstTexture];
-        _currentAccelleration = 0;
+        [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy - kAcceleration)];
     }
 }
 

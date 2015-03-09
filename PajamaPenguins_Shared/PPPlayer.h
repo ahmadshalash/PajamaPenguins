@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Skye Freeman. All rights reserved.
 //
 
-#import "PPSimpleAnimatedSprite.h"
+#import <SpriteKit/SpriteKit.h>
 
 typedef NS_ENUM(NSUInteger, PlayerState) {
     PlayerStateIdle = 0,
@@ -14,7 +14,7 @@ typedef NS_ENUM(NSUInteger, PlayerState) {
     PlayerStateFly,
 };
 
-@interface PPPlayer : PPSimpleAnimatedSprite
+@interface PPPlayer : SKSpriteNode
 
 + (instancetype)playerWithIdleTextures:(NSArray*)idleTextures swimTextures:(NSArray*)swimTextures flyTextures:(NSArray*)flyTextures;
 - (instancetype)initWithIdleTextures:(NSArray*)idleTextures swimTextures:(NSArray*)swimTextures flyTextures:(NSArray*)flyTextures;
@@ -23,4 +23,5 @@ typedef NS_ENUM(NSUInteger, PlayerState) {
 @property (nonatomic) PlayerState playerState;
 @property (nonatomic) BOOL playerShouldDive;
 @property (nonatomic) BOOL playerShouldRotate;
+@property (nonatomic) BOOL playerShouldAnimate;
 @end

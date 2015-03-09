@@ -94,13 +94,12 @@ CGFloat const kMoveAndFadeDistance = 20;
     CGFloat _playerBubbleBirthrate;
 }
 
-- (id)initWithSize:(CGSize)size {
+- (instancetype)initWithSize:(CGSize)size {
     return [super initWithSize:size];
 }
 
 - (void)didMoveToView:(SKView *)view {
     NSLog(@"Screen Size: %fl,%fl",self.size.width, self.size.height);
-    
     [self createNewGame];
     [self testStuff];
 }

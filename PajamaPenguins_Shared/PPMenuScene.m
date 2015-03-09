@@ -201,9 +201,11 @@ CGFloat const kPlatformPadding = 50.0;
 
 #pragma mark - Transfer To Game Scene
 - (void)loadGameScene {
-    SKScene *gameScene = [PPGameScene sceneWithSize:self.size];
-    SKTransition *fade = [SKTransition fadeWithColor:[SKColor whiteColor] duration:1];
-    [self.view presentScene:gameScene transition:fade];
+    [PPGameScene loadSceneAssetsWithCompletionHandler:^{
+        SKScene *gameScene = [PPGameScene sceneWithSize:self.size];
+        SKTransition *fade = [SKTransition fadeWithColor:[SKColor whiteColor] duration:1];
+        [self.view presentScene:gameScene transition:fade];
+    }];
 }
 
 @end
