@@ -10,7 +10,8 @@
 
 #define kAccelerationCap 45.0
 
-CGFloat const kAnimationSpeed = .05;
+CGFloat const kAnimationSpeed = 0.05;
+CGFloat const kIdleAnimationSpeed = 0.25;
 
 @interface PPPlayer()
 @property (nonatomic) CGFloat currentAccelleration;
@@ -85,7 +86,7 @@ CGFloat const kAnimationSpeed = .05;
     //Animation
     switch (self.playerState) {
         case PlayerStateIdle:
-            [self runAnimationWithTextures:self.idleTextures speed:kAnimationSpeed*2 key:@"playerIdle"];
+            [self runAnimationWithTextures:self.idleTextures speed:kIdleAnimationSpeed key:@"playerIdle"];
             break;
             
         case PlayerStateSwim:
@@ -93,6 +94,7 @@ CGFloat const kAnimationSpeed = .05;
             break;
             
         case PlayerStateFly:
+            [self runAnimationWithTextures:self.flyTextures speed:kAnimationSpeed key:@"playerFly"];
             break;
             
         default:

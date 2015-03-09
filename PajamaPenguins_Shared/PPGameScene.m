@@ -155,7 +155,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     //Player
     PPPlayer *player = [PPPlayer playerWithIdleTextures:[PPSharedAssets sharedPenguinGreyIdleFrames]
                                            swimTextures:[PPSharedAssets sharedPenguinGreySwimFrames]
-                                            flyTextures:nil];
+                                            flyTextures:[PPSharedAssets sharedPenguinGreyFlyFrames]];
     [player setPosition:CGPointMake(-self.size.width/4, 50)];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
@@ -164,6 +164,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     [player.physicsBody setCollisionBitMask:obstacleCategory | edgeCategory];
     [player.physicsBody setContactTestBitMask:obstacleCategory];
     [player setPlayerShouldRotate:YES];
+    [player setPlayerState:PlayerStateFly];
     [self.worldNode addChild:player];
     
     //Setting Players initial position height (for water surface tracking)
@@ -426,9 +427,10 @@ CGFloat const kMoveAndFadeDistance = 20;
     if ([self currentPlayer].position.y < self.waterSurface.position.y) {
         [[self currentPlayer] setPlayerState:PlayerStateSwim];
     } else {
-        [[self currentPlayer] setPlayerState:PlayerStateIdle];
+        [[self currentPlayer] setPlayerState:PlayerStateFly];
     }
 }
+
 #pragma mark - Water Background
 - (SKSpriteNode*)waterBackgroundNode {
     SKSpriteNode *waterBackground = [SKSpriteNode spriteNodeWithTexture:[SKTexture loadPixelTextureWithName:@"WaterBackground"]];

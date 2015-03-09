@@ -32,6 +32,7 @@
         
         sPenguinGreyIdleFrames = [NSMutableArray new];
         sPenguinGreySwimFrames = [NSMutableArray new];
+        sPenguinGreyFlyFrames = [NSMutableArray new];
         
         //Idle Textures
         for (int i = 0; i < 2; i++) {
@@ -42,7 +43,12 @@
         for (int i = 0; i < 8; i++) {
             [sPenguinGreySwimFrames addObject:[SKTexture loadPixelTexture:[atlas textureNamed:[NSString stringWithFileBase:@"penguin_grey_swim_" index:i]]]];
         }
-
+        
+        //Fly Textures
+        for (int i = 0; i < 6; i++) {
+            [sPenguinGreyFlyFrames addObject:[SKTexture loadPixelTexture:[atlas textureNamed:[NSString stringWithFileBase:@"penguin_grey_fly_" index:i]]]];
+        }
+        
         //Misc.
         sFingerSprite = [atlas textureNamed:@"finger_sprite"];
         sFingerSpriteEffect = [atlas textureNamed:@"finger_sprite_effect"];

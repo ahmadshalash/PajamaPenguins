@@ -154,15 +154,18 @@ CGFloat const kPlatformPadding = 50.0;
 
 #pragma mark - Penguins
 - (PPPlayer*)newGreyPenguin {
-    return [self newPengiunWithIdleTextures:[PPSharedAssets sharedPenguinGreyIdleFrames] swimTextures:[PPSharedAssets sharedPenguinGreySwimFrames] flyTextures:nil];
+    return [self newPengiunWithIdleTextures:[PPSharedAssets sharedPenguinGreyIdleFrames]
+                               swimTextures:[PPSharedAssets sharedPenguinGreySwimFrames]
+                                flyTextures:[PPSharedAssets sharedPenguinGreyFlyFrames]];
 }
 
 - (PPPlayer*)newPengiunWithIdleTextures:(NSArray*)idleTextures swimTextures:(NSArray*)swimTextures flyTextures:(NSArray*)flyTextures {
     PPPlayer *penguin = [PPPlayer playerWithIdleTextures:idleTextures
                                             swimTextures:swimTextures
                                              flyTextures:flyTextures];
-    [penguin setScale:.5];
+    [penguin setScale:.75];
     [penguin setPhysicsBody:nil];
+    [penguin setAnchorPoint:CGPointMake(0.5, 0)];
     [penguin setPosition:CGPointMake(0, kPlatformPadding/2)];
     [penguin setPlayerState:PlayerStateIdle];
     [penguin setName:@"penguin"];
