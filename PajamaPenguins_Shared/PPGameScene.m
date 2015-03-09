@@ -153,8 +153,9 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.worldNode addChild:self.waterSurface];
 
     //Player
-    PPPlayer *player = [[PPPlayer alloc] initWithFirstTexture:[PPSharedAssets sharedPenguinNormalIdle]
-                                                secondTexture:[PPSharedAssets sharedPenguinNormalAnim]];
+    PPPlayer *player = [PPPlayer playerWithIdleTextures:[PPSharedAssets sharedPenguinGreyIdleFrames]
+                                           swimTextures:[PPSharedAssets sharedPenguinGreySwimFrames]
+                                            flyTextures:nil];
     [player setPosition:CGPointMake(-self.size.width/4, 50)];
     [player setName:@"player"];
     [player setZRotation:SSKDegreesToRadians(90)];
@@ -409,15 +410,24 @@ CGFloat const kMoveAndFadeDistance = 20;
     [player.physicsBody setVelocity:CGVectorMake(0, 0)];
     [player.physicsBody setCollisionBitMask:0x0];
     [player.physicsBody setContactTestBitMask:0x0];
-    [player.physicsBody applyImpulse:CGVectorMake(.85, 25)];
-    [player.physicsBody applyAngularImpulse:-.0005];
+    [player.physicsBody applyImpulse:CGVectorMake(5, 50)];
+    [player.physicsBody applyAngularImpulse:-.005];
 }
 
 - (void)updatePlayer:(NSTimeInterval)dt {
+    [self checkPlayerAnimationState];
+
     [[self currentPlayer] update:dt];
     [self clampPlayerVelocity];
 }
 
+- (void)checkPlayerAnimationState {
+    if ([self currentPlayer].position.y < self.waterSurface.position.y) {
+        [[self currentPlayer] setPlayerState:PlayerStateSwim];
+    } else {
+        [[self currentPlayer] setPlayerState:PlayerStateIdle];
+    }
+}
 #pragma mark - Water Background
 - (SKSpriteNode*)waterBackgroundNode {
     SKSpriteNode *waterBackground = [SKSpriteNode spriteNodeWithTexture:[SKTexture loadPixelTextureWithName:@"WaterBackground"]];

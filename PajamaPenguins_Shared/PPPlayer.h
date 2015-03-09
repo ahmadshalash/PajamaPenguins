@@ -8,9 +8,18 @@
 
 #import "PPSimpleAnimatedSprite.h"
 
+typedef NS_ENUM(NSUInteger, PlayerState) {
+    PlayerStateIdle = 0,
+    PlayerStateSwim,
+    PlayerStateFly,
+};
+
 @interface PPPlayer : PPSimpleAnimatedSprite
 
-@property (nonatomic) BOOL playerShouldDive;
++ (instancetype)playerWithIdleTextures:(NSArray*)idleTextures swimTextures:(NSArray*)swimTextures flyTextures:(NSArray*)flyTextures;
+- (instancetype)initWithIdleTextures:(NSArray*)idleTextures swimTextures:(NSArray*)swimTextures flyTextures:(NSArray*)flyTextures;
 - (void)update:(NSTimeInterval)dt;
 
+@property (nonatomic) PlayerState playerState;
+@property (nonatomic) BOOL playerShouldDive;
 @end

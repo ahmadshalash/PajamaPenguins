@@ -30,6 +30,14 @@
         sPenguinNormalIdle = [atlas textureNamed:@"penguin_normal_1"];
         sPenguinNormalAnim = [atlas textureNamed:@"penguin_normal_2"];
         
+        NSMutableArray *tempPenguinGreySwimFrames = [NSMutableArray new];
+        for (int i = 0; i < 8; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"penguin_grey_swim_%d",i];
+            [tempPenguinGreySwimFrames addObject:[atlas textureNamed:textureName]];
+        }
+        sPenguinGreySwimFrames = [NSArray arrayWithArray:tempPenguinGreySwimFrames];
+        sPenguinGreyIdleFrames = [NSArray arrayWithObject:[atlas textureNamed:@"penguin_grey_idle_0"]];
+        
         //Misc.
         sFingerSprite = [atlas textureNamed:@"finger_sprite"];
         sFingerSpriteEffect = [atlas textureNamed:@"finger_sprite_effect"];
@@ -96,6 +104,21 @@ static SKTexture *sPenguinNormalIdle = nil;
 static SKTexture *sPenguinNormalAnim = nil;
 + (SKTexture*)sharedPenguinNormalAnim {
     return sPenguinNormalAnim;
+}
+
+static NSArray *sPenguinGreyIdleFrames = nil;
++ (NSArray*)sharedPenguinGreyIdleFrames {
+    return sPenguinGreyIdleFrames;
+}
+
+static NSArray *sPenguinGreySwimFrames = nil;
++ (NSArray*)sharedPenguinGreySwimFrames {
+    return sPenguinGreySwimFrames;
+}
+
+static NSArray *sPenguinGreyFlyFrames = nil;
++ (NSArray*)sharedPenguinGreyFlyFrames {
+    return sPenguinGreyFlyFrames;
 }
 
 //Misc Game Scene

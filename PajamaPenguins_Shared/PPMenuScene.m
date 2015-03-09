@@ -47,8 +47,8 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     [self addChild:self.menuBackgroundNode];
     
     [self.menuBackgroundNode addChild:[self newColorBackground]];
-    [self.menuBackgroundNode addChild:[self newPlatformIceberg]];
     [self.menuBackgroundNode addChild:[self newSnowEmitter]];
+    [self.menuBackgroundNode addChild:[self newPlatformIceberg]];
     [self.menuBackgroundNode addChild:[self newWaterSurface]];
 }
 
