@@ -9,23 +9,24 @@
 #import "SSKParallaxNode.h"
 
 @interface SSKParallaxNode()
-@property (nonatomic, readwrite) MoveState moveState;
 @property (nonatomic) NSMutableArray *allAttachedNodes;
 @property (nonatomic) SKNode *firstNode;
 @property (nonatomic) SKNode *secondNode;
+@property (nonatomic) NSUInteger frameCount;
 @end
 
 @implementation SSKParallaxNode
 
-+ (instancetype)nodeWithSize:(CGSize)size attachedNodes:(NSArray*)nodes moveSpeed:(CGPoint)moveSpeed {
-    return [[self alloc] initWithSize:size attachedNodes:nodes moveSpeed:moveSpeed];
++ (instancetype)nodeWithSize:(CGSize)size attachedNodes:(NSArray*)nodes moveSpeed:(CGPoint)moveSpeed numFrames:(NSUInteger)frames {
+    return [[self alloc] initWithSize:size attachedNodes:nodes moveSpeed:moveSpeed numFrames:frames];
 }
 
-- (instancetype)initWithSize:(CGSize)size attachedNodes:(NSArray*)nodes moveSpeed:(CGPoint)moveSpeed {
+- (instancetype)initWithSize:(CGSize)size attachedNodes:(NSArray*)nodes moveSpeed:(CGPoint)moveSpeed numFrames:(NSUInteger)frames {
     self = [super initWithColor:[SKColor clearColor] size:size];
     if (self) {
         self.moveSpeed = moveSpeed;
         self.moveState = MoveStateMoving;
+        self.frameCount = frames;
         
         self.allAttachedNodes = [NSMutableArray new];
         
@@ -36,24 +37,27 @@
             }
         }
         
+        //Duplicate nodes
+        NSMutableArray *tempDuplicates = [NSMutableArray new];
+        for (int i = 0; i < self.allAttachedNodes.count; i++) {
+            for (int j = 1; j < self.frameCount; j++) {
+                SKSpriteNode *originalNode = [self.allAttachedNodes objectAtIndex:i];
+                SKSpriteNode *duplicateNode = [originalNode copy];
+                [duplicateNode setPosition:CGPointMake(self.size.width * j, 0)];
+                [tempDuplicates addObject:duplicateNode];
+            }
+        }
+        [self.allAttachedNodes addObjectsFromArray:tempDuplicates];
+        
         //Place nodes
         for (int i = 0; i < self.allAttachedNodes.count; i++) {
-            SKNode *attachedNode = [self.allAttachedNodes objectAtIndex:i];
+            SKSpriteNode *attachedNode = [self.allAttachedNodes objectAtIndex:i];
             [attachedNode setName:@"parallaxNode"];
-            [attachedNode setPosition:CGPointMake((self.size.width * i) - (1 * i), 0)];
             [self addChild:attachedNode];
         }
-
+        
     }
     return self;
-}
-
-- (void)startMovement {
-    self.moveState = MoveStateMoving;
-}
-
-- (void)stopMovement {
-    self.moveState = MoveStateStopped;
 }
 
 - (void)update:(NSTimeInterval)dt {
@@ -62,7 +66,7 @@
         [self enumerateChildNodesWithName:@"parallaxNode" usingBlock:^(SKNode *node, BOOL *stop) {
             node.position = CGPointMake(node.position.x + amountToMove.x, node.position.y + amountToMove.y);
             if (node.position.x <= -self.size.width) {
-                [node setPosition:CGPointMake(self.size.width - 2, 0)];
+                [node setPosition:CGPointMake(self.size.width * (self.frameCount-1), 0)];
             }
         }];
     }

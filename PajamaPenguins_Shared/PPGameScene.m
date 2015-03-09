@@ -34,6 +34,7 @@ typedef enum {
 
 typedef enum {
     backgroundLayer = 0,
+    parallaxLayer,
     obstacleLayer,
     playerLayer,
     foregroundLayer,
@@ -120,6 +121,12 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
     
+    //Color blend background
+    self.blendBackground = [SSKDynamicColorNode nodeWithRed:125 green:255 blue:255 size:self.size];
+    [self.blendBackground setZPosition:backgroundLayer];
+    [self addChild:self.blendBackground];
+    
+    //Snow Emitter
     SKEmitterNode *snowEmitter = [PPSharedAssets sharedSnowEmitter].copy;
     [snowEmitter setZPosition:foregroundLayer];
     [snowEmitter setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
@@ -127,17 +134,22 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self addChild:snowEmitter];
     
     //Parallaxing Nodes
-//    SSKParallaxNode *waterSurfaceNode = [SSKParallaxNode nodeWithSize:[self maxWorldScaleSize]
-//                                                        attachedNodes:[self waterSurfaceForParallax]
-//                                                            moveSpeed:CGPointMake(-30, 0)];
-//    [waterSurfaceNode setName:@"parallaxNode"];
-//    [waterSurfaceNode setZPosition:waterSurfaceLayer];
-//    [self.worldNode addChild:waterSurfaceNode];
+    NSMutableArray *parallaxingNodes = [NSMutableArray new];
 
-    //Color blend background
-    self.blendBackground = [SSKDynamicColorNode nodeWithRed:125 green:255 blue:255 size:self.size];
-    [self addChild:self.blendBackground];
+    SKSpriteNode *cloudBackground = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedCloudBackgroundTexture]];
+    [cloudBackground setAnchorPoint:CGPointMake(0.5, 0)];
+    [parallaxingNodes addObject:cloudBackground];
     
+    SSKParallaxNode *parallaxBackground = [SSKParallaxNode nodeWithSize:self.scene.size
+                                                          attachedNodes:parallaxingNodes
+                                                              moveSpeed:CGPointMake(-10, 0)
+                                                              numFrames:3];
+    [parallaxBackground setZPosition:parallaxLayer];
+    [parallaxBackground setAlpha:.5];
+    [parallaxBackground setName:@"parallaxNode"];
+    [self.worldNode addChild:parallaxBackground];
+    
+    //Water Surface
     CGPoint surfaceStart = CGPointMake(-self.size.width/2, 0);
     CGPoint surfaceEnd = CGPointMake(self.size.width/kWorldScaleCap, 0);
     

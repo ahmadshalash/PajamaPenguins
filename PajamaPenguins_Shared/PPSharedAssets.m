@@ -50,8 +50,9 @@
         }
         
         //Misc.
-        sFingerSprite = [atlas textureNamed:@"finger_sprite"];
-        sFingerSpriteEffect = [atlas textureNamed:@"finger_sprite_effect"];
+        sFingerSprite = [SKTexture loadPixelTexture:[atlas textureNamed:@"finger_sprite"]];
+        sFingerSpriteEffect = [SKTexture loadPixelTexture:[atlas textureNamed:@"finger_sprite_effect"]];
+        sCloudBackgroundTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"clouds_background"]];
         
         //Emitters
         sSnowEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"SnowEmitter"];
@@ -83,6 +84,11 @@ static SKTexture *sWaterGradient = nil;
 static SKTexture *sIcebergTexture = nil;
 + (SKTexture*)sharedIcebergTexture {
     return sIcebergTexture;
+}
+
+static SKTexture *sCloudBackgroundTexture = nil;
++ (SKTexture*)sharedCloudBackgroundTexture {
+    return sCloudBackgroundTexture;
 }
 
 //Buttons
@@ -142,6 +148,7 @@ static SKTexture *sFingerSpriteEffect = nil;
 + (SKTexture*)sharedFingerSpriteEffect {
     return sFingerSpriteEffect;
 }
+
 
 //Misc Menu Scene
 
