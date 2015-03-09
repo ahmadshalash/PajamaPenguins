@@ -22,4 +22,5 @@ typedef NS_ENUM(NSUInteger, PlayerState) {
 
 @property (nonatomic) PlayerState playerState;
 @property (nonatomic) BOOL playerShouldDive;
+@property (nonatomic) BOOL playerShouldRotate;
 @end

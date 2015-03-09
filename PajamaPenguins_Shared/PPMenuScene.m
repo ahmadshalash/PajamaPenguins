@@ -9,6 +9,7 @@
 #import "PPMenuScene.h"
 #import "PPGameScene.h"
 #import "PPSharedAssets.h"
+#import "PPPlayer.h"
 
 #import "SKAction+SFAdditions.h"
 
@@ -21,6 +22,8 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     SceneLayerBackground = 0,
     SceneLayerMenu,
 };
+
+CGFloat const kPlatformPadding = 50.0;
 
 @interface PPMenuScene()
 @property (nonatomic) SKNode *menuBackgroundNode;
@@ -48,7 +51,14 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     
     [self.menuBackgroundNode addChild:[self newColorBackground]];
     [self.menuBackgroundNode addChild:[self newSnowEmitter]];
-    [self.menuBackgroundNode addChild:[self newPlatformIceberg]];
+    
+    SKNode *platformNode = [SKNode new];
+    [platformNode setName:@"platform"];
+    [self.menuBackgroundNode addChild:platformNode];
+    
+    [platformNode addChild:[self newPlatformIceberg]];
+    [platformNode addChild:[self newGreyPenguin]];
+    
     [self.menuBackgroundNode addChild:[self newWaterSurface]];
 }
 
@@ -75,7 +85,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     [self runAction:[SKAction waitForDuration:.5] completion:^{
 
         //Iceberg float
-        [[self.menuBackgroundNode childNodeWithName:@"platformIceberg"] runAction:[SKAction repeatActionForever:[self floatAction]]];
+        [[self.menuBackgroundNode childNodeWithName:@"platform"] runAction:[SKAction repeatActionForever:[self floatAction]]];
         
         //Button move in
         [[self.menuNode childNodeWithName:@"playButton"] runAction:[SKAction moveTo:CGPointMake(0, -self.size.height/4) duration:.75 timingMode:SKActionTimingEaseOut]];
@@ -111,7 +121,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     SKSpriteNode *platform = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedIcebergTexture]];
     [platform setName:@"platformIceberg"];
     [platform setAnchorPoint:CGPointMake(0.5, 1)];
-    [platform setPosition:CGPointMake(0, 50)];
+    [platform setPosition:CGPointMake(0, kPlatformPadding)];
     return platform;
 }
 
@@ -142,6 +152,29 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
     return playButton;
 }
 
+#pragma mark - Penguins
+- (PPPlayer*)newGreyPenguin {
+    return [self newPengiunWithIdleTextures:[PPSharedAssets sharedPenguinGreyIdleFrames] swimTextures:[PPSharedAssets sharedPenguinGreySwimFrames] flyTextures:nil];
+}
+
+- (PPPlayer*)newPengiunWithIdleTextures:(NSArray*)idleTextures swimTextures:(NSArray*)swimTextures flyTextures:(NSArray*)flyTextures {
+    PPPlayer *penguin = [PPPlayer playerWithIdleTextures:idleTextures
+                                            swimTextures:swimTextures
+                                             flyTextures:flyTextures];
+    [penguin setScale:.5];
+    [penguin setPhysicsBody:nil];
+    [penguin setPosition:CGPointMake(0, kPlatformPadding/2)];
+    [penguin setPlayerState:PlayerStateIdle];
+    [penguin setName:@"penguin"];
+    return penguin;
+}
+
+- (void)updateAllPenguins:(NSTimeInterval)dt {
+    [self enumerateChildNodesWithName:@"//penguin" usingBlock:^(SKNode *node, BOOL *stop) {
+        PPPlayer *penguin = (PPPlayer*)node;
+        [penguin update:dt];
+    }];
+}
 #pragma mark - Actions
 - (SKAction*)floatAction {
     SKAction *up = [SKAction moveByX:0 y:20 duration:3];
@@ -160,6 +193,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer) {
 #pragma mark - Update
 - (void)update:(NSTimeInterval)currentTime {
     [(SSKWaterSurfaceNode*)[self.menuBackgroundNode childNodeWithName:@"waterSurface"] update:currentTime];
+    [self updateAllPenguins:currentTime];
 }
 
 #pragma mark - Transfer To Game Scene

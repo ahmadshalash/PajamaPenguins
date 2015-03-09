@@ -33,9 +33,9 @@ typedef void (^AssetCompletionHandler)(void);
 + (SKTexture*)sharedPenguinNormalIdle;
 + (SKTexture*)sharedPenguinNormalAnim;
 
-+ (NSArray*)sharedPenguinGreyIdleFrames;
-+ (NSArray*)sharedPenguinGreySwimFrames;
-+ (NSArray*)sharedPenguinGreyFlyFrames;
++ (NSMutableArray*)sharedPenguinGreyIdleFrames;
++ (NSMutableArray*)sharedPenguinGreySwimFrames;
++ (NSMutableArray*)sharedPenguinGreyFlyFrames;
 
 //Shared Emitters
 + (SKEmitterNode*)sharedSnowEmitter;

@@ -163,6 +163,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     [player.physicsBody setCategoryBitMask:playerCategory];
     [player.physicsBody setCollisionBitMask:obstacleCategory | edgeCategory];
     [player.physicsBody setContactTestBitMask:obstacleCategory];
+    [player setPlayerShouldRotate:YES];
     [self.worldNode addChild:player];
     
     //Setting Players initial position height (for water surface tracking)
@@ -515,6 +516,7 @@ CGFloat const kMoveAndFadeDistance = 20;
 - (SKEmitterNode*)playerBubbleEmitter {
     return (SKEmitterNode*)[self.worldNode childNodeWithName:@"bubbleEmitter"];
 }
+
 #pragma mark - Sky
 - (SKSpriteNode*)skyBackgroundNode {
     SKSpriteNode *skyBackground = [SKSpriteNode spriteNodeWithTexture:[SKTexture loadPixelTextureWithName:@"SkyBackground"]];

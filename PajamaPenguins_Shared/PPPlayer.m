@@ -78,12 +78,14 @@ CGFloat const kAnimationSpeed = .05;
 - (void)update:(NSTimeInterval)dt {
     
     //Rotation
-    [self setPlayerRotation:dt];
+    if (self.playerShouldRotate) {
+        [self setPlayerRotation:dt];
+    }
     
     //Animation
     switch (self.playerState) {
         case PlayerStateIdle:
-            [self runAnimationWithTextures:self.idleTextures speed:0.25 key:@"playerIdle"];
+            [self runAnimationWithTextures:self.idleTextures speed:kAnimationSpeed*2 key:@"playerIdle"];
             break;
             
         case PlayerStateSwim:

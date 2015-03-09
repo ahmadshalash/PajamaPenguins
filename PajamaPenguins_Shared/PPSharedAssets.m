@@ -30,14 +30,20 @@
         sPenguinNormalIdle = [atlas textureNamed:@"penguin_normal_1"];
         sPenguinNormalAnim = [atlas textureNamed:@"penguin_normal_2"];
         
-        NSMutableArray *tempPenguinGreySwimFrames = [NSMutableArray new];
-        for (int i = 0; i < 8; i++) {
-            NSString *textureName = [NSString stringWithFormat:@"penguin_grey_swim_%d",i];
-            [tempPenguinGreySwimFrames addObject:[atlas textureNamed:textureName]];
+        //Idle Textures
+        sPenguinGreyIdleFrames = [NSMutableArray new];
+        for (int i = 0; i < 2; i++) {
+            NSString *idleTextureName = [NSString stringWithFormat:@"penguin_grey_idle_%d",i];
+            [sPenguinGreyIdleFrames addObject:[atlas textureNamed:idleTextureName]];
         }
-        sPenguinGreySwimFrames = [NSArray arrayWithArray:tempPenguinGreySwimFrames];
-        sPenguinGreyIdleFrames = [NSArray arrayWithObject:[atlas textureNamed:@"penguin_grey_idle_0"]];
         
+        //Swim Textures
+        sPenguinGreySwimFrames = [NSMutableArray new];
+        for (int i = 0; i < 8; i++) {
+            NSString *swimTextureName = [NSString stringWithFormat:@"penguin_grey_swim_%d",i];
+            [sPenguinGreySwimFrames addObject:[atlas textureNamed:swimTextureName]];
+        }
+
         //Misc.
         sFingerSprite = [atlas textureNamed:@"finger_sprite"];
         sFingerSpriteEffect = [atlas textureNamed:@"finger_sprite_effect"];
@@ -106,18 +112,18 @@ static SKTexture *sPenguinNormalAnim = nil;
     return sPenguinNormalAnim;
 }
 
-static NSArray *sPenguinGreyIdleFrames = nil;
-+ (NSArray*)sharedPenguinGreyIdleFrames {
+static NSMutableArray *sPenguinGreyIdleFrames = nil;
++ (NSMutableArray*)sharedPenguinGreyIdleFrames {
     return sPenguinGreyIdleFrames;
 }
 
-static NSArray *sPenguinGreySwimFrames = nil;
-+ (NSArray*)sharedPenguinGreySwimFrames {
+static NSMutableArray *sPenguinGreySwimFrames = nil;
++ (NSMutableArray*)sharedPenguinGreySwimFrames {
     return sPenguinGreySwimFrames;
 }
 
-static NSArray *sPenguinGreyFlyFrames = nil;
-+ (NSArray*)sharedPenguinGreyFlyFrames {
+static NSMutableArray *sPenguinGreyFlyFrames = nil;
++ (NSMutableArray*)sharedPenguinGreyFlyFrames {
     return sPenguinGreyFlyFrames;
 }
 
