@@ -18,6 +18,7 @@ typedef void (^AssetCompletionHandler)(void);
 + (SKTexture*)sharedWaterGradient;
 + (SKTexture*)sharedIcebergTexture;
 + (SKTexture*)sharedCloudBackgroundTexture;
++ (SKTexture*)sharedCloudForegroundTexture;
 
 //Shared Misc. Textures
 + (SKTexture*)sharedFingerSprite;

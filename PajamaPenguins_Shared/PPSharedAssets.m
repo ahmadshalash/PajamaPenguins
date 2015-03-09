@@ -53,7 +53,7 @@
         sFingerSprite = [SKTexture loadPixelTexture:[atlas textureNamed:@"finger_sprite"]];
         sFingerSpriteEffect = [SKTexture loadPixelTexture:[atlas textureNamed:@"finger_sprite_effect"]];
         sCloudBackgroundTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"clouds_background"]];
-        
+        sCloudForegroundTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"clouds_foreground"]];
         //Emitters
         sSnowEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"SnowEmitter"];
         sBubbleEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"BubbleEmitter"];
@@ -89,6 +89,11 @@ static SKTexture *sIcebergTexture = nil;
 static SKTexture *sCloudBackgroundTexture = nil;
 + (SKTexture*)sharedCloudBackgroundTexture {
     return sCloudBackgroundTexture;
+}
+
+static SKTexture *sCloudForegroundTexture = nil;
++ (SKTexture*)sharedCloudForegroundTexture {
+    return sCloudForegroundTexture;
 }
 
 //Buttons

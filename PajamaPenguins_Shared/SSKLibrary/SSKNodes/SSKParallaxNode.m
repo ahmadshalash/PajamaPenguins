@@ -43,7 +43,7 @@
             for (int j = 1; j < self.frameCount; j++) {
                 SKSpriteNode *originalNode = [self.allAttachedNodes objectAtIndex:i];
                 SKSpriteNode *duplicateNode = [originalNode copy];
-                [duplicateNode setPosition:CGPointMake(self.size.width * j, 0)];
+                [duplicateNode setPosition:CGPointMake(self.size.width * j, duplicateNode.position.y)];
                 [tempDuplicates addObject:duplicateNode];
             }
         }
@@ -66,7 +66,7 @@
         [self enumerateChildNodesWithName:@"parallaxNode" usingBlock:^(SKNode *node, BOOL *stop) {
             node.position = CGPointMake(node.position.x + amountToMove.x, node.position.y + amountToMove.y);
             if (node.position.x <= -self.size.width) {
-                [node setPosition:CGPointMake(self.size.width * (self.frameCount-1), 0)];
+                [node setPosition:CGPointMake(self.size.width * (self.frameCount-1), node.position.y)];
             }
         }];
     }

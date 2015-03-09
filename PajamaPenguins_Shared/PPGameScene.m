@@ -33,7 +33,7 @@ typedef enum {
 }GameState;
 
 typedef enum {
-    backgroundLayer = 0,
+    backgroundLayer,
     parallaxLayer,
     obstacleLayer,
     playerLayer,
@@ -120,7 +120,7 @@ CGFloat const kMoveAndFadeDistance = 20;
     self.worldNode = [SSKCameraNode node];
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
-    
+
     //Color blend background
     self.blendBackground = [SSKDynamicColorNode nodeWithRed:125 green:255 blue:255 size:self.size];
     [self.blendBackground setZPosition:backgroundLayer];
@@ -138,13 +138,19 @@ CGFloat const kMoveAndFadeDistance = 20;
 
     SKSpriteNode *cloudBackground = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedCloudBackgroundTexture]];
     [cloudBackground setAnchorPoint:CGPointMake(0.5, 0)];
+    [cloudBackground setZPosition:backgroundLayer];
     [parallaxingNodes addObject:cloudBackground];
+    
+    SKSpriteNode *cloudForeground = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedCloudForegroundTexture]];
+    [cloudForeground setAnchorPoint:CGPointMake(0.5, 0)];
+    [cloudForeground setZPosition:foregroundLayer];
+    [cloudForeground setPosition:CGPointMake(0, self.size.height/2)];
+    [parallaxingNodes addObject:cloudForeground];
     
     SSKParallaxNode *parallaxBackground = [SSKParallaxNode nodeWithSize:self.scene.size
                                                           attachedNodes:parallaxingNodes
-                                                              moveSpeed:CGPointMake(-10, 0)
+                                                              moveSpeed:CGPointMake(-20, 0)
                                                               numFrames:3];
-    [parallaxBackground setZPosition:parallaxLayer];
     [parallaxBackground setAlpha:.5];
     [parallaxBackground setName:@"parallaxNode"];
     [self.worldNode addChild:parallaxBackground];
