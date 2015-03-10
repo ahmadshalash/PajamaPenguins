@@ -52,8 +52,12 @@
         //Misc.
         sFingerSprite = [SKTexture loadPixelTexture:[atlas textureNamed:@"finger_sprite"]];
         sFingerSpriteEffect = [SKTexture loadPixelTexture:[atlas textureNamed:@"finger_sprite_effect"]];
-        sCloudBackgroundTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"clouds_background"]];
+
+        sCloudBackgroundLowerTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"clouds_background_lower"]];
+        sCloudBackgroundMiddleTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"clouds_background_middle"]];
+        sCloudBackgroundUpperTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"clouds_background_upper"]];
         sCloudForegroundTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"clouds_foreground"]];
+        
         //Emitters
         sSnowEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"SnowEmitter"];
         sBubbleEmitter = [SKEmitterNode emitterNodeWithFileNamed:@"BubbleEmitter"];
@@ -86,9 +90,19 @@ static SKTexture *sIcebergTexture = nil;
     return sIcebergTexture;
 }
 
-static SKTexture *sCloudBackgroundTexture = nil;
-+ (SKTexture*)sharedCloudBackgroundTexture {
-    return sCloudBackgroundTexture;
+static SKTexture *sCloudBackgroundLowerTexture = nil;
++ (SKTexture*)sharedCloudBackgroundLowerTexture {
+    return sCloudBackgroundLowerTexture;
+}
+
+static SKTexture *sCloudBackgroundMiddleTexture = nil;
++ (SKTexture*)sharedCloudBackgroundMiddleTexture {
+    return sCloudBackgroundMiddleTexture;
+}
+
+static SKTexture *sCloudBackgroundUpperTexture = nil;
++ (SKTexture*)sharedCloudBackgroundUpperTexture {
+    return sCloudBackgroundUpperTexture;
 }
 
 static SKTexture *sCloudForegroundTexture = nil;

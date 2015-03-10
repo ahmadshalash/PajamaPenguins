@@ -54,7 +54,7 @@ static const uint32_t playerCategory   = 0x1 << 0;
 static const uint32_t obstacleCategory = 0x1 << 1;
 static const uint32_t edgeCategory     = 0x1 << 2;
 
-CGFloat const kAirGravityStrength = -3;
+CGFloat const kAirGravityStrength = -2.75;
 CGFloat const kWaterGravityStrength = 6;
 CGFloat const kGameOverGravityStrength = -9.8;
 
@@ -67,7 +67,7 @@ CGFloat const kMaxBreathTimer = 6.0;
 CGFloat const kWorldScaleCap = 0.55;
 
 CGFloat const kPlayerUpperVelocityLimit = 700.0;
-CGFloat const kPlayerLowerAirVelocityLimit = -600.0;
+CGFloat const kPlayerLowerAirVelocityLimit = -700.0;
 CGFloat const kPlayerLowerWaterVelocityLimit = -550.0;
 
 //Name Constants
@@ -76,6 +76,9 @@ NSString * const kPixelFontName = @"Fipps-Regular";
 //Action Constants
 CGFloat const kMoveAndFadeTime = 0.2;
 CGFloat const kMoveAndFadeDistance = 20;
+
+//Parallax Constants
+CGFloat const kParallaxMinSpeed = -20.0;
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
@@ -134,26 +137,27 @@ CGFloat const kMoveAndFadeDistance = 20;
     [self addChild:snowEmitter];
     
     //Parallaxing Nodes
-    NSMutableArray *parallaxingNodes = [NSMutableArray new];
-
-    SKSpriteNode *cloudBackground = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedCloudBackgroundTexture]];
-    [cloudBackground setAnchorPoint:CGPointMake(0.5, 0)];
-    [cloudBackground setZPosition:backgroundLayer];
-    [parallaxingNodes addObject:cloudBackground];
+    CGPoint cloudBottomPos = CGPointMake(0, self.size.height/8 * 6);
+    CGPoint cloudMiddlePos = CGPointMake(0, cloudBottomPos.y + [PPSharedAssets sharedCloudBackgroundMiddleTexture].size.height/3);
+    CGPoint cloudUpperPos = CGPointMake(0, cloudMiddlePos.y + [PPSharedAssets sharedCloudBackgroundUpperTexture].size.height/3);
+    CGPoint cloudForegroundPos = CGPointMake(0, cloudUpperPos.y + [PPSharedAssets sharedCloudForegroundTexture].size.height/3);
     
-    SKSpriteNode *cloudForeground = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedCloudForegroundTexture]];
-    [cloudForeground setAnchorPoint:CGPointMake(0.5, 0)];
-    [cloudForeground setZPosition:foregroundLayer];
-    [cloudForeground setPosition:CGPointMake(0, self.size.height/2)];
-    [parallaxingNodes addObject:cloudForeground];
+    SSKParallaxNode *backgroundSlow = [self backgroundLayerWithSpeed:kParallaxMinSpeed position:cloudBottomPos texture:[PPSharedAssets sharedCloudBackgroundLowerTexture]];
+    [backgroundSlow setAlpha:.6];
+    [self.worldNode addChild:backgroundSlow];
     
-    SSKParallaxNode *parallaxBackground = [SSKParallaxNode nodeWithSize:self.scene.size
-                                                          attachedNodes:parallaxingNodes
-                                                              moveSpeed:CGPointMake(-20, 0)
-                                                              numFrames:3];
-    [parallaxBackground setAlpha:.5];
-    [parallaxBackground setName:@"parallaxNode"];
-    [self.worldNode addChild:parallaxBackground];
+    SSKParallaxNode *backgroundMedium = [self backgroundLayerWithSpeed:kParallaxMinSpeed*2 position:cloudMiddlePos texture:[PPSharedAssets sharedCloudBackgroundMiddleTexture]];
+    [backgroundMedium setAlpha:.7];
+    [self.worldNode addChild:backgroundMedium];
+    
+    SSKParallaxNode *backgroundFast = [self backgroundLayerWithSpeed:kParallaxMinSpeed*3 position:cloudUpperPos texture:[PPSharedAssets sharedCloudBackgroundUpperTexture]];
+    [backgroundFast setAlpha:.75];
+    [self.worldNode addChild:backgroundFast];
+    
+    SSKParallaxNode *foreground = [self backgroundLayerWithSpeed:kParallaxMinSpeed*4 position:cloudForegroundPos texture:[PPSharedAssets sharedCloudForegroundTexture]];
+    [foreground setAlpha:.8];
+    [foreground setZPosition:foregroundLayer];
+    [self.worldNode addChild:foreground];
     
     //Water Surface
     CGPoint surfaceStart = CGPointMake(-self.size.width/2, 0);
@@ -701,7 +705,6 @@ CGFloat const kMoveAndFadeDistance = 20;
     }
     
     if (self.gameState == MainMenu || self.gameState == Playing) {
-        [self updateParallaxNodesWithDelta:deltaTime];
         [self updatePlayer:deltaTime];
         [self updateGravity];
     }
@@ -711,6 +714,9 @@ CGFloat const kMoveAndFadeDistance = 20;
         [self updateBreathMeter];
         [self checkBreathMeterForGameOver];
     }
+
+    //Background
+    [self updateParallaxNodesWithDelta:deltaTime];
     
     //Water surface
     [self trackPlayerForSplash];
@@ -731,6 +737,20 @@ CGFloat const kMoveAndFadeDistance = 20;
     }
 }
 #pragma mark - Parallaxing
+- (SSKParallaxNode*)backgroundLayerWithSpeed:(CGFloat)speed position:(CGPoint)position texture:(SKTexture*)texture {
+    NSMutableArray *parallaxNodes = [NSMutableArray new];
+
+    SKSpriteNode *layer = [SKSpriteNode spriteNodeWithTexture:texture];
+    [layer setPosition:position];
+    [layer setAnchorPoint:CGPointMake(0.5, 0)];
+    [parallaxNodes addObject:layer];
+    
+    SSKParallaxNode *parallaxLayer = [SSKParallaxNode nodeWithSize:self.scene.size attachedNodes:parallaxNodes moveSpeed:CGPointMake(speed, 0) numFrames:3];
+    [parallaxLayer setName:@"parallaxNode"];
+    [parallaxLayer setZPosition:backgroundLayer];
+    return parallaxLayer;
+}
+
 - (void)updateParallaxNodesWithDelta:(NSTimeInterval)dt {
     [self.worldNode enumerateChildNodesWithName:@"parallaxNode" usingBlock:^(SKNode *node, BOOL *stop) {
         [(SSKParallaxNode*)node update:dt];
