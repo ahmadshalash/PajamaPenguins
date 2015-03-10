@@ -142,11 +142,10 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [self.worldNode addChild:backgroundSlow];
     
     SSKParallaxNode *backgroundMedium = [self backgroundLayerWithSpeed:kParallaxMinSpeed*2 position:cloudMiddlePos texture:[PPSharedAssets sharedCloudBackgroundMiddleTexture]];
-//    [backgroundMedium setAlpha:.7];
     [self.worldNode addChild:backgroundMedium];
     
     SSKParallaxNode *backgroundFast = [self backgroundLayerWithSpeed:kParallaxMinSpeed*3 position:cloudUpperPos texture:[PPSharedAssets sharedCloudBackgroundUpperTexture]];
-    [backgroundFast setAlpha:.8];
+    [backgroundFast setAlpha:.7];
     [self.worldNode addChild:backgroundFast];
     
     SSKParallaxNode *foreground = [self backgroundLayerWithSpeed:kParallaxMinSpeed*4 position:cloudForegroundPos texture:[PPSharedAssets sharedCloudForegroundTexture]];
@@ -157,7 +156,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     //Snow Emitter
     self.snowEmitter = [PPSharedAssets sharedSnowEmitter].copy;
     [self.snowEmitter setZPosition:foregroundLayer];
-//    [snowEmitter setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
     [self.snowEmitter setPosition:CGPointMake(self.size.width/2, cloudForegroundPos.y)];
     [self.snowEmitter setName:@"snowEmitter"];
     [self.worldNode addChild:self.snowEmitter];
