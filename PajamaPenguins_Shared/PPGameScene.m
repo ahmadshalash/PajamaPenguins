@@ -55,6 +55,7 @@ static const uint32_t obstacleCategory = 0x1 << 1;
 static const uint32_t edgeCategory     = 0x1 << 2;
 
 CGFloat const kAirGravityStrength = -2.75;
+//CGFloat const kAirGravityStrength = 1;
 CGFloat const kWaterGravityStrength = 6;
 CGFloat const kGameOverGravityStrength = -9.8;
 
@@ -84,6 +85,7 @@ CGFloat const kParallaxMinSpeed = -20.0;
 @property (nonatomic) GameState gameState;
 @property (nonatomic) SSKDynamicColorNode *blendBackground;
 @property (nonatomic) SSKWaterSurfaceNode *waterSurface;
+@property (nonatomic) SKEmitterNode *snowEmitter;
 @property (nonatomic) SKNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
 @property (nonatomic) SKNode *hudNode;
@@ -129,13 +131,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [self.blendBackground setZPosition:backgroundLayer];
     [self addChild:self.blendBackground];
     
-    //Snow Emitter
-    SKEmitterNode *snowEmitter = [PPSharedAssets sharedSnowEmitter].copy;
-    [snowEmitter setZPosition:foregroundLayer];
-    [snowEmitter setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
-    [snowEmitter setName:@"snowEmitter"];
-    [self addChild:snowEmitter];
-    
     //Parallaxing Nodes
     CGPoint cloudBottomPos = CGPointMake(0, self.size.height/8 * 6);
     CGPoint cloudMiddlePos = CGPointMake(0, cloudBottomPos.y + [PPSharedAssets sharedCloudBackgroundMiddleTexture].size.height/3);
@@ -147,17 +142,25 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [self.worldNode addChild:backgroundSlow];
     
     SSKParallaxNode *backgroundMedium = [self backgroundLayerWithSpeed:kParallaxMinSpeed*2 position:cloudMiddlePos texture:[PPSharedAssets sharedCloudBackgroundMiddleTexture]];
-    [backgroundMedium setAlpha:.7];
+//    [backgroundMedium setAlpha:.7];
     [self.worldNode addChild:backgroundMedium];
     
     SSKParallaxNode *backgroundFast = [self backgroundLayerWithSpeed:kParallaxMinSpeed*3 position:cloudUpperPos texture:[PPSharedAssets sharedCloudBackgroundUpperTexture]];
-    [backgroundFast setAlpha:.75];
+    [backgroundFast setAlpha:.8];
     [self.worldNode addChild:backgroundFast];
     
     SSKParallaxNode *foreground = [self backgroundLayerWithSpeed:kParallaxMinSpeed*4 position:cloudForegroundPos texture:[PPSharedAssets sharedCloudForegroundTexture]];
-    [foreground setAlpha:.8];
+    [foreground setAlpha:.95];
     [foreground setZPosition:foregroundLayer];
     [self.worldNode addChild:foreground];
+
+    //Snow Emitter
+    self.snowEmitter = [PPSharedAssets sharedSnowEmitter].copy;
+    [self.snowEmitter setZPosition:foregroundLayer];
+//    [snowEmitter setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
+    [self.snowEmitter setPosition:CGPointMake(self.size.width/2, cloudForegroundPos.y)];
+    [self.snowEmitter setName:@"snowEmitter"];
+    [self.worldNode addChild:self.snowEmitter];
     
     //Water Surface
     CGPoint surfaceStart = CGPointMake(-self.size.width/2, 0);
@@ -540,12 +543,8 @@ CGFloat const kParallaxMinSpeed = -20.0;
     return (SKEmitterNode*)[self.worldNode childNodeWithName:@"bubbleEmitter"];
 }
 
-#pragma mark - Sky
-- (SKSpriteNode*)skyBackgroundNode {
-    SKSpriteNode *skyBackground = [SKSpriteNode spriteNodeWithTexture:[SKTexture loadPixelTextureWithName:@"SkyBackground"]];
-    [skyBackground setScale:[self backgroundSpriteScale]];
-    [skyBackground setAnchorPoint:CGPointMake(0, 0)];
-    return skyBackground;
+- (void)trackCloudForSnowPosition {
+    
 }
 
 #pragma mark - Obstacles
@@ -747,6 +746,7 @@ CGFloat const kParallaxMinSpeed = -20.0;
     
     SSKParallaxNode *parallaxLayer = [SSKParallaxNode nodeWithSize:self.scene.size attachedNodes:parallaxNodes moveSpeed:CGPointMake(speed, 0) numFrames:3];
     [parallaxLayer setName:@"parallaxNode"];
+//    [parallaxLayer setAlpha:.9];
     [parallaxLayer setZPosition:backgroundLayer];
     return parallaxLayer;
 }

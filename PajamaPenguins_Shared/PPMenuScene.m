@@ -20,6 +20,7 @@
 
 typedef NS_ENUM(NSUInteger, SceneLayer) {
     SceneLayerBackground = 0,
+    SceneLayerForeground,
     SceneLayerMenu,
 };
 
@@ -102,6 +103,7 @@ CGFloat const kPlatformPadding = 50.0;
     CGPoint surfaceEnd = CGPointMake(self.size.width/2 + surfacePadding, 0);
     SSKWaterSurfaceNode *waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd jointWidth:5];
     [waterSurface setAlpha:0.7];
+    [waterSurface setZPosition:SceneLayerForeground];
     [waterSurface setName:@"waterSurface"];
     [waterSurface setBodyWithDepth:self.size.height/2 + surfacePadding];
     [waterSurface setTexture:[PPSharedAssets sharedWaterGradient]];
