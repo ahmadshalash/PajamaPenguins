@@ -86,8 +86,6 @@
 		EEF798291A9D7ECA0000DD14 /* SKScene+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798271A9D7ECA0000DD14 /* SKScene+SFAdditions.m */; };
 		EEF7983C1A9FCAE80000DD14 /* SSKColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF7983B1A9FCAE80000DD14 /* SSKColorNode.m */; };
 		EEF7983D1A9FCAE80000DD14 /* SSKColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF7983B1A9FCAE80000DD14 /* SSKColorNode.m */; };
-		EEF798491AA0FD440000DD14 /* PPWaterSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798481AA0FD440000DD14 /* PPWaterSprite.m */; };
-		EEF7984A1AA0FD440000DD14 /* PPWaterSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF798481AA0FD440000DD14 /* PPWaterSprite.m */; };
 		EEFA234D1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA234C1A9D3B5E0003B009 /* SSKParallaxNode.m */; };
 		EEFA234E1A9D3B5E0003B009 /* SSKParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA234C1A9D3B5E0003B009 /* SSKParallaxNode.m */; };
 /* End PBXBuildFile section */
@@ -176,8 +174,6 @@
 		EEF798271A9D7ECA0000DD14 /* SKScene+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKScene+SFAdditions.m"; sourceTree = "<group>"; };
 		EEF7983A1A9FCAE80000DD14 /* SSKColorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSKColorNode.h; path = ../../SSKColorNode.h; sourceTree = "<group>"; };
 		EEF7983B1A9FCAE80000DD14 /* SSKColorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSKColorNode.m; path = ../../SSKColorNode.m; sourceTree = "<group>"; };
-		EEF798471AA0FD440000DD14 /* PPWaterSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPWaterSprite.h; sourceTree = "<group>"; };
-		EEF798481AA0FD440000DD14 /* PPWaterSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPWaterSprite.m; sourceTree = "<group>"; };
 		EEFA234B1A9D3B5E0003B009 /* SSKParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKParallaxNode.h; sourceTree = "<group>"; };
 		EEFA234C1A9D3B5E0003B009 /* SSKParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKParallaxNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -365,8 +361,6 @@
 				EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */,
 				EEF798221A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.h */,
 				EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */,
-				EEF798471AA0FD440000DD14 /* PPWaterSprite.h */,
-				EEF798481AA0FD440000DD14 /* PPWaterSprite.m */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -596,7 +590,6 @@
 				EE6F92FC1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
 				41E430A918B09E5200E1427D /* ViewController.m in Sources */,
 				EE3434731AAA5EB50010BE71 /* SKAction+SFAdditions.m in Sources */,
-				EEF798491AA0FD440000DD14 /* PPWaterSprite.m in Sources */,
 				EE6F92FA1A82F39400286DC7 /* SSKiAD.m in Sources */,
 				EE6F92FE1A82F39400286DC7 /* SSKScene.m in Sources */,
 				EE34347B1AABF4180010BE71 /* PPSharedAssets.m in Sources */,
@@ -638,7 +631,6 @@
 				EE6F92FD1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
 				41E430EA18B09E8600E1427D /* AppDelegate.m in Sources */,
 				EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
-				EEF7984A1AA0FD440000DD14 /* PPWaterSprite.m in Sources */,
 				EEC9DB8E1AA7BF5E0022CDF1 /* SSKProgressBarNode.m in Sources */,
 				EEF798291A9D7ECA0000DD14 /* SKScene+SFAdditions.m in Sources */,
 				EEBA93F31A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */,

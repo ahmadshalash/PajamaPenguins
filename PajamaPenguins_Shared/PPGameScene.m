@@ -9,7 +9,6 @@
 #import "PPSharedAssets.h"
 #import "PPPlayer.h"
 #import "PPIcebergObstacle.h"
-#import "PPWaterSprite.h"
 
 #import "SKColor+SFAdditions.h"
 #import "SKNode+SFAdditions.h"
@@ -85,6 +84,7 @@ CGFloat const kParallaxMinSpeed = -20.0;
 @property (nonatomic) GameState gameState;
 @property (nonatomic) SSKDynamicColorNode *blendBackground;
 @property (nonatomic) SSKWaterSurfaceNode *waterSurface;
+@property (nonatomic) NSMutableArray *obstacleTexturePool;
 @property (nonatomic) SKEmitterNode *snowEmitter;
 @property (nonatomic) SKNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
@@ -125,7 +125,7 @@ CGFloat const kParallaxMinSpeed = -20.0;
     self.worldNode = [SSKCameraNode node];
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
-
+    
     //Color blend background
     self.blendBackground = [SSKDynamicColorNode nodeWithRed:125 green:255 blue:255 size:self.size];
     [self.blendBackground setZPosition:backgroundLayer];
@@ -321,6 +321,7 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [self resetBreathTimer];
     [self createHudLayer];
 
+    [self populateObstacleTexturePool];
     [self startObstacleSpawnSequence];
     [self startSplashAtObstaclesForever];
     
@@ -546,32 +547,28 @@ CGFloat const kParallaxMinSpeed = -20.0;
 }
 
 #pragma mark - Obstacles
-- (PPIcebergObstacle*)newIceBergAtPosition:(CGPoint)position withWidth:(CGFloat)width {
-    PPIcebergObstacle *obstacle = [[PPIcebergObstacle alloc] initWithWidth:width];
-    [obstacle setPosition:position];
+- (PPIcebergObstacle*)newIceBergWithTexture:(SKTexture*)texture {
+    PPIcebergObstacle *obstacle = [PPIcebergObstacle spriteNodeWithTexture:texture];
     [obstacle setName:@"obstacle"];
     [obstacle setZPosition:obstacleLayer];
     [obstacle.physicsBody setCategoryBitMask:obstacleCategory];
     return obstacle;
 }
 
-- (SKNode*)generateNewObstacleWithRandomSize {
-    CGFloat randomNum = SSKRandomFloatInRange(15, 250);
+- (SKNode*)generateNewRandomObstacle {
+    CGFloat randomNum = SSKRandomFloatInRange(0, self.obstacleTexturePool.count);
+    SKTexture *randomTexture = [self.obstacleTexturePool objectAtIndex:randomNum];
     
-    //Max zoom width position
-    CGFloat spawnPosition = self.size.width/kWorldScaleCap;
-    
-    //Offset by half of iceberg width
-    CGPoint spawnPoint = CGPointMake(spawnPosition + randomNum/2, 0);
-    
-    return [self newIceBergAtPosition:spawnPoint withWidth:randomNum];
+    PPIcebergObstacle *newIceberg = [self newIceBergWithTexture:randomTexture];
+    [newIceberg setPosition:CGPointMake((self.size.width/kWorldScaleCap) + newIceberg.size.width/2, 0)];
+    return newIceberg;
 }
 
 #pragma mark - Obstacle Spawn Sequence
 - (void)startObstacleSpawnSequence {
     SKAction *wait = [SKAction waitForDuration:1.5];
     SKAction *spawnFloatMove = [SKAction runBlock:^{
-        SKNode *obstacle = [self generateNewObstacleWithRandomSize];
+        SKNode *obstacle = [self generateNewRandomObstacle];
         [self.worldNode addChild:obstacle];
         [obstacle runAction:[SKAction repeatActionForever:[self floatAction]]];
         [obstacle runAction:[SKAction moveToX:-self.size.width duration:4] withKey:@"moveObstacle" completion:^{
@@ -590,6 +587,14 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [self.worldNode enumerateChildNodesWithName:@"obstacle" usingBlock:^(SKNode *node, BOOL *stop) {
         [node removeActionForKey:@"moveObstacle"];
     }];
+}
+
+- (void)populateObstacleTexturePool {
+    self.obstacleTexturePool = nil;
+    self.obstacleTexturePool = [NSMutableArray new];
+    
+    [self.obstacleTexturePool addObject:[PPSharedAssets sharedObstacleMediumTexture]];
+    [self.obstacleTexturePool addObject:[PPSharedAssets sharedObstacleLargeTexture]];
 }
 
 #pragma mark - Score Tracking

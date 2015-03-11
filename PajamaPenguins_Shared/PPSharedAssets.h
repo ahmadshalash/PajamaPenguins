@@ -23,6 +23,10 @@ typedef void (^AssetCompletionHandler)(void);
 + (SKTexture*)sharedCloudBackgroundUpperTexture;
 + (SKTexture*)sharedCloudForegroundTexture;
 
+//Shared Obstacle Textures
++ (SKTexture*)sharedObstacleLargeTexture;
++ (SKTexture*)sharedObstacleMediumTexture;
+
 //Shared Misc. Textures
 + (SKTexture*)sharedFingerSprite;
 + (SKTexture*)sharedFingerSpriteEffect;
@@ -35,9 +39,6 @@ typedef void (^AssetCompletionHandler)(void);
 + (SKTexture*)sharedHomeButtonDownTexture;
 
 //Shared Penguins Textures
-+ (SKTexture*)sharedPenguinNormalIdle;
-+ (SKTexture*)sharedPenguinNormalAnim;
-
 + (NSMutableArray*)sharedPenguinGreyIdleFrames;
 + (NSMutableArray*)sharedPenguinGreySwimFrames;
 + (NSMutableArray*)sharedPenguinGreyFlyFrames;

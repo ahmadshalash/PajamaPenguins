@@ -10,46 +10,22 @@
 
 @implementation PPIcebergObstacle
 
-- (instancetype)initWithWidth:(CGFloat)width {
-    self = [PPIcebergObstacle shapeNodeWithPath:[self pathFromPoints:[self cornerPointsWithWidth:width]]];
-
+- (instancetype)initWithTexture:(SKTexture *)texture {
+    self = [super initWithTexture:texture];
     if (self) {
-        [self setFillColor:[SKColor whiteColor]];
-        [self setStrokeColor:[SKColor blackColor]];
-        [self setLineWidth:2];
-        
-        
-        self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:self.path];
-        self.physicsBody.restitution = 0;
-        self.physicsBody.friction = 0;
+        [self setAnchorPoint:CGPointMake(0, 0.66)];
+        [self setTexture:texture];
+
+        self.physicsBody = [SKPhysicsBody bodyWithTexture:texture size:self.size];
+        self.physicsBody.affectedByGravity = NO;
+        self.physicsBody.dynamic = NO;
     }
     return self;
 }
 
-- (NSArray*)cornerPointsWithWidth:(CGFloat)width {
-    CGPoint topPoint = CGPointMake(0, width/2);
-    CGPoint leftPoint = CGPointMake(-width/2, 0);
-    CGPoint bottomPoint = CGPointMake(0, -width);
-    CGPoint rightPoint = CGPointMake(width/2, 0);
-    
-    NSArray *pointsArray = [NSArray arrayWithObjects:
-                            [NSValue valueWithCGPoint:topPoint],
-                            [NSValue valueWithCGPoint:leftPoint],
-                            [NSValue valueWithCGPoint:bottomPoint],
-                            [NSValue valueWithCGPoint:rightPoint],
-                            nil];
-    return pointsArray;
+- (instancetype)initWithImageNamed:(NSString *)name {
+    return [PPIcebergObstacle spriteNodeWithTexture:[SKTexture textureWithImageNamed:name]];
 }
 
-- (CGPathRef)pathFromPoints:(NSArray*)points {
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathMoveToPoint(path, nil, [(NSValue*)[points objectAtIndex:0] CGPointValue].x, [(NSValue*)[points objectAtIndex:0] CGPointValue].y);
-    
-    for (NSValue *point in points) {
-        CGPathAddLineToPoint(path, nil, [point CGPointValue].x, [point CGPointValue].y);
-    }
-    CGPathCloseSubpath(path);
-    return path;
-}
 
 @end

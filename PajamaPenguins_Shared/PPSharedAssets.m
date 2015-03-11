@@ -26,6 +26,10 @@
         sHomeButtonUpTexture = [atlas textureNamed:@"home_button_up"];
         sHomeButtonDownTexture = [atlas textureNamed:@"home_button_down"];
         
+        //Obstacles
+        sObstacleLargeTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"iceberg_250x375"]];
+        sObstacleMediumTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"iceberg_200x300"]];
+        
         //Penguins
         sPenguinNormalIdle = [atlas textureNamed:@"penguin_normal_1"];
         sPenguinNormalAnim = [atlas textureNamed:@"penguin_normal_2"];
@@ -155,6 +159,17 @@ static NSMutableArray *sPenguinGreySwimFrames = nil;
 static NSMutableArray *sPenguinGreyFlyFrames = nil;
 + (NSMutableArray*)sharedPenguinGreyFlyFrames {
     return sPenguinGreyFlyFrames;
+}
+
+//Obstacles
+static SKTexture *sObstacleLargeTexture = nil;
++ (SKTexture*)sharedObstacleLargeTexture {
+    return sObstacleLargeTexture;
+}
+
+static SKTexture *sObstacleMediumTexture = nil;
++ (SKTexture*)sharedObstacleMediumTexture {
+    return sObstacleMediumTexture;
 }
 
 //Misc Game Scene

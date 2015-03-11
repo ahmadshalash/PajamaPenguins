@@ -8,8 +8,5 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface PPIcebergObstacle : SKShapeNode
-
-- (instancetype)initWithWidth:(CGFloat)width;
-
+@interface PPIcebergObstacle : SKSpriteNode
 @end
