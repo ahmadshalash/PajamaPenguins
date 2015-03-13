@@ -60,7 +60,7 @@
         self.waterJoints = [self createSurfacePointsWithStart:startPoint end:endPoint];
 
         self.waterSurface = [SKShapeNode shapeNodeWithPath:[self pathFromJoints:self.waterJoints]];
-        [self.waterSurface setLineWidth:5];
+        [self.waterSurface setLineWidth:1];
         
         [self addChild:self.waterSurface];
     }
@@ -172,6 +172,7 @@
 }
 
 - (void)updateSurfaceNodes:(NSTimeInterval)dt {
+    [self.waterSurface setPath:nil];
     [self.waterSurface setPath:[self pathFromJoints:self.waterJoints]];
 }
 

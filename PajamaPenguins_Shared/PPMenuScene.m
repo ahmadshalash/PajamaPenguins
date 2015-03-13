@@ -50,7 +50,7 @@ CGFloat const kPlatformPadding = 50.0;
 
 #pragma mark - Scene Construction
 - (void)createSceneBackground {
-    self.menuBackgroundNode = [SKNode new];
+    self.menuBackgroundNode = [SKNode node];
     [self.menuBackgroundNode setZPosition:SceneLayerBackground];
     [self.menuBackgroundNode setName:@"menuBackground"];
     [self addChild:self.menuBackgroundNode];

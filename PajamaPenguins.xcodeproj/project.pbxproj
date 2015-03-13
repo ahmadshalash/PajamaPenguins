@@ -440,12 +440,12 @@
 		EEAE6FA61AA68EC300215C7E /* Emitters */ = {
 			isa = PBXGroup;
 			children = (
-				EE3434801AAC180B0010BE71 /* EmitterAssets */,
 				EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */,
 				EEC9DB811AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks */,
 				EEAE6FA31AA68B8B00215C7E /* ObstacleSplashEmitter.sks */,
 				EEAE6FA91AA68F9900215C7E /* BubbleEmitter.sks */,
 				EEC9DB841AA7B5510022CDF1 /* SnowEmitter.sks */,
+				EE3434801AAC180B0010BE71 /* EmitterAssets */,
 			);
 			name = Emitters;
 			sourceTree = "<group>";
