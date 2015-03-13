@@ -9,4 +9,5 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface PPIcebergObstacle : SKSpriteNode
+- (instancetype)initWithSize:(CGSize)size;
 @end

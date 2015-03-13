@@ -31,9 +31,6 @@
         sObstacleMediumTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"iceberg_200x300"]];
         
         //Penguins
-        sPenguinNormalIdle = [atlas textureNamed:@"penguin_normal_1"];
-        sPenguinNormalAnim = [atlas textureNamed:@"penguin_normal_2"];
-        
         sPenguinGreyIdleFrames = [NSMutableArray new];
         sPenguinGreySwimFrames = [NSMutableArray new];
         sPenguinGreyFlyFrames = [NSMutableArray new];

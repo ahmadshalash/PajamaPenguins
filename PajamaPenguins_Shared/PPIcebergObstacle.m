@@ -10,10 +10,20 @@
 
 @implementation PPIcebergObstacle
 
+#warning placeholder
+- (instancetype)initWithSize:(CGSize)size {
+    self = [super initWithColor:[SKColor whiteColor] size:size];
+    if (self) {
+        self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:size];
+        self.physicsBody.affectedByGravity = NO;
+        self.physicsBody.dynamic = NO;
+    }
+    return self;
+}
+
 - (instancetype)initWithTexture:(SKTexture *)texture {
     self = [super initWithTexture:texture];
     if (self) {
-        [self setAnchorPoint:CGPointMake(0, 0.66)];
         [self setTexture:texture];
 
         self.physicsBody = [SKPhysicsBody bodyWithTexture:texture size:self.size];

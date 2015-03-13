@@ -41,6 +41,11 @@ CGFloat const kPlatformPadding = 50.0;
     [self createSceneBackground];
     [self createMenu];
     [self startAnimations];
+    
+    [self testStuff];
+}
+
+- (void)testStuff {
 }
 
 #pragma mark - Scene Construction

@@ -53,6 +53,7 @@
 		EE6F93011A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F31A82F39400286DC7 /* SSKGraphicsUtils.m */; };
 		EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
 		EE6F93051A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
+		EE9E6B251AB26AE40038CB43 /* penguin_grey_iPhone.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EE9E6B241AB26AE40038CB43 /* penguin_grey_iPhone.atlas */; };
 		EEAE6F971AA665E200215C7E /* WaterGradientBlue-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */; };
 		EEAE6F9C1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */; };
 		EEAE6F9D1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */; };
@@ -147,6 +148,7 @@
 		EE6F92F41A82F39400286DC7 /* SSKMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKMathUtils.h; sourceTree = "<group>"; };
 		EE6F92F61A82F39400286DC7 /* SSKPhysicsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKPhysicsUtils.h; sourceTree = "<group>"; };
 		EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKPhysicsUtils.m; sourceTree = "<group>"; };
+		EE9E6B241AB26AE40038CB43 /* penguin_grey_iPhone.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = penguin_grey_iPhone.atlas; sourceTree = "<group>"; };
 		EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaterGradientBlue-iphone.png"; sourceTree = "<group>"; };
 		EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = PlayerSplashUpEmitter.sks; path = ../PajamaPenguins_Shared/PlayerSplashUpEmitter.sks; sourceTree = "<group>"; };
 		EEAE6FA31AA68B8B00215C7E /* ObstacleSplashEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = ObstacleSplashEmitter.sks; path = ../PajamaPenguins_Shared/ObstacleSplashEmitter.sks; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 			children = (
 				EE3434791AABF4180010BE71 /* PPSharedAssets.h */,
 				EE34347A1AABF4180010BE71 /* PPSharedAssets.m */,
+				EE9E6B241AB26AE40038CB43 /* penguin_grey_iPhone.atlas */,
 				EE34347D1AAC125D0010BE71 /* pajama_penguins_assets.atlas */,
 				EEAE6FA61AA68EC300215C7E /* Emitters */,
 				EECC66891AA11C7E004CB609 /* Backgrounds */,
@@ -535,6 +538,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE9E6B251AB26AE40038CB43 /* penguin_grey_iPhone.atlas in Resources */,
 				EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */,
 				EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */,
 				EEAE6F9C1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */,

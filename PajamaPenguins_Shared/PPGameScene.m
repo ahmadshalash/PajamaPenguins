@@ -54,7 +54,6 @@ static const uint32_t obstacleCategory = 0x1 << 1;
 static const uint32_t edgeCategory     = 0x1 << 2;
 
 CGFloat const kAirGravityStrength = -2.75;
-//CGFloat const kAirGravityStrength = 1;
 CGFloat const kWaterGravityStrength = 6;
 CGFloat const kGameOverGravityStrength = -9.8;
 
@@ -62,7 +61,8 @@ CGFloat const kObstacleSplashStrength = 10;
 CGFloat const kMaxSplashStrength = 20;
 
 //Clamped Constants
-CGFloat const kMaxBreathTimer = 6.0;
+//CGFloat const kMaxBreathTimer = 6.0;
+CGFloat const kMaxBreathTimer = 96.0;
 
 CGFloat const kWorldScaleCap = 0.55;
 
@@ -547,6 +547,25 @@ CGFloat const kParallaxMinSpeed = -20.0;
 }
 
 #pragma mark - Obstacles
+
+//TEMP ***
+- (PPIcebergObstacle*)newIcebergWithSize:(CGSize)size {
+    PPIcebergObstacle *obstacle = [[PPIcebergObstacle alloc] initWithSize:size];
+    [obstacle setName:@"obstacle"];
+    [obstacle setZPosition:obstacleLayer];
+    [obstacle.physicsBody setCategoryBitMask:obstacleCategory];
+    return obstacle;
+}
+
+- (SKNode*)newObstacle {
+    PPIcebergObstacle *newObstacle = [self newIcebergWithSize:CGSizeMake(100, 100)];
+    [newObstacle setPosition:CGPointMake((self.size.width/kWorldScaleCap) + newObstacle.size.width/2, 0)];
+    return newObstacle;
+}
+
+
+//TEMP ***
+
 - (PPIcebergObstacle*)newIceBergWithTexture:(SKTexture*)texture {
     PPIcebergObstacle *obstacle = [PPIcebergObstacle spriteNodeWithTexture:texture];
     [obstacle setName:@"obstacle"];
@@ -564,11 +583,20 @@ CGFloat const kParallaxMinSpeed = -20.0;
     return newIceberg;
 }
 
+- (void)populateObstacleTexturePool {
+    self.obstacleTexturePool = nil;
+    self.obstacleTexturePool = [NSMutableArray new];
+    
+    [self.obstacleTexturePool addObject:[PPSharedAssets sharedObstacleMediumTexture]];
+    [self.obstacleTexturePool addObject:[PPSharedAssets sharedObstacleLargeTexture]];
+}
+
 #pragma mark - Obstacle Spawn Sequence
 - (void)startObstacleSpawnSequence {
     SKAction *wait = [SKAction waitForDuration:1.5];
     SKAction *spawnFloatMove = [SKAction runBlock:^{
-        SKNode *obstacle = [self generateNewRandomObstacle];
+//        SKNode *obstacle = [self generateNewRandomObstacle];
+        SKNode *obstacle = [self newObstacle];
         [self.worldNode addChild:obstacle];
         [obstacle runAction:[SKAction repeatActionForever:[self floatAction]]];
         [obstacle runAction:[SKAction moveToX:-self.size.width duration:4] withKey:@"moveObstacle" completion:^{
@@ -589,13 +617,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     }];
 }
 
-- (void)populateObstacleTexturePool {
-    self.obstacleTexturePool = nil;
-    self.obstacleTexturePool = [NSMutableArray new];
-    
-    [self.obstacleTexturePool addObject:[PPSharedAssets sharedObstacleMediumTexture]];
-    [self.obstacleTexturePool addObject:[PPSharedAssets sharedObstacleLargeTexture]];
-}
 
 #pragma mark - Score Tracking
 - (void)startScoreCounter {
