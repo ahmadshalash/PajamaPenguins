@@ -63,7 +63,7 @@ CGFloat const kPlatformPadding = 50.0;
     [self.menuBackgroundNode addChild:platformNode];
     
     [platformNode addChild:[self newPlatformIceberg]];
-    [platformNode addChild:[self newGreyPenguin]];
+    [platformNode addChild:[self greyPenguin ]];
     
     [self.menuBackgroundNode addChild:[self newWaterSurface]];
 }
@@ -160,6 +160,21 @@ CGFloat const kPlatformPadding = 50.0;
 }
 
 #pragma mark - Penguins
+- (PPPlayer*)penguinWithType:(PlayerType)type atlas:(SKTextureAtlas*)atlas {
+    PPPlayer *penguin = [PPPlayer playerWithType:type atlas:atlas];
+    [penguin setScale:.75];
+    [penguin setPhysicsBody:nil];
+    [penguin setAnchorPoint:CGPointMake(0.5, 0)];
+    [penguin setPosition:CGPointMake(0, kPlatformPadding/2)];
+    [penguin setPlayerState:PlayerStateIdle];
+    [penguin setName:@"penguin"];
+    return penguin;
+}
+
+- (PPPlayer*)greyPenguin {
+    return [self penguinWithType:PlayerTypeGrey atlas:[PPSharedAssets sharedPenguinGreyTextures]];
+}
+
 - (PPPlayer*)newGreyPenguin {
     return [self newPengiunWithIdleTextures:[PPSharedAssets sharedPenguinGreyIdleFrames]
                                swimTextures:[PPSharedAssets sharedPenguinGreySwimFrames]

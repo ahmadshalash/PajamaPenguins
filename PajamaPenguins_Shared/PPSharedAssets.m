@@ -31,6 +31,8 @@
         sObstacleMediumTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"iceberg_200x300"]];
         
         //Penguins
+        sPenguinGreyTextures = [SKTextureAtlas atlasNamed:@"penguin_grey_iPhone"];
+        
         sPenguinGreyIdleFrames = [NSMutableArray new];
         sPenguinGreySwimFrames = [NSMutableArray new];
         sPenguinGreyFlyFrames = [NSMutableArray new];
@@ -133,6 +135,11 @@ static SKTexture *sHomeButtonDownTexture = nil;
 }
 
 //Penguins
+static SKTextureAtlas *sPenguinGreyTextures = nil;
++ (SKTextureAtlas*)sharedPenguinGreyTextures {
+    return sPenguinGreyTextures;
+}
+
 static SKTexture *sPenguinNormalIdle = nil;
 + (SKTexture*)sharedPenguinNormalIdle {
     return sPenguinNormalIdle;

@@ -22,6 +22,29 @@ CGFloat const kIdleAnimationSpeed = 0.25;
 @end
 
 @implementation PPPlayer
++ (instancetype)playerWithType:(PlayerType)playerType atlas:(SKTextureAtlas*)atlas {
+    return [[self alloc] initWithType:playerType atlas:atlas];
+}
+
+- (instancetype)initWithType:(PlayerType)playerType atlas:(SKTextureAtlas*)atlas {
+    self.playerType = playerType;
+    NSString *initialTexture = [NSString stringWithFormat:@"penguin_%@_idle_00",[self playerTypeStringVal:playerType]];
+    
+    self = [super initWithTexture:[atlas textureNamed:initialTexture]];
+    if (self) {
+        NSMutableArray *tempIdleTextures = [NSMutableArray new];
+        for (int i = 0; i < 2; i++) {
+            NSString *idleFrame = [NSString stringWithFormat:@"penguin_%@_idle_0%d",[self playerTypeStringVal:self.playerType],i];
+            [tempIdleTextures addObject:[atlas textureNamed:idleFrame]];
+        }
+        self.idleTextures = tempIdleTextures;
+        
+//        NSMutableArray *tempSwimFrames = [NSMutableArray new];
+//        NSMutableArray *tempFlyFrames = [NSMutableArray new];
+    }
+    return self;
+}
+
 + (instancetype)playerWithIdleTextures:(NSArray*)idleTextures swimTextures:(NSArray*)swimTextures flyTextures:(NSArray*)flyTextures {
     return [[self alloc] initWithIdleTextures:idleTextures swimTextures:swimTextures flyTextures:flyTextures];
 }
@@ -94,6 +117,23 @@ CGFloat const kIdleAnimationSpeed = 0.25;
     if (_playerShouldDive) {
         [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy - kAcceleration)];
     }
+}
+
+#pragma mark - Player Type String Parsing
+- (NSString*)playerTypeStringVal:(PlayerType)playerType {
+    NSString *type = nil;
+    
+    switch (playerType) {
+        case PlayerTypeGrey:
+            type = @"grey";
+            break;
+            
+        default:
+            type = @"";
+            NSLog(@"Player Type not recognized");
+            break;
+    }
+    return type;
 }
 
 @end
