@@ -6,7 +6,7 @@
 //
 
 #import "SSKColorNode.h"
-#import "SKNode+SFAdditions.h"
+#import "SSKUtils.h"
 
 NSString * const kColorChangeKey = @"colorChangeKey";
 

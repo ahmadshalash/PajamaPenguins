@@ -11,7 +11,7 @@
 #import "PPSharedAssets.h"
 #import "PPPlayer.h"
 
-#import "SKAction+SFAdditions.h"
+#import "SSKUtils.h"
 
 #import "SSKButtonNode.h"
 #import "SSKGraphicsUtils.h"

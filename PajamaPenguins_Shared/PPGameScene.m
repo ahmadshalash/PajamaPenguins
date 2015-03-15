@@ -11,9 +11,7 @@
 #import "PPIcebergObstacle.h"
 
 #import "SKColor+SFAdditions.h"
-#import "SKNode+SFAdditions.h"
-#import "SKScene+SFAdditions.h"
-#import "SKAction+SFAdditions.h"
+#import "SSKUtils.h"
 
 #import "SSKProgressBarNode.h"
 #import "SSKWaterSurfaceNode.h"
