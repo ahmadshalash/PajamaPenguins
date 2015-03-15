@@ -380,7 +380,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
 }
 
 #pragma mark - Breath Meter
-//Meter
 - (void)updateBreathMeter {
     [(SSKProgressBarNode*)[self.hudNode childNodeWithName:@"progressBar"] setProgress:_breathTimer/kMaxBreathTimer];
 }
@@ -391,7 +390,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     }
 }
 
-//Timer
 - (void)resetBreathTimer {
     _breathTimer = kMaxBreathTimer;
 }
@@ -452,15 +450,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     } else {
         [[self currentPlayer] setPlayerState:PlayerStateFly];
     }
-}
-
-#pragma mark - Water Background
-- (SKSpriteNode*)waterBackgroundNode {
-    SKSpriteNode *waterBackground = [SKSpriteNode spriteNodeWithTexture:[SKTexture loadPixelTextureWithName:@"WaterBackground"]];
-    [waterBackground setScale:[self backgroundSpriteScale]];
-    [waterBackground setAnchorPoint:CGPointMake(0, 1)];
-    [waterBackground setAlpha:0.65];
-    return waterBackground;
 }
 
 #pragma mark - Water Surface
@@ -542,10 +531,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     return (SKEmitterNode*)[self.worldNode childNodeWithName:@"bubbleEmitter"];
 }
 
-- (void)trackCloudForSnowPosition {
-    
-}
-
 #pragma mark - Obstacles
 
 //TEMP ***
@@ -562,8 +547,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [newObstacle setPosition:CGPointMake((self.size.width/kWorldScaleCap) + newObstacle.size.width/2, 0)];
     return newObstacle;
 }
-
-
 //TEMP ***
 
 - (PPIcebergObstacle*)newIceBergWithTexture:(SKTexture*)texture {
@@ -617,7 +600,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     }];
 }
 
-
 #pragma mark - Score Tracking
 - (void)startScoreCounter {
     SKAction *timerDelay = [SKAction waitForDuration:.25];
@@ -651,10 +633,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [down setTimingMode:SKActionTimingEaseInEaseOut];
     SKAction *up = [down reversedAction];
     return [SKAction sequence:@[down,up]];
-}
-
-- (SKAction*)moveObstacleWithDuration:(NSTimeInterval)duration {
-    return [SKAction moveToX:-self.size.width duration:duration];
 }
 
 #pragma mark - Convenience
@@ -770,7 +748,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     
     SSKParallaxNode *parallaxLayer = [SSKParallaxNode nodeWithSize:self.scene.size attachedNodes:parallaxNodes moveSpeed:CGPointMake(speed, 0) numFrames:3];
     [parallaxLayer setName:@"parallaxNode"];
-//    [parallaxLayer setAlpha:.9];
     [parallaxLayer setZPosition:backgroundLayer];
     return parallaxLayer;
 }
@@ -861,18 +838,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
 
 - (CGFloat)scaleCapInversion {
     return (1 - kWorldScaleCap);
-}
-
-- (CGSize)maxWorldScaleSize {
-    return CGSizeMake(self.size.width * (1 + kWorldScaleCap), self.size.height * (1 + kWorldScaleCap));
-}
-
-- (CGFloat)backgroundSpriteScale {
-    return ((self.size.width/kWorldScaleCap)/self.size.width) + ((self.size.width/2)/kWorldScaleCap)/(self.size.width/2);
-}
-
-- (BOOL)worldIsBelowMinZoom {
-    return (self.worldNode.xScale <= kWorldScaleCap);
 }
 
 - (BOOL)playerIsBelowBottomBoundary {

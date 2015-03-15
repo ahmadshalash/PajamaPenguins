@@ -37,5 +37,4 @@
     return [PPIcebergObstacle spriteNodeWithTexture:[SKTexture textureWithImageNamed:name]];
 }
 
-
 @end
