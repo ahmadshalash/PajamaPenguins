@@ -39,7 +39,7 @@ typedef void (^AssetCompletionHandler)(void);
 + (SKTexture*)sharedHomeButtonDownTexture;
 
 //Shared Penguins Textures
-+ (SKTextureAtlas*)sharedPenguinGreyTextures;
++ (SKTextureAtlas*)sharedPenguinBlackTextures;
 
 + (NSMutableArray*)sharedPenguinGreyIdleFrames;
 + (NSMutableArray*)sharedPenguinGreySwimFrames;

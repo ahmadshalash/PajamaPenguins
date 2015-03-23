@@ -128,6 +128,10 @@ CGFloat const kIdleAnimationSpeed = 0.25;
             type = @"grey";
             break;
             
+        case PlayerTypeBlack:
+            type = @"black";
+            break;
+            
         default:
             type = @"";
             NSLog(@"Player Type not recognized");

@@ -84,6 +84,7 @@ CGFloat const kParallaxMinSpeed = -20.0;
 @property (nonatomic) SSKWaterSurfaceNode *waterSurface;
 @property (nonatomic) NSMutableArray *obstacleTexturePool;
 @property (nonatomic) SKEmitterNode *snowEmitter;
+@property (nonatomic) SSKCameraNode *cameraNode;
 @property (nonatomic) SKNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
 @property (nonatomic) SKNode *hudNode;
@@ -186,6 +187,9 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [player setPlayerShouldRotate:YES];
     [player setPlayerState:PlayerStateFly];
     [self.worldNode addChild:player];
+    
+    //Camera
+    self.cameraNode = [[SSKCameraNode alloc] init];
     
     //Setting Players initial position height (for water surface tracking)
     _lastPlayerHeight = player.position.y;
@@ -321,7 +325,7 @@ CGFloat const kParallaxMinSpeed = -20.0;
 
     [self populateObstacleTexturePool];
     [self startObstacleSpawnSequence];
-    [self startSplashAtObstaclesForever];
+//    [self startSplashAtObstaclesForever];
     
     [self startScoreCounter];
 }
@@ -731,9 +735,10 @@ CGFloat const kParallaxMinSpeed = -20.0;
 }
 
 - (void)didSimulatePhysics {
-    if (self.gameState == Playing) {
-        [self updateWorldZoom];
-    }
+//    if (self.gameState == Playing) {
+//        [self updateWorldZoom];
+        [self.cameraNode centerVerticallyOnNode:[self currentPlayer]];
+//    }
 }
 #pragma mark - Parallaxing
 - (SSKParallaxNode*)backgroundLayerWithSpeed:(CGFloat)speed position:(CGPoint)position texture:(SKTexture*)texture {

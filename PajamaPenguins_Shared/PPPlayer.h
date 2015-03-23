@@ -10,6 +10,7 @@
 
 typedef NS_ENUM(NSUInteger, PlayerType) {
     PlayerTypeGrey = 0,
+    PlayerTypeBlack,
 };
 
 typedef NS_ENUM(NSUInteger, PlayerState) {
