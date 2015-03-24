@@ -10,7 +10,7 @@
 
 #import "PPSharedAssets.h"
 
-#define DEBUG_MODE 1 // Comment/uncomment to toggle debug information.
+//#define DEBUG_MODE 1 // Comment/uncomment to toggle debug information.
 
 @implementation ViewController
 

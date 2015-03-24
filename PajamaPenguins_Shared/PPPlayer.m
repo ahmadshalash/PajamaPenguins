@@ -10,7 +10,7 @@
 
 #define kAcceleration 45.0
 
-CGFloat const kAnimationSpeed = 0.035;
+CGFloat const kAnimationSpeed = 0.05;
 CGFloat const kIdleAnimationSpeed = 0.25;
 
 @interface PPPlayer()
@@ -19,6 +19,7 @@ CGFloat const kIdleAnimationSpeed = 0.25;
 @property (nonatomic) NSArray *idleTextures;
 @property (nonatomic) NSArray *swimTextures;
 @property (nonatomic) NSArray *flyTextures;
+@property (nonatomic) NSArray *diveTextures;
 @end
 
 @implementation PPPlayer
@@ -32,6 +33,7 @@ CGFloat const kIdleAnimationSpeed = 0.25;
     
     self = [super initWithTexture:[atlas textureNamed:initialTexture]];
     if (self) {
+        //Idle
         NSMutableArray *tempIdleTextures = [NSMutableArray new];
         for (int i = 0; i < 2; i++) {
             NSString *idleFrame = [NSString stringWithFormat:@"penguin_%@_idle_0%d",[self playerTypeStringVal:self.playerType],i];
@@ -39,8 +41,34 @@ CGFloat const kIdleAnimationSpeed = 0.25;
         }
         self.idleTextures = tempIdleTextures;
         
-//        NSMutableArray *tempSwimFrames = [NSMutableArray new];
-//        NSMutableArray *tempFlyFrames = [NSMutableArray new];
+        //Dive
+        NSMutableArray *tempDiveTextures = [NSMutableArray new];
+        for (int i = 0; i < 1; i ++) {
+            NSString *diveFrame = [NSString stringWithFormat:@"penguin_%@_dive_0%d",[self playerTypeStringVal:self.playerType],i];
+            [tempDiveTextures addObject:[atlas textureNamed:diveFrame]];
+        }
+        self.diveTextures = tempDiveTextures;
+
+        //Swim
+        NSMutableArray *tempSwimTextures = [NSMutableArray new];
+        for (int i = 0; i < 2; i++) {
+            NSString *swimFrame = [NSString stringWithFormat:@"penguin_%@_swim_0%d",[self playerTypeStringVal:self.playerType],i];
+            [tempSwimTextures addObject:[atlas textureNamed:swimFrame]];
+        }
+        self.swimTextures = tempSwimTextures;
+        
+        //Fly
+        NSMutableArray *tempFlyFrames = [NSMutableArray new];
+        for (int i = 0; i < 2; i ++) {
+            NSString *flyFrame = [NSString stringWithFormat:@"penguin_%@_fly_0%d",[self playerTypeStringVal:self.playerType],i];
+            [tempFlyFrames addObject:[atlas textureNamed:flyFrame]];
+        }
+        self.flyTextures = tempFlyFrames;
+        
+        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[(SKTexture*)[self.idleTextures objectAtIndex:0] size].width/2 - 5];
+        [self.physicsBody setDynamic:YES];
+        [self.physicsBody setFriction:0];
+        [self.physicsBody setRestitution:0];
     }
     return self;
 }
@@ -94,11 +122,20 @@ CGFloat const kIdleAnimationSpeed = 0.25;
     if (self.playerShouldRotate) {
         [self setPlayerRotation:dt];
     }
+
+    //Diving Physics
+    if (_playerShouldDive) {
+        [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy - kAcceleration)];
+    }
     
     //Animation
     switch (self.playerState) {
         case PlayerStateIdle:
             [self runAnimationWithTextures:self.idleTextures speed:kIdleAnimationSpeed key:@"playerIdle"];
+            break;
+            
+        case PlayerStateDive:
+            [self runAnimationWithTextures:self.diveTextures speed:kAnimationSpeed key:@"playerDive"];
             break;
             
         case PlayerStateSwim:
@@ -113,10 +150,6 @@ CGFloat const kIdleAnimationSpeed = 0.25;
             break;
     }
     
-    //Diving Physics
-    if (_playerShouldDive) {
-        [self.physicsBody setVelocity:CGVectorMake(0, self.physicsBody.velocity.dy - kAcceleration)];
-    }
 }
 
 #pragma mark - Player Type String Parsing

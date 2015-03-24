@@ -7,5 +7,4 @@
 #import "SSKScene.h"
 
 @interface PPGameScene : SSKScene
-
 @end

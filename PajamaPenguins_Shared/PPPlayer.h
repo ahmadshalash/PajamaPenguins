@@ -15,6 +15,7 @@ typedef NS_ENUM(NSUInteger, PlayerType) {
 
 typedef NS_ENUM(NSUInteger, PlayerState) {
     PlayerStateIdle = 0,
+    PlayerStateDive,
     PlayerStateSwim,
     PlayerStateFly,
 };

@@ -33,9 +33,9 @@ typedef enum {
     backgroundLayer,
     parallaxLayer,
     obstacleLayer,
-    playerLayer,
     foregroundLayer,
     waterSurfaceLayer,
+    playerLayer,
     hudLayer,
     menuLayer,
     fadeOutLayer,
@@ -174,19 +174,22 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [self.worldNode addChild:self.waterSurface];
 
     //Player
-    PPPlayer *player = [PPPlayer playerWithIdleTextures:[PPSharedAssets sharedPenguinGreyIdleFrames]
-                                           swimTextures:[PPSharedAssets sharedPenguinGreySwimFrames]
-                                            flyTextures:[PPSharedAssets sharedPenguinGreyFlyFrames]];
-    [player setPosition:CGPointMake(-self.size.width/4, 50)];
-    [player setName:@"player"];
-    [player setZRotation:SSKDegreesToRadians(90)];
-    [player setZPosition:playerLayer];
-    [player.physicsBody setCategoryBitMask:playerCategory];
-    [player.physicsBody setCollisionBitMask:obstacleCategory | edgeCategory];
-    [player.physicsBody setContactTestBitMask:obstacleCategory];
-    [player setPlayerShouldRotate:YES];
-    [player setPlayerState:PlayerStateFly];
+    PPPlayer *player = [self blackPenguin];
     [self.worldNode addChild:player];
+//    
+//    PPPlayer *player = [PPPlayer playerWithIdleTextures:[PPSharedAssets sharedPenguinGreyIdleFrames]
+//                                           swimTextures:[PPSharedAssets sharedPenguinGreySwimFrames]
+//                                            flyTextures:[PPSharedAssets sharedPenguinGreyFlyFrames]];
+//    [player setPosition:CGPointMake(-self.size.width/4, 50)];
+//    [player setName:@"player"];
+//    [player setZRotation:SSKDegreesToRadians(90)];
+//    [player setZPosition:playerLayer];
+//    [player.physicsBody setCategoryBitMask:playerCategory];
+//    [player.physicsBody setCollisionBitMask:obstacleCategory | edgeCategory];
+//    [player.physicsBody setContactTestBitMask:obstacleCategory];
+//    [player setPlayerShouldRotate:YES];
+//    [player setPlayerState:PlayerStateFly];
+//    [self.worldNode addChild:player];
     
     //Camera
     self.cameraNode = [[SSKCameraNode alloc] init];
@@ -411,6 +414,26 @@ CGFloat const kParallaxMinSpeed = -20.0;
     }
 }
 
+#pragma mark - Penguin Types
+- (PPPlayer*)penguinWithType:(PlayerType)type atlas:(SKTextureAtlas*)atlas {
+    PPPlayer *penguin = [PPPlayer playerWithType:type atlas:atlas];
+    [penguin setPosition:CGPointMake(-self.size.width/4, 50)];
+    [penguin setScale:.75];
+    [penguin setName:@"player"];
+    [penguin setZRotation:SSKDegreesToRadians(90)];
+    [penguin setZPosition:playerLayer];
+    [penguin.physicsBody setCategoryBitMask:playerCategory];
+    [penguin.physicsBody setCollisionBitMask:obstacleCategory | edgeCategory];
+    [penguin.physicsBody setContactTestBitMask:obstacleCategory];
+    [penguin setPlayerShouldRotate:YES];
+    [penguin setPlayerState:PlayerStateFly];
+    return penguin;
+}
+
+- (PPPlayer*)blackPenguin {
+    return [self penguinWithType:PlayerTypeBlack atlas:[PPSharedAssets sharedPenguinBlackTextures]];
+}
+
 #pragma mark - Player
 - (void)clampPlayerVelocity {
     PPPlayer *player = [self currentPlayer];
@@ -447,9 +470,16 @@ CGFloat const kParallaxMinSpeed = -20.0;
 }
 
 - (void)checkPlayerAnimationState {
+    if ([self currentPlayer].playerShouldDive == YES) {
+        [[self currentPlayer] setPlayerState:PlayerStateDive];
+        return;
+    }
+    
     if ([self currentPlayer].position.y < self.waterSurface.position.y) {
         [[self currentPlayer] setPlayerState:PlayerStateSwim];
-    } else {
+    }
+    
+    else {
         [[self currentPlayer] setPlayerState:PlayerStateFly];
     }
 }
@@ -735,10 +765,10 @@ CGFloat const kParallaxMinSpeed = -20.0;
 }
 
 - (void)didSimulatePhysics {
-//    if (self.gameState == Playing) {
+    if (!(self.gameState == GameOver)) {
 //        [self updateWorldZoom];
         [self.cameraNode centerVerticallyOnNode:[self currentPlayer]];
-//    }
+    }
 }
 #pragma mark - Parallaxing
 - (SSKParallaxNode*)backgroundLayerWithSpeed:(CGFloat)speed position:(CGPoint)position texture:(SKTexture*)texture {
