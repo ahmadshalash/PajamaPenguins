@@ -19,7 +19,7 @@
     [super viewWillLayoutSubviews];
     
     SKView * skView = (SKView *)self.view;
-    [skView setIgnoresSiblingOrder:YES]; //Provides extra rendering optimizations. (However, zPositions need to be explicitly set)
+    [skView setIgnoresSiblingOrder:YES]; //Provides extra rendering optimizations. (zPositions need to be explicitly set)
 
     if (!skView.scene) {
         [PPSharedAssets loadSharedAssetsWithCompletion:^{
@@ -47,7 +47,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
 }
 
 @end
