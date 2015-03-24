@@ -766,8 +766,8 @@ CGFloat const kParallaxMinSpeed = -20.0;
 
 - (void)didSimulatePhysics {
     if (!(self.gameState == GameOver)) {
-//        [self updateWorldZoom];
-        [self.cameraNode centerVerticallyOnNode:[self currentPlayer]];
+        [self updateWorldZoom];
+//        [self.cameraNode centerVerticallyOnNode:[self currentPlayer]];
     }
 }
 #pragma mark - Parallaxing
