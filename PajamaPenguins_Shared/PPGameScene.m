@@ -84,7 +84,7 @@ CGFloat const kParallaxMinSpeed = -20.0;
 @property (nonatomic) SSKWaterSurfaceNode *waterSurface;
 @property (nonatomic) NSMutableArray *obstacleTexturePool;
 @property (nonatomic) SKEmitterNode *snowEmitter;
-@property (nonatomic) SSKCameraNode *cameraNode;
+
 @property (nonatomic) SKNode *worldNode;
 @property (nonatomic) SKNode *menuNode;
 @property (nonatomic) SKNode *hudNode;
@@ -176,23 +176,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     //Player
     PPPlayer *player = [self blackPenguin];
     [self.worldNode addChild:player];
-//    
-//    PPPlayer *player = [PPPlayer playerWithIdleTextures:[PPSharedAssets sharedPenguinGreyIdleFrames]
-//                                           swimTextures:[PPSharedAssets sharedPenguinGreySwimFrames]
-//                                            flyTextures:[PPSharedAssets sharedPenguinGreyFlyFrames]];
-//    [player setPosition:CGPointMake(-self.size.width/4, 50)];
-//    [player setName:@"player"];
-//    [player setZRotation:SSKDegreesToRadians(90)];
-//    [player setZPosition:playerLayer];
-//    [player.physicsBody setCategoryBitMask:playerCategory];
-//    [player.physicsBody setCollisionBitMask:obstacleCategory | edgeCategory];
-//    [player.physicsBody setContactTestBitMask:obstacleCategory];
-//    [player setPlayerShouldRotate:YES];
-//    [player setPlayerState:PlayerStateFly];
-//    [self.worldNode addChild:player];
-    
-    //Camera
-    self.cameraNode = [[SSKCameraNode alloc] init];
     
     //Setting Players initial position height (for water surface tracking)
     _lastPlayerHeight = player.position.y;
@@ -794,15 +777,15 @@ CGFloat const kParallaxMinSpeed = -20.0;
 #pragma mark - World Zoom
 - (void)updateWorldZoom {
     if ([self playerIsAboveTopBoundary]) {
-        CGFloat newScale = 1 - ([self percentageOfMaxScaleWithRatio:[self topZoomRatio]]);
-        [self.worldNode setScale:newScale];
-        [self.worldNode setPosition:CGPointMake([self amountToOffsetTop].dx, [self amountToOffsetTop].dy)];
+
+        [self setNewWorldScaleWithRatio:[self topZoomRatio]];
+        [self setNewWorldPositionWithOffset:[self amountToOffsetTop]];
     }
     
     else if ([self playerIsBelowBottomBoundary]) {
-        CGFloat newScale = 1 - ([self percentageOfMaxScaleWithRatio:[self bottomZoomRatio]]);
-        [self.worldNode setScale:newScale];
-        [self.worldNode setPosition:CGPointMake([self amountToOffsetBottom].dx, [self amountToOffsetBottom].dy)];
+        
+        [self setNewWorldScaleWithRatio:[self bottomZoomRatio]];
+        [self setNewWorldPositionWithOffset:[self amountToOffsetBottom]];
     }
     
     else {
@@ -813,6 +796,15 @@ CGFloat const kParallaxMinSpeed = -20.0;
 - (void)resetWorldZoom {
     [self.worldNode setScale:1];
     [self.worldNode setPosition:CGPointZero];
+}
+
+- (void)setNewWorldScaleWithRatio:(CGFloat)zoomRatio {
+    CGFloat newScale = 1 - ([self percentageOfMaxScaleWithRatio:zoomRatio]);
+    [self.worldNode setScale:newScale];
+}
+
+- (void)setNewWorldPositionWithOffset:(CGVector)amountToOffset {
+    [self.worldNode setPosition:CGPointMake(amountToOffset.dx, amountToOffset.dy)];
 }
 
 - (CGVector)amountToOffsetTop {
