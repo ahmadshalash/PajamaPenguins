@@ -72,7 +72,7 @@
         }
         
         if (label) {
-            self.label = [SKLabelNode centeredLabelWithLabel:label];
+            _label = [SKLabelNode centeredLabelWithLabel:label];
             [self addChild:self.label];
         }
         
@@ -83,8 +83,7 @@
 }
 
 - (instancetype)initWithIdleColor:(UIColor *)idleColor selectedColor:(UIColor *)selectedColor size:(CGSize)size labelWithText:(NSString*)text {
-    SKLabelNode *label = [SKLabelNode centeredLabelWithText:text];
-    return [self initWithIdleColor:idleColor selectedColor:selectedColor size:size label:label];
+    return [self initWithIdleColor:idleColor selectedColor:selectedColor size:size label:[SKLabelNode centeredLabelWithText:text]];
 }
 
 - (instancetype)initWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size {
@@ -95,8 +94,8 @@
     return [self initWithIdleColor:color selectedColor:color size:size];
 }
 
-#pragma mark - Init with shape
-- (instancetype)initWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape {
+#pragma mark - Init with two shapes
+- (instancetype)initWithIdleShape:(SKShapeNode *)idleShape selectedShape:(SKShapeNode *)selectedShape label:(SKLabelNode*)label {
     self = [super initWithColor:[SKColor clearColor] size:CGSizeMake(0, 0)];
     if (self) {
         self.size = idleShape.frame.size;
@@ -112,26 +111,69 @@
             [self addChild:_selectedShape];
         }
         
+        if (label) {
+            _label = [SKLabelNode centeredLabelWithLabel:label];
+            [self addChild:_label];
+        }
+        
         [self setIsSelected:NO];
         [self setUserInteractionEnabled:YES];
     }
     return self;
 }
 
-- (instancetype)initWithShape:(SKShapeNode *)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor {
+- (instancetype)initWithIdleShape:(SKShapeNode *)idleShape selectedShape:(SKShapeNode *)selectedShape labelWithText:(NSString*)text {
+    return [self initWithIdleShape:idleShape selectedShape:selectedShape label:[SKLabelNode centeredLabelWithText:text]];
+}
+
+- (instancetype)initWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape {
+    return [self initWithIdleShape:idleShape selectedShape:selectedShape label:nil];
+}
+
+#pragma mark - Init with one shape - two colors
+- (instancetype)initWithShape:(SKShapeNode*)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor label:(SKLabelNode*)label {
     SKShapeNode *idleShape = shape.copy;
     SKShapeNode *selectedShape = shape.copy;
     
     [idleShape setFillColor:idleFillColor];
     [selectedShape setFillColor:selectedFillColor];
+    return [self initWithIdleShape:idleShape selectedShape:selectedShape label:label];
+}
 
-    return [self initWithIdleShape:idleShape selectedShape:selectedShape];
+- (instancetype)initWithShape:(SKShapeNode*)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor labelWithText:(NSString*)text {
+    return [self initWithShape:shape idleFillColor:idleFillColor selectedFillColor:selectedFillColor label:[SKLabelNode centeredLabelWithText:text]];
+}
+
+- (instancetype)initWithShape:(SKShapeNode *)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor {
+    return [self initWithShape:shape idleFillColor:idleFillColor selectedFillColor:selectedFillColor label:nil];
+}
+
+#pragma mark - Init with two circles
+- (instancetype)initWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor label:(SKLabelNode*)label {
+    SKShapeNode *idleCircle = [SKShapeNode shapeNodeWithCircleOfRadius:idleRadius fillColor:fillColor];
+    SKShapeNode *selectedCircle = [SKShapeNode shapeNodeWithCircleOfRadius:selectedRadius fillColor:fillColor];
+    return [self initWithIdleShape:idleCircle selectedShape:selectedCircle label:label];
+}
+
+- (instancetype)initWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor labelWithText:(NSString*)text {
+    return [self initWithIdleCircleOfRadius:idleRadius selectedCircleOfRadius:selectedRadius fillColor:fillColor label:[SKLabelNode centeredLabelWithText:text]];
 }
 
 - (instancetype)initWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor {
-    SKShapeNode *idleShape = [SKShapeNode shapeNodeWithCircleOfRadius:idleRadius fillColor:fillColor];
-    SKShapeNode *selectedShape = [SKShapeNode shapeNodeWithCircleOfRadius:selectedRadius fillColor:fillColor];
-    return [self initWithIdleShape:idleShape selectedShape:selectedShape];
+    return [self initWithIdleCircleOfRadius:idleRadius selectedCircleOfRadius:selectedRadius fillColor:fillColor label:nil];
+}
+
+#pragma mark - Init with one circle - two colors
+- (instancetype)initWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor label:(SKLabelNode*)label {
+    return [self initWithShape:[SKShapeNode shapeNodeWithCircleOfRadius:radius] idleFillColor:idleFillColor selectedFillColor:selectedFillColor label:label];
+}
+
+- (instancetype)initWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor labelWithText:(NSString*)text {
+    return [self initWithShape:[SKShapeNode shapeNodeWithCircleOfRadius:radius] idleFillColor:idleFillColor selectedFillColor:selectedFillColor labelWithText:text];
+}
+
+- (instancetype)initWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor {
+    return [self initWithShape:[SKShapeNode shapeNodeWithCircleOfRadius:radius] idleFillColor:idleFillColor selectedFillColor:selectedFillColor];
 }
 
 #pragma mark - Convenience initializers
@@ -158,16 +200,53 @@
 }
 
 //Shape Button
++ (instancetype)buttonWithIdleShape:(SKShapeNode *)idleShape selectedShape:(SKShapeNode *)selectedShape label:(SKLabelNode*)label {
+    return [[self alloc] initWithIdleShape:idleShape selectedShape:selectedShape label:label];
+}
+
++ (instancetype)buttonWithIdleShape:(SKShapeNode *)idleShape selectedShape:(SKShapeNode *)selectedShape labelWithText:(NSString*)text {
+    return [[self alloc] initWithIdleShape:idleShape selectedShape:selectedShape labelWithText:text];
+}
+
 + (instancetype)buttonWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape {
     return [[self alloc] initWithIdleShape:idleShape selectedShape:selectedShape];
+}
+
++ (instancetype)buttonWithShape:(SKShapeNode*)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor label:(SKLabelNode*)label {
+    return [[self alloc] initWithShape:shape idleFillColor:idleFillColor selectedFillColor:selectedFillColor label:label];
+}
+
++ (instancetype)buttonWithShape:(SKShapeNode*)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor labelWithText:(NSString*)text {
+    return [[self alloc] initWithShape:shape idleFillColor:idleFillColor selectedFillColor:selectedFillColor labelWithText:text];
 }
 
 + (instancetype)buttonWithShape:(SKShapeNode *)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor {
     return [[self alloc] initWithShape:shape idleFillColor:idleFillColor selectedFillColor:selectedFillColor];
 }
 
+//Circle Button
++ (instancetype)buttonWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor label:(SKLabelNode*)label {
+    return [[self alloc] initWithIdleCircleOfRadius:idleRadius selectedCircleOfRadius:selectedRadius fillColor:fillColor label:label];
+}
+
++ (instancetype)buttonWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor labelWithText:(NSString*)text {
+    return [[self alloc] initWithIdleCircleOfRadius:idleRadius selectedCircleOfRadius:selectedRadius fillColor:fillColor labelWithText:text];
+}
+
 + (instancetype)buttonWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor {
     return [[self alloc] initWithIdleCircleOfRadius:idleRadius selectedCircleOfRadius:selectedRadius fillColor:fillColor];
+}
+
++ (instancetype)buttonWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor label:(SKLabelNode*)label {
+    return [[self alloc] initWithCircleOfRadius:radius idleFillColor:idleFillColor selectedFillColor:selectedFillColor label:label];
+}
+
++ (instancetype)buttonWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor labelWithText:(NSString*)text {
+    return [[self alloc] initWithCircleOfRadius:radius idleFillColor:idleFillColor selectedFillColor:selectedFillColor labelWithText:text];
+}
+
++ (instancetype)buttonWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor {
+    return [[self alloc] initWithCircleOfRadius:radius idleFillColor:idleFillColor selectedFillColor:selectedFillColor];
 }
 
 #pragma mark - Shape Button Management

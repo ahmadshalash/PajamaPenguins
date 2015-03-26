@@ -47,12 +47,13 @@ CGFloat const kPlatformPadding = 50.0;
 
 - (void)testStuff {
     CGSize buttonSize = CGSizeMake(200, 50);
+    
     SKShapeNode *idleShape = [SKShapeNode shapeNodeWithCircleOfRadius:50];
-//    [idleShape setFillColor:[SKColor redColor]];
+    [idleShape setFillColor:[SKColor redColor]];
     SKShapeNode *selectedShape = [SKShapeNode shapeNodeWithCircleOfRadius:45];
     [selectedShape setFillColor:[SKColor redColor]];
     
-    SSKButtonNode *colorbutton = [SSKButtonNode buttonWithShape:idleShape idleFillColor:[SKColor blueColor] selectedFillColor:[SKColor redColor]];
+    SSKButtonNode *colorbutton = [SSKButtonNode buttonWithCircleOfRadius:50 idleFillColor:[SKColor blueColor] selectedFillColor:[SKColor redColor] labelWithText:@"Button"];
     [colorbutton setTouchDownInsideTarget:self selector:@selector(testButtonTouchDown)];
     [colorbutton setZPosition:100];
     [self addChild:colorbutton];

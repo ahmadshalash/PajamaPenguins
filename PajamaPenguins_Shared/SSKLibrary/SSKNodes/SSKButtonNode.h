@@ -8,12 +8,6 @@
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
 
-/*
- 
- NOTE: Button streching only works via setting xScale and yScale as of iOS 8.
- 
- */
-
 @interface SSKButtonNode : SKSpriteNode
 
 @property (nonatomic, readonly) SEL SELTouchUpInside;
@@ -44,7 +38,7 @@
 - (instancetype)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture;
 - (instancetype)initWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName;
 
-// Create button with colors
+// Create rectangle button with colors
 + (instancetype)buttonWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size label:(SKLabelNode*)label;
 + (instancetype)buttonWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size labelWithText:(NSString*)text;
 + (instancetype)buttonWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size;
@@ -53,14 +47,41 @@
 - (instancetype)initWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size labelWithText:(NSString*)text;
 - (instancetype)initWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size;
 
-// Create button with shapes
+// Create button with two custom shapes, one color
++ (instancetype)buttonWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape label:(SKLabelNode*)label;
++ (instancetype)buttonWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape labelWithText:(NSString*)text;
 + (instancetype)buttonWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape;
-+ (instancetype)buttonWithShape:(SKShapeNode *)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor;
+
+- (instancetype)initWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape label:(SKLabelNode*)label;
+- (instancetype)initWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape labelWithText:(NSString*)text;
+- (instancetype)initWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape;
+
+// Create button with one custom shape, two colors
++ (instancetype)buttonWithShape:(SKShapeNode*)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor label:(SKLabelNode*)label;
++ (instancetype)buttonWithShape:(SKShapeNode*)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor labelWithText:(NSString*)text;
++ (instancetype)buttonWithShape:(SKShapeNode*)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor;
+
+- (instancetype)initWithShape:(SKShapeNode*)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor label:(SKLabelNode*)label;
+- (instancetype)initWithShape:(SKShapeNode*)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor labelWithText:(NSString*)text;
+- (instancetype)initWithShape:(SKShapeNode*)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor;
+
+// Create button with two circles, one color
++ (instancetype)buttonWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor label:(SKLabelNode*)label;
++ (instancetype)buttonWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor labelWithText:(NSString*)text;
 + (instancetype)buttonWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor;
 
-- (instancetype)initWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape;
-- (instancetype)initWithShape:(SKShapeNode *)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor;
+- (instancetype)initWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor label:(SKLabelNode*)label;
+- (instancetype)initWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor labelWithText:(NSString*)text;
 - (instancetype)initWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor;
+
+// Create button with one circle, two colors
++ (instancetype)buttonWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor label:(SKLabelNode*)label;
++ (instancetype)buttonWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor labelWithText:(NSString*)text;
++ (instancetype)buttonWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor;
+
+- (instancetype)initWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor label:(SKLabelNode*)label;
+- (instancetype)initWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor labelWithText:(NSString*)text;
+- (instancetype)initWithCircleOfRadius:(CGFloat)radius idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor;
 
 // Set responding selectors
 - (void)setTouchUpInsideTarget:(id)theTarget selector:(SEL)theSelector;
