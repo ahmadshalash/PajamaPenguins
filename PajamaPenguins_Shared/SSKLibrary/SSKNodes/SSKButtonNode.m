@@ -118,7 +118,11 @@
     return self;
 }
 
-
+- (instancetype)initWithIdleCircleRadius:(CGFloat)idleRadius selectedCircleRadius:(CGFloat)selectedRadius {
+    SKShapeNode *idleShape = [SKShapeNode shapeNodeWithCircleOfRadius:idleRadius];
+    SKShapeNode *selectedShape = [SKShapeNode shapeNodeWithCircleOfRadius:selectedRadius];
+    return [self initWithIdleShape:idleShape selectedShape:selectedShape];
+}
 
 #pragma mark - Convenience initializers
 //Textured Button

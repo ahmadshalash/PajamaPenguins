@@ -57,6 +57,7 @@
 + (instancetype)buttonWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape;
 
 - (instancetype)initWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape;
+- (instancetype)initWithIdleCircleRadius:(CGFloat)idleRadius selectedCircleRadius:(CGFloat)selectedRadius;
 
 // Set responding selectors
 - (void)setTouchUpInsideTarget:(id)theTarget selector:(SEL)theSelector;
