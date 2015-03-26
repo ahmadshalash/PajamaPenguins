@@ -27,6 +27,9 @@
 @property (nonatomic, readwrite) SKTexture *idleTexture;
 @property (nonatomic, readwrite) SKTexture *selectedTexture;
 
+@property (nonatomic, readwrite) SKColor *idleColor;
+@property (nonatomic, readwrite) SKColor *selectedColor;
+
 @property (nonatomic) BOOL isSelected;
 
 + (instancetype)buttonWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture;

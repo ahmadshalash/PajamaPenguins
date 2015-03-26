@@ -8,17 +8,14 @@
 #import "SSKButtonNode.h"
 
 @interface SSKButtonNode()
-
 @end
 
 @implementation SSKButtonNode
-
 
 #pragma mark - Init with textures
 - (instancetype)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture {
     self = [super initWithTexture:idleTexture color:[SKColor clearColor] size:idleTexture.size];
     if (self) {
-        //Instance Textures
         if (idleTexture) {
             [self setIdleTexture:idleTexture];
         }
@@ -62,9 +59,23 @@
 }
 
 #pragma mark - Init with colors
-#warning Finish color implementation
 - (instancetype)initWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size {
-    return nil;
+    self = [super initWithColor:idleColor size:size];
+    if (self) {
+        self.size = size;
+        
+        if (idleColor) {
+            [self setIdleColor:idleColor];
+        }
+        
+        if (selectedColor) {
+            [self setSelectedColor:selectedColor];
+        }
+        
+        [self setIsSelected:NO];
+        [self setUserInteractionEnabled:YES];
+    }
+    return self;
 }
 
 - (instancetype)initWithColor:(UIColor *)color size:(CGSize)size {
@@ -87,12 +98,12 @@
 #pragma mark - Setter Overrides
 - (void)setIsSelected:(BOOL)isSelected {
     _isSelected = isSelected;
-    if (_selectedTexture) {
-        if (_isSelected) {
-            [self setTexture:_selectedTexture];
-        } else {
-            [self setTexture:_idleTexture];
-        }
+    if (_isSelected) {
+        if (_selectedColor) [self setColor:_selectedColor];
+        if (_selectedTexture)[self setTexture:_selectedTexture];
+    } else {
+        if (_idleColor) [self setColor:_idleColor];
+        if (_idleTexture)[self setTexture:_idleTexture];
     }
 }
 
@@ -179,4 +190,5 @@
 #endif
     return location;
 }
+
 @end

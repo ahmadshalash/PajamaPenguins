@@ -46,6 +46,10 @@ CGFloat const kPlatformPadding = 50.0;
 }
 
 - (void)testStuff {
+    CGSize buttonSize = CGSizeMake(200, 50);
+    SSKButtonNode *colorbutton = [SSKButtonNode buttonWithIdleColor:[SKColor redColor] selectedColor:[SKColor blueColor] size:buttonSize];
+    [colorbutton setZPosition:100];
+    [self addChild:colorbutton];
 }
 
 #pragma mark - Scene Construction
