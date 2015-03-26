@@ -24,10 +24,8 @@
 @property (nonatomic, readonly, weak) id targetTouchUpOutside;
 @property (nonatomic, readonly, weak) id targetTouchDownInside;
 
-@property (nonatomic, readwrite, strong) SKTexture *idleTexture;
-@property (nonatomic, readwrite, strong) SKTexture *selectedTexture;
-
-@property (nonatomic) SKLabelNode *labelNode;
+@property (nonatomic, readwrite) SKTexture *idleTexture;
+@property (nonatomic, readwrite) SKTexture *selectedTexture;
 
 @property (nonatomic) BOOL isSelected;
 
@@ -36,6 +34,9 @@
 
 + (instancetype)buttonWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName;
 - (instancetype)initWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName;
+
++ (instancetype)buttonWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size;
+- (instancetype)initWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size;
 
 - (void)setTouchUpInsideTarget:(id)theTarget selector:(SEL)theSelector;
 - (void)setTouchDownInsideTarget:(id)theTarget selector:(SEL)theSelector;

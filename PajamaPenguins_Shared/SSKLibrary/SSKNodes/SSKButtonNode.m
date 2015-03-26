@@ -13,10 +13,8 @@
 
 @implementation SSKButtonNode
 
-+ (instancetype)buttonWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture {
-    return [[self alloc] initWithIdleTexture:idleTexture selectedTexture:selectedTexture];
-}
 
+#pragma mark - Init with textures
 - (instancetype)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture {
     self = [super initWithTexture:idleTexture color:[SKColor clearColor] size:idleTexture.size];
     if (self) {
@@ -29,17 +27,12 @@
             [self setSelectedTexture:selectedTexture];
         }
         
-//        //For button scaling
-//        self.centerRect = CGRectMake((self.size.width/2 - 1)/self.size.width,
-//                                     (self.size.height/2 - 1)/self.size.height,
-//                                     2/self.size.width,
-//                                     2/self.size.height);
-        
         [self setIsSelected:NO];
         [self setUserInteractionEnabled:YES];
     }
     return self;
 }
+
 
 - (instancetype)initWithTexture:(SKTexture *)texture {
     return [self initWithIdleTexture:texture selectedTexture:nil];
@@ -49,10 +42,7 @@
     return [self initWithIdleTexture:texture selectedTexture:nil];
 }
 
-+ (instancetype)buttonWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName {
-    return [[self alloc] initWithIdleImageName:idleImageName selectedImageName:selectedImageName];
-}
-
+#pragma mark - Init with images named
 - (instancetype)initWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName {
     SKTexture *idleTexture = nil;
     if (idleImageName) {
@@ -69,6 +59,29 @@
 
 - (instancetype)initWithImageNamed:(NSString *)name {
     return [self initWithIdleImageName:name selectedImageName:nil];
+}
+
+#pragma mark - Init with colors
+#warning Finish color implementation
+- (instancetype)initWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size {
+    return nil;
+}
+
+- (instancetype)initWithColor:(UIColor *)color size:(CGSize)size {
+    return [self initWithIdleColor:color selectedColor:color size:size];
+}
+
+#pragma mark - Convenience initializers
++ (instancetype)buttonWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName {
+    return [[self alloc] initWithIdleImageName:idleImageName selectedImageName:selectedImageName];
+}
+
++ (instancetype)buttonWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture {
+    return [[self alloc] initWithIdleTexture:idleTexture selectedTexture:selectedTexture];
+}
+
++ (instancetype)buttonWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size {
+    return [[self alloc] initWithIdleColor:idleColor selectedColor:selectedColor size:size];
 }
 
 #pragma mark - Setter Overrides

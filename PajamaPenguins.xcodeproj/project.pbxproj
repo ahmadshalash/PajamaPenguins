@@ -39,6 +39,7 @@
 		EE34347F1AAC125D0010BE71 /* pajama_penguins_assets.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EE34347D1AAC125D0010BE71 /* pajama_penguins_assets.atlas */; };
 		EE5575EB1A5A108100B87145 /* PPGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5575E91A5A108100B87145 /* PPGameScene.m */; };
 		EE5575F01A5A16A700B87145 /* PPGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5575E91A5A108100B87145 /* PPGameScene.m */; };
+		EE5E21D41AC35F0400C9A310 /* EmitterParticle.png in Resources */ = {isa = PBXBuildFile; fileRef = EE5E21D21AC35F0400C9A310 /* EmitterParticle.png */; };
 		EE6F92F81A82F39400286DC7 /* SSKGameCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92E71A82F39400286DC7 /* SSKGameCenter.m */; };
 		EE6F92FA1A82F39400286DC7 /* SSKiAD.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92E91A82F39400286DC7 /* SSKiAD.m */; };
 		EE6F92FC1A82F39400286DC7 /* SSKButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92EC1A82F39400286DC7 /* SSKButtonNode.m */; };
@@ -61,8 +62,8 @@
 		EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
 		EEBA93F31A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
 		EEC369281AC0DAFA0099A2C6 /* penguin_black_iPhone.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EEC369271AC0DAFA0099A2C6 /* penguin_black_iPhone.atlas */; };
-		EEC9DB7C1AA7B2040022CDF1 /* EmitterParticle.png in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB7B1AA7B2040022CDF1 /* EmitterParticle.png */; };
-		EEC9DB7D1AA7B2040022CDF1 /* EmitterParticle.png in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB7B1AA7B2040022CDF1 /* EmitterParticle.png */; };
+		EEC9DB7C1AA7B2040022CDF1 /* EmitterParticleOld.png in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB7B1AA7B2040022CDF1 /* EmitterParticleOld.png */; };
+		EEC9DB7D1AA7B2040022CDF1 /* EmitterParticleOld.png in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB7B1AA7B2040022CDF1 /* EmitterParticleOld.png */; };
 		EEC9DB821AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB811AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks */; };
 		EEC9DB831AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB811AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks */; };
 		EEC9DB861AA7B5510022CDF1 /* SnowEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEC9DB841AA7B5510022CDF1 /* SnowEmitter.sks */; };
@@ -125,6 +126,7 @@
 		EE34347D1AAC125D0010BE71 /* pajama_penguins_assets.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = pajama_penguins_assets.atlas; sourceTree = "<group>"; };
 		EE5575E81A5A108100B87145 /* PPGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPGameScene.h; sourceTree = "<group>"; };
 		EE5575E91A5A108100B87145 /* PPGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPGameScene.m; sourceTree = "<group>"; };
+		EE5E21D21AC35F0400C9A310 /* EmitterParticle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmitterParticle.png; sourceTree = "<group>"; };
 		EE6F92E61A82F39400286DC7 /* SSKGameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKGameCenter.h; sourceTree = "<group>"; };
 		EE6F92E71A82F39400286DC7 /* SSKGameCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKGameCenter.m; sourceTree = "<group>"; };
 		EE6F92E81A82F39400286DC7 /* SSKiAD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKiAD.h; sourceTree = "<group>"; };
@@ -147,7 +149,7 @@
 		EEBA93F01A93FD4F00CBD711 /* TwoDimensionalArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoDimensionalArray.h; sourceTree = "<group>"; };
 		EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoDimensionalArray.m; sourceTree = "<group>"; };
 		EEC369271AC0DAFA0099A2C6 /* penguin_black_iPhone.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = penguin_black_iPhone.atlas; sourceTree = "<group>"; };
-		EEC9DB7B1AA7B2040022CDF1 /* EmitterParticle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmitterParticle.png; sourceTree = "<group>"; };
+		EEC9DB7B1AA7B2040022CDF1 /* EmitterParticleOld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmitterParticleOld.png; sourceTree = "<group>"; };
 		EEC9DB811AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = PlayerSplashDownEmitter.sks; path = PajamaPenguins_Shared/PlayerSplashDownEmitter.sks; sourceTree = SOURCE_ROOT; };
 		EEC9DB841AA7B5510022CDF1 /* SnowEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SnowEmitter.sks; sourceTree = "<group>"; };
 		EEC9DB8B1AA7BF5E0022CDF1 /* SSKProgressBarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKProgressBarNode.h; sourceTree = "<group>"; };
@@ -317,7 +319,8 @@
 		EE3434801AAC180B0010BE71 /* EmitterAssets */ = {
 			isa = PBXGroup;
 			children = (
-				EEC9DB7B1AA7B2040022CDF1 /* EmitterParticle.png */,
+				EE5E21D21AC35F0400C9A310 /* EmitterParticle.png */,
+				EEC9DB7B1AA7B2040022CDF1 /* EmitterParticleOld.png */,
 			);
 			name = EmitterAssets;
 			sourceTree = "<group>";
@@ -528,13 +531,14 @@
 				EE168C8E1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				EEAE6FA41AA68B8B00215C7E /* ObstacleSplashEmitter.sks in Resources */,
 				EEAE6F971AA665E200215C7E /* WaterGradientBlue-iphone.png in Resources */,
-				EEC9DB7C1AA7B2040022CDF1 /* EmitterParticle.png in Resources */,
+				EEC9DB7C1AA7B2040022CDF1 /* EmitterParticleOld.png in Resources */,
 				EEC9DB821AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks in Resources */,
 				EE34346F1AAA52ED0010BE71 /* platform_iceberg.png in Resources */,
 				41E430B018B09E5200E1427D /* Images.xcassets in Resources */,
 				EEC9DB861AA7B5510022CDF1 /* SnowEmitter.sks in Resources */,
 				EEAE6FAA1AA68F9900215C7E /* BubbleEmitter.sks in Resources */,
 				41E4309A18B09E5200E1427D /* InfoPlist.strings in Resources */,
+				EE5E21D41AC35F0400C9A310 /* EmitterParticle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,7 +552,7 @@
 				EEAE6F9D1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */,
 				41E430DD18B09E8600E1427D /* InfoPlist.strings in Resources */,
 				EEAE6FA51AA68B8B00215C7E /* ObstacleSplashEmitter.sks in Resources */,
-				EEC9DB7D1AA7B2040022CDF1 /* EmitterParticle.png in Resources */,
+				EEC9DB7D1AA7B2040022CDF1 /* EmitterParticleOld.png in Resources */,
 				EE168C8F1A97C952005403E6 /* Fipps-Regular.otf in Resources */,
 				EEAE6FAB1AA68F9900215C7E /* BubbleEmitter.sks in Resources */,
 				EEC9DB871AA7B5510022CDF1 /* SnowEmitter.sks in Resources */,

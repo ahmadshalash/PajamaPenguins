@@ -401,7 +401,7 @@ CGFloat const kParallaxMinSpeed = -20.0;
 - (PPPlayer*)penguinWithType:(PlayerType)type atlas:(SKTextureAtlas*)atlas {
     PPPlayer *penguin = [PPPlayer playerWithType:type atlas:atlas];
     [penguin setPosition:CGPointMake(-self.size.width/4, 50)];
-    [penguin setScale:.75];
+    [penguin setScale:.4];
     [penguin setName:@"player"];
     [penguin setZRotation:SSKDegreesToRadians(90)];
     [penguin setZPosition:playerLayer];
@@ -558,7 +558,7 @@ CGFloat const kParallaxMinSpeed = -20.0;
 }
 
 - (SKNode*)newObstacle {
-    PPIcebergObstacle *newObstacle = [self newIcebergWithSize:CGSizeMake(100, 100)];
+    PPIcebergObstacle *newObstacle = [self newIcebergWithSize:CGSizeMake(50, 50)];
     [newObstacle setPosition:CGPointMake((self.size.width/kWorldScaleCap) + newObstacle.size.width/2, 0)];
     return newObstacle;
 }
@@ -783,9 +783,9 @@ CGFloat const kParallaxMinSpeed = -20.0;
     }
     
     else if ([self playerIsBelowBottomBoundary]) {
-        
-        [self setNewWorldScaleWithRatio:[self bottomZoomRatio]];
-        [self setNewWorldPositionWithOffset:[self amountToOffsetBottom]];
+//        
+//        [self setNewWorldScaleWithRatio:[self bottomZoomRatio]];
+//        [self setNewWorldPositionWithOffset:[self amountToOffsetBottom]];
     }
     
     else {
