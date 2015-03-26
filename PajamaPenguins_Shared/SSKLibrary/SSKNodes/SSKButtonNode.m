@@ -118,6 +118,16 @@
     return self;
 }
 
+- (instancetype)initWithShape:(SKShapeNode *)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor {
+    SKShapeNode *idleShape = shape.copy;
+    SKShapeNode *selectedShape = shape.copy;
+    
+    [idleShape setFillColor:idleFillColor];
+    [selectedShape setFillColor:selectedFillColor];
+
+    return [self initWithIdleShape:idleShape selectedShape:selectedShape];
+}
+
 - (instancetype)initWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor {
     SKShapeNode *idleShape = [SKShapeNode shapeNodeWithCircleOfRadius:idleRadius fillColor:fillColor];
     SKShapeNode *selectedShape = [SKShapeNode shapeNodeWithCircleOfRadius:selectedRadius fillColor:fillColor];
@@ -150,6 +160,10 @@
 //Shape Button
 + (instancetype)buttonWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape {
     return [[self alloc] initWithIdleShape:idleShape selectedShape:selectedShape];
+}
+
++ (instancetype)buttonWithShape:(SKShapeNode *)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor {
+    return [[self alloc] initWithShape:shape idleFillColor:idleFillColor selectedFillColor:selectedFillColor];
 }
 
 + (instancetype)buttonWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor {

@@ -55,10 +55,12 @@
 
 // Create button with shapes
 + (instancetype)buttonWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape;
++ (instancetype)buttonWithShape:(SKShapeNode *)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor;
 + (instancetype)buttonWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor;
 
 - (instancetype)initWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape;
-- (instancetype)initWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor;;
+- (instancetype)initWithShape:(SKShapeNode *)shape idleFillColor:(SKColor*)idleFillColor selectedFillColor:(SKColor*)selectedFillColor;
+- (instancetype)initWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor;
 
 // Set responding selectors
 - (void)setTouchUpInsideTarget:(id)theTarget selector:(SEL)theSelector;
