@@ -30,7 +30,6 @@
     return self;
 }
 
-
 - (instancetype)initWithTexture:(SKTexture *)texture {
     return [self initWithIdleTexture:texture selectedTexture:nil];
 }
@@ -59,7 +58,7 @@
 }
 
 #pragma mark - Init with colors
-- (instancetype)initWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size {
+- (instancetype)initWithIdleColor:(UIColor *)idleColor selectedColor:(UIColor *)selectedColor size:(CGSize)size labelWithText:(NSString*)text {
     self = [super initWithColor:idleColor size:size];
     if (self) {
         self.size = size;
@@ -72,14 +71,28 @@
             [self setSelectedColor:selectedColor];
         }
         
+        if (text) {
+            self.label = [SKLabelNode centeredLabelWithText:text];
+            [self addChild:self.label];
+        }
+        
         [self setIsSelected:NO];
         [self setUserInteractionEnabled:YES];
     }
     return self;
 }
 
+- (instancetype)initWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size {
+    return [self initWithIdleColor:idleColor selectedColor:selectedColor size:size labelWithText:nil];
+}
+
 - (instancetype)initWithColor:(UIColor *)color size:(CGSize)size {
     return [self initWithIdleColor:color selectedColor:color size:size];
+}
+
+#pragma mark - Init with shape
+- (instancetype)initWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape {
+    return nil;
 }
 
 #pragma mark - Convenience initializers
@@ -89,6 +102,10 @@
 
 + (instancetype)buttonWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture {
     return [[self alloc] initWithIdleTexture:idleTexture selectedTexture:selectedTexture];
+}
+
++ (instancetype)buttonWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size labelWithText:(NSString*)text {
+    return [[self alloc] initWithIdleColor:idleColor selectedColor:selectedColor size:size labelWithText:text];
 }
 
 + (instancetype)buttonWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size {
@@ -153,8 +170,11 @@
 #endif
 
 - (void)interactionBegan:(NSSet *)interactions withEvent:(id)event {
-    [self setIsSelected:YES];
-    [self runAction:[SKAction performSelector:_SELTouchDownInside onTarget:_targetTouchDownInside]];
+    CGPoint location = [self getLocationWithInteractions:interactions withEvent:event];
+    if (CGRectContainsPoint(self.frame, location)) {
+        [self setIsSelected:YES];
+        [self runAction:[SKAction performSelector:_SELTouchDownInside onTarget:_targetTouchDownInside]];
+    }
 }
 
 - (void)interactionMoved:(NSSet *)interactions withEvent:(id)event {
@@ -189,6 +209,15 @@
     location = [event locationInNode:self.parent];
 #endif
     return location;
+}
+@end
+
+@implementation SKLabelNode (SFAdditions)
++ (SKLabelNode*)centeredLabelWithText:(NSString*)text {
+    SKLabelNode *label = [SKLabelNode labelNodeWithText:text];
+    [label setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
+    [label setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
+    return label;
 }
 
 @end

@@ -47,9 +47,14 @@ CGFloat const kPlatformPadding = 50.0;
 
 - (void)testStuff {
     CGSize buttonSize = CGSizeMake(200, 50);
-    SSKButtonNode *colorbutton = [SSKButtonNode buttonWithIdleColor:[SKColor redColor] selectedColor:[SKColor blueColor] size:buttonSize];
+    SSKButtonNode *colorbutton = [[SSKButtonNode alloc] initWithIdleColor:[SKColor redColor] selectedColor:[SKColor blueColor] size:buttonSize labelWithText:@"Button"];
+    [colorbutton setTouchDownInsideTarget:self selector:@selector(testButtonTouchDown)];
     [colorbutton setZPosition:100];
     [self addChild:colorbutton];
+}
+
+- (void)testButtonTouchDown {
+    NSLog(@"TOUCH");
 }
 
 #pragma mark - Scene Construction

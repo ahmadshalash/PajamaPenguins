@@ -30,19 +30,32 @@
 @property (nonatomic, readwrite) SKColor *idleColor;
 @property (nonatomic, readwrite) SKColor *selectedColor;
 
+@property (nonatomic, readwrite) SKLabelNode *label;
+
 @property (nonatomic) BOOL isSelected;
 
+//Textured Button
 + (instancetype)buttonWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture;
 - (instancetype)initWithIdleTexture:(SKTexture*)idleTexture selectedTexture:(SKTexture*)selectedTexture;
 
 + (instancetype)buttonWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName;
 - (instancetype)initWithIdleImageName:(NSString*)idleImageName selectedImageName:(NSString*)selectedImageName;
 
+//Colored Button
 + (instancetype)buttonWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size;
 - (instancetype)initWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size;
 
+//Color Button with Label
++ (instancetype)buttonWithIdleColor:(SKColor*)idleColor selectedColor:(SKColor*)selectedColor size:(CGSize)size labelWithText:(NSString*)text;
+- (instancetype)initWithIdleColor:(UIColor *)idleColor selectedColor:(UIColor *)selectedColor size:(CGSize)size labelWithText:(NSString*)text;
+
+//Set responding selectors
 - (void)setTouchUpInsideTarget:(id)theTarget selector:(SEL)theSelector;
 - (void)setTouchDownInsideTarget:(id)theTarget selector:(SEL)theSelector;
 - (void)setTouchUpOutsideTarget:(id)theTarget selector:(SEL)theSelector;
 
+@end
+
+@interface SKLabelNode (SFAdditions)
++ (SKLabelNode*)centeredLabelWithText:(NSString*)text;
 @end
