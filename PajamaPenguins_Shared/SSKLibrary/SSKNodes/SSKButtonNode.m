@@ -118,9 +118,9 @@
     return self;
 }
 
-- (instancetype)initWithIdleCircleRadius:(CGFloat)idleRadius selectedCircleRadius:(CGFloat)selectedRadius {
-    SKShapeNode *idleShape = [SKShapeNode shapeNodeWithCircleOfRadius:idleRadius];
-    SKShapeNode *selectedShape = [SKShapeNode shapeNodeWithCircleOfRadius:selectedRadius];
+- (instancetype)initWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor {
+    SKShapeNode *idleShape = [SKShapeNode shapeNodeWithCircleOfRadius:idleRadius fillColor:fillColor];
+    SKShapeNode *selectedShape = [SKShapeNode shapeNodeWithCircleOfRadius:selectedRadius fillColor:fillColor];
     return [self initWithIdleShape:idleShape selectedShape:selectedShape];
 }
 
@@ -150,6 +150,10 @@
 //Shape Button
 + (instancetype)buttonWithIdleShape:(SKShapeNode*)idleShape selectedShape:(SKShapeNode*)selectedShape {
     return [[self alloc] initWithIdleShape:idleShape selectedShape:selectedShape];
+}
+
++ (instancetype)buttonWithIdleCircleOfRadius:(CGFloat)idleRadius selectedCircleOfRadius:(CGFloat)selectedRadius fillColor:(SKColor*)fillColor {
+    return [[self alloc] initWithIdleCircleOfRadius:idleRadius selectedCircleOfRadius:selectedRadius fillColor:fillColor];
 }
 
 #pragma mark - Shape Button Management
@@ -288,5 +292,12 @@
     [label setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
     [label setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
 }
+@end
 
+@implementation SKShapeNode (SFAdditions)
++ (SKShapeNode*)shapeNodeWithCircleOfRadius:(CGFloat)radius fillColor:(SKColor*)fillColor {
+    SKShapeNode *circle = [SKShapeNode shapeNodeWithCircleOfRadius:radius];
+    [circle setFillColor:fillColor];
+    return circle;
+}
 @end

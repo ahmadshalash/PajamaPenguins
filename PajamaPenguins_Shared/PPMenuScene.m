@@ -52,7 +52,7 @@ CGFloat const kPlatformPadding = 50.0;
     SKShapeNode *selectedShape = [SKShapeNode shapeNodeWithCircleOfRadius:45];
     [selectedShape setFillColor:[SKColor redColor]];
     
-    SSKButtonNode *colorbutton = [[SSKButtonNode alloc] initWithIdleCircleRadius:30 selectedCircleRadius:20];
+    SSKButtonNode *colorbutton = [SSKButtonNode buttonWithIdleCircleOfRadius:50 selectedCircleOfRadius:45 fillColor:[SKColor redColor]];
     [colorbutton setTouchDownInsideTarget:self selector:@selector(testButtonTouchDown)];
     [colorbutton setZPosition:100];
     [self addChild:colorbutton];
