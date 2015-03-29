@@ -17,7 +17,8 @@
         SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"pajama_penguins_assets"];
         
         //Backgrounds
-        sWaterGradient = [SKTexture textureWithImageNamed:@"WaterGradientBlue-iphone"];
+        sWaterGradient = [SKTexture textureWithImageNamed:@"water"];
+        sSkyGradient = [SKTexture textureWithImageNamed:@"sky"];
         sIcebergTexture = [SKTexture textureWithImageNamed:@"platform_iceberg"];
         
         //Buttons
@@ -86,6 +87,11 @@
 static SKTexture *sWaterGradient = nil;
 + (SKTexture*)sharedWaterGradient {
     return sWaterGradient;
+}
+
+static SKTexture *sSkyGradient = nil;
++ (SKTexture*)sharedSkyGradient {
+    return sSkyGradient;
 }
 
 static SKTexture *sIcebergTexture = nil;

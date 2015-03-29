@@ -13,6 +13,7 @@
 
 #import "SSKUtils.h"
 
+#import "SKColor+SFAdditions.h"
 #import "SSKButtonNode.h"
 #import "SSKGraphicsUtils.h"
 #import "SSKWaterSurfaceNode.h"
@@ -46,33 +47,19 @@ CGFloat const kPlatformPadding = 50.0;
 }
 
 - (void)testStuff {
-    CGSize buttonSize = CGSizeMake(200, 50);
-    
-    SKShapeNode *idleShape = [SKShapeNode shapeNodeWithCircleOfRadius:50];
-    [idleShape setFillColor:[SKColor redColor]];
-    SKShapeNode *selectedShape = [SKShapeNode shapeNodeWithCircleOfRadius:45];
-    [selectedShape setFillColor:[SKColor redColor]];
-    
-    SSKButtonNode *colorbutton = [SSKButtonNode buttonWithCircleOfRadius:50 idleFillColor:[SKColor blueColor] selectedFillColor:[SKColor redColor] labelWithText:@"Button"];
-    [colorbutton setTouchDownInsideTarget:self selector:@selector(testButtonTouchDown)];
-    [colorbutton setZPosition:100];
-    [self addChild:colorbutton];
-    
-    NSLog(@"%fl %fl", idleShape.frame.size.width,idleShape.frame.size.height);
-}
-
-- (void)testButtonTouchDown {
-    NSLog(@"TOUCH");
 }
 
 #pragma mark - Scene Construction
 - (void)createSceneBackground {
+    [self.scene setBackgroundColor:[SKColor skyColor]];
+    
     self.menuBackgroundNode = [SKNode node];
     [self.menuBackgroundNode setZPosition:SceneLayerBackground];
     [self.menuBackgroundNode setName:@"menuBackground"];
     [self addChild:self.menuBackgroundNode];
     
-    [self.menuBackgroundNode addChild:[self newColorBackground]];
+//    [self.menuBackgroundNode addChild:[self newColorBackground]];
+    [self.menuBackgroundNode addChild:[self skyBackground]];
     [self.menuBackgroundNode addChild:[self newSnowEmitter]];
     
     SKNode *platformNode = [SKNode new];
@@ -124,14 +111,20 @@ CGFloat const kPlatformPadding = 50.0;
     CGPoint surfaceStart = CGPointMake(-self.size.width/2 - surfacePadding, 0);
     CGPoint surfaceEnd = CGPointMake(self.size.width/2 + surfacePadding, 0);
     SSKWaterSurfaceNode *waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd jointWidth:5];
-    [waterSurface setAlpha:0.7];
+    [waterSurface setAlpha:0.9];
     [waterSurface setZPosition:SceneLayerForeground];
     [waterSurface setName:@"waterSurface"];
-    [waterSurface setBodyWithDepth:self.size.height/2 + surfacePadding];
+    [waterSurface setBodyWithDepth:self.size.height/2];
     [waterSurface setTexture:[PPSharedAssets sharedWaterGradient]];
     [waterSurface setSplashDamping:.003];
     [waterSurface setSplashTension:.0025];
     return waterSurface;
+}
+
+- (SKSpriteNode*)skyBackground {
+    SKSpriteNode *sky = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedSkyGradient]];
+    [sky setAnchorPoint:CGPointMake(0.5, 0)];
+    return sky;
 }
 
 - (SSKDynamicColorNode*)newColorBackground {
@@ -172,7 +165,6 @@ CGFloat const kPlatformPadding = 50.0;
     SSKButtonNode *playButton = [SSKButtonNode buttonWithIdleTexture:[PPSharedAssets sharedPlayButtonUpTexture] selectedTexture:[PPSharedAssets sharedPlayButtonDownTexture]];
     [playButton setTouchUpInsideTarget:self selector:@selector(loadGameScene)];
     [playButton setName:@"playButton"];
-    [playButton setPosition:CGPointMake(0, -self.size.height/4)];
     return playButton;
 }
 

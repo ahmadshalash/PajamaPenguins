@@ -30,6 +30,9 @@
 		EE168C981A97CEC2005403E6 /* SSKScoreNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168C961A97CEC2005403E6 /* SSKScoreNode.m */; };
 		EE168CDE1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */; };
 		EE168CDF1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */; };
+		EE16B1821AC7890E00B15134 /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = EE16B1811AC7890E00B15134 /* water.png */; };
+		EE16B1851AC78E8400B15134 /* sky.png in Resources */ = {isa = PBXBuildFile; fileRef = EE16B1841AC78E8400B15134 /* sky.png */; };
+		EE16B1881AC7911800B15134 /* SKColor+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EE16B1871AC7911800B15134 /* SKColor+SFAdditions.m */; };
 		EE2C0F371A5A01CD00B33834 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E430A118B09E5200E1427D /* Main_iPhone.storyboard */; };
 		EE2C0F381A5A01D200B33834 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E430A418B09E5200E1427D /* Main_iPad.storyboard */; };
 		EE34346F1AAA52ED0010BE71 /* platform_iceberg.png in Resources */ = {isa = PBXBuildFile; fileRef = EE34346E1AAA52ED0010BE71 /* platform_iceberg.png */; };
@@ -120,6 +123,9 @@
 		EE168C961A97CEC2005403E6 /* SSKScoreNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKScoreNode.m; sourceTree = "<group>"; };
 		EE168CDC1A994DFE005403E6 /* PPIcebergObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPIcebergObstacle.h; sourceTree = "<group>"; };
 		EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPIcebergObstacle.m; sourceTree = "<group>"; };
+		EE16B1811AC7890E00B15134 /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water.png; sourceTree = "<group>"; };
+		EE16B1841AC78E8400B15134 /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
+		EE16B1871AC7911800B15134 /* SKColor+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKColor+SFAdditions.m"; sourceTree = "<group>"; };
 		EE34346E1AAA52ED0010BE71 /* platform_iceberg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = platform_iceberg.png; sourceTree = "<group>"; };
 		EE3434791AABF4180010BE71 /* PPSharedAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPSharedAssets.h; path = ../PajamaPenguins_Shared/PPSharedAssets.h; sourceTree = "<group>"; };
 		EE34347A1AABF4180010BE71 /* PPSharedAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPSharedAssets.m; path = ../PajamaPenguins_Shared/PPSharedAssets.m; sourceTree = "<group>"; };
@@ -302,6 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				EE168C811A96A51D005403E6 /* SKColor+SFAdditions.h */,
+				EE16B1871AC7911800B15134 /* SKColor+SFAdditions.m */,
 				EE0F00761AB534B40067CD38 /* SSKUtils.h */,
 				EE0F00771AB534B40067CD38 /* SSKUtils.m */,
 			);
@@ -438,6 +445,8 @@
 		EECC66891AA11C7E004CB609 /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
+				EE16B1841AC78E8400B15134 /* sky.png */,
+				EE16B1811AC7890E00B15134 /* water.png */,
 				EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */,
 				EE34346E1AAA52ED0010BE71 /* platform_iceberg.png */,
 			);
@@ -538,7 +547,9 @@
 				EEC9DB861AA7B5510022CDF1 /* SnowEmitter.sks in Resources */,
 				EEAE6FAA1AA68F9900215C7E /* BubbleEmitter.sks in Resources */,
 				41E4309A18B09E5200E1427D /* InfoPlist.strings in Resources */,
+				EE16B1851AC78E8400B15134 /* sky.png in Resources */,
 				EE5E21D41AC35F0400C9A310 /* EmitterParticle.png in Resources */,
+				EE16B1821AC7890E00B15134 /* water.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -577,6 +588,7 @@
 				EEC9DB8D1AA7BF5E0022CDF1 /* SSKProgressBarNode.m in Sources */,
 				EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
 				EE6F92FC1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
+				EE16B1881AC7911800B15134 /* SKColor+SFAdditions.m in Sources */,
 				41E430A918B09E5200E1427D /* ViewController.m in Sources */,
 				EE6F92FA1A82F39400286DC7 /* SSKiAD.m in Sources */,
 				EE6F92FE1A82F39400286DC7 /* SSKScene.m in Sources */,

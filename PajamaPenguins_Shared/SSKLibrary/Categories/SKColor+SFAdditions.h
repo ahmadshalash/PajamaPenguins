@@ -17,3 +17,7 @@ SSK_INLINE SKColor *SKColorWithRGB(int r, int g, int b) {
 SSK_INLINE SKColor *SKColorWithRGBA(int r, int g, int b, int a) {
     return [SKColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a/255.0f];
 }
+
+@interface SKColor (SFAdditions)
++ (SKColor*)skyColor;
+@end

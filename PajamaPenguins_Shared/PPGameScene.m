@@ -80,7 +80,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
 
 @interface PPGameScene()
 @property (nonatomic) GameState gameState;
-@property (nonatomic) SSKDynamicColorNode *blendBackground;
 @property (nonatomic) SSKWaterSurfaceNode *waterSurface;
 @property (nonatomic) NSMutableArray *obstacleTexturePool;
 @property (nonatomic) SKEmitterNode *snowEmitter;
@@ -125,10 +124,15 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
     
-    //Color blend background
-    self.blendBackground = [SSKDynamicColorNode nodeWithRed:125 green:255 blue:255 size:self.size];
-    [self.blendBackground setZPosition:backgroundLayer];
-    [self addChild:self.blendBackground];
+    //Background color
+    [self.scene setBackgroundColor:[SKColor skyColor]];
+    
+    //Sky
+    SKSpriteNode *skyBackground = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedSkyGradient]];
+    [skyBackground setAnchorPoint:CGPointMake(0, 0)];
+    [skyBackground setPosition:CGPointMake(-self.size.width/2, 0)];
+    [skyBackground setZPosition:backgroundLayer];
+    [self.worldNode addChild:skyBackground];
     
     //Parallaxing Nodes
     CGPoint cloudBottomPos = CGPointMake(0, self.size.height/8 * 6);
@@ -165,9 +169,9 @@ CGFloat const kParallaxMinSpeed = -20.0;
     
     self.waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd jointWidth:5];
     [self.waterSurface setName:@"water"];
-    [self.waterSurface setAlpha:.8];
+    [self.waterSurface setAlpha:.9];
     [self.waterSurface setZPosition:waterSurfaceLayer];
-    [self.waterSurface setBodyWithDepth:(self.size.height)/kWorldScaleCap];
+    [self.waterSurface setBodyWithDepth:self.size.height/2];
     [self.waterSurface setTexture:[PPSharedAssets sharedWaterGradient]];
     [self.waterSurface setSplashDamping:.05];
     [self.waterSurface setSplashTension:.005];
@@ -311,14 +315,12 @@ CGFloat const kParallaxMinSpeed = -20.0;
 
     [self populateObstacleTexturePool];
     [self startObstacleSpawnSequence];
-//    [self startSplashAtObstaclesForever];
     
     [self startScoreCounter];
 }
 
 - (void)startGameAnimations {
     [self runAction:[SKAction waitForDuration:.5] completion:^{
-        [self.blendBackground startCrossfadeForeverWithMax:255 min:125 interval:5];
     }];
 }
 
@@ -335,7 +337,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
 }
 
 - (void)runGameOverSequence {
-    [self.blendBackground stopCrossfadeForever];
     [self setGravity:kGameOverGravityStrength];
     [self fadeoutHUD];
     [self playerGameOverCatapult];
