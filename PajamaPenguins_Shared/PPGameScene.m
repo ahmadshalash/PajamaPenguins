@@ -11,6 +11,7 @@
 #import "PPIcebergObstacle.h"
 
 #import "SKColor+SFAdditions.h"
+#import "UIDevice+SFAdditions.h"
 #import "SSKUtils.h"
 
 #import "SSKProgressBarNode.h"
@@ -402,10 +403,11 @@ CGFloat const kParallaxMinSpeed = -20.0;
 - (PPPlayer*)penguinWithType:(PlayerType)type atlas:(SKTextureAtlas*)atlas {
     PPPlayer *penguin = [PPPlayer playerWithType:type atlas:atlas];
     [penguin setPosition:CGPointMake(-self.size.width/4, 50)];
-    [penguin setScale:.4];
+    [penguin setSize:[self playerSize]];
     [penguin setName:@"player"];
     [penguin setZRotation:SSKDegreesToRadians(90)];
     [penguin setZPosition:playerLayer];
+    [penguin createPhysicsBody];
     [penguin.physicsBody setCategoryBitMask:playerCategory];
     [penguin.physicsBody setCollisionBitMask:obstacleCategory | edgeCategory];
     [penguin.physicsBody setContactTestBitMask:obstacleCategory];
@@ -442,8 +444,8 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [player.physicsBody setVelocity:CGVectorMake(0, 0)];
     [player.physicsBody setCollisionBitMask:0x0];
     [player.physicsBody setContactTestBitMask:0x0];
-    [player.physicsBody applyImpulse:CGVectorMake(5, 50)];
-    [player.physicsBody applyAngularImpulse:-.005];
+    [player.physicsBody applyImpulse:CGVectorMake(1, 15)];
+    [player.physicsBody applyAngularImpulse:-.00025];
 }
 
 - (void)updatePlayer:(NSTimeInterval)dt {
@@ -670,15 +672,24 @@ CGFloat const kParallaxMinSpeed = -20.0;
     return (PPPlayer*)[self.worldNode childNodeWithName:@"player"];
 }
 
-- (CGFloat)getPlayerScale {
-    CGFloat playerWidth = self.size.width/7.5;
-    return (playerWidth/kLargeTileWidth);
-}
-
 - (CGFloat)getWaterSurfaceScale {
     CGFloat waterWidth = self.size.width/5;
     return (waterWidth/kLargeTileWidth);
 }
+
+- (CGSize)playerSize {
+    if ([UIDevice isUserInterfaceIdiomPhone]) {
+        return CGSizeMake(25, 25);
+    }
+    
+    else if ([UIDevice isUserInterfaceIdiomPad]) {
+        return CGSizeMake(60, 60);
+    }
+    
+    return CGSizeMake(0, 0);
+}
+
+
 #pragma mark - Collisions
 - (void)resolveCollisionFromFirstBody:(SKPhysicsBody *)firstBody secondBody:(SKPhysicsBody *)secondBody {
     if (self.gameState == Playing) {

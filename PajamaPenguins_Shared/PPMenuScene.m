@@ -14,6 +14,8 @@
 #import "SSKUtils.h"
 
 #import "SKColor+SFAdditions.h"
+#import "UIDevice+SFAdditions.h"
+
 #import "SSKButtonNode.h"
 #import "SSKGraphicsUtils.h"
 #import "SSKWaterSurfaceNode.h"
@@ -169,11 +171,9 @@ CGFloat const kPlatformPadding = 50.0;
 }
 
 #pragma mark - Penguins Types
-
 - (PPPlayer*)penguinWithType:(PlayerType)type atlas:(SKTextureAtlas*)atlas {
     PPPlayer *penguin = [PPPlayer playerWithType:type atlas:atlas];
-    [penguin setScale:.75];
-    [penguin setPhysicsBody:nil];
+    [penguin setSize:[self playerSize]];
     [penguin setAnchorPoint:CGPointMake(0.5, 0)];
     [penguin setPosition:CGPointMake(0, kPlatformPadding/2)];
     [penguin setPlayerState:PlayerStateIdle];
@@ -191,6 +191,7 @@ CGFloat const kPlatformPadding = 50.0;
         [penguin update:dt];
     }];
 }
+
 #pragma mark - Actions
 - (SKAction*)floatAction {
     SKAction *up = [SKAction moveByX:0 y:20 duration:3];
@@ -219,6 +220,18 @@ CGFloat const kPlatformPadding = 50.0;
         SKTransition *fade = [SKTransition fadeWithColor:[SKColor whiteColor] duration:1];
         [self.view presentScene:gameScene transition:fade];
     }];
+}
+
+#pragma mark - Device Sprite Sizing
+- (CGSize)playerSize {
+    if ([UIDevice isUserInterfaceIdiomPhone]) {
+        return CGSizeMake(50, 50);
+    }
+    else if ([UIDevice isUserInterfaceIdiomPad]) {
+        return CGSizeMake(120, 120);
+    }
+    
+    return CGSizeMake(50, 50);
 }
 
 @end

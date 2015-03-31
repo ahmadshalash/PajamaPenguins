@@ -53,6 +53,8 @@
 		EE6F93011A82F39400286DC7 /* SSKGraphicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F31A82F39400286DC7 /* SSKGraphicsUtils.m */; };
 		EE6F93041A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
 		EE6F93051A82F39400286DC7 /* SSKPhysicsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */; };
+		EE8ED2261ACB2288007A3F3F /* penguin_black.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EE8ED2251ACB2288007A3F3F /* penguin_black.atlas */; };
+		EE8ED2291ACB2815007A3F3F /* UIDevice+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8ED2281ACB2815007A3F3F /* UIDevice+SFAdditions.m */; };
 		EEAE6F971AA665E200215C7E /* WaterGradientBlue-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */; };
 		EEAE6F9C1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */; };
 		EEAE6F9D1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */; };
@@ -146,6 +148,9 @@
 		EE6F92F41A82F39400286DC7 /* SSKMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKMathUtils.h; sourceTree = "<group>"; };
 		EE6F92F61A82F39400286DC7 /* SSKPhysicsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKPhysicsUtils.h; sourceTree = "<group>"; };
 		EE6F92F71A82F39400286DC7 /* SSKPhysicsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKPhysicsUtils.m; sourceTree = "<group>"; };
+		EE8ED2251ACB2288007A3F3F /* penguin_black.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = penguin_black.atlas; sourceTree = "<group>"; };
+		EE8ED2271ACB2815007A3F3F /* UIDevice+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+SFAdditions.h"; sourceTree = "<group>"; };
+		EE8ED2281ACB2815007A3F3F /* UIDevice+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+SFAdditions.m"; sourceTree = "<group>"; };
 		EEAE6F961AA665E200215C7E /* WaterGradientBlue-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaterGradientBlue-iphone.png"; sourceTree = "<group>"; };
 		EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = PlayerSplashUpEmitter.sks; path = ../PajamaPenguins_Shared/PlayerSplashUpEmitter.sks; sourceTree = "<group>"; };
 		EEAE6FA31AA68B8B00215C7E /* ObstacleSplashEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = ObstacleSplashEmitter.sks; path = ../PajamaPenguins_Shared/ObstacleSplashEmitter.sks; sourceTree = "<group>"; };
@@ -311,6 +316,8 @@
 				EE16B1871AC7911800B15134 /* SKColor+SFAdditions.m */,
 				EE0F00761AB534B40067CD38 /* SSKUtils.h */,
 				EE0F00771AB534B40067CD38 /* SSKUtils.m */,
+				EE8ED2271ACB2815007A3F3F /* UIDevice+SFAdditions.h */,
+				EE8ED2281ACB2815007A3F3F /* UIDevice+SFAdditions.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -337,6 +344,7 @@
 			children = (
 				EE3434791AABF4180010BE71 /* PPSharedAssets.h */,
 				EE34347A1AABF4180010BE71 /* PPSharedAssets.m */,
+				EE8ED2251ACB2288007A3F3F /* penguin_black.atlas */,
 				EEC369271AC0DAFA0099A2C6 /* penguin_black_iPhone.atlas */,
 				EE34347D1AAC125D0010BE71 /* pajama_penguins_assets.atlas */,
 				EEAE6FA61AA68EC300215C7E /* Emitters */,
@@ -542,6 +550,7 @@
 				EEAE6F971AA665E200215C7E /* WaterGradientBlue-iphone.png in Resources */,
 				EEC9DB7C1AA7B2040022CDF1 /* EmitterParticleOld.png in Resources */,
 				EEC9DB821AA7B3480022CDF1 /* PlayerSplashDownEmitter.sks in Resources */,
+				EE8ED2261ACB2288007A3F3F /* penguin_black.atlas in Resources */,
 				EE34346F1AAA52ED0010BE71 /* platform_iceberg.png in Resources */,
 				41E430B018B09E5200E1427D /* Images.xcassets in Resources */,
 				EEC9DB861AA7B5510022CDF1 /* SnowEmitter.sks in Resources */,
@@ -598,6 +607,7 @@
 				EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */,
 				EE168CDE1A994DFE005403E6 /* PPIcebergObstacle.m in Sources */,
 				EE168C971A97CEC2005403E6 /* SSKScoreNode.m in Sources */,
+				EE8ED2291ACB2815007A3F3F /* UIDevice+SFAdditions.m in Sources */,
 				EEC9DB971AA93F900022CDF1 /* PPMenuScene.m in Sources */,
 				EEF798241A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m in Sources */,
 				41E430A018B09E5200E1427D /* AppDelegate.m in Sources */,

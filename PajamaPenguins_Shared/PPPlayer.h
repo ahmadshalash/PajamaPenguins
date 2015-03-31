@@ -24,11 +24,9 @@ typedef NS_ENUM(NSUInteger, PlayerState) {
 + (instancetype)playerWithType:(PlayerType)playerType atlas:(SKTextureAtlas*)atlas;
 - (instancetype)initWithType:(PlayerType)playerType atlas:(SKTextureAtlas*)atlas;
 
-//OLD going to be refactored
-+ (instancetype)playerWithIdleTextures:(NSArray*)idleTextures swimTextures:(NSArray*)swimTextures flyTextures:(NSArray*)flyTextures;
-- (instancetype)initWithIdleTextures:(NSArray*)idleTextures swimTextures:(NSArray*)swimTextures flyTextures:(NSArray*)flyTextures;
+- (void)createPhysicsBody;
+
 - (void)update:(NSTimeInterval)dt;
-//OLD going to be refactored
 
 @property (nonatomic) PlayerState playerState;
 @property (nonatomic) PlayerType playerType;

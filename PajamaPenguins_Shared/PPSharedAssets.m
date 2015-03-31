@@ -32,7 +32,7 @@
         sObstacleMediumTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"iceberg_200x300"]];
         
         //Penguins
-        sPenguinBlackTextures = [SKTextureAtlas atlasNamed:@"penguin_black_iPhone"];
+        sPenguinBlackTextures = [SKTextureAtlas atlasNamed:@"penguin_black"];
         
         sPenguinGreyIdleFrames = [NSMutableArray new];
         sPenguinGreySwimFrames = [NSMutableArray new];

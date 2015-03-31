@@ -10,6 +10,11 @@
 
 #define kAcceleration 45.0
 
+CGFloat const kIdleFrames = 2;
+CGFloat const kSwimFrames = 4;
+CGFloat const kFlyFrames = 2;
+CGFloat const kDiveFrames = 1;
+
 CGFloat const kAnimationSpeed = 0.05;
 CGFloat const kIdleAnimationSpeed = 0.25;
 
@@ -35,7 +40,7 @@ CGFloat const kIdleAnimationSpeed = 0.25;
     if (self) {
         //Idle
         NSMutableArray *tempIdleTextures = [NSMutableArray new];
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < kIdleFrames; i++) {
             NSString *idleFrame = [NSString stringWithFormat:@"penguin_%@_idle_0%d",[self playerTypeStringVal:self.playerType],i];
             [tempIdleTextures addObject:[atlas textureNamed:idleFrame]];
         }
@@ -43,7 +48,7 @@ CGFloat const kIdleAnimationSpeed = 0.25;
         
         //Dive
         NSMutableArray *tempDiveTextures = [NSMutableArray new];
-        for (int i = 0; i < 1; i ++) {
+        for (int i = 0; i < kDiveFrames; i ++) {
             NSString *diveFrame = [NSString stringWithFormat:@"penguin_%@_dive_0%d",[self playerTypeStringVal:self.playerType],i];
             [tempDiveTextures addObject:[atlas textureNamed:diveFrame]];
         }
@@ -51,7 +56,7 @@ CGFloat const kIdleAnimationSpeed = 0.25;
 
         //Swim
         NSMutableArray *tempSwimTextures = [NSMutableArray new];
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < kSwimFrames; i++) {
             NSString *swimFrame = [NSString stringWithFormat:@"penguin_%@_swim_0%d",[self playerTypeStringVal:self.playerType],i];
             [tempSwimTextures addObject:[atlas textureNamed:swimFrame]];
         }
@@ -59,37 +64,24 @@ CGFloat const kIdleAnimationSpeed = 0.25;
         
         //Fly
         NSMutableArray *tempFlyFrames = [NSMutableArray new];
-        for (int i = 0; i < 2; i ++) {
+        for (int i = 0; i < kFlyFrames; i ++) {
             NSString *flyFrame = [NSString stringWithFormat:@"penguin_%@_fly_0%d",[self playerTypeStringVal:self.playerType],i];
             [tempFlyFrames addObject:[atlas textureNamed:flyFrame]];
         }
         self.flyTextures = tempFlyFrames;
         
-        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[(SKTexture*)[self.idleTextures objectAtIndex:0] size].width/2 - 5];
-        [self.physicsBody setDynamic:YES];
-        [self.physicsBody setFriction:0];
-        [self.physicsBody setRestitution:0];
     }
     return self;
 }
 
-+ (instancetype)playerWithIdleTextures:(NSArray*)idleTextures swimTextures:(NSArray*)swimTextures flyTextures:(NSArray*)flyTextures {
-    return [[self alloc] initWithIdleTextures:idleTextures swimTextures:swimTextures flyTextures:flyTextures];
-}
-
-- (instancetype)initWithIdleTextures:(NSArray*)idleTextures swimTextures:(NSArray*)swimTextures flyTextures:(NSArray*)flyTextures {
-    self = [super initWithTexture:[idleTextures objectAtIndex:0]];
-    if (self) {
-        self.idleTextures = idleTextures;
-        self.swimTextures = swimTextures;
-        self.flyTextures = flyTextures;
-        
-        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[(SKTexture*)[self.idleTextures objectAtIndex:0] size].width/2 - 5];
+#pragma mark - Physics Body
+- (void)createPhysicsBody {
+    if (!self.physicsBody) {
+        self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.size.width/2 - 2];
         [self.physicsBody setDynamic:YES];
         [self.physicsBody setFriction:0];
         [self.physicsBody setRestitution:0];
     }
-    return self;
 }
 
 #pragma mark - Rotation
