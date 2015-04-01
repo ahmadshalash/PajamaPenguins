@@ -9,7 +9,12 @@
 #import "SKTexture+SFAdditions.h"
 
 @implementation SKTexture (SFAdditions)
-+ (SKTexture*)textureWithGradientOfSize:(CGSize)size startColor:(CIColor*)startColor endColor:(CIColor*)endColor direction:(GradientDirection)direction {
++ (SKTexture*)textureWithGradientOfSize:(CGSize)size
+                             startColor:(SKColor*)startColor
+                               endColor:(SKColor*)endColor
+                              direction:(GradientDirection)direction
+{
+    //Define CI context and create CIFilter
     CIContext *coreImageContext = [CIContext contextWithOptions:nil];
     CIFilter *gradientFilter = [CIFilter filterWithName:@"CILinearGradient"];
     if (!gradientFilter) {
@@ -17,7 +22,12 @@
         return nil;;
     }
     [gradientFilter setDefaults];
+
+    //Convert colors to CIColors
+    CIColor *CIStartColor = [CIColor colorWithSKColor:startColor];
+    CIColor *CIEndColor = [CIColor colorWithSKColor:endColor];
     
+    //Define gradient start and end positions
     CGPoint startPoint;
     CGPoint endPoint;
     
@@ -53,8 +63,8 @@
 
     [gradientFilter setValue:startVector forKey:@"inputPoint0"];
     [gradientFilter setValue:endVector forKey:@"inputPoint1"];
-    [gradientFilter setValue:startColor forKey:@"inputColor0"];
-    [gradientFilter setValue:endColor forKey:@"inputColor1"];
+    [gradientFilter setValue:CIStartColor forKey:@"inputColor0"];
+    [gradientFilter setValue:CIEndColor forKey:@"inputColor1"];
     
     CGImageRef cgImageRef = [coreImageContext createCGImage:[gradientFilter outputImage] fromRect:CGRectMake(0, 0, size.width, size.height)];
     
@@ -75,4 +85,22 @@
     return [SKTexture loadPixelTexture:[atlas textureNamed:name]];
 }
 
+@end
+
+@implementation CIColor (Convenience)
++ (CIColor*)colorWithSKColor:(SKColor*)color {
+    CGColorRef colorRef = [color CGColor];
+    size_t numComponents = CGColorGetNumberOfComponents(colorRef);
+    CGFloat red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
+    
+    
+    if (numComponents == 4) {
+        const CGFloat *components = CGColorGetComponents(colorRef);
+        red = components[0];
+        green = components[1];
+        blue = components[2];
+        alpha = components[3];
+    }
+    return [CIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
 @end

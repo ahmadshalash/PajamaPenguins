@@ -117,11 +117,11 @@ CGFloat const kPlatformPadding = 50.0;
     SSKWaterSurfaceNode *waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart
                                                                           endPoint:surfaceEnd
                                                                              depth:waterSize.height
-                                                                           texture:[SKTexture textureWithGradientOfSize:waterSize startColor:[SKColor blueColor].CIColor endColor:[SKColor redColor].CIColor direction:GradientDirectionVertical]];
+                                                                           texture:[SKTexture textureWithGradientOfSize:waterSize startColor:[SKColor blueColor] endColor:[SKColor redColor] direction:GradientDirectionDiagonalRight]];
 //    SSKWaterSurfaceNode *waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd jointWidth:5];
     [waterSurface setAlpha:0.9];
     [waterSurface setZPosition:SceneLayerForeground];
-//    [waterSurface setName:@"waterSurface"];
+    [waterSurface setName:@"waterSurface"];
 //    [waterSurface setBodyWithDepth:self.size.height/2];
 //    [waterSurface setTexture:[PPSharedAssets sharedWaterGradient]];
     [waterSurface setSplashDamping:.003];

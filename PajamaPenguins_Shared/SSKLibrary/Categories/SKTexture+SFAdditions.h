@@ -16,10 +16,17 @@ typedef NS_ENUM(NSUInteger, GradientDirection) {
 };
 
 @interface SKTexture (SFAdditions)
-+ (SKTexture*)textureWithGradientOfSize:(CGSize)size startColor:(CIColor*)startColor endColor:(CIColor*)endColor direction:(GradientDirection)direction;
++ (SKTexture*)textureWithGradientOfSize:(CGSize)size
+                             startColor:(SKColor*)startColor
+                               endColor:(SKColor*)endColor
+                              direction:(GradientDirection)direction;
 
 + (SKTexture*)loadPixelTexture:(SKTexture*)texture;
 + (SKTexture*)loadPixelTextureWithName:(NSString*)name;
 + (SKTexture*)loadPixelTextureWithName:(NSString*)name inAtlas:(SKTextureAtlas*)atlas;
 
+@end
+
+@interface CIColor (Convenience)
++ (CIColor*)colorWithSKColor:(SKColor*)color;
 @end
