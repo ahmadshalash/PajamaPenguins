@@ -28,12 +28,6 @@
 
 @end
 
-@interface SKTexture (SFAdditions)
-+ (SKTexture*)loadPixelTexture:(SKTexture*)texture;
-+ (SKTexture*)loadPixelTextureWithName:(NSString*)name;
-+ (SKTexture*)loadPixelTextureWithName:(NSString*)name inAtlas:(SKTextureAtlas*)atlas;
-@end
-
 @interface SKEmitterNode (SFAdditions)
 + (instancetype)emitterNodeWithFileNamed:(NSString*)emitterName;
 @end

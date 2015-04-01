@@ -14,6 +14,7 @@
 #import "SSKUtils.h"
 
 #import "SKColor+SFAdditions.h"
+#import "SKTexture+SFAdditions.h"
 #import "UIDevice+SFAdditions.h"
 
 #import "SSKButtonNode.h"
@@ -112,12 +113,17 @@ CGFloat const kPlatformPadding = 50.0;
     CGFloat surfacePadding = 5;
     CGPoint surfaceStart = CGPointMake(-self.size.width/2 - surfacePadding, 0);
     CGPoint surfaceEnd = CGPointMake(self.size.width/2 + surfacePadding, 0);
-    SSKWaterSurfaceNode *waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd jointWidth:5];
+    CGSize waterSize = CGSizeMake(self.size.width, self.size.height/2);
+    SSKWaterSurfaceNode *waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart
+                                                                          endPoint:surfaceEnd
+                                                                             depth:waterSize.height
+                                                                           texture:[SKTexture textureWithGradientOfSize:waterSize startColor:[SKColor blueColor].CIColor endColor:[SKColor redColor].CIColor direction:GradientDirectionVertical]];
+//    SSKWaterSurfaceNode *waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd jointWidth:5];
     [waterSurface setAlpha:0.9];
     [waterSurface setZPosition:SceneLayerForeground];
-    [waterSurface setName:@"waterSurface"];
-    [waterSurface setBodyWithDepth:self.size.height/2];
-    [waterSurface setTexture:[PPSharedAssets sharedWaterGradient]];
+//    [waterSurface setName:@"waterSurface"];
+//    [waterSurface setBodyWithDepth:self.size.height/2];
+//    [waterSurface setTexture:[PPSharedAssets sharedWaterGradient]];
     [waterSurface setSplashDamping:.003];
     [waterSurface setSplashTension:.0025];
     return waterSurface;
@@ -145,12 +151,12 @@ CGFloat const kPlatformPadding = 50.0;
 }
 
 - (SKLabelNode*)newTitleLabel {
-    SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"Fipps-Regular"];
+    SKLabelNode *label = [SKLabelNode labelNodeWithFontNamed:@"AmericanTypewriter"];
     [label setText:@"Pajama Penguins"];
     [label setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
     [label setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
-    [label setFontSize:20];
-    [label setFontColor:[SKColor blackColor]];
+    [label setFontSize:30];
+    [label setFontColor:[SKColor whiteColor]];
     [label setPosition:CGPointMake(0, self.size.height/8 * 3)];
     [label setName:@"titleLabel"];
     return label;

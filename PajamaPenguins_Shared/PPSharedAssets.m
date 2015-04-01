@@ -8,6 +8,7 @@
 
 #import "PPSharedAssets.h"
 #import "SSKGraphicsUtils.h"
+#import "SKTexture+SFAdditions.h"
 
 @implementation PPSharedAssets
 + (void)loadSharedAssetsWithCompletion:(AssetCompletionHandler)completion {

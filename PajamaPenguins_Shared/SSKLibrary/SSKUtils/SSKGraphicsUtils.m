@@ -6,6 +6,7 @@
 //
 
 #import "SSKGraphicsUtils.h"
+#import "SKTexture+SFAdditions.h"
 
 @implementation SSKGraphicsUtils
 + (NSArray*)loadPixelAnimationFromAtlas:(SKTextureAtlas*)atlas
@@ -66,21 +67,6 @@
     [emitter runAction:[SKAction sequence:@[wait, turnOffBirthRate, waitParticleLifetime, removeEmitter]]];
 }
 
-@end
-
-@implementation SKTexture (SFAdditions)
-+ (SKTexture*)loadPixelTexture:(SKTexture*)texture {
-    texture.filteringMode = SKTextureFilteringNearest;
-    return texture;
-}
-
-+ (SKTexture*)loadPixelTextureWithName:(NSString*)name {
-    return [SKTexture loadPixelTexture:[SKTexture textureWithImageNamed:name]];
-}
-
-+ (SKTexture*)loadPixelTextureWithName:(NSString*)name inAtlas:(SKTextureAtlas*)atlas {
-    return [SKTexture loadPixelTexture:[atlas textureNamed:name]];
-}
 @end
 
 @implementation SKEmitterNode (SFAdditions)

@@ -60,8 +60,8 @@ CGFloat const kObstacleSplashStrength = 10;
 CGFloat const kMaxSplashStrength = 20;
 
 //Clamped Constants
-//CGFloat const kMaxBreathTimer = 6.0;
-CGFloat const kMaxBreathTimer = 96.0;
+CGFloat const kMaxBreathTimer = 6.0;
+//CGFloat const kMaxBreathTimer = 96.0;
 
 CGFloat const kWorldScaleCap = 0.55;
 
