@@ -17,6 +17,7 @@
 #import "SKTexture+SFAdditions.h"
 #import "UIDevice+SFAdditions.h"
 
+#import "SSKParallaxNode.h"
 #import "SSKButtonNode.h"
 #import "SSKGraphicsUtils.h"
 #import "SSKWaterSurfaceNode.h"
@@ -33,6 +34,9 @@ CGFloat const kPlatformPadding = 50.0;
 @interface PPMenuScene()
 @property (nonatomic) SKNode *menuBackgroundNode;
 @property (nonatomic) SKNode *menuNode;
+
+@property (nonatomic) SSKWaterSurfaceNode *waterSurface;
+@property (nonatomic) SSKParallaxNode *clouds;
 @end
 
 @implementation PPMenuScene
@@ -61,10 +65,18 @@ CGFloat const kPlatformPadding = 50.0;
     [self.menuBackgroundNode setName:@"menuBackground"];
     [self addChild:self.menuBackgroundNode];
     
-//    [self.menuBackgroundNode addChild:[self newColorBackground]];
+    //Sky
     [self.menuBackgroundNode addChild:[self skyBackground]];
+    
+    //Clouds
+    self.clouds = [SSKParallaxNode nodeWithSize:self.size attachedNodes:@[[self cloudNodeTall],[self cloudNodeWide]] moveSpeed:CGPointMake(-10, 0) numFrames:2];
+    [self.clouds setName:@"clouds"];
+    [self.menuBackgroundNode addChild:self.clouds];
+    
+    //Snow
     [self.menuBackgroundNode addChild:[self newSnowEmitter]];
     
+    //Iceberg group
     SKNode *platformNode = [SKNode new];
     [platformNode setName:@"platform"];
     [self.menuBackgroundNode addChild:platformNode];
@@ -72,7 +84,9 @@ CGFloat const kPlatformPadding = 50.0;
     [platformNode addChild:[self newPlatformIceberg]];
     [platformNode addChild:[self blackPenguin]];
     
-    [self.menuBackgroundNode addChild:[self newWaterSurface]];
+    //Water Surface
+    self.waterSurface = [self newWaterSurface];
+    [self.menuBackgroundNode addChild:self.waterSurface];
 }
 
 - (void)createMenu {
@@ -117,13 +131,10 @@ CGFloat const kPlatformPadding = 50.0;
     SSKWaterSurfaceNode *waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart
                                                                           endPoint:surfaceEnd
                                                                              depth:waterSize.height
-                                                                           texture:[SKTexture textureWithGradientOfSize:waterSize startColor:[SKColor blueColor] endColor:[SKColor redColor] direction:GradientDirectionDiagonalRight]];
-//    SSKWaterSurfaceNode *waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd jointWidth:5];
+                                                                           texture:[SKTexture textureWithGradientOfSize:waterSize startColor:[SKColor blueColor] endColor:[SKColor greenColor] direction:GradientDirectionDiagonalRight]];
     [waterSurface setAlpha:0.9];
     [waterSurface setZPosition:SceneLayerForeground];
     [waterSurface setName:@"waterSurface"];
-//    [waterSurface setBodyWithDepth:self.size.height/2];
-//    [waterSurface setTexture:[PPSharedAssets sharedWaterGradient]];
     [waterSurface setSplashDamping:.003];
     [waterSurface setSplashTension:.0025];
     return waterSurface;
@@ -176,6 +187,22 @@ CGFloat const kPlatformPadding = 50.0;
     return playButton;
 }
 
+- (SKSpriteNode*)cloudNodeTall {
+    SKSpriteNode *cloud = [SKSpriteNode spriteNodeWithTexture:[[PPSharedAssets sharedCloudAtlas] textureNamed:@"cloud_00"]];
+    [cloud setSize:CGSizeMake(100, 100)];
+    [cloud setAlpha:.3];
+    [cloud setPosition:CGPointMake(-self.size.width/4, self.size.height/4)];
+    return cloud;
+}
+
+- (SKSpriteNode*)cloudNodeWide {
+    SKSpriteNode *cloud = [SKSpriteNode spriteNodeWithTexture:[[PPSharedAssets sharedCloudAtlas] textureNamed:@"cloud_01"]];
+    [cloud setSize:CGSizeMake(100, 100)];
+    [cloud setAlpha:.3];
+    [cloud setPosition:CGPointMake(self.size.width/4, self.size.height/4)];
+    return cloud;
+}
+
 #pragma mark - Penguins Types
 - (PPPlayer*)penguinWithType:(PlayerType)type atlas:(SKTextureAtlas*)atlas {
     PPPlayer *penguin = [PPPlayer playerWithType:type atlas:atlas];
@@ -208,27 +235,12 @@ CGFloat const kPlatformPadding = 50.0;
 
 - (SKAction*)waterSurfaceSplash {
     return [SKAction runBlock:^{
-        [(SSKWaterSurfaceNode*)[self.menuBackgroundNode childNodeWithName:@"waterSurface"] splash:CGPointMake(self.size.width/2, 0) speed:-5];
-        [(SSKWaterSurfaceNode*)[self.menuBackgroundNode childNodeWithName:@"waterSurface"] splash:CGPointMake(-self.size.width/2, 0) speed:-5];
+        [self.waterSurface splash:CGPointMake(self.size.width/2, 0) speed:-5];
+        [self.waterSurface splash:CGPointMake(-self.size.width/2, 0) speed:-5];
     }];
 }
 
-#pragma mark - Update
-- (void)update:(NSTimeInterval)currentTime {
-    [(SSKWaterSurfaceNode*)[self.menuBackgroundNode childNodeWithName:@"waterSurface"] update:currentTime];
-    [self updateAllPenguins:currentTime];
-}
-
-#pragma mark - Transfer To Game Scene
-- (void)loadGameScene {
-    [PPGameScene loadSceneAssetsWithCompletionHandler:^{
-        SKScene *gameScene = [PPGameScene sceneWithSize:self.size];
-        SKTransition *fade = [SKTransition fadeWithColor:[SKColor whiteColor] duration:1];
-        [self.view presentScene:gameScene transition:fade];
-    }];
-}
-
-#pragma mark - Device Sprite Sizing
+#pragma mark - Convenience
 - (CGSize)playerSize {
     if ([UIDevice isUserInterfaceIdiomPhone]) {
         return CGSizeMake(50, 50);
@@ -240,4 +252,27 @@ CGFloat const kPlatformPadding = 50.0;
     return CGSizeMake(50, 50);
 }
 
+- (SSKWaterSurfaceNode*)currentWaterSurface {
+    return (SSKWaterSurfaceNode*)[self.menuBackgroundNode childNodeWithName:@"waterSurface"];
+}
+
+#pragma mark - Transfer To Game Scene
+- (void)loadGameScene {
+    [PPGameScene loadSceneAssetsWithCompletionHandler:^{
+        SKScene *gameScene = [PPGameScene sceneWithSize:self.size];
+        SKTransition *fade = [SKTransition fadeWithColor:[SKColor whiteColor] duration:1];
+        [self.view presentScene:gameScene transition:fade];
+    }];
+}
+
+#pragma mark - Update
+- (void)update:(NSTimeInterval)currentTime {
+    [super update:currentTime];
+    
+    [self.waterSurface update:self.deltaTime];
+    [self.clouds update:self.deltaTime];
+    [self updateAllPenguins:self.deltaTime];
+}
+
 @end
+

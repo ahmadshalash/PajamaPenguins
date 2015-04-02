@@ -11,10 +11,11 @@
 
 @interface PPSharedAssets : NSObject
 
+// Preloading
 typedef void (^AssetCompletionHandler)(void);
 + (void)loadSharedAssetsWithCompletion:(AssetCompletionHandler)completion;
 
-//Shared Background Textures
+// Background Textures
 + (SKTexture*)sharedWaterGradient;
 + (SKTexture*)sharedSkyGradient;
 + (SKTexture*)sharedIcebergTexture;
@@ -24,29 +25,28 @@ typedef void (^AssetCompletionHandler)(void);
 + (SKTexture*)sharedCloudBackgroundUpperTexture;
 + (SKTexture*)sharedCloudForegroundTexture;
 
-//Shared Obstacle Textures
+// Clouds
++ (SKTextureAtlas*)sharedCloudAtlas;
+
+// Obstacle Textures
 + (SKTexture*)sharedObstacleLargeTexture;
 + (SKTexture*)sharedObstacleMediumTexture;
 
-//Shared Misc. Textures
+// Misc. Textures
 + (SKTexture*)sharedFingerSprite;
 + (SKTexture*)sharedFingerSpriteEffect;
 
-//Shared Button Textures
+// Button Textures
 + (SKTexture*)sharedPlayButtonUpTexture;
 + (SKTexture*)sharedPlayButtonDownTexture;
 
 + (SKTexture*)sharedHomeButtonUpTexture;
 + (SKTexture*)sharedHomeButtonDownTexture;
 
-//Shared Penguins Textures
+// Penguins Textures
 + (SKTextureAtlas*)sharedPenguinBlackTextures;
 
-+ (NSMutableArray*)sharedPenguinGreyIdleFrames;
-+ (NSMutableArray*)sharedPenguinGreySwimFrames;
-+ (NSMutableArray*)sharedPenguinGreyFlyFrames;
-
-//Shared Emitters
+// Emitters
 + (SKEmitterNode*)sharedSnowEmitter;
 + (SKEmitterNode*)sharedBubbleEmitter;
 + (SKEmitterNode*)sharedPlayerSplashDownEmitter;

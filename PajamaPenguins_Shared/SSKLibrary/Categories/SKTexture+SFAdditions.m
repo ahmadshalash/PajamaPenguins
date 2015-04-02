@@ -17,10 +17,6 @@
     //Define CI context and create CIFilter
     CIContext *coreImageContext = [CIContext contextWithOptions:nil];
     CIFilter *gradientFilter = [CIFilter filterWithName:@"CILinearGradient"];
-    if (!gradientFilter) {
-        NSLog(@"No gradient of name: %@", gradientFilter.name);
-        return nil;;
-    }
     [gradientFilter setDefaults];
 
     //Convert colors to CIColors
@@ -57,7 +53,8 @@
             endPoint = CGPointMake(size.width/2, size.height);
             break;
     }
-
+    
+    //Define vectors from start and end points
     CIVector *startVector = [CIVector vectorWithCGPoint:startPoint];
     CIVector *endVector = [CIVector vectorWithCGPoint:endPoint];
 
@@ -87,6 +84,7 @@
 
 @end
 
+#pragma mark - CIColor
 @implementation CIColor (Convenience)
 + (CIColor*)colorWithSKColor:(SKColor*)color {
     CGColorRef colorRef = [color CGColor];

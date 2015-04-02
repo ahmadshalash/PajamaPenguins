@@ -64,6 +64,7 @@
 		EEAE6FA51AA68B8B00215C7E /* ObstacleSplashEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6FA31AA68B8B00215C7E /* ObstacleSplashEmitter.sks */; };
 		EEAE6FAA1AA68F9900215C7E /* BubbleEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6FA91AA68F9900215C7E /* BubbleEmitter.sks */; };
 		EEAE6FAB1AA68F9900215C7E /* BubbleEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6FA91AA68F9900215C7E /* BubbleEmitter.sks */; };
+		EEAF97671ACDFCCD007D0DC2 /* clouds.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EEAF97661ACDFCCD007D0DC2 /* clouds.atlas */; };
 		EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
@@ -159,6 +160,7 @@
 		EEAE6F9A1AA67A9C00215C7E /* PlayerSplashUpEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = PlayerSplashUpEmitter.sks; path = ../PajamaPenguins_Shared/PlayerSplashUpEmitter.sks; sourceTree = "<group>"; };
 		EEAE6FA31AA68B8B00215C7E /* ObstacleSplashEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = ObstacleSplashEmitter.sks; path = ../PajamaPenguins_Shared/ObstacleSplashEmitter.sks; sourceTree = "<group>"; };
 		EEAE6FA91AA68F9900215C7E /* BubbleEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = BubbleEmitter.sks; path = PajamaPenguins_Shared/BubbleEmitter.sks; sourceTree = SOURCE_ROOT; };
+		EEAF97661ACDFCCD007D0DC2 /* clouds.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = clouds.atlas; sourceTree = "<group>"; };
 		EEBA93CD1A8C1FED00CBD711 /* SSKCameraNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKCameraNode.h; sourceTree = "<group>"; };
 		EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKCameraNode.m; sourceTree = "<group>"; };
 		EEBA93F01A93FD4F00CBD711 /* TwoDimensionalArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoDimensionalArray.h; sourceTree = "<group>"; };
@@ -348,7 +350,8 @@
 			children = (
 				EE3434791AABF4180010BE71 /* PPSharedAssets.h */,
 				EE34347A1AABF4180010BE71 /* PPSharedAssets.m */,
-				EE8ED2251ACB2288007A3F3F /* penguin_black.atlas */,
+				EEAF97691ACDFD1B007D0DC2 /* Background Elements */,
+				EEAF97681ACDFCD8007D0DC2 /* Penguins */,
 				EEC369271AC0DAFA0099A2C6 /* penguin_black_iPhone.atlas */,
 				EE34347D1AAC125D0010BE71 /* pajama_penguins_assets.atlas */,
 				EEAE6FA61AA68EC300215C7E /* Emitters */,
@@ -454,6 +457,22 @@
 			name = Emitters;
 			sourceTree = "<group>";
 		};
+		EEAF97681ACDFCD8007D0DC2 /* Penguins */ = {
+			isa = PBXGroup;
+			children = (
+				EE8ED2251ACB2288007A3F3F /* penguin_black.atlas */,
+			);
+			name = Penguins;
+			sourceTree = "<group>";
+		};
+		EEAF97691ACDFD1B007D0DC2 /* Background Elements */ = {
+			isa = PBXGroup;
+			children = (
+				EEAF97661ACDFCCD007D0DC2 /* clouds.atlas */,
+			);
+			name = "Background Elements";
+			sourceTree = "<group>";
+		};
 		EECC66891AA11C7E004CB609 /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -557,6 +576,7 @@
 				EE8ED2261ACB2288007A3F3F /* penguin_black.atlas in Resources */,
 				EE34346F1AAA52ED0010BE71 /* platform_iceberg.png in Resources */,
 				41E430B018B09E5200E1427D /* Images.xcassets in Resources */,
+				EEAF97671ACDFCCD007D0DC2 /* clouds.atlas in Resources */,
 				EEC9DB861AA7B5510022CDF1 /* SnowEmitter.sks in Resources */,
 				EEAE6FAA1AA68F9900215C7E /* BubbleEmitter.sks in Resources */,
 				41E4309A18B09E5200E1427D /* InfoPlist.strings in Resources */,

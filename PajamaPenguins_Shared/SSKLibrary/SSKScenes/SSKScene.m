@@ -6,7 +6,9 @@
 
 #import "SSKScene.h"
 
-@implementation SSKScene
+@implementation SSKScene {
+    NSTimeInterval _lastUpdateTime;
+}
 
 - (id)initWithSize:(CGSize)size {
     self = [super initWithSize:size];
@@ -121,6 +123,16 @@
 
 - (void)resolveCollisionFromFirstBody:(SKPhysicsBody*)firstBody secondBody:(SKPhysicsBody*)secondBody {
     /* Overridden by subclasses */
+}
+
+#pragma mark - Update
+- (void)update:(NSTimeInterval)currentTime {
+    self.deltaTime = currentTime - _lastUpdateTime;
+    _lastUpdateTime = currentTime;
+    
+    if (self.deltaTime > 1) {
+        self.deltaTime = 0;
+    }
 }
 
 @end

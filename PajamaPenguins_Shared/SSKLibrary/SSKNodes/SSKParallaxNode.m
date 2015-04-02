@@ -60,6 +60,7 @@
     return self;
 }
 
+#pragma mark - Update
 - (void)update:(NSTimeInterval)dt {
     if (self.moveState == MoveStateMoving) {
         CGPoint amountToMove = CGPointMake(self.moveSpeed.x * dt, self.moveSpeed.y * dt);

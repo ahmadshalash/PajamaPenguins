@@ -61,8 +61,6 @@ CGFloat const kMaxSplashStrength = 20;
 
 //Clamped Constants
 CGFloat const kMaxBreathTimer = 6.0;
-//CGFloat const kMaxBreathTimer = 96.0;
-
 CGFloat const kWorldScaleCap = 0.55;
 
 CGFloat const kPlayerUpperVelocityLimit = 700.0;
@@ -160,9 +158,9 @@ CGFloat const kParallaxMinSpeed = -20.0;
     //Snow Emitter
     self.snowEmitter = [PPSharedAssets sharedSnowEmitter].copy;
     [self.snowEmitter setZPosition:foregroundLayer];
-    [self.snowEmitter setPosition:CGPointMake(self.size.width/2, cloudForegroundPos.y)];
+    [self.snowEmitter setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
     [self.snowEmitter setName:@"snowEmitter"];
-    [self.worldNode addChild:self.snowEmitter];
+    [self addChild:self.snowEmitter];
     
     //Water Surface
     CGPoint surfaceStart = CGPointMake(-self.size.width/2, 0);
@@ -407,12 +405,12 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [penguin setName:@"player"];
     [penguin setZRotation:SSKDegreesToRadians(90)];
     [penguin setZPosition:playerLayer];
+    [penguin setPlayerShouldRotate:YES];
+    [penguin setPlayerState:PlayerStateFly];
     [penguin createPhysicsBody];
     [penguin.physicsBody setCategoryBitMask:playerCategory];
     [penguin.physicsBody setCollisionBitMask:obstacleCategory | edgeCategory];
     [penguin.physicsBody setContactTestBitMask:obstacleCategory];
-    [penguin setPlayerShouldRotate:YES];
-    [penguin setPlayerState:PlayerStateFly];
     return penguin;
 }
 
@@ -689,7 +687,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     return CGSizeMake(0, 0);
 }
 
-
 #pragma mark - Collisions
 - (void)resolveCollisionFromFirstBody:(SKPhysicsBody *)firstBody secondBody:(SKPhysicsBody *)secondBody {
     if (self.gameState == Playing) {
@@ -725,30 +722,25 @@ CGFloat const kParallaxMinSpeed = -20.0;
 
 #pragma mark - Scene Processing
 - (void)update:(NSTimeInterval)currentTime {
-    NSTimeInterval deltaTime = currentTime - _lastUpdateTime;
-    _lastUpdateTime = currentTime;
-    
-    if (deltaTime > 1) {
-        deltaTime = 0;
-    }
+    [super update:currentTime];
     
     if (self.gameState == MainMenu || self.gameState == Playing) {
-        [self updatePlayer:deltaTime];
+        [self updatePlayer:self.deltaTime];
         [self updateGravity];
     }
     
     if (self.gameState == Playing) {
-        [self updateBreathTimer:deltaTime];
+        [self updateBreathTimer:self.deltaTime];
         [self updateBreathMeter];
         [self checkBreathMeterForGameOver];
     }
 
     //Background
-    [self updateParallaxNodesWithDelta:deltaTime];
+    [self updateParallaxNodesWithDelta:self.deltaTime];
     
     //Water surface
     [self trackPlayerForSplash];
-    [self.waterSurface update:deltaTime];
+    [self.waterSurface update:self.deltaTime];
     
     //Bubbles
     [self trackPlayerForBubbles];
@@ -762,9 +754,9 @@ CGFloat const kParallaxMinSpeed = -20.0;
 - (void)didSimulatePhysics {
     if (!(self.gameState == GameOver)) {
         [self updateWorldZoom];
-//        [self.cameraNode centerVerticallyOnNode:[self currentPlayer]];
     }
 }
+
 #pragma mark - Parallaxing
 - (SSKParallaxNode*)backgroundLayerWithSpeed:(CGFloat)speed position:(CGPoint)position texture:(SKTexture*)texture {
     NSMutableArray *parallaxNodes = [NSMutableArray new];

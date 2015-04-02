@@ -32,28 +32,12 @@
         sObstacleLargeTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"iceberg_250x375"]];
         sObstacleMediumTexture = [SKTexture loadPixelTexture:[atlas textureNamed:@"iceberg_200x300"]];
         
+        //Clouds
+        sCloudAtlas = [SKTextureAtlas atlasNamed:@"clouds"];
+        
         //Penguins
         sPenguinBlackTextures = [SKTextureAtlas atlasNamed:@"penguin_black"];
-        
-        sPenguinGreyIdleFrames = [NSMutableArray new];
-        sPenguinGreySwimFrames = [NSMutableArray new];
-        sPenguinGreyFlyFrames = [NSMutableArray new];
-        
-        //Idle Textures
-        for (int i = 0; i < 2; i++) {
-            [sPenguinGreyIdleFrames addObject:[SKTexture loadPixelTexture:[atlas textureNamed:[NSString stringWithFileBase:@"penguin_grey_idle_" index:i]]]];
-        }
-        
-        //Swim Textures
-        for (int i = 0; i < 8; i++) {
-            [sPenguinGreySwimFrames addObject:[SKTexture loadPixelTexture:[atlas textureNamed:[NSString stringWithFileBase:@"penguin_grey_swim_" index:i]]]];
-        }
-        
-        //Fly Textures
-        for (int i = 0; i < 6; i++) {
-            [sPenguinGreyFlyFrames addObject:[SKTexture loadPixelTexture:[atlas textureNamed:[NSString stringWithFileBase:@"penguin_grey_fly_" index:i]]]];
-        }
-        
+
         //Misc.
         sFingerSprite = [SKTexture loadPixelTexture:[atlas textureNamed:@"finger_sprite"]];
         sFingerSpriteEffect = [SKTexture loadPixelTexture:[atlas textureNamed:@"finger_sprite_effect"]];
@@ -84,7 +68,7 @@
 
 #pragma mark - Shared Textures
 
-//Backgrounds
+//Background Elements
 static SKTexture *sWaterGradient = nil;
 + (SKTexture*)sharedWaterGradient {
     return sWaterGradient;
@@ -98,6 +82,12 @@ static SKTexture *sSkyGradient = nil;
 static SKTexture *sIcebergTexture = nil;
 + (SKTexture*)sharedIcebergTexture {
     return sIcebergTexture;
+}
+
+//Clouds
+static SKTextureAtlas *sCloudAtlas = nil;
++ (SKTextureAtlas*)sharedCloudAtlas {
+    return sCloudAtlas;
 }
 
 static SKTexture *sCloudBackgroundLowerTexture = nil;
@@ -147,31 +137,6 @@ static SKTextureAtlas *sPenguinBlackTextures = nil;
     return sPenguinBlackTextures;
 }
 
-static SKTexture *sPenguinNormalIdle = nil;
-+ (SKTexture*)sharedPenguinNormalIdle {
-    return sPenguinNormalIdle;
-}
-
-static SKTexture *sPenguinNormalAnim = nil;
-+ (SKTexture*)sharedPenguinNormalAnim {
-    return sPenguinNormalAnim;
-}
-
-static NSMutableArray *sPenguinGreyIdleFrames = nil;
-+ (NSMutableArray*)sharedPenguinGreyIdleFrames {
-    return sPenguinGreyIdleFrames;
-}
-
-static NSMutableArray *sPenguinGreySwimFrames = nil;
-+ (NSMutableArray*)sharedPenguinGreySwimFrames {
-    return sPenguinGreySwimFrames;
-}
-
-static NSMutableArray *sPenguinGreyFlyFrames = nil;
-+ (NSMutableArray*)sharedPenguinGreyFlyFrames {
-    return sPenguinGreyFlyFrames;
-}
-
 //Obstacles
 static SKTexture *sObstacleLargeTexture = nil;
 + (SKTexture*)sharedObstacleLargeTexture {
@@ -194,8 +159,6 @@ static SKTexture *sFingerSpriteEffect = nil;
     return sFingerSpriteEffect;
 }
 
-
-//Misc Menu Scene
 
 #pragma mark - Shared Emitters
 static SKEmitterNode *sSnowEmitter = nil;

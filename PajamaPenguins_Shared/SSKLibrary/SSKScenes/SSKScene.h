@@ -16,6 +16,9 @@
 
 @interface SSKScene : SKScene <SKPhysicsContactDelegate>
 
+//Time since last frame (Dont forget to call [super currentTime:] !)
+@property (nonatomic) NSTimeInterval deltaTime;
+
 //Loading Scene Assets
 typedef void (^AssetCompletionHandler)(void);
 + (void)loadSceneAssetsWithCompletionHandler:(AssetCompletionHandler)handler; //Not to be overriden
