@@ -107,7 +107,6 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [self testStuff];
 }
 
-#pragma mark - Test Stuff
 - (void)testStuff {
 }
 
@@ -766,7 +765,7 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [layer setAnchorPoint:CGPointMake(0.5, 0)];
     [parallaxNodes addObject:layer];
     
-    SSKParallaxNode *parallaxLayer = [SSKParallaxNode nodeWithSize:self.scene.size attachedNodes:parallaxNodes moveSpeed:CGPointMake(speed, 0) numFrames:3];
+    SSKParallaxNode *parallaxLayer = [SSKParallaxNode nodeWithSize:self.scene.size attachedNodes:parallaxNodes moveSpeed:CGPointMake(speed, 0)];
     [parallaxLayer setName:@"parallaxNode"];
     [parallaxLayer setZPosition:backgroundLayer];
     return parallaxLayer;

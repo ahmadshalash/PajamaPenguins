@@ -69,7 +69,7 @@ CGFloat const kPlatformPadding = 50.0;
     [self.menuBackgroundNode addChild:[self skyBackground]];
     
     //Clouds
-    self.clouds = [SSKParallaxNode nodeWithSize:self.size attachedNodes:@[[self cloudNodeTall],[self cloudNodeWide]] moveSpeed:CGPointMake(-10, 0) numFrames:2];
+    self.clouds = [SSKParallaxNode nodeWithSize:self.size attachedNodes:@[[self cloudNodeTall],[self cloudNodeWide]] moveSpeed:CGPointMake(-50, 0)];
     [self.clouds setName:@"clouds"];
     [self.menuBackgroundNode addChild:self.clouds];
     
@@ -144,13 +144,6 @@ CGFloat const kPlatformPadding = 50.0;
     SKSpriteNode *sky = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedSkyGradient]];
     [sky setAnchorPoint:CGPointMake(0.5, 0)];
     return sky;
-}
-
-- (SSKDynamicColorNode*)newColorBackground {
-    SSKDynamicColorNode *colorBackground = [SSKDynamicColorNode nodeWithRed:125 green:255 blue:255 size:self.size];
-    [colorBackground startCrossfadeForeverWithMax:255 min:125 interval:10];
-    [colorBackground setName:@"colorBackground"];
-    return colorBackground;
 }
 
 - (SKSpriteNode*)newPlatformIceberg {
@@ -245,15 +238,12 @@ CGFloat const kPlatformPadding = 50.0;
     if ([UIDevice isUserInterfaceIdiomPhone]) {
         return CGSizeMake(50, 50);
     }
+    
     else if ([UIDevice isUserInterfaceIdiomPad]) {
         return CGSizeMake(120, 120);
     }
     
     return CGSizeMake(50, 50);
-}
-
-- (SSKWaterSurfaceNode*)currentWaterSurface {
-    return (SSKWaterSurfaceNode*)[self.menuBackgroundNode childNodeWithName:@"waterSurface"];
 }
 
 #pragma mark - Transfer To Game Scene
