@@ -68,7 +68,7 @@ CGFloat const kPlatformPadding = 50.0;
     [self addChild:self.menuBackgroundNode];
     
     //Sky
-    [self.menuBackgroundNode addChild:[self skyBackground]];
+    [self.menuBackgroundNode addChild:[self skyNode]];
     
     //Clouds
     self.cloudFast = [self cloudParallaxLayerFast];
@@ -89,7 +89,7 @@ CGFloat const kPlatformPadding = 50.0;
     [platformNode addChild:[self blackPenguin]];
     
     //Water Surface
-    self.waterSurface = [self newWaterSurface];
+    self.waterSurface = [self waterBodyNode];
     [self.menuBackgroundNode addChild:self.waterSurface];
 }
 
@@ -110,7 +110,7 @@ CGFloat const kPlatformPadding = 50.0;
 
 - (void)startAnimations {
     //Water waves
-    [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[[self waterSurfaceSplash],[SKAction waitForDuration:.5]]]]];
+//    [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[[self waterSurfaceSplash],[SKAction waitForDuration:.5]]]]];
     
     //Pause to prevent frame skip
     [self runAction:[SKAction waitForDuration:.5] completion:^{
@@ -127,15 +127,16 @@ CGFloat const kPlatformPadding = 50.0;
 }
 
 #pragma mark - Nodes
-- (SSKWaterSurfaceNode*)newWaterSurface {
+- (SSKWaterSurfaceNode*)waterBodyNode {
     CGFloat surfacePadding = 5;
     CGPoint surfaceStart = CGPointMake(-self.size.width/2 - surfacePadding, 0);
     CGPoint surfaceEnd = CGPointMake(self.size.width/2 + surfacePadding, 0);
     CGSize waterSize = CGSizeMake(self.size.width, self.size.height/2);
-    SSKWaterSurfaceNode *waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart
-                                                                          endPoint:surfaceEnd
-                                                                             depth:waterSize.height
-                                                                           texture:[SKTexture textureWithGradientOfSize:waterSize startColor:[SKColor blueColor] endColor:[SKColor greenColor] direction:GradientDirectionDiagonalRight]];
+    SKColor *startColor = SKColorWithRGB(7, 26, 95);
+    SKColor *endColor = SKColorWithRGB(76, 186, 255);
+    SKTexture *gradient = [SKTexture textureWithGradientOfSize:waterSize startColor:startColor endColor:endColor direction:GradientDirectionVertical];
+
+    SSKWaterSurfaceNode *waterSurface = [SSKWaterSurfaceNode surfaceWithStartPoint:surfaceStart endPoint:surfaceEnd depth:waterSize.height texture:gradient];
     [waterSurface setAlpha:0.9];
     [waterSurface setZPosition:SceneLayerForeground];
     [waterSurface setName:@"waterSurface"];
@@ -144,10 +145,22 @@ CGFloat const kPlatformPadding = 50.0;
     return waterSurface;
 }
 
-- (SKSpriteNode*)skyBackground {
-    SKSpriteNode *sky = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedSkyGradient]];
+- (SKNode*)skyNode {
+    SKColor *startColor = SKColorWithRGB(172, 213, 206);
+    SKColor *endColor = SKColorWithRGB(46, 91, 169);
+    SKTexture *skyGradient = [SKTexture textureWithGradientOfSize:CGSizeMake(self.size.width, self.size.height/2) startColor:startColor endColor:endColor direction:GradientDirectionVertical];
+    SKSpriteNode *sky = [SKSpriteNode spriteNodeWithTexture:skyGradient];
     [sky setAnchorPoint:CGPointMake(0.5, 0)];
-    return sky;
+    
+    SKSpriteNode *background = [SKSpriteNode spriteNodeWithColor:startColor size:sky.size];
+    [background setAnchorPoint:CGPointMake(0.5, 1)];
+    
+    SKNode *group = [SKNode new];
+    [group setZPosition:-10];
+    [group addChild:sky];
+    [group addChild:background];
+    
+    return group;
 }
 
 - (SKSpriteNode*)newPlatformIceberg {
