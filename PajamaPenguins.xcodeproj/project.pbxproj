@@ -65,6 +65,7 @@
 		EEAE6FAA1AA68F9900215C7E /* BubbleEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6FA91AA68F9900215C7E /* BubbleEmitter.sks */; };
 		EEAE6FAB1AA68F9900215C7E /* BubbleEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEAE6FA91AA68F9900215C7E /* BubbleEmitter.sks */; };
 		EEAF97671ACDFCCD007D0DC2 /* clouds.atlas in Resources */ = {isa = PBXBuildFile; fileRef = EEAF97661ACDFCCD007D0DC2 /* clouds.atlas */; };
+		EEB870711AD0C421000D21E6 /* PPSkySprite.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB870701AD0C421000D21E6 /* PPSkySprite.m */; };
 		EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93D01A8C1FED00CBD711 /* SSKCameraNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */; };
 		EEBA93F21A93FD4F00CBD711 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBA93F11A93FD4F00CBD711 /* TwoDimensionalArray.m */; };
@@ -161,6 +162,8 @@
 		EEAE6FA31AA68B8B00215C7E /* ObstacleSplashEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = ObstacleSplashEmitter.sks; path = ../PajamaPenguins_Shared/ObstacleSplashEmitter.sks; sourceTree = "<group>"; };
 		EEAE6FA91AA68F9900215C7E /* BubbleEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = BubbleEmitter.sks; path = PajamaPenguins_Shared/BubbleEmitter.sks; sourceTree = SOURCE_ROOT; };
 		EEAF97661ACDFCCD007D0DC2 /* clouds.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = clouds.atlas; sourceTree = "<group>"; };
+		EEB8706F1AD0C421000D21E6 /* PPSkySprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSkySprite.h; sourceTree = "<group>"; };
+		EEB870701AD0C421000D21E6 /* PPSkySprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSkySprite.m; sourceTree = "<group>"; };
 		EEBA93CD1A8C1FED00CBD711 /* SSKCameraNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKCameraNode.h; sourceTree = "<group>"; };
 		EEBA93CE1A8C1FED00CBD711 /* SSKCameraNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKCameraNode.m; sourceTree = "<group>"; };
 		EEBA93F01A93FD4F00CBD711 /* TwoDimensionalArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoDimensionalArray.h; sourceTree = "<group>"; };
@@ -371,6 +374,8 @@
 				EE168CDD1A994DFE005403E6 /* PPIcebergObstacle.m */,
 				EEF798221A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.h */,
 				EEF798231A9D4E9B0000DD14 /* PPSimpleAnimatedSprite.m */,
+				EEB8706F1AD0C421000D21E6 /* PPSkySprite.h */,
+				EEB870701AD0C421000D21E6 /* PPSkySprite.m */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
@@ -621,6 +626,7 @@
 				EEC9DB8D1AA7BF5E0022CDF1 /* SSKProgressBarNode.m in Sources */,
 				EEBA93CF1A8C1FED00CBD711 /* SSKCameraNode.m in Sources */,
 				EE6F92FC1A82F39400286DC7 /* SSKButtonNode.m in Sources */,
+				EEB870711AD0C421000D21E6 /* PPSkySprite.m in Sources */,
 				EE16B1881AC7911800B15134 /* SKColor+SFAdditions.m in Sources */,
 				41E430A918B09E5200E1427D /* ViewController.m in Sources */,
 				EE6F92FA1A82F39400286DC7 /* SSKiAD.m in Sources */,

@@ -19,5 +19,6 @@ SSK_INLINE SKColor *SKColorWithRGBA(int r, int g, int b, int a) {
 }
 
 @interface SKColor (SFAdditions)
-+ (SKColor*)skyColor;
++ (SKColor*)colorWithR:(int)r g:(int)g b:(int)b;
++ (SKColor*)backgroundColor;
 @end

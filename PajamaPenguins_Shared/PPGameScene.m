@@ -9,6 +9,7 @@
 #import "PPSharedAssets.h"
 #import "PPPlayer.h"
 #import "PPIcebergObstacle.h"
+#import "PPSkySprite.h"
 
 #import "SKColor+SFAdditions.h"
 #import "UIDevice+SFAdditions.h"
@@ -123,36 +124,12 @@ CGFloat const kParallaxMinSpeed = -20.0;
     [self addChild:self.worldNode];
     
     //Background color
-    [self.scene setBackgroundColor:[SKColor skyColor]];
+    [self.scene setBackgroundColor:[SKColor backgroundColor]];
     
     //Sky
-    SKSpriteNode *skyBackground = [SKSpriteNode spriteNodeWithTexture:[PPSharedAssets sharedSkyGradient]];
-    [skyBackground setAnchorPoint:CGPointMake(0, 0)];
-    [skyBackground setPosition:CGPointMake(-self.size.width/2, 0)];
-    [skyBackground setZPosition:backgroundLayer];
-    [self.worldNode addChild:skyBackground];
-    
+    [self.worldNode addChild:[PPSkySprite spriteWithSize:CGSizeMake(self.size.width * 3, self.size.height * 1.5) skyType:SkyTypeDay]];
+
     //Parallaxing Nodes
-    CGPoint cloudBottomPos = CGPointMake(0, self.size.height/8 * 6);
-    CGPoint cloudMiddlePos = CGPointMake(0, cloudBottomPos.y + [PPSharedAssets sharedCloudBackgroundMiddleTexture].size.height/3);
-    CGPoint cloudUpperPos = CGPointMake(0, cloudMiddlePos.y + [PPSharedAssets sharedCloudBackgroundUpperTexture].size.height/3);
-    CGPoint cloudForegroundPos = CGPointMake(0, cloudUpperPos.y + [PPSharedAssets sharedCloudForegroundTexture].size.height/3);
-    
-    SSKParallaxNode *backgroundSlow = [self backgroundLayerWithSpeed:kParallaxMinSpeed position:cloudBottomPos texture:[PPSharedAssets sharedCloudBackgroundLowerTexture]];
-    [backgroundSlow setAlpha:.6];
-    [self.worldNode addChild:backgroundSlow];
-    
-    SSKParallaxNode *backgroundMedium = [self backgroundLayerWithSpeed:kParallaxMinSpeed*2 position:cloudMiddlePos texture:[PPSharedAssets sharedCloudBackgroundMiddleTexture]];
-    [self.worldNode addChild:backgroundMedium];
-    
-    SSKParallaxNode *backgroundFast = [self backgroundLayerWithSpeed:kParallaxMinSpeed*3 position:cloudUpperPos texture:[PPSharedAssets sharedCloudBackgroundUpperTexture]];
-    [backgroundFast setAlpha:.7];
-    [self.worldNode addChild:backgroundFast];
-    
-    SSKParallaxNode *foreground = [self backgroundLayerWithSpeed:kParallaxMinSpeed*4 position:cloudForegroundPos texture:[PPSharedAssets sharedCloudForegroundTexture]];
-    [foreground setAlpha:.95];
-    [foreground setZPosition:foregroundLayer];
-    [self.worldNode addChild:foreground];
 
     //Snow Emitter
     self.snowEmitter = [PPSharedAssets sharedSnowEmitter].copy;

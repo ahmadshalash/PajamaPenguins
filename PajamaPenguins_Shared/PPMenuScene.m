@@ -10,6 +10,7 @@
 #import "PPGameScene.h"
 #import "PPSharedAssets.h"
 #import "PPPlayer.h"
+#import "PPSkySprite.h"
 
 #import "SSKUtils.h"
 
@@ -60,15 +61,17 @@ CGFloat const kPlatformPadding = 50.0;
 
 #pragma mark - Scene Construction
 - (void)createSceneBackground {
-    [self.scene setBackgroundColor:[SKColor skyColor]];
+    self.backgroundColor = [SKColor backgroundColor];
     
     self.menuBackgroundNode = [SKNode node];
     [self.menuBackgroundNode setZPosition:SceneLayerBackground];
     [self.menuBackgroundNode setName:@"menuBackground"];
     [self addChild:self.menuBackgroundNode];
-    
+
     //Sky
-    [self.menuBackgroundNode addChild:[self skyNode]];
+    PPSkySprite *sky = [PPSkySprite spriteWithSize:CGSizeMake(self.size.width, self.size.height/2) skyType:SkyTypeDay];
+    [sky setZPosition:-1];
+    [self.menuBackgroundNode addChild:sky];
     
     //Clouds
     self.cloudFast = [self cloudParallaxLayerFast];
@@ -143,24 +146,6 @@ CGFloat const kPlatformPadding = 50.0;
     [waterSurface setSplashDamping:.003];
     [waterSurface setSplashTension:.0025];
     return waterSurface;
-}
-
-- (SKNode*)skyNode {
-    SKColor *startColor = SKColorWithRGB(172, 213, 206);
-    SKColor *endColor = SKColorWithRGB(46, 91, 169);
-    SKTexture *skyGradient = [SKTexture textureWithGradientOfSize:CGSizeMake(self.size.width, self.size.height/2) startColor:startColor endColor:endColor direction:GradientDirectionVertical];
-    SKSpriteNode *sky = [SKSpriteNode spriteNodeWithTexture:skyGradient];
-    [sky setAnchorPoint:CGPointMake(0.5, 0)];
-    
-    SKSpriteNode *background = [SKSpriteNode spriteNodeWithColor:startColor size:sky.size];
-    [background setAnchorPoint:CGPointMake(0.5, 1)];
-    
-    SKNode *group = [SKNode new];
-    [group setZPosition:-10];
-    [group addChild:sky];
-    [group addChild:background];
-    
-    return group;
 }
 
 - (SKSpriteNode*)newPlatformIceberg {

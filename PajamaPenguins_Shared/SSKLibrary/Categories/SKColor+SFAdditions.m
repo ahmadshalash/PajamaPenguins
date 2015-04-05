@@ -9,7 +9,12 @@
 #import "SKColor+SFAdditions.h"
 
 @implementation SKColor (SFAdditions)
-+ (SKColor*)skyColor {
-    return SKColorWithRGB(146, 204, 210);
++ (SKColor*)colorWithR:(int)r g:(int)g b:(int)b {
+    return [SKColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f];
 }
+
++ (SKColor*)backgroundColor {
+    return SKColorWithRGB(172, 213, 206);
+}
+
 @end
